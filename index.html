@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報Ⅰ 進研模試 2025年6月｜トップ</title>
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --primary: #1a56a0;
+    --primary-light: #e8f0fb;
+    --accent: #e85d26;
+    --text: #1e2a3a;
+    --muted: #5a6a7e;
+    --border: #d0dae6;
+    --radius: 14px;
+    --shadow: 0 4px 18px rgba(26,86,160,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+    background: linear-gradient(180deg, #e8f0fb 0%, var(--bg) 45%, #ffffff 100%);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--primary);
+    color: #fff;
+    padding: 22px 18px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  }
+
+  header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+
+  header p {
+    margin-top: 6px;
+    font-size: .9rem;
+    opacity: .9;
+  }
+
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 30px 16px 60px;
+  }
+
+  .intro {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 20px;
+    margin-bottom: 20px;
+    line-height: 1.75;
+  }
+
+  .intro h2 {
+    color: var(--primary);
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+
+  .intro p {
+    color: var(--muted);
+    font-size: .92rem;
+  }
+
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .menu a {
+    display: block;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+
+  .menu a:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+    background: var(--primary-light);
+  }
+
+  .q-number {
+    display: inline-block;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: .82rem;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+
+  .q-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .q-desc {
+    color: var(--muted);
+    font-size: .88rem;
+    line-height: 1.6;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: .78rem;
+    padding: 20px;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.05rem; }
+    .menu { grid-template-columns: 1fr; }
+    main { padding-top: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 進研模試 2025年6月</h1>
+  <p>問題選択トップページ</p>
+</header>
+
+<main>
+  <section class="intro">
+    <h2>解きたい問題を選んでください</h2>
+    <p>各問題ページへ移動します</p>
+  </section>
+
+  <nav class="menu" aria-label="問題一覧">
+    <a href="第1問.html">
+      <span class="q-number">第1問</span>
+      <div class="q-title">第1問へ</div>
+      <div class="q-desc">情報・メディア・セキュリティなど</div>
+    </a>
+
+    <a href="第2問.html">
+      <span class="q-number">第2問</span>
+      <div class="q-title">第2問へ</div>
+      <div class="q-desc">知的財産・画像データなど</div>
+    </a>
+
+    <a href="第3問.html">
+      <span class="q-number">第3問</span>
+      <div class="q-title">第3問へ</div>
+      <div class="q-desc">配列・採点プログラムなど</div>
+    </a>
+
+    <a href="第4問.html">
+      <span class="q-number">第4問</span>
+      <div class="q-title">第4問へ</div>
+      <div class="q-desc">データ分析・アンケート調査など</div>
+    </a>
+  </nav>
+</main>
+
+<footer>
+  index.html
+</footer>
+
+</body>
+</html>

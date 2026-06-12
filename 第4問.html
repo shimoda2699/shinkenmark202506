@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2025年6月｜第4問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#ffffff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:var(--primary);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:1rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.8rem;opacity:.85;white-space:nowrap;}
+  .progress-bar{width:120px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .4s ease;}
+  main{max-width:760px;margin:0 auto;padding:20px 16px 80px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 22px 20px;margin-bottom:16px;}
+  .q-meta{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-body{font-size:.9rem;line-height:1.8;}
+  .q-body p{margin-bottom:.6em;}
+  .figure-box{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
+  .sub-q{margin-top:18px;}
+  .sub-q-label{font-weight:700;font-size:.85rem;color:var(--primary);margin-bottom:8px;}
+  .choices{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.5;transition:border-color .15s,background .15s;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:22px;margin-top:1px;font-size:.85rem;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .action-row{margin-top:16px;display:flex;gap:10px;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .15s;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#aaa;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 20px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  .btn-secondary:hover{background:var(--primary-light);}
+  .result-banner{display:none;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:.9rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .result-banner .icon{font-size:1.3rem;}
+  .explanation-link{display:inline-block;margin-left:auto;font-size:.82rem;font-weight:600;color:var(--primary);text-decoration:none;border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;transition:background .15s;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:24px 22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .modal-title{font-size:1rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:6px;line-height:1;}
+  .modal-close:hover{background:var(--bg);}
+  .modal-body{font-size:.9rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .modal-body .option-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.87rem;}
+  .modal-body .option-exp.ok{border-left:3px solid var(--correct);}
+  .modal-body .option-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:.88rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:7px 10px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:3rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.2rem;color:var(--muted);}
+  .q-list li{margin-left:1.2em;margin-bottom:.4em;}
+  @media(max-width:540px){.q-card{padding:18px 14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:80px;}.score-big{font-size:2.4rem;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年6月 ｜ 第4問</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">1 / 7</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:14%"></div></div>
+  </div>
+</header>
+
+<main id="quiz-area"></main>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const SYMBOLS = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+const COMMON_STEM = `高校生のアヤカさんは「自信」をテーマにした探究活動で、校内の生徒100人（全校生徒1,000人）を対象にアンケート調査を実施した。<br><br>
+<b>質問リスト（抜粋）：</b><br>
+質問1：あなたは自信がありますか？（1.ある 2.どちらかといえばある 3.どちらかといえばない 4.ない）<br>
+質問2：卒業後の第一志望の進路を達成できると思いますか？（1.とてもそう思う 2.ややそう思う 3.そう思う 4.ややそう思わない）<br>
+質問3：難しいと思うことに挑戦するとき、あなたはポジティブに取り組んだり、計画的に進めたりしますか？（1.はい 2.いいえ）<br>
+質問4：難易度が高いテストを受けることが決まったとき、あなたはテストの前日に何時間程度学習しますか？（1.0時間以上1時間未満 ～ 7.6時間以上）`;
+
+const questions = [
+
+  // 問1 ア（アンケート設計の適否）
+  {
+    id:"1", section:"第4問 問1", points:3,
+    stem: COMMON_STEM,
+    question:`サオリさんからの指摘 i〜iv のうち、正しいものをすべて選んだ組合せを選べ。<br><br>
+i 質問1は質問文の内容が何に対してのものかという具体性に欠けており、回答者によってとらえ方が異なるため適切ではない。<br>
+ii 質問2は肯定的な選択肢と否定的な選択肢が対称に配置されていないため適切ではない。<br>
+iii 質問3は一つの質問文の中で二つの内容を問うているため適切ではない。<br>
+iv 質問4は選択肢内で時間に重複があるので適切ではない。`,
+    choices:["i，ii","i，iii","i，iv","ii，iii","ii，iv","iii，iv","i，ii，iii","i，ii，iv","i，iii，iv","ii，iii，iv","i，ii，iii，iv"],
+    correct:6,
+    explanation:{
+      answer:"⑥　i，ii，iii（正しい指摘の組合せ）",
+      text:`各指摘の評価：<br><br>
+<b>i：正しい</b>　質問1「自信がありますか？」は「何に対しての自信か」（勉強か、進路か等）が明記されておらず、具体性に欠ける。<br>
+<b>ii：正しい</b>　質問2の選択肢は「とてもそう思う・ややそう思う・そう思う・ややそう思わない」であり、否定的な選択肢が「ややそう思わない」しかなく対称でない（「そう思わない・とてもそう思わない」がない）。<br>
+<b>iii：正しい</b>　質問3は「ポジティブに取り組む」と「計画的に進める」の二つの内容を一つの質問で問うている。<br>
+<b>iv：誤り</b>　質問4の選択肢（0時間以上1時間未満、1時間以上2時間未満…）は時間に重複がない。`,
+      options:[
+        {label:"⑥ 正しい",ok:true,text:"i（具体性欠如）、ii（対称でない）、iii（ダブルバーレル）の3つが正しい指摘。"},
+        {label:"他の組合せ：誤り",ok:false,text:"ivは時間の重複がないため誤りの指摘。"}
+      ]
+    }
+  },
+
+  // 問2 イウ（異常値・欠損値確認の理由）
+  {
+    id:"2", section:"第4問 問2", points:4,
+    stem:`アヤカさんは質問リストを適切に修正したアンケートを作成し、校内の生徒100人を対象に匿名で回答してもらいデータを収集した。サオリさんから「収集したデータの中に、ほかのデータと比べて大きく異なる値（異常値）や値が欠けているところ（欠損値）がないか確認したほうがよい」とアドバイスを受けた。`,
+    question:`データを分析する前に異常値・欠損値を確認したほうがよい理由として適当なものを、次の⓪〜④のうちから二つ選べ（順序不問）。`,
+    choices:[
+      "収集したデータに、名義尺度や間隔尺度のデータが含まれるため。",
+      "質問文に不適切な表現や調査設計の問題点がないかを確認するため。",
+      "標準偏差や分散の値の信頼性を確保するため。",
+      "母集団（全校生徒）の数と比べて、収集したデータ数が十分であることを確認するため。",
+      "選択式の質問において、回答割合が顕著に高い選択肢を把握するため。"
+    ],
+    correct: -1, // 複数正解：①と②（インデックス1と2）
+    correctMulti: [1, 2],
+    explanation:{
+      answer:"①　質問文の問題点確認のため　＋　②　標準偏差・分散の信頼性確保のため",
+      text:`異常値・欠損値をデータ分析前に確認する理由：<br><br>
+・<b>①（正しい）</b>　異常値や欠損値が多く含まれているデータがあれば、質問文や調査設計に問題があった可能性を見出せる。<br>
+・<b>②（正しい）</b>　異常値や欠損値が含まれると標準偏差・分散の値が変わることがあり、データの信頼性を確保するために事前確認が必要。<br><br>
+・⓪ 誤り：尺度の種類とは無関係。<br>
+・③ 誤り：データ数と母集団の大きさの比較は別の問題（標本サイズの妥当性の評価）。<br>
+・④ 誤り：回答割合の把握は分析そのものであり、異常値・欠損値確認の理由ではない。`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"尺度の種類（名義・間隔）と異常値・欠損値確認の理由は無関係。"},
+        {label:"① 正しい",ok:true,text:"異常値・欠損値の多発は質問文の問題点のサインになる。"},
+        {label:"② 正しい",ok:true,text:"異常値があると標準偏差・分散の信頼性に影響する。"},
+        {label:"③ 誤り",ok:false,text:"母集団との比較は標本サイズの問題であり別の話。"},
+        {label:"④ 誤り",ok:false,text:"回答割合の把握は分析の目的であり、事前確認の理由ではない。"}
+      ]
+    }
+  },
+
+  // 問3 エ（分析の信頼性・妥当性のために伝えるべき情報）
+  {
+    id:"3", section:"第4問 問3", points:4,
+    stem:`アヤカさんは「高校生の自己効力感のスコアの平均値（点）には、男女で差がある」という主張とともに、男女別の自己効力感の平均値の棒グラフ（図2）を発表する予定。発表会でクラスメイトにこの分析結果および主張の信頼性や妥当性を判断してもらうために、図2の情報以外にクラスメイトに伝えるべき情報を考える。<br><br>
+候補：<br>
+a 外れ値の基準とその基準による外れ値の有無<br>
+b 男女の各人数<br>
+c 調査対象者の選定方法と理由`,
+    question:`図2の情報以外にクラスメイトに伝えるべき情報として適当なものをすべて選んだ組合せを選べ。`,
+    choices:["a","b","c","a，b","a，c","b，c","a，b，c"],
+    correct:6,
+    explanation:{
+      answer:"⑥　a，b，c（すべて伝えるべき）",
+      text:`主張の信頼性・妥当性を判断してもらうために必要な情報：<br><br>
+<b>a：必要</b>　外れ値があるかどうかによって平均値の信頼性が変わる。外れ値の基準と有無を伝えることで根拠の信頼性判断につながる。<br>
+<b>b：必要</b>　男女の各人数は平均値を比較する際の妥当性に影響する（例：一方が極端に少ないと平均値の代表性が下がる）。<br>
+<b>c：必要</b>　アヤカさんの調査対象は校内の生徒100人（標本）だが、主張は「高校生」を対象としている。標本の選定方法と理由を伝えることで、主張が全高校生に一般化できるかどうかをクラスメイトが判断できる。`,
+      options:[
+        {label:"⑥ a，b，c 正しい",ok:true,text:"三つすべてが信頼性・妥当性の判断に必要な情報。"},
+        {label:"他の組合せ：誤り",ok:false,text:"いずれか一つを欠いても信頼性・妥当性の判断に不足する。"}
+      ]
+    }
+  },
+
+  // 問4 オ（「見積点」の収集方法）
+  {
+    id:"4", section:"第4問 問4", points:3,
+    stem:`アヤカさんは「達成度が低い人ほど、課題に取り組んだ後、その課題の達成度を過大に見積もる傾向があるのではないか」という仮説を立てた。<br>
+100点満点の課題を作成し、実際の点数を「達成点」（0〜100点）、どの程度この「達成点」が取れたかを自身で予想する点数として「見積点」（0〜100点）を設定し、仮説を検証しようとしている。`,
+    question:`対象者から「見積点」を収集するための方法として最も適当なものを選べ。`,
+    choices:[
+      "課題に取り組む前、対象者にどの程度の点数が取れるか予想してもらい、その点数を収集する。",
+      "課題に取り組む対象者をアヤカさんが直接観察し、どの程度の点数が取れそうかをアヤカさんが予想し、その点数を収集する。",
+      "課題にすべて取り組んでもらった後、対象者にどの程度の点数が取れたのかを予想してもらい、その点数を収集する。",
+      "取り組んだ課題を採点した点数を見せた後、対象者にこの点数と自身の想定していた点数との差を尋ねて、その値を収集する。"
+    ],
+    correct:2,
+    explanation:{
+      answer:"②　課題に取り組んだ後に予想してもらう",
+      text:`「見積点」は「課題の達成度（どの程度課題をこなすことができたかを示す度合い）が低い人ほど達成度を<b>過大に見積もる</b>」という仮説を検証するためのものです。これは課題に<b>取り組んだ後</b>に自身の達成度を予想したものです。<br><br>
+・⓪ 誤り：課題に取り組む<b>前</b>の予想は「見積点」の定義（取り組んだ後の自己評価）に合わない。<br>
+・① 誤り：アヤカさん自身が観察して予想するのは対象者自身の主観的評価ではない。<br>
+・<b>② 正しい</b>：課題に全部取り組んだ後に「どの程度取れたか」を予想してもらう。<br>
+・③ 誤り：採点結果を見せてしまうと、それを踏まえた自己評価になり「見積点」として不適切。`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"課題取り組み前の予想は仮説の「見積点」ではない。"},
+        {label:"① 誤り",ok:false,text:"アヤカさんが予想するのは対象者の主観的評価ではない。"},
+        {label:"② 正しい",ok:true,text:"課題後に自分でどの程度取れたか予想させるのが正しい。"},
+        {label:"③ 誤り",ok:false,text:"採点結果を見せると自己評価が結果に引きずられてしまう。"}
+      ]
+    }
+  },
+
+  // 問5 カキ（図3から読み取れること・2問択）
+  {
+    id:"5", section:"第4問 問5", points:4,
+    stem:`アヤカさんは部活の部員100人に「達成点」と「見積点」を収集し、達成点が低い順に並べ替え、25人ずつ四つのグループ（A・B・C・D）に分けた。各グループの「達成点」と「見積点」の平均値を算出した（図3）。<br><br>
+<div class="figure-box">
+図3のデータ（概要）：<br>
+グループA：達成点平均 ≒ 35点、見積点平均 ≒ 62点（見積点 > 達成点）<br>
+グループB：達成点平均 ≒ 48点、見積点平均 ≒ 70点（見積点 > 達成点）<br>
+グループC：達成点平均 ≒ 63点、見積点平均 ≒ 74点（見積点 > 達成点、差は小さい）<br>
+グループD：達成点平均 ≒ 79点、見積点平均 ≒ 80点（見積点 ≒ 達成点）
+</div>`,
+    question:`図3からわかることとして適当なものを次の⓪〜④のうちから二つ選べ（順序不問）。`,
+    choices:[
+      "課題を十分に達成できたグループは、自身の達成度を過大に見積もらない傾向がある。",
+      "達成度の見積もりを高くもたないと、課題の点数も高くならない傾向がある。",
+      "どんな人でも、全員が実際の課題の点数より高い点数を見積もる。",
+      "課題の実際の達成点が50点以上の人は、下位25人には含まれない。",
+      "課題を達成する力量の低さが要因で、自身の達成度を過大に見積もってしまう。"
+    ],
+    correct: -1,
+    correctMulti: [0, 3],
+    explanation:{
+      answer:"⓪　過大に見積もらない傾向　＋　③　達成点50点以上はグループAに含まれない",
+      text:`図3から読み取れること：<br><br>
+・<b>⓪（正しい）</b>　グループCとDは達成点と見積点の差が小さく、課題を十分に達成できたグループほど自身の達成度を過大に見積もらない傾向がある。<br>
+・<b>③（正しい）</b>　グループBの達成点平均が約48点なので、グループBの全員が50点以上ではない。グループA（下位25人）に50点以上の人が含まれることはない（定義上最下位グループ）。<br><br>
+・① 誤り：見積点と達成点の関係から因果関係を断定することはできない。<br>
+・② 誤り：図3には平均値のみが示されており「どんな人でも全員が」とは断言できない。<br>
+・④ 誤り：図3では平均値を比較しているだけであり、因果関係（力量の低さが要因）を判断することはできない。`,
+      options:[
+        {label:"⓪ 正しい",ok:true,text:"グループC・Dは見積点と達成点の差が小さく、過大評価しない傾向が見られる。"},
+        {label:"① 誤り",ok:false,text:"見積もりが高いから点数が高いとは逆の因果関係を示しており、因果関係は不明。"},
+        {label:"② 誤り",ok:false,text:"「全員が」は断言できない。平均値のみから判断不可。"},
+        {label:"③ 正しい",ok:true,text:"グループBの平均が48点なので、下位25人（グループA）に50点以上は含まれない。"},
+        {label:"④ 誤り",ok:false,text:"図3の結果から因果関係を断定することはできない。"}
+      ]
+    }
+  },
+
+  // 問6 ク（仮説検証の方法）
+  {
+    id:"6", section:"第4問 問6", points:4,
+    stem:`アヤカさんの仮説：「アヤカさんの学校に通う高校生は、ある課題の実際の達成度が低い人ほど、課題に取り組んだ後、その課題の達成度を過大に見積もる傾向があるのではないか」`,
+    question:`この仮説を検証するための方法として最も適当なものを選べ。`,
+    choices:[
+      "「達成点」と「見積点」の散布図と相関係数をもとに、負の相関がみられるかどうかを確認する。",
+      "「達成点」と「『見積点』から『達成点』を引いた値」の散布図と相関係数をもとに、正の相関がみられるかどうかを確認する。",
+      "「達成点」と「『見積点』から『達成点』を引いた値」の散布図と相関係数をもとに、負の相関がみられるかどうかを確認する。",
+      "「達成点」と「『見積点』と『達成点』を足した値」の散布図と相関係数をもとに、正の相関がみられるかどうかを確認する。",
+      "「達成点」と「『見積点』と『達成点』を足した値」の散布図と相関係数をもとに、負の相関がみられるかどうかを確認する。"
+    ],
+    correct:2,
+    explanation:{
+      answer:"②　「達成点」と「見積点−達成点」で負の相関を確認する",
+      text:`仮説は「達成度（達成点）が低いほど、達成度の過大見積もりが大きい」というものです。「過大見積もりの程度」は「見積点 − 達成点」で表せます（これが大きいほど過大に見積もっている）。<br><br>
+仮説が正しければ、「達成点が低いほど（見積点−達成点）が大きい」 → 達成点と（見積点−達成点）の間には<b>負の相関</b>が見られるはずです。<br><br>
+よって「達成点」と「見積点 − 達成点」の散布図と相関係数をもとに、<b>負の相関</b>がみられるかどうかを確認するのが正解。`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"「達成点」と「見積点」の相関では過大見積もりの程度を評価できない。"},
+        {label:"① 誤り",ok:false,text:"「見積点−達成点」で正の相関は仮説と逆になる。"},
+        {label:"② 正しい",ok:true,text:"「達成点」が低いほど「見積点−達成点」が大きい＝負の相関。仮説を検証できる。"},
+        {label:"③ 誤り",ok:false,text:"足した値は過大見積もりの程度を表さない。"},
+        {label:"④ 誤り",ok:false,text:"足した値は過大見積もりの程度を表さない。"}
+      ]
+    }
+  },
+
+  // 問7 ケ（追加調査の適当でない収集計画）
+  {
+    id:"7", section:"第4問 問7", points:3,
+    stem:`アヤカさんは仮説の妥当性をさらに検討するために、追加調査を計画している。`,
+    question:`この調査におけるデータの収集の計画として<b>適当でないもの</b>を選べ。`,
+    choices:[
+      "今回対象者であった部員100人を対象に課題についての前提知識を問うテストのスコアも、「見積点」や「達成点」とともに収集する。",
+      "今回対象者であった各部員のクラスの担任の先生を対象に今回とは異なる課題に取り組んでもらい、「見積点」と「達成点」を再度収集する。",
+      "今回対象者であった部員以外のアヤカさんの学校に通う高校生を対象に今回と同様の課題に取り組んでもらい、「見積点」と「達成点」を再度収集する。",
+      "今回対象者であった部員100人を対象に今回とは異なる課題に取り組んでもらい、「見積点」と「達成点」を再度収集する。"
+    ],
+    correct:1,
+    explanation:{
+      answer:"①　担任の先生を対象にする（適当でない）",
+      text:`アヤカさんの仮説の対象は「アヤカさんの学校に通う高校生」です。<br><br>
+・<b>① 適当でない（正解）</b>　担任の先生を対象にするとデータが「高校生」ではなく「教師」のものになり、仮説の対象となる「高校生」とは異なるデータが収集される。<br><br>
+・⓪ 適当：前提知識の影響を調べることで見積点と達成点の関係をより詳しく分析できる。<br>
+・② 適当：部員以外の高校生を対象にすることで、今回の結果の信頼性・一般化可能性を検討できる。<br>
+・③ 適当：異なる課題でも同様の傾向が見られるかを確認でき、仮説の妥当性を検討できる。`,
+      options:[
+        {label:"⓪ 適当",ok:true,text:"前提知識を加えることで分析が深まる。"},
+        {label:"① 不適当（正解）",ok:false,text:"担任の先生は「高校生」ではないため、仮説の対象と異なるデータとなる。"},
+        {label:"② 適当",ok:true,text:"他の高校生での検証により一般化可能性を判断できる。"},
+        {label:"③ 適当",ok:true,text:"異なる課題での再収集により仮説の妥当性をさらに検討できる。"}
+      ]
+    }
+  }
+
+];
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+let selected = null;
+let answered = false;
+
+function renderQuestion() {
+  const q = questions[current];
+  answered = false; selected = null;
+  const total = questions.length;
+  document.getElementById('prog-label').textContent = `${current + 1} / ${total}`;
+  document.getElementById('prog-fill').style.width = `${((current + 1) / total) * 100}%`;
+
+  // 複数正解問題の場合のラベル
+  const multi = q.correctMulti ? true : false;
+
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-badge">${q.section}</span>
+        <span class="q-point">${q.points}点${multi ? '（2つ選択）' : ''}</span>
+      </div>
+      <div class="q-body">
+        <div>${q.stem}</div>
+        <div class="sub-q">
+          <div class="sub-q-label">問：${q.question}</div>
+          <div class="choices" id="choices">
+            ${q.choices.map((c, i) => `
+              <button class="choice-btn" data-i="${i}" onclick="selectChoice(${i})">
+                <span class="ci">${SYMBOLS[i]}</span>
+                <span>${c}</span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="btn-primary" id="submit-btn" onclick="submitAnswer()" disabled>回答する</button>
+      </div>
+      <div class="result-banner" id="result-banner">
+        <span class="icon" id="result-icon"></span>
+        <span id="result-text"></span>
+        <button class="explanation-link" onclick="openModal(${current})">解説を見る</button>
+      </div>
+    </div>
+    <div class="action-row" id="next-row" style="display:none">
+      ${current < questions.length - 1
+        ? `<button class="btn-primary" onclick="nextQuestion()">次の問題へ →</button>`
+        : `<button class="btn-primary" onclick="showResult()">結果を見る</button>`}
+    </div>`;
+}
+
+function selectChoice(i) {
+  if (answered) return;
+  selected = i;
+  document.querySelectorAll('.choice-btn').forEach((b, idx) => b.classList.toggle('selected', idx === i));
+  document.getElementById('submit-btn').disabled = false;
+}
+
+function submitAnswer() {
+  if (selected === null || answered) return;
+  answered = true; answers[current] = selected;
+  const q = questions[current];
+
+  // 正誤判定
+  let isCorrect;
+  if (q.correctMulti) {
+    isCorrect = q.correctMulti.includes(selected);
+  } else {
+    isCorrect = selected === q.correct;
+  }
+
+  document.getElementById('submit-btn').disabled = true;
+  document.querySelectorAll('.choice-btn').forEach((b, idx) => {
+    b.disabled = true; b.classList.remove('selected');
+    const isRightAnswer = q.correctMulti ? q.correctMulti.includes(idx) : idx === q.correct;
+    if (isRightAnswer) b.classList.add('correct');
+    else if (idx === selected && !isCorrect) b.classList.add('wrong');
+  });
+
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('show');
+  if (isCorrect) {
+    banner.classList.add('correct');
+    document.getElementById('result-icon').textContent = '✓';
+    document.getElementById('result-text').textContent = '正解！';
+    document.querySelector('.explanation-link').style.opacity = '0.5';
+  } else {
+    banner.classList.add('wrong');
+    document.getElementById('result-icon').textContent = '✗';
+    if (q.correctMulti) {
+      document.getElementById('result-text').textContent = `不正解。正解は${q.correctMulti.map(i=>SYMBOLS[i]).join('と')}のどちらか`;
+    } else {
+      document.getElementById('result-text').textContent = `不正解。正解は${SYMBOLS[q.correct]}`;
+    }
+  }
+  document.getElementById('next-row').style.display = 'flex';
+}
+
+function nextQuestion() { current++; if (current < questions.length) renderQuestion(); else showResult(); }
+
+function showResult() {
+  let correct = 0, points = 0, maxPoints = 0;
+  questions.forEach((q, i) => {
+    maxPoints += q.points;
+    const ok = q.correctMulti ? q.correctMulti.includes(answers[i]) : answers[i] === q.correct;
+    if (ok) { correct++; points += q.points; }
+  });
+  document.getElementById('prog-label').textContent = '終了';
+  document.getElementById('prog-fill').style.width = '100%';
+  const rows = questions.map((q, i) => {
+    const ok = q.correctMulti ? q.correctMulti.includes(answers[i]) : answers[i] === q.correct;
+    const correctLabel = q.correctMulti ? q.correctMulti.map(x=>SYMBOLS[x]).join('/') : SYMBOLS[q.correct];
+    return `<tr><td>${q.section}</td><td>${answers[i] !== null ? SYMBOLS[answers[i]] : '未回答'}</td><td>${correctLabel}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?q.points:0}/${q.points}</td></tr>`;
+  }).join('');
+  document.getElementById('quiz-area').innerHTML = `
+    <div style="background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 24px;text-align:center">
+      <h2 style="font-size:1.4rem;color:var(--primary);margin-bottom:6px">第4問 終了！</h2>
+      <div style="margin:16px 0">
+        <div class="score-big">${correct}<span class="score-denom"> / ${questions.length}問</span></div>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxPoints}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:24px"><button class="btn-secondary" onclick="restartQuiz()">もう一度挑戦する</button></div>
+    </div>`;
+}
+
+function restartQuiz() { current = 0; answers = new Array(questions.length).fill(null); selected = null; answered = false; renderQuestion(); }
+
+function openModal(idx) {
+  const q = questions[idx]; const exp = q.explanation;
+  const opts = exp.options.map(o => `<div class="option-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('');
+  document.getElementById('modal-title').textContent = `${q.section} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:12px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+renderQuestion();
+</script>
+</body>
+</html>

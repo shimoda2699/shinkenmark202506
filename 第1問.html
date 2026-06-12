@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2025年6月｜第1問</title>
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --primary: #1a56a0;
+    --primary-light: #e8f0fb;
+    --accent: #e85d26;
+    --correct: #1a7a4a;
+    --correct-bg: #e6f4ec;
+    --wrong: #b91c1c;
+    --wrong-bg: #fde8e8;
+    --text: #1e2a3a;
+    --muted: #5a6a7e;
+    --border: #d0dae6;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(26,86,160,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── ヘッダー ── */
+  header {
+    background: var(--primary);
+    color: #fff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  header h1 { font-size: 1rem; font-weight: 700; letter-spacing: .03em; }
+  .progress-wrap { display: flex; align-items: center; gap: 10px; }
+  .progress-label { font-size: .8rem; opacity: .85; white-space: nowrap; }
+  .progress-bar {
+    width: 120px; height: 6px;
+    background: rgba(255,255,255,.3);
+    border-radius: 3px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; background: #7ec8f7;
+    border-radius: 3px;
+    transition: width .4s ease;
+  }
+
+  /* ── メイン ── */
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 80px; }
+
+  /* ── 問題カード ── */
+  .q-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px 22px 20px;
+    margin-bottom: 16px;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 14px;
+  }
+  .q-badge {
+    background: var(--primary); color: #fff;
+    font-size: .72rem; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    letter-spacing: .04em;
+  }
+  .q-point {
+    font-size: .72rem; color: var(--muted);
+  }
+  .q-body { font-size: .95rem; line-height: 1.8; }
+  .q-body p { margin-bottom: .6em; }
+  .q-body .lead { font-weight: 600; margin-bottom: 10px; }
+  .q-body table {
+    border-collapse: collapse; width: 100%;
+    margin: 10px 0; font-size: .88rem;
+  }
+  .q-body table th, .q-body table td {
+    border: 1px solid var(--border);
+    padding: 6px 8px; text-align: left;
+  }
+  .q-body table th { background: var(--primary-light); font-weight: 700; }
+  .figure-box {
+    background: var(--primary-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px; margin: 10px 0;
+    font-size: .88rem; line-height: 1.7;
+  }
+  .sub-q { margin-top: 18px; }
+  .sub-q-label {
+    font-weight: 700; font-size: .85rem;
+    color: var(--primary); margin-bottom: 8px;
+  }
+
+  /* ── 選択肢 ── */
+  .choices { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .choice-btn {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--bg); border: 2px solid var(--border);
+    border-radius: 8px; padding: 10px 14px;
+    cursor: pointer; text-align: left;
+    font-size: .88rem; line-height: 1.5;
+    transition: border-color .15s, background .15s;
+  }
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--primary); background: var(--primary-light);
+  }
+  .choice-btn .ci {
+    font-weight: 700; color: var(--primary);
+    min-width: 22px; margin-top: 1px;
+    font-size: .85rem;
+  }
+  .choice-btn.selected { border-color: var(--primary); background: var(--primary-light); }
+  .choice-btn.correct  { border-color: var(--correct); background: var(--correct-bg); }
+  .choice-btn.wrong    { border-color: var(--wrong);   background: var(--wrong-bg); }
+  .choice-btn:disabled { cursor: default; }
+
+  /* ── 回答ボタン ── */
+  .action-row {
+    margin-top: 16px; display: flex;
+    gap: 10px; justify-content: flex-end;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 10px 24px; font-size: .9rem;
+    font-weight: 700; cursor: pointer;
+    transition: background .15s;
+  }
+  .btn-primary:hover { background: #154080; }
+  .btn-primary:disabled { background: #aaa; cursor: default; }
+  .btn-secondary {
+    background: #fff; color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 8px; padding: 10px 20px;
+    font-size: .9rem; font-weight: 700;
+    cursor: pointer; transition: background .15s;
+  }
+  .btn-secondary:hover { background: var(--primary-light); }
+
+  /* ── 結果バナー ── */
+  .result-banner {
+    display: none; border-radius: 8px;
+    padding: 12px 16px; margin-top: 14px;
+    font-size: .9rem; font-weight: 600;
+    align-items: center; gap: 10px;
+  }
+  .result-banner.show { display: flex; }
+  .result-banner.correct { background: var(--correct-bg); color: var(--correct); }
+  .result-banner.wrong   { background: var(--wrong-bg);   color: var(--wrong); }
+  .result-banner .icon { font-size: 1.3rem; }
+  .explanation-link {
+    display: inline-block; margin-left: auto;
+    font-size: .82rem; font-weight: 600;
+    color: var(--primary); text-decoration: none;
+    border: 1.5px solid var(--primary);
+    padding: 4px 12px; border-radius: 20px;
+    cursor: pointer; background: #fff;
+    transition: background .15s;
+  }
+  .explanation-link:hover { background: var(--primary-light); }
+
+  /* ── モーダル（解説） ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(10,20,40,.5);
+    z-index: 200; align-items: center;
+    justify-content: center; padding: 16px;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #fff; border-radius: 12px;
+    max-width: 680px; width: 100%;
+    max-height: 85vh; overflow-y: auto;
+    padding: 24px 22px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.2);
+  }
+  .modal-header {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .modal-title {
+    font-size: 1rem; font-weight: 700;
+    color: var(--primary);
+  }
+  .modal-close {
+    background: none; border: none;
+    font-size: 1.4rem; cursor: pointer;
+    color: var(--muted); padding: 4px 8px;
+    border-radius: 6px; line-height: 1;
+  }
+  .modal-close:hover { background: var(--bg); }
+  .modal-body { font-size: .9rem; line-height: 1.85; }
+  .modal-body .correct-answer {
+    background: var(--correct-bg);
+    border-left: 4px solid var(--correct);
+    padding: 8px 12px; border-radius: 4px;
+    margin-bottom: 12px; font-weight: 700;
+    color: var(--correct);
+  }
+  .modal-body p { margin-bottom: .7em; }
+  .modal-body .option-exp {
+    margin: 6px 0 6px 0;
+    padding: 6px 10px;
+    background: var(--bg); border-radius: 6px;
+    font-size: .87rem;
+  }
+  .modal-body .option-exp.ok { border-left: 3px solid var(--correct); }
+  .modal-body .option-exp.ng { border-left: 3px solid var(--wrong); }
+  .label-ok { color: var(--correct); font-weight: 700; }
+  .label-ng { color: var(--wrong);   font-weight: 700; }
+
+  /* ── 結果画面 ── */
+  #result-screen {
+    display: none;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px 24px;
+    text-align: center;
+  }
+  #result-screen h2 { font-size: 1.4rem; color: var(--primary); margin-bottom: 6px; }
+  .score-big { font-size: 3rem; font-weight: 800; color: var(--primary); }
+  .score-denom { font-size: 1.2rem; color: var(--muted); }
+  .result-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: .88rem; }
+  .result-table th, .result-table td {
+    border: 1px solid var(--border); padding: 7px 10px; text-align: center;
+  }
+  .result-table th { background: var(--primary-light); font-weight: 700; }
+  .result-table td.ok { color: var(--correct); font-weight: 700; }
+  .result-table td.ng { color: var(--wrong);   font-weight: 700; }
+  .retry-btn { margin-top: 24px; }
+
+  @media (max-width: 540px) {
+    .q-card { padding: 18px 14px; }
+    .choice-btn { font-size: .84rem; padding: 9px 12px; }
+    .progress-bar { width: 80px; }
+    .score-big { font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年6月 ｜ 第1問</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">1 / 11</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:9%"></div></div>
+  </div>
+</header>
+
+<main id="quiz-area"></main>
+
+<!-- 解説モーダル -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// =============================================
+// 問題データ  第1問（配点20点・小問11問）
+// =============================================
+const questions = [
+
+  // 問1a ア
+  {
+    id: "1a",
+    section: "問1 a",
+    points: 1,
+    stem: `次の文章を読んで答えよ。<br><br>
+「メディア」という言葉には情報を媒介するものという意味があり、文脈によってその役割や性質が異なってくる。例えば、新聞やテレビなどはマスメディアとよばれることがあり、<b>ア</b> という特徴がある。`,
+    question: `空欄【ア】に入れるのに最も適当なものを選べ。`,
+    choices: [
+      "情報の送り手と受け手が一対一の関係であり、おもに双方向の情報伝達を行う",
+      "情報の送り手と受け手が一対一の関係であり、おもに一方向の情報伝達を行う",
+      "情報の送り手と受け手が一対多の関係であり、おもに双方向の情報伝達を行う",
+      "情報の送り手と受け手が一対多の関係であり、おもに一方向の情報伝達を行う"
+    ],
+    correct: 3,
+    explanation: {
+      answer: "③　情報の送り手と受け手が一対多の関係であり、おもに一方向の情報伝達を行う",
+      text: `マスメディア（新聞・テレビなど）の特徴は「一対多」の関係です。新聞社やテレビ局（送り手）が多数の読者・視聴者（受け手）に情報を届けます。また、受け手から新聞社やテレビ局に双方向に情報を発信することは通常少ないため、「一方向」の情報伝達が主体です。よって正解は③。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "一対一かつ双方向はソーシャルメディアや電話などに近い。" },
+        { label: "① 誤り", ok: false, text: "一対一はマスメディアの特徴ではない。" },
+        { label: "② 誤り", ok: false, text: "一対多は正しいが、マスメディアは双方向ではなく一方向が主体。" },
+        { label: "③ 正しい", ok: true, text: "一対多・一方向がマスメディアの特徴。" }
+      ]
+    }
+  },
+
+  // 問1b イ
+  {
+    id: "1b",
+    section: "問1 b",
+    points: 2,
+    stem: `メディアの役割の分類（表1）において、<b>表現のためのメディア</b>（下線部A）の説明として最も適当なものを選べ。<br><br>
+<table><tr><th>表現のためのメディア</th><th>伝達のためのメディア</th><th>記録のためのメディア</th></tr>
+<tr><td>文字、記号、静止画、動画、音声など</td><td>空気、光、電波、電気など</td><td>USBメモリ、CD-ROM、HDD、SSDなど</td></tr></table>`,
+    question: `表1の下線部Aについての説明として最も適当なものを選べ。`,
+    choices: [
+      "電圧の変化や物質の振動など、情報を伝えるための物理現象そのもの",
+      "情報を保存するためのもの",
+      "情報を視覚・聴覚などの五感で知覚できるかたちにしたもの",
+      "多くの人に情報を広く伝えることができるもの"
+    ],
+    correct: 2,
+    explanation: {
+      answer: "②　情報を視覚・聴覚などの五感で知覚できるかたちにしたもの",
+      text: `「表現のためのメディア」（文字・記号・静止画・動画・音声）は、情報を人間の五感（視覚・聴覚など）で知覚できる形にしたものです。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "電圧の変化や物質の振動などの物理現象は「伝達のためのメディア」（空気・光・電波など）の説明。" },
+        { label: "① 誤り", ok: false, text: "情報を保存するためのものは「記録のためのメディア」（USBメモリ・HDD等）の説明。" },
+        { label: "② 正しい", ok: true, text: "文字や動画・音声などは五感で知覚できる形の表現であり、正しい説明。" },
+        { label: "③ 誤り", ok: false, text: "多くの人に広く伝えるのはマスメディアの特徴であり、表現のためのメディア全体の説明ではない。" }
+      ]
+    }
+  },
+
+  // 問1c ウ
+  {
+    id: "1c",
+    section: "問1 c",
+    points: 1,
+    stem: `メディアに保存された<b>データの管理方法</b>（下線部B）について、適当でないものを選べ。`,
+    question: `下線部Bに関しての説明として適当でないものを選べ。`,
+    choices: [
+      "機密性の高いデータをメディアに保存する際はパスワードによるアクセス制限をかけ、パスワードは忘れないように文字数が少ないものにしたほうがよい。",
+      "ファイルサイズの大きなデータは、メディアの記憶容量を節約するために圧縮をするとよい。",
+      "コンピュータに保存している重要なデータは、機器の故障などに備えて定期的に別のメディアにバックアップを取ることが望ましい。",
+      "ハードディスクは高速に回転する円盤に磁気記録をしているので、保存中や読み出し中は衝撃を与えないようにしたほうがよい。"
+    ],
+    correct: 0,
+    explanation: {
+      answer: "⓪　パスワードは文字数が少ないものにしたほうがよい（誤り）",
+      text: `パスワードは文字数が少ないほど不正アクセスされやすくなります。セキュリティの観点からパスワードは文字数を多くすべきです。「文字数が少ないものにしたほうがよい」という記述は誤りで、これが"適当でないもの"として正解となります。`,
+      options: [
+        { label: "⓪ 誤り（正解）", ok: false, text: "パスワードは短いほどリスクが高い。文字数は多くすべき。" },
+        { label: "① 正しい", ok: true, text: "大容量ファイルを圧縮して記憶容量を節約するのは適切な管理方法。" },
+        { label: "② 正しい", ok: true, text: "定期バックアップは機器故障リスクへの適切な対策。" },
+        { label: "③ 正しい", ok: true, text: "HDDは磁気記録円盤が高速回転しており、衝撃に弱いため注意が必要。" }
+      ]
+    }
+  },
+
+  // 問2a エ
+  {
+    id: "2a-e",
+    section: "問2 a（エ）",
+    points: 1,
+    stem: `台風が接近すると海面が上昇する。「吸い上げ効果」では気圧の変化量（hPa）に比例して海面が上昇し、気圧が1hPa低くなると海面がp cm上昇するとする。平常時の気圧を1010hPa、台風時の気圧をA hPaとする。`,
+    question: `「吸い上げ効果」による海面上昇を求める式として、p × <b>【エ】</b> となる。【エ】に入れるのに最も適当なものを選べ。`,
+    choices: [
+      "(1010 + A)",
+      "(1010 − A)",
+      "(1010 × A)",
+      "(1010 ÷ A)"
+    ],
+    correct: 1,
+    explanation: {
+      answer: "①　(1010 − A)",
+      text: `気圧がAのとき、平常時1010hPaとの差は「1010 − A」hPaです。気圧が1hPa低くなるごとにp cm上昇するので、海面上昇量は<br><b>p × (1010 − A)</b><br>となります。AはB以外では1010より小さい（台風により気圧が低下）ので、1010−Aが正の値となります。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "1010+Aは気圧の差ではなく和になってしまう。" },
+        { label: "① 正しい", ok: true, text: "平常気圧と台風時気圧の差（1010−A）がhPaの変化量。" },
+        { label: "② 誤り", ok: false, text: "積は気圧差を表さない。" },
+        { label: "③ 誤り", ok: false, text: "商は気圧差を表さない。" }
+      ]
+    }
+  },
+
+  // 問2a オ
+  {
+    id: "2a-o",
+    section: "問2 a（オ）",
+    points: 1,
+    stem: `「吹き寄せ効果」では風速（m/s）の2乗に比例して海面が上昇する。風速をW m/s、係数をq（q>0）、海岸線と風向きの影響係数をZとする。`,
+    question: `「吹き寄せ効果」による海面上昇を求める式は「q × <b>【オ】</b> × Z」となる。【オ】に入れるのに最も適当なものを選べ。`,
+    choices: [
+      "W",
+      "2W",
+      "√W",
+      "W²"
+    ],
+    correct: 3,
+    explanation: {
+      answer: "③　W²",
+      text: `「吹き寄せ効果」では風速（m/s）の2乗に比例して海面が上昇すると本文に明記されています。風速をW m/sとすると、その2乗はW²です。よって式は「q × W² × Z」となります。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "Wは風速の1乗であり2乗ではない。" },
+        { label: "① 誤り", ok: false, text: "2Wは風速の2倍であり2乗ではない。" },
+        { label: "② 誤り", ok: false, text: "√Wは風速の0.5乗であり2乗ではない。" },
+        { label: "③ 正しい", ok: true, text: "W²（風速の2乗）が正しい。" }
+      ]
+    }
+  },
+
+  // 問2b カ
+  {
+    id: "2b",
+    section: "問2 b",
+    points: 2,
+    stem: `図2は昨年の台風時の地点Xにおける実際の潮位偏差の推移である。図3は数式モデル（p × (1010−A) + q × W² × Z）でのp・qの値を変えたシミュレーション結果（①〜③）を示す。<br><br>
+<div class="figure-box">
+図2：最初の約16時間は潮位偏差20〜30cm付近で推移、その後約30時間で上昇・下降を繰り返しピーク（40〜50cm）に到達、さらにその後は30〜40cm付近で下降・上昇を繰り返す。<br><br>
+図3 ⓪ p=1.0, q=0.5：0〜120cmで激しく上下するグラフ<br>
+図3 ① p=1.5, q=0.05：20〜45cm程度で実際の推移に近い形状<br>
+図3 ② p=2.5, q=0.01：40〜55cm程度でやや高めだが形状が近い<br>
+図3 ③ p=0.5, q=0.005：値が極めて低くほぼ平坦
+</div>`,
+    question: `空欄【カ】（実際の潮位偏差の推移に最も近い係数の組合せ）に入れるのに最も適当なものを選べ。`,
+    choices: [
+      "⓪ p=1.0, q=0.5",
+      "① p=1.5, q=0.05",
+      "② p=2.5, q=0.01",
+      "③ p=0.5, q=0.005"
+    ],
+    correct: 1,
+    explanation: {
+      answer: "①　p=1.5, q=0.05",
+      text: `図2の実際の潮位偏差は最初の16時間程度が20〜30cm付近、その後おおむね30〜50cmの範囲で上昇・下降を繰り返す形状です。<br><br>
+・⓪（p=1.0, q=0.5）は値が0〜120cmと大きく変動しすぎ。<br>
+・<b>①（p=1.5, q=0.05）</b>は20〜45cm程度で図2の形状・値に最も近い。<br>
+・②（p=2.5, q=0.01）は全体的に高めで形状も少し異なる。<br>
+・③（p=0.5, q=0.005）は値が極めて低くほぼ平坦で実態と大きく乖離。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "値の変動幅が大きすぎて実データと合わない。" },
+        { label: "① 正しい", ok: true, text: "形状・値ともに実際の潮位偏差の推移に最も近い。" },
+        { label: "② 誤り", ok: false, text: "全体的な値が高めで実データとずれている。" },
+        { label: "③ 誤り", ok: false, text: "値が低すぎて実データとかけ離れている。" }
+      ]
+    }
+  },
+
+  // 問2c キ
+  {
+    id: "2c",
+    section: "問2 c",
+    points: 2,
+    stem: `モデルの精度をさらに高めるために、「吸い上げ効果」と「吹き寄せ効果」のほかに影響を与えている要素がないか検討する。`,
+    question: `その方法として最も適当なものを選べ。`,
+    choices: [
+      "地点Xの、今回データを収集した日における、風速や気圧以外のデータを収集して、潮位偏差を予測できる要素がないかを調べる。",
+      "地点Xと異なる地点での、今回データを収集した日における、風速や気圧以外のデータを収集して、潮位偏差を予測できる要素がないかを調べる。",
+      "地点Xの、昨年の台風が来ていない平常時における、今回と同様のデータを収集して、モデルの式にそれらを当てはめ、実際の潮位偏差との差を調べる。",
+      "地点Xと異なる地点での、昨年の台風が来ていない平常時における、今回と同様のデータを収集して、モデルの式にそれらを当てはめ、実際の潮位偏差との差を調べる。"
+    ],
+    correct: 0,
+    explanation: {
+      answer: "⓪　地点Xの・同じ台風時・気圧や風速以外のデータを収集する",
+      text: `台風時の地点Xでの潮位偏差を精度よく予測するモデルの精度を高めるには、<b>同じ場所・同じ天候条件（台風時）</b>のもとで、今回の風速・気圧以外のデータをさらに集めることが適切です。これにより、ほかに潮位偏差に関係する要素がないか探せます。<br><br>
+・①は場所が異なるため、地点ごとの地形差などが混入し適切でない。<br>
+・②③は台風が来ていない平常時のデータであり、台風時の影響因子を探す目的に合わない。`,
+      options: [
+        { label: "⓪ 正しい", ok: true, text: "地点X・台風時・気圧風速以外のデータを収集するのが最適。" },
+        { label: "① 誤り", ok: false, text: "場所が異なると地形などの条件が変わるため不適切。" },
+        { label: "② 誤り", ok: false, text: "平常時のデータでは台風の影響因子を特定できない。" },
+        { label: "③ 誤り", ok: false, text: "場所も天候条件も異なるため最も不適切。" }
+      ]
+    }
+  },
+
+  // 問3a ク
+  {
+    id: "3a",
+    section: "問3 a",
+    points: 2,
+    stem: `インターネット上のIPアドレスには「プライベートIPアドレス」（企業などのLAN内で割り当て）と「グローバルIPアドレス」（全世界で通信するために割り当て）の2種類がある。`,
+    question: `インターネット上のIPアドレスについての記述として最も適当なものを選べ。`,
+    choices: [
+      "インターネット上で利用するIPアドレスをプライベートIPアドレスといい、同じIPアドレスが存在してもよい。",
+      "インターネット上で利用するIPアドレスをプライベートIPアドレスといい、同じIPアドレスが存在してはいけない。",
+      "インターネット上で利用するIPアドレスをグローバルIPアドレスといい、同じIPアドレスが存在してもよい。",
+      "インターネット上で利用するIPアドレスをグローバルIPアドレスといい、同じIPアドレスが存在してはいけない。"
+    ],
+    correct: 3,
+    explanation: {
+      answer: "③　グローバルIPアドレスといい、同じIPアドレスが存在してはいけない",
+      text: `インターネット上で使用されるIPアドレスは<b>グローバルIPアドレス</b>です。インターネットサービスプロバイダ（ISP）から割り当てられ、世界中で重複なく一意でなければなりません。プライベートIPアドレスは組織内のLANで使用されるものです。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "インターネット上はグローバルIPアドレスを使用する。プライベートではない。" },
+        { label: "① 誤り", ok: false, text: "同上。プライベートIPアドレスはLAN内で使用。" },
+        { label: "② 誤り", ok: false, text: "グローバルIPアドレスは正しいが、「存在してもよい」は誤り。一意でなければならない。" },
+        { label: "③ 正しい", ok: true, text: "グローバルIPアドレスはインターネット上で一意である必要がある。" }
+      ]
+    }
+  },
+
+  // 問3b ケ
+  {
+    id: "3b",
+    section: "問3 b",
+    points: 2,
+    stem: `DNSはTCPとUDPの両方で通信を行うことができる。TCPでは正確性を重視し、UDPでは簡単な手順で通信を行う。`,
+    question: `DNSで使用するUDPについての説明として最も適当なものを選べ。`,
+    choices: [
+      "UDPは通信の信頼性よりも応答の速さを重視しており、正しいIPアドレスを通知することを優先する。",
+      "UDPは通信の信頼性よりも応答の速さを重視しており、接続までの待ち時間を少なくすることを狙っている。",
+      "UDPは応答の速さよりも通信の信頼性を重視しており、正しいIPアドレスを通知することを優先する。",
+      "UDPは応答の速さよりも通信の信頼性を重視しており、接続までの待ち時間を少なくすることを狙っている。"
+    ],
+    correct: 1,
+    explanation: {
+      answer: "①　応答の速さを重視し、接続までの待ち時間を少なくすることを狙っている",
+      text: `UDPはデータの送受信確認（チェック）をしないため、TCPより簡単な手順で通信ができます。これにより<b>応答速度が速く、接続までの待ち時間を少なく</b>できます。正しいIPアドレスの通知を「優先する」という性質はUDPの特徴ではありません。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "「正しいIPアドレスを通知することを優先」はUDPの特徴ではない。" },
+        { label: "① 正しい", ok: true, text: "応答速度重視・待ち時間削減がUDPの特徴。" },
+        { label: "② 誤り", ok: false, text: "UDPは信頼性よりも速さを重視する。信頼性重視はTCP。" },
+        { label: "③ 誤り", ok: false, text: "UDPは信頼性重視ではない。" }
+      ]
+    }
+  },
+
+  // 問3c コ
+  {
+    id: "3c",
+    section: "問3 c",
+    points: 2,
+    stem: `インターネットにおいて、IPアドレスだけで通信をせずドメイン名やDNSを使用する利点を考える。`,
+    question: `その利点として最も適当なものを選べ。`,
+    choices: [
+      "人間はドメイン名を覚えることは難しいが、IPアドレスであれば簡単に覚えることができる。",
+      "ドメイン名から、接続するサーバを設置している組織の区分や国などを把握しやすい。",
+      "インターネットの通信経路に障害が発生した場合でも、パケットの迂回路をDNSサーバが示してくれるので、途切れずに通信ができる。",
+      "DNSを利用することでIPアドレスの枯渇が解消されたため、IoT機器やスマートフォンなどにIPアドレスを活用することができる。"
+    ],
+    correct: 1,
+    explanation: {
+      answer: "①　ドメイン名から組織の区分や国などを把握しやすい",
+      text: `ドメイン名（例：mext.go.jp）には「.jp」（日本）「.go」（政府機関）といった情報が含まれており、接続先のサーバの組織区分や国を把握しやすいという利点があります。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "IPアドレスは桁数の多い数字で覚えにくい。ドメイン名の方が人間には覚えやすい。" },
+        { label: "① 正しい", ok: true, text: "ドメイン名から組織種別・国などが読み取れる。" },
+        { label: "② 誤り", ok: false, text: "DNSはドメイン名とIPアドレスの変換を行うもの。迂回路を提供するのはルータの役割。" },
+        { label: "③ 誤り", ok: false, text: "IPアドレスの枯渇対策はIPv6の導入であり、DNSとは直接関係がない。" }
+      ]
+    }
+  },
+
+  // 問4a サ
+  {
+    id: "4a",
+    section: "問4 a",
+    points: 2,
+    stem: `バレーボール部の合宿日程アンケートWebフォームには次のUI部品がある。<br>
+Ⅰ 学年・組・番号・氏名（テキストボックス）<br>
+Ⅱ 合宿参加の可否（ラジオボタン：はい参加します／いいえ参加しません）<br>
+Ⅲ 参加できる日程（チェックボックス：5日間×4時間帯のマトリクス）※ Ⅱで「いいえ」の場合は表示されない<br>
+Ⅳ 質問（テキストボックス）<br><br>
+送信ボタンを押したときに、エラーと判定されると元のアンケート画面に強制的に戻すルールを設定する。`,
+    question: `設定する必要がないと考えられるものを選べ。`,
+    choices: [
+      "Ⅰのテキストボックス：未記入であってはならない。",
+      "Ⅱのラジオボタン：どちらかを必ず選択しなければならない。",
+      "Ⅲのチェックボックス：Ⅱで「はい、参加します」を選んだ場合、列方向（日付）において、縦1列のチェック数はすべての列で1個以上なければならない。",
+      "Ⅲのチェックボックス：Ⅱで「はい、参加します」を選んだ場合、行方向（時間帯）において、横1行のチェック数はすべての行で1個以上なければならない。"
+    ],
+    correct: 3,
+    explanation: {
+      answer: "③　行方向（時間帯）においてすべての行で1個以上のチェックは不要",
+      text: `Ⅲのチェックボックスは「現時点で参加できる日程をすべてチェック」するものです。<br><br>
+・<b>⓪ 必要</b>：氏名がないと回答者を特定できない。<br>
+・<b>① 必要</b>：ⅡがどちらでもないとⅢを表示するかどうかが判断できない。<br>
+・<b>② 必要</b>：「はい」を選択した場合、どの日付にも参加できない人はいないはずなので、列（日付）方向に各候補日に1個以上のチェックが必要→エラーで戻す意味がある。<br>
+・<b>③ 不要（正解）</b>：行（時間帯）方向は、例えばすべての候補日の午前が参加不可という人もいうる。すべての時間帯行にチェックを要求する必要はなく、このルールは設定する必要がない。`,
+      options: [
+        { label: "⓪ 必要・正しい", ok: true, text: "氏名未記入では回答者を特定できないためエラーにすべき。" },
+        { label: "① 必要・正しい", ok: true, text: "ⅡはⅢの表示判定に使われるため必須。" },
+        { label: "② 必要・正しい", ok: true, text: "「はい」選択時に列方向で1個以上のチェックは意図あり。" },
+        { label: "③ 不要（正解）", ok: false, text: "すべての時間帯に参加できるとは限らないため、行方向の制約は不要。" }
+      ]
+    }
+  },
+
+  // 問4b シ
+  {
+    id: "4b",
+    section: "問4 b",
+    points: 2,
+    stem: `このWebフォームでは、送信ボタンが押される前に他のWebサイトへ移動しようとすると「回答内容が保存されていません。移動すると内容が破棄されてしまいますがよろしいですか？」というメッセージとともに、<b>左ボタン（ボタンA）</b>と<b>右ボタン（ボタンB）</b>が表示される。<br>
+ボタンAは「元のアンケート画面に戻るためのボタン」、ボタンBは「回答途中のアンケートを送信せずに他のWebサイトへ移動する右ボタン」。`,
+    question: `ボタンAとボタンBに表示されるべき説明の組合せとして最も適当なものを選べ。`,
+    choices: [
+      "ボタンA：回答を保存する　　ボタンB：回答を保存しない",
+      "ボタンA：回答を保存する　　ボタンB：移動する",
+      "ボタンA：アンケートに戻る　ボタンB：移動する",
+      "ボタンA：アンケートに戻る　ボタンB：内容を送信する"
+    ],
+    correct: 2,
+    explanation: {
+      answer: "②　ボタンA：アンケートに戻る　ボタンB：移動する",
+      text: `ボタンAは「元のアンケート画面に戻る」ためのボタンなので「アンケートに戻る」が適切です。ボタンBは「回答途中のアンケートを送信せずに他のWebサイトへ移動する」ためのボタンなので「移動する」が適切です。<br><br>
+「回答を保存する」は一時保存機能（右下「回答を保存」ボタン）の説明であり、このダイアログのボタンには不適切。「内容を送信する」はダイアログの趣旨（移動確認）と異なる。`,
+      options: [
+        { label: "⓪ 誤り", ok: false, text: "「回答を保存する/しない」はダイアログの目的（移動確認）と合わない。" },
+        { label: "① 誤り", ok: false, text: "ボタンAの「回答を保存する」は一時保存機能の説明であり不適切。" },
+        { label: "② 正しい", ok: true, text: "アンケートに戻る（左A）と移動する（右B）が正確に機能を表している。" },
+        { label: "③ 誤り", ok: false, text: "「内容を送信する」は送信ボタンの説明であり、移動確認ダイアログのBボタンには不適切。" }
+      ]
+    }
+  }
+
+];
+
+// =============================================
+// アプリ状態
+// =============================================
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+let selected = null;
+let answered = false;
+
+function renderQuestion() {
+  const q = questions[current];
+  answered = false;
+  selected = null;
+
+  const total = questions.length;
+  document.getElementById('prog-label').textContent = `${current + 1} / ${total}`;
+  document.getElementById('prog-fill').style.width = `${((current + 1) / total) * 100}%`;
+
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = `
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-badge">${q.section}</span>
+        <span class="q-point">${q.points}点</span>
+      </div>
+      <div class="q-body">
+        ${q.stem ? `<p>${q.stem}</p>` : ''}
+        <div class="sub-q">
+          <div class="sub-q-label">問：${q.question}</div>
+          <div class="choices" id="choices">
+            ${q.choices.map((c, i) => `
+              <button class="choice-btn" data-i="${i}" onclick="selectChoice(${i})">
+                <span class="ci">${['⓪','①','②','③','④','⑤'][i]}</span>
+                <span>${c}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="btn-primary" id="submit-btn" onclick="submitAnswer()" disabled>回答する</button>
+      </div>
+      <div class="result-banner" id="result-banner">
+        <span class="icon" id="result-icon"></span>
+        <span id="result-text"></span>
+        <button class="explanation-link" onclick="openModal(${current})">解説を見る</button>
+      </div>
+    </div>
+    <div class="action-row" id="next-row" style="display:none">
+      ${current < questions.length - 1
+        ? `<button class="btn-primary" onclick="nextQuestion()">次の問題へ →</button>`
+        : `<button class="btn-primary" onclick="showResult()">結果を見る</button>`}
+    </div>
+  `;
+}
+
+function selectChoice(i) {
+  if (answered) return;
+  selected = i;
+  document.querySelectorAll('.choice-btn').forEach((btn, idx) => {
+    btn.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('submit-btn').disabled = false;
+}
+
+function submitAnswer() {
+  if (selected === null || answered) return;
+  answered = true;
+  answers[current] = selected;
+  const q = questions[current];
+  const isCorrect = selected === q.correct;
+
+  document.getElementById('submit-btn').disabled = true;
+
+  document.querySelectorAll('.choice-btn').forEach((btn, idx) => {
+    btn.disabled = true;
+    btn.classList.remove('selected');
+    if (idx === q.correct) btn.classList.add('correct');
+    else if (idx === selected && !isCorrect) btn.classList.add('wrong');
+  });
+
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('show');
+  if (isCorrect) {
+    banner.classList.add('correct');
+    document.getElementById('result-icon').textContent = '✓';
+    document.getElementById('result-text').textContent = '正解！';
+  } else {
+    banner.classList.add('wrong');
+    document.getElementById('result-icon').textContent = '✗';
+    document.getElementById('result-text').textContent = `不正解。正解は${['⓪','①','②','③','④','⑤'][q.correct]}`;
+  }
+
+  document.getElementById('next-row').style.display = 'flex';
+  // 正解なら解説ボタンを薄く（不要なら非表示も可）
+  if (isCorrect) {
+    document.querySelector('.explanation-link').style.opacity = '0.5';
+  }
+}
+
+function nextQuestion() {
+  current++;
+  if (current < questions.length) renderQuestion();
+  else showResult();
+}
+
+function showResult() {
+  const total = questions.length;
+  let correct = 0;
+  let points = 0;
+  let maxPoints = 0;
+  questions.forEach((q, i) => {
+    maxPoints += q.points;
+    if (answers[i] === q.correct) { correct++; points += q.points; }
+  });
+
+  const area = document.getElementById('quiz-area');
+  document.getElementById('prog-label').textContent = `終了`;
+  document.getElementById('prog-fill').style.width = '100%';
+
+  let rows = questions.map((q, i) => {
+    const ok = answers[i] === q.correct;
+    return `<tr>
+      <td>${q.section}</td>
+      <td>${answers[i] !== null ? ['⓪','①','②','③','④','⑤'][answers[i]] : '未回答'}</td>
+      <td>${['⓪','①','②','③','④','⑤'][q.correct]}</td>
+      <td class="${ok ? 'ok' : 'ng'}">${ok ? '○' : '✗'}</td>
+      <td>${ok ? q.points : 0} / ${q.points}</td>
+    </tr>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div id="result-screen" style="display:block">
+      <h2>第1問 終了！</h2>
+      <div style="margin:16px 0">
+        <div class="score-big">${correct}<span class="score-denom"> / ${total}問</span></div>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxPoints}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>
+        ${rows}
+      </table>
+      <div class="retry-btn">
+        <button class="btn-secondary" onclick="restartQuiz()">もう一度挑戦する</button>
+      </div>
+    </div>
+  `;
+}
+
+function restartQuiz() {
+  current = 0;
+  answers = new Array(questions.length).fill(null);
+  selected = null;
+  answered = false;
+  renderQuestion();
+}
+
+// ── モーダル ──
+function openModal(idx) {
+  const q = questions[idx];
+  const exp = q.explanation;
+  const opts = exp.options.map(o => `
+    <div class="option-exp ${o.ok ? 'ok' : 'ng'}">
+      <span class="${o.ok ? 'label-ok' : 'label-ng'}">${o.label}</span>　${o.text}
+    </div>`).join('');
+
+  document.getElementById('modal-title').textContent = `${q.section} 解説`;
+  document.getElementById('modal-body').innerHTML = `
+    <div class="correct-answer">✓ 正解：${exp.answer}</div>
+    <p>${exp.text}</p>
+    <div style="margin-top:12px">${opts}</div>
+  `;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('show');
+}
+
+// 初期描画
+renderQuestion();
+</script>
+</body>
+</html>

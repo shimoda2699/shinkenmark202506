@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2025年6月｜第3問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#ffffff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:var(--primary);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:1rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.8rem;opacity:.85;white-space:nowrap;}
+  .progress-bar{width:120px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .4s ease;}
+  main{max-width:760px;margin:0 auto;padding:20px 16px 80px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 22px 20px;margin-bottom:16px;}
+  .q-meta{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-body{font-size:.9rem;line-height:1.8;}
+  .q-body p{margin-bottom:.6em;}
+  .code-box{background:#1e2a3a;color:#c8d8e8;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:.83rem;line-height:1.75;margin:10px 0;overflow-x:auto;white-space:pre;}
+  .code-box .blank{background:#f0a000;color:#1e2a3a;font-weight:700;padding:0 4px;border-radius:3px;}
+  .figure-box{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
+  .data-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.83rem;font-family:'Courier New',monospace;}
+  .data-table th,.data-table td{border:1px solid var(--border);padding:5px 8px;text-align:center;}
+  .data-table th{background:var(--primary-light);font-weight:700;}
+  .sub-q{margin-top:18px;}
+  .sub-q-label{font-weight:700;font-size:.85rem;color:var(--primary);margin-bottom:8px;}
+  .choices{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;text-align:left;font-size:.86rem;line-height:1.5;transition:border-color .15s,background .15s;font-family:'Courier New',monospace;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:22px;margin-top:1px;font-size:.85rem;font-family:inherit;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .action-row{margin-top:16px;display:flex;gap:10px;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .15s;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#aaa;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 20px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  .btn-secondary:hover{background:var(--primary-light);}
+  .result-banner{display:none;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:.9rem;font-weight:600;align-items:center;gap:10px;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .result-banner .icon{font-size:1.3rem;}
+  .explanation-link{display:inline-block;margin-left:auto;font-size:.82rem;font-weight:600;color:var(--primary);text-decoration:none;border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;transition:background .15s;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:24px 22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .modal-title{font-size:1rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:6px;line-height:1;}
+  .modal-close:hover{background:var(--bg);}
+  .modal-body{font-size:.9rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .modal-body .option-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.87rem;font-family:'Courier New',monospace;}
+  .modal-body .option-exp.ok{border-left:3px solid var(--correct);}
+  .modal-body .option-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:.88rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:7px 10px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:3rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.2rem;color:var(--muted);}
+  @media(max-width:540px){.q-card{padding:18px 14px;}.choice-btn{font-size:.8rem;}.progress-bar{width:80px;}.score-big{font-size:2.4rem;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年6月 ｜ 第3問</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">1 / 9</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:11%"></div></div>
+  </div>
+</header>
+
+<main id="quiz-area"></main>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const SYMBOLS = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+
+// 配列データ（共通コンテキスト）
+const ARRAY_TABLE = `
+<table class="data-table">
+<tr><th>添字</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th></tr>
+<tr><th>Touan</th><td>1</td><td>4</td><td>5</td><td>2</td><td>6</td><td>8</td><td>4</td><td>3</td><td>2</td><td>4</td><td>3</td><td>2</td><td>2</td><td>5</td></tr>
+<tr><th>Seikai</th><td>1</td><td>4</td><td>4</td><td>2</td><td>6</td><td>8</td><td>4</td><td>1</td><td>2</td><td>4</td><td>1</td><td>2</td><td>2</td><td>6</td></tr>
+<tr><th>Haiten</th><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td></tr>
+</table>`;
+
+const questions = [
+
+  // 問1 ア
+  {
+    id:"1-a", section:"第3問 問1（ア）", points:2,
+    stem:`資格試験の採点プログラムを考える。以下の配列データを使用する（添字は0から始まる）：<br>${ARRAY_TABLE}<br>
+Sさんが解答した答案データが配列 <b>Touan</b>、正解データが配列 <b>Seikai</b>、配点データが配列 <b>Haiten</b> に格納されている。添字 k のとき答案データは Touan[k]、正解データは Seikai[k]、配点データは Haiten[k]。<br><br>
+例：Touan[3]の値は「2」でSeikai[3]の値と一致しているので正解となり、Haiten[3]の10点が加わる。`,
+    question:`Touan[6]の値は【ア】で、得点に加わる点数は【イ】点。【ア】に当てはまるものを選べ。`,
+    choices:["2","3","4","8"],
+    correct:2,
+    explanation:{
+      answer:"②　4",
+      text:`配列の添字は0から始まります。図2より Touan[6] = 4 です。また Seikai[6] = 4 であり、Touan[6] と Seikai[6] が一致するので正解となり、Haiten[6] = 5点が得点に加わります。`,
+      options:[
+        {label:"⓪ 2：誤り",ok:false,text:"Touan[6]は4、2ではない。"},
+        {label:"① 3：誤り",ok:false,text:"Touan[6]は4、3ではない。"},
+        {label:"② 4：正しい",ok:true,text:"Touan[6] = 4。Seikai[6] = 4 と一致し正解。"},
+        {label:"③ 8：誤り",ok:false,text:"Touan[6]は4、8ではない。"}
+      ]
+    }
+  },
+
+  // 問1 イ
+  {
+    id:"1-i", section:"第3問 問1（イ）", points:1,
+    stem:`${ARRAY_TABLE}<br>Touan[6] = 4、Seikai[6] = 4（一致→正解）、Haiten[6] = 5点。`,
+    question:`Touan[6]が正解のとき、得点に加わる点数【イ】は何点か。`,
+    choices:["0点","5点","10点","15点"],
+    correct:1,
+    explanation:{
+      answer:"①　5点",
+      text:`Touan[6] = 4 で Seikai[6] = 4 と一致しているので正解です。Haiten[6] = 5 なので、得点に5点が加わります。`,
+      options:[
+        {label:"⓪ 0点：誤り",ok:false,text:"正解なので0点にはならない。"},
+        {label:"① 5点：正しい",ok:true,text:"Haiten[6] = 5点が加算される。"},
+        {label:"② 10点：誤り",ok:false,text:"Haiten[6]は5であり10ではない。"},
+        {label:"③ 15点：誤り",ok:false,text:"Haiten[6]は5であり15ではない。"}
+      ]
+    }
+  },
+
+  // 問1 ウエ（総得点75点）
+  {
+    id:"1-ue", section:"第3問 問1（ウエ）", points:3,
+    stem:`${ARRAY_TABLE}<br>Touan[k]とSeikai[k]を比較し、一致すれば正解としてHaiten[k]を加算することでSさんの総得点を求める。`,
+    question:`Sさんの総得点【ウエ】点は何点か。当てはまる数字（2桁）を答えよ。`,
+    choices:["65点","70点","75点","80点","85点","90点"],
+    correct:2,
+    explanation:{
+      answer:"75点（ウ=7, エ=5）",
+      text:`各添字でTouan[k]とSeikai[k]を比較します：<br>
+一致（正解）：k = 0,1,3,4,5,6,8,9,11,12 → それぞれHaiten[k]を加算<br>
+不一致（誤り）：k = 2,7,10,13<br><br>
+正解問題の得点合計：<br>
+k=0:10 + k=1:10 + k=3:10 + k=4:10 + k=5:10 + k=6:5 + k=8:5 + k=9:5 + k=11:5 + k=12:5 = <b>75点</b>`,
+      options:[
+        {label:"65点：誤り",ok:false,text:"計算が合わない。"},
+        {label:"70点：誤り",ok:false,text:"計算が合わない。"},
+        {label:"75点：正しい",ok:true,text:"一致する10問の配点を合算すると75点。"},
+        {label:"80点以上：誤り",ok:false,text:"計算が合わない。"}
+      ]
+    }
+  },
+
+  // 問2 オ
+  {
+    id:"2-o", section:"第3問 問2（オ）", points:3,
+    stem:`図3のプログラム（採点・判定・結果表示）：<br>
+<div class="code-box">(04) tokuten = 0
+(05) i を 0 から要素数(Touan) - 1 まで1ずつ増やしながら繰り返す:
+(06)   もし Touan[<span class="blank">オ</span>] == Seikai[<span class="blank">オ</span>] ならば:
+(07)     tokuten = <span class="blank">カ</span>
+(08) もし <span class="blank">キ</span> ならば:
+(09)   表示する ("「合格」(得点:", tokuten, "点)")
+(10) そうでなければ:
+(11)   表示する ("「不合格」(得点:", tokuten, "点)")</div>`,
+    question:`空欄【オ】に入れるのに最も適当なものを選べ。`,
+    choices:["tokuten","tokuten + i","i - 1","i"],
+    correct:3,
+    explanation:{
+      answer:"③　i",
+      text:`(05)行目で変数 i を 0 から「要素数(Touan) - 1」まで1ずつ増やしながら繰り返しています。これは配列の各要素を順番にアクセスするための典型的なループです。各繰り返しでTouanとSekaiの<b>同じ添字（i番目）の要素</b>を比較するので、空欄には <b>i</b> が入ります。`,
+      options:[
+        {label:"⓪ tokuten：誤り",ok:false,text:"tokuten は得点を格納する変数であり、配列の添字には使わない。"},
+        {label:"① tokuten + i：誤り",ok:false,text:"添字として不適切。"},
+        {label:"② i - 1：誤り",ok:false,text:"i - 1 だとi=0のとき添字が-1になり不正。"},
+        {label:"③ i：正しい",ok:true,text:"ループ変数 i を配列の添字として使うのが正しい。"}
+      ]
+    }
+  },
+
+  // 問2 カ
+  {
+    id:"2-k", section:"第3問 問2（カ）", points:3,
+    stem:`図3のプログラムの続き。正解のとき(07)行目で変数 tokuten に配点を加算する。`,
+    question:`空欄【カ】に入れるのに最も適当なものを選べ。`,
+    choices:["Haiten[i]","Haiten[i - 1]","tokuten + Haiten[i]","tokuten + Haiten[i - 1]"],
+    correct:2,
+    explanation:{
+      answer:"②　tokuten + Haiten[i]",
+      text:`(07)行目は「tokuten に Haiten[i] を<b>加算</b>してtokuten を更新する」処理です。加算なので現在の tokuten の値に Haiten[i] を足す必要があります。よって <b>tokuten + Haiten[i]</b> が正解です。単に Haiten[i] だけだと以前の得点がリセットされてしまいます。`,
+      options:[
+        {label:"⓪ Haiten[i]：誤り",ok:false,text:"これだと毎回Haiten[i]で上書きされ、累積得点にならない。"},
+        {label:"① Haiten[i-1]：誤り",ok:false,text:"添字がずれており誤り。"},
+        {label:"② tokuten + Haiten[i]：正しい",ok:true,text:"現在の得点にHaiten[i]を加算して更新するのが正しい。"},
+        {label:"③ tokuten + Haiten[i-1]：誤り",ok:false,text:"添字がずれており誤り。"}
+      ]
+    }
+  },
+
+  // 問2 キ
+  {
+    id:"2-ki", section:"第3問 問2（キ）", points:3,
+    stem:`図1の合否判定：「得点が60点以上の場合『合格』、それ以外は『不合格』」<br>
+(08)行目は合否を判定する条件式。正解なら(09)行目「合格」を表示する。`,
+    question:`空欄【キ】に入れるのに最も適当なものを選べ。`,
+    choices:["tokuten >= 60","tokuten <= 60","tokuten <= 59","tokuten != 59"],
+    correct:0,
+    explanation:{
+      answer:"⓪　tokuten >= 60",
+      text:`合否判定は「60点以上で合格」です。(08)行目の条件が満たされると(09)行目「合格」の表示が実行されます。よって条件は「tokuten >= 60（tokuten が60以上）」が正解です。`,
+      options:[
+        {label:"⓪ tokuten >= 60：正しい",ok:true,text:"60点以上のときに合格を表示するための条件。"},
+        {label:"① tokuten <= 60：誤り",ok:false,text:"60点以下も含んでしまい不合格者まで合格になる。"},
+        {label:"② tokuten <= 59：誤り",ok:false,text:"59点以下に合格表示してしまう（逆の判定）。"},
+        {label:"③ tokuten != 59：誤り",ok:false,text:"59点でない場合に合格となり、不適切。"}
+      ]
+    }
+  },
+
+  // 問3 ク（改定後の合否）
+  {
+    id:"3-k", section:"第3問 問3（ク）", points:2,
+    stem:`改定後の合否判定（図5）：<br>
+<div class="figure-box">条件a）かつ条件b）が満たされる場合「合格」、それ以外は「不合格」<br>
+・条件a）合計点が60点以上<br>
+・条件b）A・B・Cの各分野に基準点を設け、すべての分野がその基準点以上<br>
+　基準点：分野A: 30点、分野B: 15点、分野C: 15点</div>
+問題構成：1問目〜6問目が分野A（各10点、計60点）、7問目〜10問目が分野B（各5点、計20点）、11問目〜14問目が分野C（各5点、計20点）。<br><br>
+Sさんの答案：${ARRAY_TABLE}<br>不一致（誤り）：k=2,7,10,13 → 分野A:k=2（10点失点）、分野B:k=7（5点失点）、分野C:k=10,13（各5点失点）<br>
+・分野A得点：60 − 10 = 50点（基準30点以上 ✓）<br>
+・分野B得点：20 − 5 = 15点（基準15点以上 ✓）<br>
+・分野C得点：20 − 10 = 10点（基準15点未満 ✗）`,
+    question:`Sさんの答案を改定内容で判定すると合否結果【ク】はどうなるか。`,
+    choices:["条件a）と条件b）を満たし合格","条件b）は満たさないが、条件a）を満たし合格","条件a）を満たさず不合格","条件a）を満たすが、分野Bの得点が基準点を満たさず不合格","条件a）を満たすが、分野Cの得点が基準点を満たさず不合格","条件a）を満たすが、分野BとCの得点が基準点を満たさず不合格"],
+    correct:4,
+    explanation:{
+      answer:"④　条件a）を満たすが、分野Cの得点が基準点を満たさず不合格",
+      text:`Sさんの得点計算：<br>
+・合計：75点（条件a：60点以上 ✓）<br>
+・分野A：50点（基準30点 ✓）<br>
+・分野B：15点（基準15点 ✓）<br>
+・分野C：10点（基準15点 ✗）<br><br>
+条件aは満たしますが、分野Cの得点が基準点15点を下回るため条件bを満たせず「不合格」となります。`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"分野Cが基準を満たさないため条件b）を満たせない。"},
+        {label:"① 誤り",ok:false,text:"条件b）を満たさないので合格ではない。"},
+        {label:"② 誤り",ok:false,text:"条件a）は満たしている（75点）。"},
+        {label:"③ 誤り",ok:false,text:"分野Bは15点で基準を満たしている。"},
+        {label:"④ 正しい",ok:true,text:"合計75点で条件a）はクリアだが分野C（10点）が基準15点未満。"},
+        {label:"⑤ 誤り",ok:false,text:"分野Bは基準を満たしている。"}
+      ]
+    }
+  },
+
+  // 問3 ケ（hantei初期値）
+  {
+    id:"3-ke", section:"第3問 問3（ケ）", points:2,
+    stem:`改定プログラム（図6）の(08)行目：<div class="code-box">(08) hantei = <span class="blank">ケ</span></div>
+変数 hantei は合否判定結果を格納する変数。(18)行目で条件を満たせば hantei = "『合格』" に変更される。`,
+    question:`空欄【ケ】に入れるのに最も適当なものを選べ。`,
+    choices:['"『合格』"', '"『不合格』"', '""', '"0"', '0'],
+    correct:1,
+    explanation:{
+      answer:"①　\"『不合格』\"",
+      text:`プログラムの処理の流れは「最初は不合格と仮定し、条件をすべて満たせば合格に変更する」です。(18)行目で条件を満たした場合に hantei を「合格」に変更しているので、(08)行目の初期値は<b>「不合格」</b>でなければなりません。`,
+      options:[
+        {label:'⓪ "『合格』"：誤り',ok:false,text:"初期値を合格にすると条件チェックの意味がなくなる。"},
+        {label:'① "『不合格』"：正しい',ok:true,text:"まず不合格とセットし、条件を満たせば合格に書き換える設計。"},
+        {label:'② ""：誤り',ok:false,text:"空文字では合否が未定のままとなる。"},
+        {label:'③ "0"、④ 0：誤り',ok:false,text:"数値は合否文字列の格納に不適切。"}
+      ]
+    }
+  },
+
+  // 問3 サ
+  {
+    id:"3-sa", section:"第3問 問3（サ）", points:3,
+    stem:`図6のプログラム後半：<div class="code-box">(13) もし tokuten >= 60 ならば:
+(14)   i = 0
+(15)   i &lt; 要素数(Bunya_kijun) and
+      Bunya_tokuten[i] >= Bunya_kijun[i] の間繰り返す:
+(16)     i = i + 1
+(17)   もし i == <span class="blank">サ</span> ならば:
+(18)     hantei = "『合格』"
+(19) 表示する (hantei, "(得点:", tokuten, "点)")</div>
+注意：(15)行目は繰り返しの条件。「and」より前が成り立たないときはその時点で繰り返しを終える。<br>
+Bunya_kijun = [30, 15, 15]（3要素）、各分野が基準点以上ならiが増加。全3分野をクリアすればi=3になる。`,
+    question:`空欄【サ】に入れるのに最も適当なものを選べ。`,
+    choices:["Bunya_kijun[i - 1]","Bunya_kijun[i] - 1","要素数(Bunya_kijun) - 1","要素数(Bunya_kijun)","要素数(Bunya_kijun[i - 1])","要素数(Bunya_kijun[i]) - 1"],
+    correct:3,
+    explanation:{
+      answer:"③　要素数(Bunya_kijun)",
+      text:`(15)行目のループは各分野の得点が基準点以上であれば i を1ずつ増やします。Bunya_kijun の要素数は3（分野A・B・C）です。<br><br>
+すべての分野が基準点以上ならループは3回実行され、i = 3 になります。この状態を確認するのが(17)行目です。<br>
+「i == 要素数(Bunya_kijun)」は「i == 3」と同じ意味です。これがTrueのとき、全分野が基準を満たしたとわかり、合格と判定できます。`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"Bunya_kijun[i-1]は配列要素の参照であり要素数ではない。"},
+        {label:"① 誤り",ok:false,text:"Bunya_kijun[i]-1は要素の値から1引いたもので誤り。"},
+        {label:"② 誤り",ok:false,text:"要素数(Bunya_kijun)-1 = 2であり、全分野クリア時のi=3とは一致しない。"},
+        {label:"③ 正しい",ok:true,text:"要素数(Bunya_kijun) = 3 であり、全分野クリア時の i = 3 と一致する。"},
+        {label:"④⑤ 誤り",ok:false,text:"引数が配列の要素を参照しており不適切。"}
+      ]
+    }
+  }
+
+];
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+let selected = null;
+let answered = false;
+
+function renderQuestion() {
+  const q = questions[current];
+  answered = false; selected = null;
+  const total = questions.length;
+  document.getElementById('prog-label').textContent = `${current + 1} / ${total}`;
+  document.getElementById('prog-fill').style.width = `${((current + 1) / total) * 100}%`;
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-badge">${q.section}</span>
+        <span class="q-point">${q.points}点</span>
+      </div>
+      <div class="q-body">
+        ${q.stem ? `<div>${q.stem}</div>` : ''}
+        <div class="sub-q">
+          <div class="sub-q-label">問：${q.question}</div>
+          <div class="choices" id="choices">
+            ${q.choices.map((c, i) => `
+              <button class="choice-btn" data-i="${i}" onclick="selectChoice(${i})">
+                <span class="ci">${SYMBOLS[i]}</span>
+                <span>${c}</span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="btn-primary" id="submit-btn" onclick="submitAnswer()" disabled>回答する</button>
+      </div>
+      <div class="result-banner" id="result-banner">
+        <span class="icon" id="result-icon"></span>
+        <span id="result-text"></span>
+        <button class="explanation-link" onclick="openModal(${current})">解説を見る</button>
+      </div>
+    </div>
+    <div class="action-row" id="next-row" style="display:none">
+      ${current < questions.length - 1
+        ? `<button class="btn-primary" onclick="nextQuestion()">次の問題へ →</button>`
+        : `<button class="btn-primary" onclick="showResult()">結果を見る</button>`}
+    </div>`;
+}
+
+function selectChoice(i) {
+  if (answered) return;
+  selected = i;
+  document.querySelectorAll('.choice-btn').forEach((b, idx) => b.classList.toggle('selected', idx === i));
+  document.getElementById('submit-btn').disabled = false;
+}
+
+function submitAnswer() {
+  if (selected === null || answered) return;
+  answered = true; answers[current] = selected;
+  const q = questions[current];
+  const ok = selected === q.correct;
+  document.getElementById('submit-btn').disabled = true;
+  document.querySelectorAll('.choice-btn').forEach((b, idx) => {
+    b.disabled = true; b.classList.remove('selected');
+    if (idx === q.correct) b.classList.add('correct');
+    else if (idx === selected && !ok) b.classList.add('wrong');
+  });
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('show');
+  if (ok) {
+    banner.classList.add('correct');
+    document.getElementById('result-icon').textContent = '✓';
+    document.getElementById('result-text').textContent = '正解！';
+    document.querySelector('.explanation-link').style.opacity = '0.5';
+  } else {
+    banner.classList.add('wrong');
+    document.getElementById('result-icon').textContent = '✗';
+    document.getElementById('result-text').textContent = `不正解。正解は${SYMBOLS[q.correct]}`;
+  }
+  document.getElementById('next-row').style.display = 'flex';
+}
+
+function nextQuestion() { current++; if (current < questions.length) renderQuestion(); else showResult(); }
+
+function showResult() {
+  let correct = 0, points = 0, maxPoints = 0;
+  questions.forEach((q, i) => { maxPoints += q.points; if (answers[i] === q.correct) { correct++; points += q.points; } });
+  document.getElementById('prog-label').textContent = '終了';
+  document.getElementById('prog-fill').style.width = '100%';
+  const rows = questions.map((q, i) => {
+    const ok = answers[i] === q.correct;
+    return `<tr><td>${q.section}</td><td>${answers[i] !== null ? SYMBOLS[answers[i]] : '未回答'}</td><td>${SYMBOLS[q.correct]}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?q.points:0}/${q.points}</td></tr>`;
+  }).join('');
+  document.getElementById('quiz-area').innerHTML = `
+    <div style="background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 24px;text-align:center">
+      <h2 style="font-size:1.4rem;color:var(--primary);margin-bottom:6px">第3問 終了！</h2>
+      <div style="margin:16px 0">
+        <div class="score-big">${correct}<span class="score-denom"> / ${questions.length}問</span></div>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxPoints}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:24px"><button class="btn-secondary" onclick="restartQuiz()">もう一度挑戦する</button></div>
+    </div>`;
+}
+
+function restartQuiz() { current = 0; answers = new Array(questions.length).fill(null); selected = null; answered = false; renderQuestion(); }
+
+function openModal(idx) {
+  const q = questions[idx]; const exp = q.explanation;
+  const opts = exp.options.map(o => `<div class="option-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('');
+  document.getElementById('modal-title').textContent = `${q.section} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:12px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+renderQuestion();
+</script>
+</body>
+</html>

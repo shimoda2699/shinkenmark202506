@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2025年6月｜第2問</title>
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --primary: #1a56a0;
+    --primary-light: #e8f0fb;
+    --accent: #e85d26;
+    --correct: #1a7a4a;
+    --correct-bg: #e6f4ec;
+    --wrong: #b91c1c;
+    --wrong-bg: #fde8e8;
+    --text: #1e2a3a;
+    --muted: #5a6a7e;
+    --border: #d0dae6;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(26,86,160,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  header { background: var(--primary); color: #fff; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.18); }
+  header h1 { font-size: 1rem; font-weight: 700; }
+  .progress-wrap { display: flex; align-items: center; gap: 10px; }
+  .progress-label { font-size: .8rem; opacity: .85; white-space: nowrap; }
+  .progress-bar { width: 120px; height: 6px; background: rgba(255,255,255,.3); border-radius: 3px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: #7ec8f7; border-radius: 3px; transition: width .4s ease; }
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 80px; }
+  .q-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px 22px 20px; margin-bottom: 16px; }
+  .q-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .q-badge { background: var(--primary); color: #fff; font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .q-point { font-size: .72rem; color: var(--muted); }
+  .q-body { font-size: .95rem; line-height: 1.8; }
+  .q-body p { margin-bottom: .6em; }
+  .figure-box { background: var(--primary-light); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin: 10px 0; font-size: .88rem; line-height: 1.7; }
+  .code-box { background: #1e2a3a; color: #e8f0fb; border-radius: 6px; padding: 12px 14px; font-family: 'Courier New', monospace; font-size: .84rem; line-height: 1.7; margin: 10px 0; white-space: pre-wrap; }
+  .sub-q { margin-top: 18px; }
+  .sub-q-label { font-weight: 700; font-size: .85rem; color: var(--primary); margin-bottom: 8px; }
+  .choices { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .choice-btn { display: flex; align-items: flex-start; gap: 10px; background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 10px 14px; cursor: pointer; text-align: left; font-size: .88rem; line-height: 1.5; transition: border-color .15s, background .15s; }
+  .choice-btn:hover:not(:disabled) { border-color: var(--primary); background: var(--primary-light); }
+  .choice-btn .ci { font-weight: 700; color: var(--primary); min-width: 22px; margin-top: 1px; font-size: .85rem; }
+  .choice-btn.selected { border-color: var(--primary); background: var(--primary-light); }
+  .choice-btn.correct { border-color: var(--correct); background: var(--correct-bg); }
+  .choice-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+  .choice-btn:disabled { cursor: default; }
+  .action-row { margin-top: 16px; display: flex; gap: 10px; justify-content: flex-end; }
+  .btn-primary { background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 10px 24px; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .15s; }
+  .btn-primary:hover { background: #154080; }
+  .btn-primary:disabled { background: #aaa; cursor: default; }
+  .btn-secondary { background: #fff; color: var(--primary); border: 2px solid var(--primary); border-radius: 8px; padding: 10px 20px; font-size: .9rem; font-weight: 700; cursor: pointer; }
+  .btn-secondary:hover { background: var(--primary-light); }
+  .result-banner { display: none; border-radius: 8px; padding: 12px 16px; margin-top: 14px; font-size: .9rem; font-weight: 600; align-items: center; gap: 10px; }
+  .result-banner.show { display: flex; }
+  .result-banner.correct { background: var(--correct-bg); color: var(--correct); }
+  .result-banner.wrong { background: var(--wrong-bg); color: var(--wrong); }
+  .result-banner .icon { font-size: 1.3rem; }
+  .explanation-link { display: inline-block; margin-left: auto; font-size: .82rem; font-weight: 600; color: var(--primary); text-decoration: none; border: 1.5px solid var(--primary); padding: 4px 12px; border-radius: 20px; cursor: pointer; background: #fff; transition: background .15s; }
+  .explanation-link:hover { background: var(--primary-light); }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,20,40,.5); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+  .modal-overlay.show { display: flex; }
+  .modal { background: #fff; border-radius: 12px; max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 24px 22px; box-shadow: 0 8px 40px rgba(0,0,0,.2); }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .modal-title { font-size: 1rem; font-weight: 700; color: var(--primary); }
+  .modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); padding: 4px 8px; border-radius: 6px; line-height: 1; }
+  .modal-close:hover { background: var(--bg); }
+  .modal-body { font-size: .9rem; line-height: 1.85; }
+  .modal-body .correct-answer { background: var(--correct-bg); border-left: 4px solid var(--correct); padding: 8px 12px; border-radius: 4px; margin-bottom: 12px; font-weight: 700; color: var(--correct); }
+  .modal-body p { margin-bottom: .7em; }
+  .modal-body .option-exp { margin: 6px 0; padding: 6px 10px; background: var(--bg); border-radius: 6px; font-size: .87rem; }
+  .modal-body .option-exp.ok { border-left: 3px solid var(--correct); }
+  .modal-body .option-exp.ng { border-left: 3px solid var(--wrong); }
+  .label-ok { color: var(--correct); font-weight: 700; }
+  .label-ng { color: var(--wrong); font-weight: 700; }
+  .result-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: .88rem; }
+  .result-table th,.result-table td { border: 1px solid var(--border); padding: 7px 10px; text-align: center; }
+  .result-table th { background: var(--primary-light); font-weight: 700; }
+  .result-table td.ok { color: var(--correct); font-weight: 700; }
+  .result-table td.ng { color: var(--wrong); font-weight: 700; }
+  .score-big { font-size: 3rem; font-weight: 800; color: var(--primary); }
+  .score-denom { font-size: 1.2rem; color: var(--muted); }
+  @media (max-width: 540px) { .q-card { padding: 18px 14px; } .choice-btn { font-size: .84rem; padding: 9px 12px; } .progress-bar { width: 80px; } .score-big { font-size: 2.4rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年6月 ｜ 第2問</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">1 / 13</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:8%"></div></div>
+  </div>
+</header>
+
+<main id="quiz-area"></main>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const SYMBOLS = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+
+const questions = [
+
+  // ── 第2問A ──
+
+  // A-問1 ア（特許権）
+  {
+    id:"A-1", section:"第2問A 問1", points:2,
+    stem:`ユイさんが考えたアイデア：「ペンにストップウォッチ機能を搭載し、計測した時間をスマートフォンのアプリケーションに勉強時間として記録する」。先生から「データ処理の設計を取り入れた、レベルの高い斬新なアイデアなので、特許庁が管轄する知的財産権を調べてもよいかもしれません」と言われた。<br><br>産業財産権は次の4種類：<br>
+    ⓪ 特許権（プログラムやシステム等を含む新規かつ高度な発明を保護）<br>
+    ① 実用新案権（実用的な物品の形状や構造を対象とした考案を保護）<br>
+    ② 意匠権（物品の独創的な形状や色彩などの外観デザインを保護）<br>
+    ③ 商標権（商品やサービスに使用されるロゴやマークを保護）`,
+    question:`ユイさんのアイデアに対する権利として最も適当なものを選べ。（下線部A）`,
+    choices:["特許権（プログラムやシステム等を含む新規かつ高度な発明を保護する。）","実用新案権（実用的な物品の形状や構造を対象とした考案を保護する。）","意匠権（物品の独創的な形状や色彩などの外観デザインを保護する。）","商標権（商品やサービスに使用されるロゴやマークを保護する。）"],
+    correct:0,
+    explanation:{
+      answer:"⓪　特許権",
+      text:`先生の発言「データ処理の設計を取り入れた、レベルの高い斬新なアイデア」から、ユイさんのアイデアはプログラムやシステム等を含む新規かつ高度な発明に当たります。これは<b>特許権</b>の保護対象です。実用新案権は物品の形状・構造、意匠権は外観デザイン、商標権はロゴやマークであり、いずれもユイさんのアイデアとは一致しません。`,
+      options:[
+        {label:"⓪ 正しい",ok:true,text:"データ処理を含む高度な発明 → 特許権が該当。"},
+        {label:"① 誤り",ok:false,text:"実用新案権は物品の形状・構造の考案を保護するもので、プログラムには該当しない。"},
+        {label:"② 誤り",ok:false,text:"意匠権は外観デザインを保護するもの。"},
+        {label:"③ 誤り",ok:false,text:"商標権はロゴやマークを保護するもの。"}
+      ]
+    }
+  },
+
+  // A-問2 イ（ファイルサイズ計算）
+  {
+    id:"A-2", section:"第2問A 問2", points:2,
+    stem:`ユイさんの画像ファイル：縦横それぞれ200ピクセル・24ビットカラーの無圧縮bmp。<br>
+ユイさんの計算式：「画像を構成する総ピクセル数 × 色情報ビット数」→ バイト変換（÷8）。<br>
+先生の補足：「コンピュータの中でデジタル化されたデータではKに対して2¹⁰（=1024）が用いられる」。`,
+    question:`空欄【イ】（ファイルサイズのKB数）に入れるのに最も適当なものを選べ。`,
+    choices:["4.7","14.6","117.2","937.5"],
+    correct:2,
+    explanation:{
+      answer:"②　117.2",
+      text:`計算手順：<br>
+① 総ピクセル数 = 200 × 200 = 40,000 ピクセル<br>
+② 24ビットカラーなので色情報ビット数 = 24<br>
+③ 総ビット数 = 40,000 × 24 = 960,000 ビット<br>
+④ バイト変換 = 960,000 ÷ 8 = 120,000 バイト<br>
+⑤ KB変換（1K = 1024）= 120,000 ÷ 1024 ≒ <b>117.1875 ≒ 117.2 KB</b>`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"4.7は計算が合わない。"},
+        {label:"① 誤り",ok:false,text:"14.6は計算が合わない。"},
+        {label:"② 正しい",ok:true,text:"200×200×24÷8÷1024 ≒ 117.2 KB。"},
+        {label:"③ 誤り",ok:false,text:"937.5はKBに変換せずバイトで止めた値（120,000/128）などの誤計算。"}
+      ]
+    }
+  },
+
+  // A-問3 ウ（ファイル形式）
+  {
+    id:"A-3", section:"第2問A 問3", points:2,
+    stem:`先生：「提出する画像のファイル形式は、色を劣化させることのない可逆圧縮の【ウ】に変えておいてください」`,
+    question:`空欄【ウ】に入れるファイル形式とその説明として最も適当なものを選べ。`,
+    choices:[
+      "png：元データを再現することができる、24ビットカラーの圧縮画像ファイル形式",
+      "gif：元データを再現することができる、色数を256色に絞った圧縮画像ファイル形式",
+      "jpg：一部のデータを間引いた、24ビットカラーの圧縮画像ファイル形式",
+      "mp3：一部のデータを間引いた、一般的なビットレートの圧縮音声ファイル形式"
+    ],
+    correct:0,
+    explanation:{
+      answer:"⓪　png：元データを再現できる24ビットカラーの可逆圧縮画像",
+      text:`条件は「色を劣化させない（可逆圧縮）」かつ「24ビットカラー」です。<br>
+・<b>png</b>：可逆圧縮・24ビットカラー対応 → 正解<br>
+・gif：可逆圧縮だが色数が256色に制限される<br>
+・jpg：非可逆圧縮（一部データを間引く）<br>
+・mp3：音声ファイル形式`,
+      options:[
+        {label:"⓪ 正しい",ok:true,text:"可逆圧縮・24ビットカラー。条件を満たす。"},
+        {label:"① 誤り",ok:false,text:"gifは可逆圧縮だが256色に制限されるため色が劣化する可能性がある。"},
+        {label:"② 誤り",ok:false,text:"jpgは非可逆圧縮で色が劣化する。"},
+        {label:"③ 誤り",ok:false,text:"mp3は音声ファイル形式であり画像ではない。"}
+      ]
+    }
+  },
+
+  // A-問4 エ（ランレングス圧縮・削減文字数）
+  {
+    id:"A-4e", section:"第2問A 問4（エ）", points:1,
+    stem:`ランレングス圧縮：同じデータが1回以上並んで現れた場合、その個数をデータの直後に付加し「文字, 回数」というデータに置き換える。<br>
+例：「○×××△△△□□」→「○1×3△3□2」（9文字→8文字、1文字削減）`,
+    question:`「○×××△△△□□」のランレングス圧縮で、結果的に【エ】文字分のデータ量を減らすことができる。【エ】に当てはまる数字をマークせよ。`,
+    choices:["0","1","2","3","4","5"],
+    correct:1,
+    explanation:{
+      answer:"① 1文字",
+      text:`元データ「○×××△△△□□」= 9文字<br>
+圧縮後「○1×3△3□2」= 8文字（○×△□や数字を各1文字と数える）<br>
+削減量 = 9 - 8 = <b>1文字</b>`,
+      options:[
+        {label:"⓪ 0",ok:false,text:"圧縮の効果がないことになるが、実際は1文字削減できる。"},
+        {label:"① 1",ok:true,text:"9文字→8文字で1文字削減。"},
+        {label:"② 2",ok:false,text:"計算が合わない。"},
+        {label:"③ 3以上",ok:false,text:"計算が合わない。"}
+      ]
+    }
+  },
+
+  // A-問4 オ（変化なし）
+  {
+    id:"A-4o", section:"第2問A 問4（オ）", points:2,
+    stem:`次の⓪〜⑤の文字列をランレングス圧縮したとき、圧縮前と圧縮後のデータ量に変化がないものを選べ。<br><br>
+⓪ ○○○×××△△△□□□○○○×××△△△□□□<br>
+① ○×△□○×△□○×△□○×△□○×△□○×△□<br>
+② △△△△△△○○○○○○△△△△△△○○○○○○<br>
+③ ○×△□□□□□□□□□○×△□□□□□□□□□<br>
+④ ××××××△□○○○○○××××××△□○○○○○<br>
+⑤ ○○○×△□□□□○×××△△△□□○×△△□□`,
+    question:`圧縮前と圧縮後のデータ量に変化がない文字列を選べ。`,
+    choices:["⓪","①","②","③","④","⑤"],
+    correct:1,
+    explanation:{
+      answer:"①　○×△□○×△□○×△□○×△□○×△□○×△□",
+      text:`ランレングス圧縮は「連続する同じ文字」を「文字+回数」に置き換えます。<br><br>
+①の文字列はすべてのデータが1文字ずつ異なるため（○×△□が繰り返し）、圧縮すると「○1×1△1□1○1×1…」となります。各文字が「文字+1」となり、元の文字数と同じ（1文字→1文字）か増えます。<br>
+→ データ量の変化なし（正解）<br><br>
+他の選択肢は連続する同じ文字があるため圧縮効果があります。解説の圧縮結果：<br>
+・⓪：○3×3△3□3○3×3△3□3 = 16文字（元24文字）→削減<br>
+・①：○1×1△1□1×24個 = 24文字（元24文字）→変化なし<br>
+・②：△6○6△6○6 = 8文字（元24文字）→大幅削減<br>
+・③、④、⑤もそれぞれ削減効果あり`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"連続する同じ文字があるため圧縮で削減できる。"},
+        {label:"① 正しい",ok:true,text:"すべて1文字ずつ異なるため、圧縮後も文字数が変わらない。"},
+        {label:"② 誤り",ok:false,text:"△や○が6連続するため大幅に削減できる。"},
+        {label:"③ 誤り",ok:false,text:"□が連続する部分で削減できる。"},
+        {label:"④ 誤り",ok:false,text:"×や○が連続する部分で削減できる。"},
+        {label:"⑤ 誤り",ok:false,text:"連続する部分があるため削減できる。"}
+      ]
+    }
+  },
+
+  // A-問4 カ（差が最大）
+  {
+    id:"A-4k", section:"第2問A 問4（カ）", points:2,
+    stem:`⓪〜⑤の文字列のうち、ランレングス圧縮前と圧縮後のデータ量に一番大きな差が出るものを選べ。（差は【キ】【ク】文字分）`,
+    question:`圧縮前と圧縮後のデータ量の差が最も大きいものを選べ。`,
+    choices:["⓪","①","②","③","④","⑤"],
+    correct:1,
+    explanation:{
+      answer:"①　○×△□○×△□○×△□○×△□○×△□○×△□",
+      text:`各文字列の圧縮結果と文字数：<br><br>
+・⓪ 元:24文字 → 圧縮後:16文字（差8）<br>
+・<b>① 元:24文字 → 圧縮後:48文字（差−24、最大の増加）</b><br>
+　（すべて1文字ずつ異なる→「文字1」×24組 = 48文字）<br>
+・② 元:24文字 → 圧縮後:8文字（差16）<br>
+・③ 元:24文字 → 圧縮後:16文字（差8）<br>
+・④ 元:24文字 → 圧縮後:16文字（差8）<br>
+・⑤ 元:24文字 → 圧縮後:24文字（差0）<br><br>
+差の絶対値が最大なのは①の24文字増加です（設問では「差が出る」として符号を問わず絶対値で考えます）。`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"差は8文字。"},
+        {label:"① 正しい",ok:true,text:"1文字ずつ異なるため圧縮後に24文字増加→差が最大の24文字。"},
+        {label:"② 誤り",ok:false,text:"差は16文字（削減）。"},
+        {label:"③ 誤り",ok:false,text:"差は8文字。"},
+        {label:"④ 誤り",ok:false,text:"差は8文字。"},
+        {label:"⑤ 誤り",ok:false,text:"変化なし。"}
+      ]
+    }
+  },
+
+  // A-問5 ケ（プレゼン・不適当）
+  {
+    id:"A-5", section:"第2問A 問5", points:2,
+    stem:`効果的なプレゼンテーションを実施するための有効なデザインや発表の心構えとして<b>適当でないもの</b>を選べ。<br>
+あ 視認性向上のため、1枚のスライド内で使用する文字と背景を同じような色や明るさで統一する。<br>
+い 話の流れを理解しやすくするため、スライドを「導入・展開・まとめ」の流れで整理する。<br>
+う 可読性向上のため、スライドに解説したい事柄の詳細を記述するようにする。<br>
+え 聞き手に誤解を与えないようにするため、印刷した原稿に常に目を向けながら発表する。`,
+    question:`適当でないものをすべて選んだ組合せを選べ。`,
+    choices:["あ，い","あ，う","あ，え","い，う","い，え","う，え","あ，い，う","あ，い，え","あ，う，え","い，う，え","あ，い，う，え"],
+    correct:7,
+    explanation:{
+      answer:"⑦　あ，い，え（適当でないものの組合せ）",
+      text:`各記述の評価：<br><br>
+<b>あ：適当でない</b> → 文字と背景を同じような色や明るさにすると文字が読みにくくなる（視認性が下がる）。<br>
+<b>い：適当</b> → 「導入・展開・まとめ」の構成は話の流れを理解しやすくするための有効な方法。<br>
+<b>う：適当でない</b> → スライドに詳細を書きすぎると情報量が増え、視覚的負担が増して内容を把握しにくくなる。<br>
+<b>え：適当でない</b> → 原稿に常に目を向けると聴衆とのアイコンタクトが減り、聴衆の反応を把握しにくくなる。<br><br>
+よって適当でないのは「あ・う・え」で正解は⑧（あ，う，え）。`,
+      options:[
+        {label:"⓪〜⑥ 誤り",ok:false,text:"適当でないものの組合せを誤っている。"},
+        {label:"⑦ 正しい",ok:true,text:"あ（色が見にくい）・う（詳細すぎる）・え（原稿に目を向ける）が適当でない。"},
+        {label:"その他 誤り",ok:false,text:""}
+      ]
+    }
+  },
+
+  // ── 第2問B ──
+
+  // B-問1 コ（POSシステム・不適当）
+  {
+    id:"B-1", section:"第2問B 問1", points:2,
+    stem:`あるコンビニエンスストアチェーンでは、POSシステム（販売時点情報管理システム）を用いて、商品情報や客ごとの売上情報が管理されている。`,
+    question:`コンビニエンスストアにPOSシステムを導入することで可能になると考えられることについて述べた文として<b>適当でないもの</b>を選べ。`,
+    choices:[
+      "リアルタイムでの在庫管理を行うことで、不足している商品を適切なタイミングで補充することができる。",
+      "店舗で売れ残っている商品を自動で廃棄することで、新商品の売り場を迅速につくることができる。",
+      "販売した商品や客の情報を分析することで、売れる傾向にある商品を店舗に並べることができる。",
+      "店舗別の売上情報を本部で一括管理することで、地域に応じたキャンペーンを展開することができる。"
+    ],
+    correct:1,
+    explanation:{
+      answer:"①　店舗で売れ残っている商品を自動で廃棄する（適当でない）",
+      text:`POSシステムは商品情報や売上情報を管理するシステムです。在庫状況の把握やデータ分析は可能ですが、「商品の自動廃棄」はPOSシステムの機能ではありません。廃棄は人間が判断して行う作業であり、POSシステムだけで実現できることではないため、①が適当でない記述です。`,
+      options:[
+        {label:"⓪ 適当",ok:true,text:"リアルタイム在庫管理→適切なタイミングでの補充は正しい。"},
+        {label:"① 不適当（正解）",ok:false,text:"商品の自動廃棄はPOSシステムの機能ではない。"},
+        {label:"② 適当",ok:true,text:"商品・客データの分析→人気商品の選定は正しい。"},
+        {label:"③ 適当",ok:true,text:"店舗別データの本部一括管理→地域キャンペーンは正しい。"}
+      ]
+    }
+  },
+
+  // B-問2 サ（バッチ処理）
+  {
+    id:"B-2", section:"第2問B 問2", points:3,
+    stem:`情報システムにおいて、対象のデータが発生すると同時に速やかに処理を行う方式は<b>リアルタイム処理</b>とよばれる。一方、一定期間ごとに蓄積されたデータをまとめて一括で処理する方式は<b>バッチ処理</b>とよばれる。`,
+    question:`バッチ処理が用いられている記述として最も適当なものを選べ。`,
+    choices:[
+      "各家庭の30分間ごとの電気使用量を、ネットワークに接続された電気メータを通じてシステムに集約して、1か月ごとの電気料金を計算する処理",
+      "動画投稿サイトでネットワークを経由して動画を視聴する際に、データを受信しながら同時に再生を行えるようにする処理",
+      "気象レーダーで30秒ごとに観測された情報を、みやすく加工したうえでその都度素早く配信するアプリケーションの処理",
+      "利用した飲食店での料金の支払いにおいて、支払いと同時にひも付けられた銀行口座から引き落としが実行されるカードの処理"
+    ],
+    correct:0,
+    explanation:{
+      answer:"⓪　各家庭の電気使用量を1か月ごとにまとめて計算する処理",
+      text:`バッチ処理は「一定期間ごとに蓄積されたデータをまとめて一括で処理する方式」です。<br><br>
+・⓪：30分ごとのデータを集約し、<b>1か月ごと</b>にまとめて電気料金を計算 → バッチ処理（正解）<br>
+・①：動画を受信しながら同時に再生（ストリーミング）→ リアルタイム処理<br>
+・②：30秒ごとにその都度素早く配信 → リアルタイム処理<br>
+・③：支払いと同時に引き落とし → リアルタイム処理`,
+      options:[
+        {label:"⓪ 正しい",ok:true,text:"1か月ごとにまとめて処理するのがバッチ処理。"},
+        {label:"① 誤り",ok:false,text:"データを受信しながら同時に再生するのはリアルタイム処理。"},
+        {label:"② 誤り",ok:false,text:"その都度素早く配信するのはリアルタイム処理。"},
+        {label:"③ 誤り",ok:false,text:"支払いと同時に引き落としはリアルタイム処理。"}
+      ]
+    }
+  },
+
+  // B-問3 シ（リレーショナルDB・構築の注意）
+  {
+    id:"B-3", section:"第2問B 問3", points:3,
+    stem:`表1（売上情報のリレーショナルデータベース）には「売上ID」「店舗名」「日時」「商品名」「単価(円)」「数量」「合計金額(円)」「アプリケーション」のフィールドがある。問題文から「各テーブルには数多くのデータの中からレコードを一意に特定するためのフィールド（表1では「売上ID」）が必ず設けられる」とある。`,
+    question:`表1のようなリレーショナルデータベースを構築するときの注意点として最も適当なものを選べ。`,
+    choices:[
+      "「商品名」フィールドのデータは、アルファベットや数字が含まれないようにしなければならない。",
+      "「日時」フィールドのデータは、和暦と西暦のどちらでも入力できるようにしなければならない。",
+      "「店舗名」フィールドのデータは、3文字以内で入力できるようにしなければならない。",
+      "「アプリケーション」フィールドのデータは、「あり」「なし」以外のデータも入力できるようにしなければならない。",
+      "「売上ID」フィールドのデータは、同じ値が存在しないようにしなければならない。",
+      "「数量」フィールドのデータは、0も入力できるようにしなければならない。"
+    ],
+    correct:4,
+    explanation:{
+      answer:"④　「売上ID」フィールドのデータは同じ値が存在しないようにしなければならない",
+      text:`問題文に「各テーブルには数多くのデータの中からレコードを一意に特定するためのフィールド（表1では「売上ID」）が必ず設けられる」とあります。レコードを一意に特定するためには、そのフィールドに<b>同じ値が存在してはならない</b>という制約が必要です。<br><br>
+他の選択肢は表1のデータから見ると不適切（商品名に英数字が含まれうる、日時は西暦で統一、店舗名は3文字以内に制限不要、アプリケーションは「あり」「なし」のみ、数量は販売数なので0はありえない）。`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"商品名にアルファベットや数字が含まれることは十分ありうる。"},
+        {label:"① 誤り",ok:false,text:"日時は統一して管理すべきで、和暦と西暦の両方に対応する必要はない。"},
+        {label:"② 誤り",ok:false,text:"店舗名の文字数を3文字以内に限定する根拠はない。"},
+        {label:"③ 誤り",ok:false,text:"アプリケーションは「あり」「なし」の二値で管理されており、それ以外の値を許す必要はない。"},
+        {label:"④ 正しい",ok:true,text:"主キーであるIDには重複があってはならない。"},
+        {label:"⑤ 誤り",ok:false,text:"数量は販売数であり、0個の販売は売上として記録する意味がない（0は不要）。"}
+      ]
+    }
+  },
+
+  // B-問4 ス（正規化・削除フィールド）
+  {
+    id:"B-4", section:"第2問B 問4", points:3,
+    stem:`リレーショナルデータベースの正規化の最初の手順は「ほかのフィールドのデータから算出できるようなフィールドを削除すること」。<br>
+表1のフィールド：売上ID、店舗名、日時、商品名、単価(円)、数量、合計金額(円)、アプリケーション`,
+    question:`表1のリレーショナルデータベースのうち、この正規化の手順で削除されるフィールドはどれか。`,
+    choices:["売上ID","店舗名","日時","商品名","単価（円）","数量","合計金額（円）","アプリケーション"],
+    correct:6,
+    explanation:{
+      answer:"⑥　合計金額（円）",
+      text:`「ほかのフィールドのデータから算出できるようなフィールドを削除する」という正規化の手順に照らすと、<b>合計金額（円）= 単価（円）× 数量</b> で算出できます。したがって「合計金額（円）」フィールドは削除対象です。<br><br>
+他のフィールド（売上ID・店舗名・日時・商品名・単価・数量・アプリケーション）は互いに独立した情報であり、他のフィールドから算出することはできません。`,
+      options:[
+        {label:"⓪〜④ 誤り",ok:false,text:"これらのフィールドは他から算出できない独立した情報。"},
+        {label:"⑤ 誤り",ok:false,text:"数量も独立した情報。"},
+        {label:"⑥ 正しい",ok:true,text:"合計金額 = 単価 × 数量 で算出できるため削除対象。"},
+        {label:"⑦ 誤り",ok:false,text:"アプリケーションも独立した情報。"}
+      ]
+    }
+  },
+
+  // B-問5 セ（正規化の利点）
+  {
+    id:"B-5", section:"第2問B 問5", points:4,
+    stem:`表2（会員情報）が表3のように分割された（会員テーブル・マイ店舗テーブル・会員ランクテーブル）。正規化の利点：「データの編集や更新の手間を最小限におさえ、データの整合性を保つことができる」。`,
+    question:`正規化の利点が最も生かされる状況として最も適当なものを選べ。`,
+    choices:[
+      "一田カレンさんの電話番号が「12-345-89」に変更されるとき",
+      "会員退会により会員ID「000002」の二村フミヤさんのデータがすべて削除されるとき",
+      "新店舗である「黒田店」が新しくマイ店舗に追加されるとき",
+      "会員ランク名が「一般」から「レギュラー」に変更されるとき",
+      "三河ケンタさんのマイ店舗が「緑丘店」に変更されるとき"
+    ],
+    correct:3,
+    explanation:{
+      answer:"③　会員ランク名が「一般」から「レギュラー」に変更されるとき",
+      text:`正規化によって会員ランク名は専用テーブル（会員ランクテーブル）に切り出されました。「一般」→「レギュラー」への変更は<b>会員ランクテーブルの1箇所を変更するだけで済みます</b>。<br><br>
+正規化前の表2では「一般」という値を持つ全レコードを一つひとつ変更する必要がありましたが、表3では1か所の変更で整合性が保てます。これが正規化の利点が最も生かされる状況です。<br><br>
+他の選択肢（電話番号変更・退会削除・新店舗追加・マイ店舗変更）も正規化によって手間が変わる場面ですが、「一般」→「レギュラー」のように多数のレコードに影響する変更を1か所で済ませられる状況が最も利点を発揮します。`,
+      options:[
+        {label:"⓪ 誤り",ok:false,text:"電話番号は個人情報で、変更は1レコードのみ。正規化の恩恵は比較的小さい。"},
+        {label:"① 誤り",ok:false,text:"退会削除は1件のみ。正規化の利点を最大限発揮する場面ではない。"},
+        {label:"② 誤り",ok:false,text:"新店舗追加は店舗テーブルへの追加のみで、正規化しても大差ない。"},
+        {label:"③ 正しい",ok:true,text:"「一般」を持つ全会員に影響する変更が1か所の更新で済む→正規化の利点が最大。"},
+        {label:"④ 誤り",ok:false,text:"マイ店舗変更は1会員レコードのみの変更。"}
+      ]
+    }
+  }
+
+];
+
+// =============================================
+// アプリ状態
+// =============================================
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+let selected = null;
+let answered = false;
+
+function renderQuestion() {
+  const q = questions[current];
+  answered = false; selected = null;
+  const total = questions.length;
+  document.getElementById('prog-label').textContent = `${current + 1} / ${total}`;
+  document.getElementById('prog-fill').style.width = `${((current + 1) / total) * 100}%`;
+
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = `
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-badge">${q.section}</span>
+        <span class="q-point">${q.points}点</span>
+      </div>
+      <div class="q-body">
+        ${q.stem ? `<p>${q.stem}</p>` : ''}
+        <div class="sub-q">
+          <div class="sub-q-label">問：${q.question}</div>
+          <div class="choices" id="choices">
+            ${q.choices.map((c, i) => `
+              <button class="choice-btn" data-i="${i}" onclick="selectChoice(${i})">
+                <span class="ci">${SYMBOLS[i] || i}</span>
+                <span>${c}</span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="btn-primary" id="submit-btn" onclick="submitAnswer()" disabled>回答する</button>
+      </div>
+      <div class="result-banner" id="result-banner">
+        <span class="icon" id="result-icon"></span>
+        <span id="result-text"></span>
+        <button class="explanation-link" onclick="openModal(${current})">解説を見る</button>
+      </div>
+    </div>
+    <div class="action-row" id="next-row" style="display:none">
+      ${current < questions.length - 1
+        ? `<button class="btn-primary" onclick="nextQuestion()">次の問題へ →</button>`
+        : `<button class="btn-primary" onclick="showResult()">結果を見る</button>`}
+    </div>
+  `;
+}
+
+function selectChoice(i) {
+  if (answered) return;
+  selected = i;
+  document.querySelectorAll('.choice-btn').forEach((btn, idx) => btn.classList.toggle('selected', idx === i));
+  document.getElementById('submit-btn').disabled = false;
+}
+
+function submitAnswer() {
+  if (selected === null || answered) return;
+  answered = true;
+  answers[current] = selected;
+  const q = questions[current];
+  const isCorrect = selected === q.correct;
+  document.getElementById('submit-btn').disabled = true;
+  document.querySelectorAll('.choice-btn').forEach((btn, idx) => {
+    btn.disabled = true;
+    btn.classList.remove('selected');
+    if (idx === q.correct) btn.classList.add('correct');
+    else if (idx === selected && !isCorrect) btn.classList.add('wrong');
+  });
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('show');
+  if (isCorrect) {
+    banner.classList.add('correct');
+    document.getElementById('result-icon').textContent = '✓';
+    document.getElementById('result-text').textContent = '正解！';
+    document.querySelector('.explanation-link').style.opacity = '0.5';
+  } else {
+    banner.classList.add('wrong');
+    document.getElementById('result-icon').textContent = '✗';
+    document.getElementById('result-text').textContent = `不正解。正解は${SYMBOLS[q.correct]}`;
+  }
+  document.getElementById('next-row').style.display = 'flex';
+}
+
+function nextQuestion() { current++; if (current < questions.length) renderQuestion(); else showResult(); }
+
+function showResult() {
+  let correct = 0, points = 0, maxPoints = 0;
+  questions.forEach((q, i) => { maxPoints += q.points; if (answers[i] === q.correct) { correct++; points += q.points; } });
+  document.getElementById('prog-label').textContent = '終了';
+  document.getElementById('prog-fill').style.width = '100%';
+  const rows = questions.map((q, i) => {
+    const ok = answers[i] === q.correct;
+    return `<tr><td>${q.section}</td><td>${answers[i] !== null ? SYMBOLS[answers[i]] : '未回答'}</td><td>${SYMBOLS[q.correct]}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?q.points:0}/${q.points}</td></tr>`;
+  }).join('');
+  document.getElementById('quiz-area').innerHTML = `
+    <div style="background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 24px;text-align:center">
+      <h2 style="font-size:1.4rem;color:var(--primary);margin-bottom:6px">第2問 終了！</h2>
+      <div style="margin:16px 0">
+        <div class="score-big">${correct}<span class="score-denom"> / ${questions.length}問</span></div>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxPoints}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>
+        ${rows}
+      </table>
+      <div style="margin-top:24px"><button class="btn-secondary" onclick="restartQuiz()">もう一度挑戦する</button></div>
+    </div>`;
+}
+
+function restartQuiz() { current = 0; answers = new Array(questions.length).fill(null); selected = null; answered = false; renderQuestion(); }
+
+function openModal(idx) {
+  const q = questions[idx];
+  const exp = q.explanation;
+  const opts = exp.options.map(o => `<div class="option-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('');
+  document.getElementById('modal-title').textContent = `${q.section} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:12px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+renderQuestion();
+</script>
+</body>
+</html>
