@@ -5,446 +5,649 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>情報I 進研模試 2025年6月｜第3問</title>
 <style>
-  :root{--bg:#f0f4f8;--card:#ffffff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,0.08);}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-  header{background:var(--primary);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
-  header h1{font-size:1rem;font-weight:700;}
-  .progress-wrap{display:flex;align-items:center;gap:10px;}
-  .progress-label{font-size:.8rem;opacity:.85;white-space:nowrap;}
-  .progress-bar{width:120px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
-  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .4s ease;}
-  main{max-width:760px;margin:0 auto;padding:20px 16px 80px;}
-  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 22px 20px;margin-bottom:16px;}
-  .q-meta{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
-  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;}
-  .q-point{font-size:.72rem;color:var(--muted);}
-  .q-body{font-size:.9rem;line-height:1.8;}
-  .q-body p{margin-bottom:.6em;}
-  .code-box{background:#1e2a3a;color:#c8d8e8;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:.83rem;line-height:1.75;margin:10px 0;overflow-x:auto;white-space:pre;}
-  .code-box .blank{background:#f0a000;color:#1e2a3a;font-weight:700;padding:0 4px;border-radius:3px;}
-  .figure-box{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
-  .data-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.83rem;font-family:'Courier New',monospace;}
-  .data-table th,.data-table td{border:1px solid var(--border);padding:5px 8px;text-align:center;}
-  .data-table th{background:var(--primary-light);font-weight:700;}
-  .sub-q{margin-top:18px;}
-  .sub-q-label{font-weight:700;font-size:.85rem;color:var(--primary);margin-bottom:8px;}
-  .choices{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
-  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;text-align:left;font-size:.86rem;line-height:1.5;transition:border-color .15s,background .15s;font-family:'Courier New',monospace;}
-  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
-  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:22px;margin-top:1px;font-size:.85rem;font-family:inherit;}
-  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
-  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
-  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
-  .choice-btn:disabled{cursor:default;}
-  .action-row{margin-top:16px;display:flex;gap:10px;justify-content:flex-end;}
-  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .15s;}
-  .btn-primary:hover{background:#154080;}
-  .btn-primary:disabled{background:#aaa;cursor:default;}
-  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 20px;font-size:.9rem;font-weight:700;cursor:pointer;}
-  .btn-secondary:hover{background:var(--primary-light);}
-  .result-banner{display:none;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:.9rem;font-weight:600;align-items:center;gap:10px;}
-  .result-banner.show{display:flex;}
-  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
-  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
-  .result-banner .icon{font-size:1.3rem;}
-  .explanation-link{display:inline-block;margin-left:auto;font-size:.82rem;font-weight:600;color:var(--primary);text-decoration:none;border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;transition:background .15s;}
-  .explanation-link:hover{background:var(--primary-light);}
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
-  .modal-overlay.show{display:flex;}
-  .modal{background:#fff;border-radius:12px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:24px 22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
-  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-  .modal-title{font-size:1rem;font-weight:700;color:var(--primary);}
-  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:6px;line-height:1;}
-  .modal-close:hover{background:var(--bg);}
-  .modal-body{font-size:.9rem;line-height:1.85;}
-  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
-  .modal-body p{margin-bottom:.7em;}
-  .modal-body .option-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.87rem;font-family:'Courier New',monospace;}
-  .modal-body .option-exp.ok{border-left:3px solid var(--correct);}
-  .modal-body .option-exp.ng{border-left:3px solid var(--wrong);}
-  .label-ok{color:var(--correct);font-weight:700;}
-  .label-ng{color:var(--wrong);font-weight:700;}
-  .result-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:.88rem;}
-  .result-table th,.result-table td{border:1px solid var(--border);padding:7px 10px;text-align:center;}
-  .result-table th{background:var(--primary-light);font-weight:700;}
-  .result-table td.ok{color:var(--correct);font-weight:700;}
-  .result-table td.ng{color:var(--wrong);font-weight:700;}
-  .score-big{font-size:3rem;font-weight:800;color:var(--primary);}
-  .score-denom{font-size:1.2rem;color:var(--muted);}
-  @media(max-width:540px){.q-card{padding:18px 14px;}.choice-btn{font-size:.8rem;}.progress-bar{width:80px;}.score-big{font-size:2.4rem;}}
+:root{
+  --bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--pl:#e8f0fb;
+  --ok:#1a7a4a;--ok-bg:#e6f4ec;--ng:#b91c1c;--ng-bg:#fde8e8;
+  --text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;
+  --radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.8;}
+header{background:var(--primary);color:#fff;padding:12px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:space-between;}
+header h1{font-size:.95rem;font-weight:700;}
+.score-disp{font-size:.82rem;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;white-space:nowrap;}
+main{max-width:800px;margin:0 auto;padding:24px 16px 80px;}
+.mondai-title{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:4px;}
+.mondai-meta{font-size:.82rem;color:var(--muted);margin-bottom:20px;}
+.mondai-bun{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:20px;}
+.mondai-bun h3{font-size:.92rem;font-weight:800;color:var(--primary);border-left:4px solid var(--primary);padding-left:8px;margin-bottom:14px;line-height:1.6;}
+.mondai-bun p{margin-bottom:.75em;}
+.speaker{font-weight:700;}
+.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:.87rem;}
+.tbl th,.tbl td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top;}
+.tbl th{background:var(--pl);font-weight:700;}
+.tbl-label{font-weight:700;font-size:.88rem;margin:10px 0 4px;display:block;}
+.fig-box{background:#f7f9fc;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
+.fig-title{font-weight:700;color:var(--primary);display:block;margin-bottom:5px;}
+.note{font-size:.83rem;color:var(--muted);}
+.code-box{background:#1e2a3a;color:#c8d8e8;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:.83rem;line-height:1.8;margin:10px 0;overflow-x:auto;white-space:pre;}
+.code-box .bl{background:#f0a000;color:#1e2a3a;font-weight:700;padding:1px 4px;border-radius:3px;}
+.section-sep{border:none;border-top:2px dashed var(--border);margin:28px 0;}
+.setsumon{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 20px 16px;margin-bottom:24px;border-left:4px solid var(--border);transition:border-color .2s;}
+.setsumon.answered{border-left-color:var(--primary);}
+.setsumon-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.setsumon-badge{background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+.setsumon-pts{font-size:.72rem;color:var(--muted);}
+.setsumon-q{font-size:.92rem;font-weight:600;margin-bottom:12px;line-height:1.65;}
+.choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.5;transition:border-color .15s,background .15s;width:100%;font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;}
+.choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--pl);}
+.ci{font-weight:700;color:var(--primary);min-width:24px;flex-shrink:0;}
+.choice-btn.selected{border-color:var(--primary);background:var(--pl);}
+.choice-btn.correct{border-color:var(--ok);background:var(--ok-bg);}
+.choice-btn.wrong{border-color:var(--ng);background:var(--ng-bg);}
+.choice-btn:disabled{cursor:default;}
+.answer-row{margin-top:14px;}
+.btn-ans{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.btn-ans:disabled{background:#aaa;cursor:default;}
+.result-wrap{display:none;margin-top:12px;}
+.result-wrap.show{display:block;}
+.result-banner{border-radius:8px;padding:11px 14px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.result-banner.ok{background:var(--ok-bg);color:var(--ok);}
+.result-banner.ng{background:var(--ng-bg);color:var(--ng);}
+.result-icon{font-size:1.2rem;}
+.exp-btn{font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;white-space:nowrap;margin-left:auto;}
+.exp-btn:hover{background:var(--pl);}
+.exp-panel{display:none;margin-top:10px;background:#f7f9fc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:.88rem;line-height:1.8;}
+.exp-panel.open{display:block;}
+.ans-label{background:var(--ok-bg);border-left:4px solid var(--ok);padding:7px 12px;border-radius:4px;margin-bottom:10px;font-weight:700;color:var(--ok);display:block;}
+.exp-panel p{margin-bottom:.6em;}
+.opt-row{margin:5px 0;padding:6px 10px;background:#fff;border-radius:6px;font-size:.86rem;}
+.opt-row.ok-opt{border-left:3px solid var(--ok);}
+.opt-row.ng-opt{border-left:3px solid var(--ng);}
+.lbl-ok{color:var(--ok);font-weight:700;}
+.lbl-ng{color:var(--ng);font-weight:700;}
+#summary{display:none;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 24px;text-align:center;margin-top:16px;}
+#summary h2{font-size:1.3rem;color:var(--primary);margin-bottom:8px;}
+.score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+.score-sub{color:var(--muted);margin-top:4px;font-size:.9rem;}
+.sum-tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:.87rem;}
+.sum-tbl th,.sum-tbl td{border:1px solid var(--border);padding:6px 10px;text-align:center;}
+.sum-tbl th{background:var(--pl);font-weight:700;}
+.sum-tbl td.ok-td{color:var(--ok);font-weight:700;}
+.sum-tbl td.ng-td{color:var(--ng);font-weight:700;}
+.btn-retry{margin-top:20px;background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;}
+.btn-retry:hover{background:var(--pl);}
+@media(max-width:540px){.mondai-bun,.setsumon{padding:16px 13px;}.choice-btn{font-size:.84rem;}.score-big{font-size:2.2rem;}.code-box{font-size:.76rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{
+    max-width:800px;
+    margin:14px auto;
+    padding:0 16px;
+    text-align:left;
+  }
+  .back-to-index-wrap.bottom{
+    margin:28px auto 36px;
+    text-align:center;
+  }
+  .back-to-index-btn{
+    display:inline-block;
+    background:var(--primary,#1a56a0);
+    color:#fff;
+    text-decoration:none;
+    padding:8px 18px;
+    border-radius:8px;
+    font-weight:700;
+    font-size:.88rem;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+  }
+  .back-to-index-btn:hover{
+    background:#154080;
+  }
+
 </style>
 </head>
 <body>
 
 <header>
-  <h1>情報Ⅰ 2025年6月 ｜ 第3問</h1>
-  <div class="progress-wrap">
-    <span class="progress-label" id="prog-label">1 / 9</span>
-    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:11%"></div></div>
-  </div>
+  <h1>情報Ⅰ 進研模試 2025年6月 ｜ 第3問（配点25点）</h1>
+  <div class="score-disp" id="hdr-score">0 / 9 問回答済</div>
 </header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
 
-<main id="quiz-area"></main>
 
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-title">解説</span>
-      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+<main>
+<div class="mondai-title">第3問　次の問い（問1〜3）に答えよ。</div>
+<div class="mondai-meta">配点 25点｜プログラミング</div>
+
+<!-- ====================================================
+     問1・問2 共通問題文
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問1・問2　次の生徒Sと先生Tの会話文を読み，後の各問いに答えよ。なお，すべての配列の添字は0から始まるものとする。</h3>
+
+  <p><span class="speaker">T：</span>Sさん，昨日受けた資格試験，どうでしたか？</p>
+  <p><span class="speaker">S：</span>無事合格しました。</p>
+  <p><span class="speaker">T：</span>おめでとう！</p>
+  <p><span class="speaker">S：</span>この資格試験はコンピュータを使って解答をし，解答を終えた直後に自分の得点と合否結果が表示されました。結果がすぐにわかってすごくよいと感じました。このような試験では，解答後どんな仕組みで合否の表示までの処理がされているのでしょうか？</p>
+  <p><span class="speaker">T：</span>Sさんはプログラムに興味がありそうですね。では一緒に考えていきましょう。</p>
+  <p><span class="speaker">S：</span>はい，お願いします。</p>
+  <p><span class="speaker">T：</span>はじめに，どんな機能が必要か考えてみると，受験者の答案の採点，合否の判定，そして合否結果と得点の画面表示の機能が必要ですね。</p>
+  <p><span class="speaker">S：</span>私が受けた試験の採点方法・配点・合否判定の内容は図1の通りです。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図1　試験の概要</span>
+    <b>[1] 出題形式</b><br>
+    ・出題内容にはA・B・Cの分野がある（各分野には小問が数問ある）<br>
+    ・分野A（6問），分野B（4問），分野C（4問）の順序で出題する<br>
+    ・全問選択式（選択肢0〜9から一つを選ぶ）<br><br>
+    <b>[2] 採点方法</b><br>
+    ・小問が正解なら，その小問の配点を得点に加え，不正解なら得点を加えない<br>
+    ・すべての分野（A・B・C）の各小問の得点を合計する<br><br>
+    <b>[3] 配点</b><br>
+    ・満点：100点<br>
+    ・配点：分野A 60点（各10点×6問），分野B 20点（各5点×4問），分野C 20点（各5点×4問）<br><br>
+    <b>[4] 合否判定</b><br>
+    ・得点が60点以上の場合「合格」，それ以外は「不合格」
+  </div>
+
+  <p><span class="speaker">T：</span>それではまず，採点処理と得点の計算処理を考えてみましょう。採点に必要なものは受験者が解答した答案データ，正解データ，そして小問ごとの配点データです。図2のプログラムは(01)行目でSさんが解答した答案のデータを配列 <code>Touan</code> に格納してみました。配列 <code>Seikai</code> には正解データ，配列 <code>Haiten</code> には配点データを格納しています。</p>
+  <p><span class="speaker">S：</span>この三つの配列はどのように関係づけられているのですか？</p>
+  <p><span class="speaker">T：</span>はい，配列の要素を指定する添字で関係づけています。添字が k のとき答案データは <code>Touan[k]</code>，その正解データは <code>Seikai[k]</code>，そして配点データは <code>Haiten[k]</code> になります。もちろん各配列の要素数も一致しますよ。それではどのように正解・不正解を判断し，得点を求めるかをSさんの答案を使って考えてみましょう。</p>
+  <p>例えば，<code>Touan[3]</code> の値は「2」で <code>Seikai[3]</code> の値と一致しているので正解になります。よって得点には <code>Haiten[3]</code> の10点が加わります。同様に考えて <code>Touan[6]</code> の値は「<b>ア</b>」で，得点に加わる点数は <b>イ</b> 点ですね。このように計算していくと，Sさんの総得点は <b>ウエ</b> 点になります。</p>
+
+  <div class="code-box">(01) Touan  = [1, 4, 5, 2, 6, 8, 4, 3, 2, 4, 3, 2, 2, 5]
+(02) Seikai = [1, 4, 4, 2, 6, 8, 4, 1, 2, 4, 1, 2, 2, 6]
+(03) Haiten = [10,10,10,10,10,10, 5, 5, 5, 5, 5, 5, 5, 5]</div>
+  <p class="note">図2　試験の採点に必要なデータを設定するプログラム（添字0〜13の14要素）</p>
+</div>
+
+<!-- 問1(ア) -->
+<div class="setsumon" id="qs0">
+  <div class="setsumon-head"><span class="setsumon-badge">問1（ア）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q"><code>Touan[6]</code> の値 <b>【ア】</b> として最も適当なものを，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch0">
+    <button class="choice-btn" onclick="sel(0,0)"><span class="ci">⓪</span><span>2</span></button>
+    <button class="choice-btn" onclick="sel(0,1)"><span class="ci">①</span><span>3</span></button>
+    <button class="choice-btn" onclick="sel(0,2)"><span class="ci">②</span><span>4</span></button>
+    <button class="choice-btn" onclick="sel(0,3)"><span class="ci">③</span><span>8</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab0" onclick="judge(0)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw0">
+    <div class="result-banner" id="rb0"><span class="result-icon" id="ri0"></span><span id="rt0"></span><button class="exp-btn" onclick="toggleExp(0)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep0">
+      <span class="ans-label">✓ 正解：②　4</span>
+      <p>図2の配列から，添字6の値を読み取ります。<br>
+      <code>Touan  = [1, 4, 5, 2, 6, 8, <b>4</b>, 3, 2, 4, 3, 2, 2, 5]</code><br>
+      　　　　　　　　　　　　　添字：0  1  2  3  4  5  <b>6</b>  …<br>
+      よって <code>Touan[6]</code> ＝ <b>4</b>。<br>
+      <code>Seikai[6]</code> も4であり一致するので正解，<code>Haiten[6]</code>＝5点が加算されます。</p>
     </div>
-    <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
-<script>
-const SYMBOLS = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+<!-- 問1(イ) -->
+<div class="setsumon" id="qs1">
+  <div class="setsumon-head"><span class="setsumon-badge">問1（イ）</span><span class="setsumon-pts">1点</span></div>
+  <div class="setsumon-q"><code>Touan[6]</code> が正解のとき，得点に加わる点数 <b>【イ】</b> は何点か。最も適当なものを選べ。</div>
+  <div class="choices" id="ch1">
+    <button class="choice-btn" onclick="sel(1,0)"><span class="ci">⓪</span><span>0点</span></button>
+    <button class="choice-btn" onclick="sel(1,1)"><span class="ci">①</span><span>5点</span></button>
+    <button class="choice-btn" onclick="sel(1,2)"><span class="ci">②</span><span>10点</span></button>
+    <button class="choice-btn" onclick="sel(1,3)"><span class="ci">③</span><span>15点</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab1" onclick="judge(1)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw1">
+    <div class="result-banner" id="rb1"><span class="result-icon" id="ri1"></span><span id="rt1"></span><button class="exp-btn" onclick="toggleExp(1)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep1">
+      <span class="ans-label">✓ 正解：①　5点</span>
+      <p><code>Haiten[6]</code>＝5 なので，<code>Touan[6]</code> が正解のとき <b>5点</b>が加算されます。図1より分野B（7〜10問目，添字6〜9）の配点は各5点です。</p>
+    </div>
+  </div>
+</div>
 
-// 配列データ（共通コンテキスト）
-const ARRAY_TABLE = `
-<table class="data-table">
-<tr><th>添字</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th></tr>
-<tr><th>Touan</th><td>1</td><td>4</td><td>5</td><td>2</td><td>6</td><td>8</td><td>4</td><td>3</td><td>2</td><td>4</td><td>3</td><td>2</td><td>2</td><td>5</td></tr>
-<tr><th>Seikai</th><td>1</td><td>4</td><td>4</td><td>2</td><td>6</td><td>8</td><td>4</td><td>1</td><td>2</td><td>4</td><td>1</td><td>2</td><td>2</td><td>6</td></tr>
-<tr><th>Haiten</th><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td></tr>
-</table>`;
+<!-- 問1(ウエ) -->
+<div class="setsumon" id="qs2">
+  <div class="setsumon-head"><span class="setsumon-badge">問1（ウエ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">Sさんの総得点 <b>【ウエ】</b> 点はいくらか。当てはまる2桁の数字を選べ。<br>
+  <span class="note">（図2の配列 Touan と Seikai を照合し，一致した問題の Haiten の値を合計する）</span></div>
+  <div class="choices" id="ch2">
+    <button class="choice-btn" onclick="sel(2,0)"><span class="ci">⓪</span><span>65点（ウ＝6，エ＝5）</span></button>
+    <button class="choice-btn" onclick="sel(2,1)"><span class="ci">①</span><span>70点（ウ＝7，エ＝0）</span></button>
+    <button class="choice-btn" onclick="sel(2,2)"><span class="ci">②</span><span>75点（ウ＝7，エ＝5）</span></button>
+    <button class="choice-btn" onclick="sel(2,3)"><span class="ci">③</span><span>80点（ウ＝8，エ＝0）</span></button>
+    <button class="choice-btn" onclick="sel(2,4)"><span class="ci">④</span><span>85点（ウ＝8，エ＝5）</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab2" onclick="judge(2)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw2">
+    <div class="result-banner" id="rb2"><span class="result-icon" id="ri2"></span><span id="rt2"></span><button class="exp-btn" onclick="toggleExp(2)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep2">
+      <span class="ans-label">✓ 正解：②　75点（ウ＝7，エ＝5）</span>
+      <p>TouanとSekaiを1問ずつ照合します：</p>
+      <table style="font-size:.83rem;border-collapse:collapse;width:100%;margin:8px 0;">
+        <tr style="background:var(--pl);"><th style="border:1px solid var(--border);padding:4px 6px;">添字k</th><th style="border:1px solid var(--border);padding:4px 6px;">Touan[k]</th><th style="border:1px solid var(--border);padding:4px 6px;">Seikai[k]</th><th style="border:1px solid var(--border);padding:4px 6px;">正誤</th><th style="border:1px solid var(--border);padding:4px 6px;">Haiten[k]</th></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">0</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">1</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">1</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">10</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">1</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">10</td></tr>
+        <tr style="background:#fde8e8;"><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ng);">✗</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">−</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">3</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">10</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">6</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">6</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">10</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">8</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">8</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">10</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">6</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td></tr>
+        <tr style="background:#fde8e8;"><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">7</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">3</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">1</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ng);">✗</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">−</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">8</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">9</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td></tr>
+        <tr style="background:#fde8e8;"><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">10</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">3</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">1</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ng);">✗</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">−</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">11</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">12</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ok);">○</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td></tr>
+        <tr style="background:#fde8e8;"><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">13</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">6</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;color:var(--ng);">✗</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">−</td></tr>
+      </table>
+      <p>正解10問の合計：10＋10＋10＋10＋10＋5＋5＋5＋5＋5 ＝ <b>75点</b></p>
+    </div>
+  </div>
+</div>
 
-const questions = [
+<!-- ====================================================
+     問2 問題文（図3プログラム）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問2　次の会話文を読み，空欄【オ】〜【キ】に入れるのに最も適当なものを，後の解答群からそれぞれ一つずつ選べ。なお，「==」は両辺の値が等しいかどうかを調べる比較演算子，「!=」は両辺の値が等しくないかどうかを調べる比較演算子である。</h3>
 
-  // 問1 ア
-  {
-    id:"1-a", section:"第3問 問1（ア）", points:2,
-    stem:`資格試験の採点プログラムを考える。以下の配列データを使用する（添字は0から始まる）：<br>${ARRAY_TABLE}<br>
-Sさんが解答した答案データが配列 <b>Touan</b>、正解データが配列 <b>Seikai</b>、配点データが配列 <b>Haiten</b> に格納されている。添字 k のとき答案データは Touan[k]、正解データは Seikai[k]、配点データは Haiten[k]。<br><br>
-例：Touan[3]の値は「2」でSeikai[3]の値と一致しているので正解となり、Haiten[3]の10点が加わる。`,
-    question:`Touan[6]の値は【ア】で、得点に加わる点数は【イ】点。【ア】に当てはまるものを選べ。`,
-    choices:["2","3","4","8"],
-    correct:2,
-    explanation:{
-      answer:"②　4",
-      text:`配列の添字は0から始まります。図2より Touan[6] = 4 です。また Seikai[6] = 4 であり、Touan[6] と Seikai[6] が一致するので正解となり、Haiten[6] = 5点が得点に加わります。`,
-      options:[
-        {label:"⓪ 2：誤り",ok:false,text:"Touan[6]は4、2ではない。"},
-        {label:"① 3：誤り",ok:false,text:"Touan[6]は4、3ではない。"},
-        {label:"② 4：正しい",ok:true,text:"Touan[6] = 4。Seikai[6] = 4 と一致し正解。"},
-        {label:"③ 8：誤り",ok:false,text:"Touan[6]は4、8ではない。"}
-      ]
-    }
-  },
+  <p><span class="speaker">T：</span>図3は，図1の試験の概要を反映したプログラムです。</p>
+  <p><span class="speaker">S：</span>(04)行目の <code>tokuten</code> は得点が格納される変数で，その計算は(05)行目以降で行われるから，ここで0に初期化しているのですね。</p>
+  <p><span class="speaker">T：</span>はい，そうです。(05)〜(07)行目までは繰り返しの処理です。繰り返す回数は，配列の要素の数を返す関数を使って「要素数(Touan)」と表され，すべての問題の数と一致します。この繰り返しの中で，小問ごとに答案の正解・不正解を確認し，正解の場合は，(07)行目で変数 <code>tokuten</code> に配点を加算しているのですよ。</p>
+  <p><span class="speaker">S：</span>よくわかりました。(08)行目以降は合否の判定をし，合否結果と得点を表示しているのですね。</p>
+  <p><span class="speaker">T：</span>その通りです。図4はプログラムの実行結果です。</p>
 
-  // 問1 イ
-  {
-    id:"1-i", section:"第3問 問1（イ）", points:1,
-    stem:`${ARRAY_TABLE}<br>Touan[6] = 4、Seikai[6] = 4（一致→正解）、Haiten[6] = 5点。`,
-    question:`Touan[6]が正解のとき、得点に加わる点数【イ】は何点か。`,
-    choices:["0点","5点","10点","15点"],
-    correct:1,
-    explanation:{
-      answer:"①　5点",
-      text:`Touan[6] = 4 で Seikai[6] = 4 と一致しているので正解です。Haiten[6] = 5 なので、得点に5点が加わります。`,
-      options:[
-        {label:"⓪ 0点：誤り",ok:false,text:"正解なので0点にはならない。"},
-        {label:"① 5点：正しい",ok:true,text:"Haiten[6] = 5点が加算される。"},
-        {label:"② 10点：誤り",ok:false,text:"Haiten[6]は5であり10ではない。"},
-        {label:"③ 15点：誤り",ok:false,text:"Haiten[6]は5であり15ではない。"}
-      ]
-    }
-  },
+  <div class="code-box">〜〜 略（図2と同じプログラム）〜〜
 
-  // 問1 ウエ（総得点75点）
-  {
-    id:"1-ue", section:"第3問 問1（ウエ）", points:3,
-    stem:`${ARRAY_TABLE}<br>Touan[k]とSeikai[k]を比較し、一致すれば正解としてHaiten[k]を加算することでSさんの総得点を求める。`,
-    question:`Sさんの総得点【ウエ】点は何点か。当てはまる数字（2桁）を答えよ。`,
-    choices:["65点","70点","75点","80点","85点","90点"],
-    correct:2,
-    explanation:{
-      answer:"75点（ウ=7, エ=5）",
-      text:`各添字でTouan[k]とSeikai[k]を比較します：<br>
-一致（正解）：k = 0,1,3,4,5,6,8,9,11,12 → それぞれHaiten[k]を加算<br>
-不一致（誤り）：k = 2,7,10,13<br><br>
-正解問題の得点合計：<br>
-k=0:10 + k=1:10 + k=3:10 + k=4:10 + k=5:10 + k=6:5 + k=8:5 + k=9:5 + k=11:5 + k=12:5 = <b>75点</b>`,
-      options:[
-        {label:"65点：誤り",ok:false,text:"計算が合わない。"},
-        {label:"70点：誤り",ok:false,text:"計算が合わない。"},
-        {label:"75点：正しい",ok:true,text:"一致する10問の配点を合算すると75点。"},
-        {label:"80点以上：誤り",ok:false,text:"計算が合わない。"}
-      ]
-    }
-  },
-
-  // 問2 オ
-  {
-    id:"2-o", section:"第3問 問2（オ）", points:3,
-    stem:`図3のプログラム（採点・判定・結果表示）：<br>
-<div class="code-box">(04) tokuten = 0
-(05) i を 0 から要素数(Touan) - 1 まで1ずつ増やしながら繰り返す:
-(06)   もし Touan[<span class="blank">オ</span>] == Seikai[<span class="blank">オ</span>] ならば:
-(07)     tokuten = <span class="blank">カ</span>
-(08) もし <span class="blank">キ</span> ならば:
+(04) tokuten = 0
+(05) i を 0 から 要素数(Touan) - 1 まで 1 ずつ増やしながら繰り返す:
+(06)   もし Touan[<span class="bl"> オ </span>] == Seikai[<span class="bl"> オ </span>] ならば:
+(07)     tokuten = <span class="bl"> カ </span>
+(08) もし <span class="bl"> キ </span> ならば:
 (09)   表示する ("「合格」(得点:", tokuten, "点)")
 (10) そうでなければ:
-(11)   表示する ("「不合格」(得点:", tokuten, "点)")</div>`,
-    question:`空欄【オ】に入れるのに最も適当なものを選べ。`,
-    choices:["tokuten","tokuten + i","i - 1","i"],
-    correct:3,
-    explanation:{
-      answer:"③　i",
-      text:`(05)行目で変数 i を 0 から「要素数(Touan) - 1」まで1ずつ増やしながら繰り返しています。これは配列の各要素を順番にアクセスするための典型的なループです。各繰り返しでTouanとSekaiの<b>同じ添字（i番目）の要素</b>を比較するので、空欄には <b>i</b> が入ります。`,
-      options:[
-        {label:"⓪ tokuten：誤り",ok:false,text:"tokuten は得点を格納する変数であり、配列の添字には使わない。"},
-        {label:"① tokuten + i：誤り",ok:false,text:"添字として不適切。"},
-        {label:"② i - 1：誤り",ok:false,text:"i - 1 だとi=0のとき添字が-1になり不正。"},
-        {label:"③ i：正しい",ok:true,text:"ループ変数 i を配列の添字として使うのが正しい。"}
-      ]
-    }
-  },
+(11)   表示する ("「不合格」(得点:", tokuten, "点)")</div>
+  <p class="note">図3　資格試験の採点・判定・結果表示をするプログラム</p>
 
-  // 問2 カ
-  {
-    id:"2-k", section:"第3問 問2（カ）", points:3,
-    stem:`図3のプログラムの続き。正解のとき(07)行目で変数 tokuten に配点を加算する。`,
-    question:`空欄【カ】に入れるのに最も適当なものを選べ。`,
-    choices:["Haiten[i]","Haiten[i - 1]","tokuten + Haiten[i]","tokuten + Haiten[i - 1]"],
-    correct:2,
-    explanation:{
-      answer:"②　tokuten + Haiten[i]",
-      text:`(07)行目は「tokuten に Haiten[i] を<b>加算</b>してtokuten を更新する」処理です。加算なので現在の tokuten の値に Haiten[i] を足す必要があります。よって <b>tokuten + Haiten[i]</b> が正解です。単に Haiten[i] だけだと以前の得点がリセットされてしまいます。`,
-      options:[
-        {label:"⓪ Haiten[i]：誤り",ok:false,text:"これだと毎回Haiten[i]で上書きされ、累積得点にならない。"},
-        {label:"① Haiten[i-1]：誤り",ok:false,text:"添字がずれており誤り。"},
-        {label:"② tokuten + Haiten[i]：正しい",ok:true,text:"現在の得点にHaiten[i]を加算して更新するのが正しい。"},
-        {label:"③ tokuten + Haiten[i-1]：誤り",ok:false,text:"添字がずれており誤り。"}
-      ]
-    }
-  },
+  <div class="fig-box">
+    <span class="fig-title">図4　実行結果（合否と得点を表示）</span>
+    「合格」（得点：<b>ウエ</b>点）
+  </div>
 
-  // 問2 キ
-  {
-    id:"2-ki", section:"第3問 問2（キ）", points:3,
-    stem:`図1の合否判定：「得点が60点以上の場合『合格』、それ以外は『不合格』」<br>
-(08)行目は合否を判定する条件式。正解なら(09)行目「合格」を表示する。`,
-    question:`空欄【キ】に入れるのに最も適当なものを選べ。`,
-    choices:["tokuten >= 60","tokuten <= 60","tokuten <= 59","tokuten != 59"],
-    correct:0,
-    explanation:{
-      answer:"⓪　tokuten >= 60",
-      text:`合否判定は「60点以上で合格」です。(08)行目の条件が満たされると(09)行目「合格」の表示が実行されます。よって条件は「tokuten >= 60（tokuten が60以上）」が正解です。`,
-      options:[
-        {label:"⓪ tokuten >= 60：正しい",ok:true,text:"60点以上のときに合格を表示するための条件。"},
-        {label:"① tokuten <= 60：誤り",ok:false,text:"60点以下も含んでしまい不合格者まで合格になる。"},
-        {label:"② tokuten <= 59：誤り",ok:false,text:"59点以下に合格表示してしまう（逆の判定）。"},
-        {label:"③ tokuten != 59：誤り",ok:false,text:"59点でない場合に合格となり、不適切。"}
-      ]
-    }
-  },
+  <p style="margin-top:12px;font-weight:700;font-size:.88rem;">【オ】の解答群</p>
+  <div class="fig-box" style="margin-top:4px;">
+    ⓪ tokuten　　① tokuten + i　　② i - 1　　③ i
+  </div>
+  <p style="margin-top:10px;font-weight:700;font-size:.88rem;">【カ】の解答群</p>
+  <div class="fig-box" style="margin-top:4px;">
+    ⓪ Haiten[i]　　① Haiten[i - 1]　　② tokuten + Haiten[i]　　③ tokuten + Haiten[i - 1]
+  </div>
+  <p style="margin-top:10px;font-weight:700;font-size:.88rem;">【キ】の解答群</p>
+  <div class="fig-box" style="margin-top:4px;">
+    ⓪ tokuten &gt;= 60　　① tokuten &lt;= 60　　② tokuten &lt;= 59　　③ tokuten != 59
+  </div>
+</div>
 
-  // 問3 ク（改定後の合否）
-  {
-    id:"3-k", section:"第3問 問3（ク）", points:2,
-    stem:`改定後の合否判定（図5）：<br>
-<div class="figure-box">条件a）かつ条件b）が満たされる場合「合格」、それ以外は「不合格」<br>
-・条件a）合計点が60点以上<br>
-・条件b）A・B・Cの各分野に基準点を設け、すべての分野がその基準点以上<br>
-　基準点：分野A: 30点、分野B: 15点、分野C: 15点</div>
-問題構成：1問目〜6問目が分野A（各10点、計60点）、7問目〜10問目が分野B（各5点、計20点）、11問目〜14問目が分野C（各5点、計20点）。<br><br>
-Sさんの答案：${ARRAY_TABLE}<br>不一致（誤り）：k=2,7,10,13 → 分野A:k=2（10点失点）、分野B:k=7（5点失点）、分野C:k=10,13（各5点失点）<br>
-・分野A得点：60 − 10 = 50点（基準30点以上 ✓）<br>
-・分野B得点：20 − 5 = 15点（基準15点以上 ✓）<br>
-・分野C得点：20 − 10 = 10点（基準15点未満 ✗）`,
-    question:`Sさんの答案を改定内容で判定すると合否結果【ク】はどうなるか。`,
-    choices:["条件a）と条件b）を満たし合格","条件b）は満たさないが、条件a）を満たし合格","条件a）を満たさず不合格","条件a）を満たすが、分野Bの得点が基準点を満たさず不合格","条件a）を満たすが、分野Cの得点が基準点を満たさず不合格","条件a）を満たすが、分野BとCの得点が基準点を満たさず不合格"],
-    correct:4,
-    explanation:{
-      answer:"④　条件a）を満たすが、分野Cの得点が基準点を満たさず不合格",
-      text:`Sさんの得点計算：<br>
-・合計：75点（条件a：60点以上 ✓）<br>
-・分野A：50点（基準30点 ✓）<br>
-・分野B：15点（基準15点 ✓）<br>
-・分野C：10点（基準15点 ✗）<br><br>
-条件aは満たしますが、分野Cの得点が基準点15点を下回るため条件bを満たせず「不合格」となります。`,
-      options:[
-        {label:"⓪ 誤り",ok:false,text:"分野Cが基準を満たさないため条件b）を満たせない。"},
-        {label:"① 誤り",ok:false,text:"条件b）を満たさないので合格ではない。"},
-        {label:"② 誤り",ok:false,text:"条件a）は満たしている（75点）。"},
-        {label:"③ 誤り",ok:false,text:"分野Bは15点で基準を満たしている。"},
-        {label:"④ 正しい",ok:true,text:"合計75点で条件a）はクリアだが分野C（10点）が基準15点未満。"},
-        {label:"⑤ 誤り",ok:false,text:"分野Bは基準を満たしている。"}
-      ]
-    }
-  },
+<!-- 問2(オ) -->
+<div class="setsumon" id="qs3">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（オ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【オ】</b>（(06)行目：配列 Touan と Seikai を比較するときの添字）に入れるのに最も適当なものを選べ。</div>
+  <div class="choices" id="ch3">
+    <button class="choice-btn" onclick="sel(3,0)"><span class="ci">⓪</span><span>tokuten</span></button>
+    <button class="choice-btn" onclick="sel(3,1)"><span class="ci">①</span><span>tokuten + i</span></button>
+    <button class="choice-btn" onclick="sel(3,2)"><span class="ci">②</span><span>i - 1</span></button>
+    <button class="choice-btn" onclick="sel(3,3)"><span class="ci">③</span><span>i</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab3" onclick="judge(3)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw3">
+    <div class="result-banner" id="rb3"><span class="result-icon" id="ri3"></span><span id="rt3"></span><button class="exp-btn" onclick="toggleExp(3)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep3">
+      <span class="ans-label">✓ 正解：③　i</span>
+      <p>(05)行目でループ変数 i が0から「要素数(Touan)−1」まで1ずつ増加します。各繰り返しで Touan と Seikai の<b>同じ添字（i番目）の要素</b>を比較することで，すべての小問を順番に採点できます。よって空欄には <b>i</b> が入ります。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　tokuten は得点を累積する変数であり，配列の添字に使うものではない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　tokuten+i は添字として不適切。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　i=0 のとき添字が−1になり，存在しない要素を参照してしまう。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">③ 正しい</span>　ループ変数 i を配列の添字として使い，0〜13を順に処理する。</div>
+    </div>
+  </div>
+</div>
 
-  // 問3 ケ（hantei初期値）
-  {
-    id:"3-ke", section:"第3問 問3（ケ）", points:2,
-    stem:`改定プログラム（図6）の(08)行目：<div class="code-box">(08) hantei = <span class="blank">ケ</span></div>
-変数 hantei は合否判定結果を格納する変数。(18)行目で条件を満たせば hantei = "『合格』" に変更される。`,
-    question:`空欄【ケ】に入れるのに最も適当なものを選べ。`,
-    choices:['"『合格』"', '"『不合格』"', '""', '"0"', '0'],
-    correct:1,
-    explanation:{
-      answer:"①　\"『不合格』\"",
-      text:`プログラムの処理の流れは「最初は不合格と仮定し、条件をすべて満たせば合格に変更する」です。(18)行目で条件を満たした場合に hantei を「合格」に変更しているので、(08)行目の初期値は<b>「不合格」</b>でなければなりません。`,
-      options:[
-        {label:'⓪ "『合格』"：誤り',ok:false,text:"初期値を合格にすると条件チェックの意味がなくなる。"},
-        {label:'① "『不合格』"：正しい',ok:true,text:"まず不合格とセットし、条件を満たせば合格に書き換える設計。"},
-        {label:'② ""：誤り',ok:false,text:"空文字では合否が未定のままとなる。"},
-        {label:'③ "0"、④ 0：誤り',ok:false,text:"数値は合否文字列の格納に不適切。"}
-      ]
-    }
-  },
+<!-- 問2(カ) -->
+<div class="setsumon" id="qs4">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（カ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【カ】</b>（(07)行目：正解時に変数 tokuten を更新する式）に入れるのに最も適当なものを選べ。</div>
+  <div class="choices" id="ch4">
+    <button class="choice-btn" onclick="sel(4,0)"><span class="ci">⓪</span><span>Haiten[i]</span></button>
+    <button class="choice-btn" onclick="sel(4,1)"><span class="ci">①</span><span>Haiten[i - 1]</span></button>
+    <button class="choice-btn" onclick="sel(4,2)"><span class="ci">②</span><span>tokuten + Haiten[i]</span></button>
+    <button class="choice-btn" onclick="sel(4,3)"><span class="ci">③</span><span>tokuten + Haiten[i - 1]</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab4" onclick="judge(4)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw4">
+    <div class="result-banner" id="rb4"><span class="result-icon" id="ri4"></span><span id="rt4"></span><button class="exp-btn" onclick="toggleExp(4)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep4">
+      <span class="ans-label">✓ 正解：②　tokuten + Haiten[i]</span>
+      <p>正解の小問ごとに，現在の得点 tokuten に配点 Haiten[i] を<b>加算</b>して tokuten を更新する処理が必要です。<br>
+      <code>tokuten = tokuten + Haiten[i]</code> という累積加算の式になります。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　<code>tokuten = Haiten[i]</code> だと，毎回その小問の配点で上書きされてしまい，それ以前の得点が消える。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">①③ 誤り</span>　添字が i-1 になっており，直前の小問の配点を参照してしまう。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">② 正しい</span>　現在の得点に今回の配点を加算して更新する。</div>
+    </div>
+  </div>
+</div>
 
-  // 問3 サ
-  {
-    id:"3-sa", section:"第3問 問3（サ）", points:3,
-    stem:`図6のプログラム後半：<div class="code-box">(13) もし tokuten >= 60 ならば:
+<!-- 問2(キ) -->
+<div class="setsumon" id="qs5">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（キ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【キ】</b>（(08)行目：合否を判定する条件式）に入れるのに最も適当なものを選べ。<br><span class="note">（条件が真のとき(09)行目「合格」が表示される）</span></div>
+  <div class="choices" id="ch5">
+    <button class="choice-btn" onclick="sel(5,0)"><span class="ci">⓪</span><span>tokuten &gt;= 60</span></button>
+    <button class="choice-btn" onclick="sel(5,1)"><span class="ci">①</span><span>tokuten &lt;= 60</span></button>
+    <button class="choice-btn" onclick="sel(5,2)"><span class="ci">②</span><span>tokuten &lt;= 59</span></button>
+    <button class="choice-btn" onclick="sel(5,3)"><span class="ci">③</span><span>tokuten != 59</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab5" onclick="judge(5)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw5">
+    <div class="result-banner" id="rb5"><span class="result-icon" id="ri5"></span><span id="rt5"></span><button class="exp-btn" onclick="toggleExp(5)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep5">
+      <span class="ans-label">✓ 正解：⓪　tokuten &gt;= 60</span>
+      <p>図1より「得点が60点以上の場合『合格』」。(08)行目の条件が真のとき(09)行目「合格」が表示されるので，条件は <b>tokuten &gt;= 60</b>（tokuten が60以上）です。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　60点以上のときに「合格」を表示する正しい条件。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　tokuten &lt;= 60 だと60点以下でも合格になってしまう。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　tokuten &lt;= 59 は59点以下のとき合格になる（逆の判定）。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　tokuten != 59 は59点でない場合すべてに合格表示されてしまい不適切。</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- ====================================================
+     問3 問題文（改定・図5・図6）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問3　次の会話文を読み，空欄【ク】〜【サ】に入れるのに最も適当なものを，後の解答群からそれぞれ一つずつ選べ。</h3>
+
+  <p><span class="speaker">S：</span>来年からこの試験の合否判定の方法が図5のように改定されるそうです。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図5　資格試験の改定内容（合否判定の改定）</span>
+    <b>[4] 合否判定（改定後）</b><br>
+    条件a）かつ条件b）が満たされる場合「合格」，それ以外は「不合格」<br>
+    ・条件a）合計点が60点以上<br>
+    ・条件b）A・B・Cの各分野に基準点を設け，すべての分野がその基準点以上<br>
+    　　　基準点　分野A：30点　　分野B：15点　　分野C：15点
+  </div>
+
+  <p><span class="speaker">S：</span>もし，今回の私の答案をこの改定内容で判定するとどうなるでしょうか？</p>
+  <p><span class="speaker">T：</span>1問目から6問目までが分野A，7問目から10問目までが分野B，11問目から14問目までが分野Cにあたるので，Sさんの答案データを処理すると，合否結果は <b>ク</b> となりますよ。</p>
+  <p><span class="speaker">S：</span>なるほど。ではプログラムはどのように考えたらよいのでしょうか。</p>
+  <p><span class="speaker">T：</span>まず，どの小問が分野A・B・Cに対応するかを考える必要があるので，配列 <b>Bunya</b> を新たに用意しましょう。もちろん，配列 Bunya の添字は配列 Touan や Seikai の添字に対応させます。配列 Bunya の要素には，分野Aの場合は0，分野Bの場合は1，分野Cの場合は2をそれぞれ設定してみましょう。</p>
+  <p><span class="speaker">S：</span>あと，分野ごとに基準点が設けられたので，分野ごとの得点を集計しないといけないと思います。</p>
+  <p><span class="speaker">T：</span>その通りです。分野ごとの基準点と得点を格納する配列を導入しましょう。それぞれの配列を <b>Bunya_kijun</b>，<b>Bunya_tokuten</b> とし，分野は三つあるので配列の要素数は3にします。最初の要素は分野A，二つ目の要素は分野B，三つ目の要素は分野Cを割り当てます。</p>
+  <p><span class="speaker">S：</span>改定内容を組み込んだプログラムを図6のように作成してみました。(04)行目では小問ごとの分野を配列 Bunya に設定しています。また，(05)行目では配列 Bunya_kijun に分野ごとの基準点，(06)行目では配列 Bunya_tokuten の各要素に0を設定しています。(07)，(08)行目は変数 tokuten と合否の判定結果を格納する変数 hantei を初期化しています。また，(11)行目では分野ごとの得点を計算しています。ではプログラムを実行してみます。</p>
+  <p><span class="speaker">T：</span>正しく結果が表示されていますね。よくできました！</p>
+
+  <div class="code-box">〜〜 略（図2と同じプログラム）〜〜
+
+(04) Bunya         = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2]
+(05) Bunya_kijun   = [30, 15, 15]
+(06) Bunya_tokuten = [0, 0, 0]
+(07) tokuten = 0
+(08) hantei  = <span class="bl"> ケ </span>
+(09) i を 0 から 要素数(Touan) - 1 まで 1 ずつ増やしながら繰り返す:
+(10)   もし Touan[<span class="bl"> オ </span>] == Seikai[<span class="bl"> オ </span>] ならば:
+(11)     Bunya_tokuten[<span class="bl"> コ </span>] = Bunya_tokuten[<span class="bl"> コ </span>] + Haiten[i]
+(12)     tokuten = <span class="bl"> カ </span>
+(13) もし tokuten >= 60 ならば:
 (14)   i = 0
 (15)   i &lt; 要素数(Bunya_kijun) and
-      Bunya_tokuten[i] >= Bunya_kijun[i] の間繰り返す:
+       Bunya_tokuten[i] >= Bunya_kijun[i] の間繰り返す:
 (16)     i = i + 1
-(17)   もし i == <span class="blank">サ</span> ならば:
-(18)     hantei = "『合格』"
-(19) 表示する (hantei, "(得点:", tokuten, "点)")</div>
-注意：(15)行目は繰り返しの条件。「and」より前が成り立たないときはその時点で繰り返しを終える。<br>
-Bunya_kijun = [30, 15, 15]（3要素）、各分野が基準点以上ならiが増加。全3分野をクリアすればi=3になる。`,
-    question:`空欄【サ】に入れるのに最も適当なものを選べ。`,
-    choices:["Bunya_kijun[i - 1]","Bunya_kijun[i] - 1","要素数(Bunya_kijun) - 1","要素数(Bunya_kijun)","要素数(Bunya_kijun[i - 1])","要素数(Bunya_kijun[i]) - 1"],
-    correct:3,
-    explanation:{
-      answer:"③　要素数(Bunya_kijun)",
-      text:`(15)行目のループは各分野の得点が基準点以上であれば i を1ずつ増やします。Bunya_kijun の要素数は3（分野A・B・C）です。<br><br>
-すべての分野が基準点以上ならループは3回実行され、i = 3 になります。この状態を確認するのが(17)行目です。<br>
-「i == 要素数(Bunya_kijun)」は「i == 3」と同じ意味です。これがTrueのとき、全分野が基準を満たしたとわかり、合格と判定できます。`,
-      options:[
-        {label:"⓪ 誤り",ok:false,text:"Bunya_kijun[i-1]は配列要素の参照であり要素数ではない。"},
-        {label:"① 誤り",ok:false,text:"Bunya_kijun[i]-1は要素の値から1引いたもので誤り。"},
-        {label:"② 誤り",ok:false,text:"要素数(Bunya_kijun)-1 = 2であり、全分野クリア時のi=3とは一致しない。"},
-        {label:"③ 正しい",ok:true,text:"要素数(Bunya_kijun) = 3 であり、全分野クリア時の i = 3 と一致する。"},
-        {label:"④⑤ 誤り",ok:false,text:"引数が配列の要素を参照しており不適切。"}
-      ]
-    }
-  }
+(17)   もし i == <span class="bl"> サ </span> ならば:
+(18)     hantei = "「合格」"
+(19) 表示する (hantei, "（得点：", tokuten, "点）")</div>
+  <p class="note">図6　改定内容に合わせて修正したプログラム</p>
+  <p class="note" style="margin-top:6px;">注意：(15)行目は繰り返しの条件である。ここでは繰り返しの条件式が二つあり，それらは「and」で結ばれている。この場合，「and」より前の条件式が成り立たないときは，「and」より後の条件式を処理せず，その時点で繰り返しを終えるものとする。</p>
 
-];
+  <p style="margin-top:14px;font-weight:700;font-size:.88rem;">【ク】の解答群</p>
+  <div class="fig-box" style="margin-top:4px;">
+    ⓪ 条件a）と条件b）を満たし合格<br>
+    ① 条件b）は満たさないが，条件a）を満たし合格<br>
+    ② 条件a）を満たさず不合格<br>
+    ③ 条件a）を満たすが，分野Bの得点が基準点を満たさず不合格<br>
+    ④ 条件a）を満たすが，分野Cの得点が基準点を満たさず不合格<br>
+    ⑤ 条件a）を満たすが，分野BとCの得点が基準点を満たさず不合格
+  </div>
 
-let current = 0;
-let answers = new Array(questions.length).fill(null);
-let selected = null;
-let answered = false;
+  <p style="margin-top:10px;font-weight:700;font-size:.88rem;">【ケ】の解答群</p>
+  <div class="fig-box" style="margin-top:4px;">
+    ⓪ "「合格」"　　① "「不合格」"　　② ""　　③ "0"　　④ 0
+  </div>
 
-function renderQuestion() {
-  const q = questions[current];
-  answered = false; selected = null;
-  const total = questions.length;
-  document.getElementById('prog-label').textContent = `${current + 1} / ${total}`;
-  document.getElementById('prog-fill').style.width = `${((current + 1) / total) * 100}%`;
-  document.getElementById('quiz-area').innerHTML = `
-    <div class="q-card">
-      <div class="q-meta">
-        <span class="q-badge">${q.section}</span>
-        <span class="q-point">${q.points}点</span>
-      </div>
-      <div class="q-body">
-        ${q.stem ? `<div>${q.stem}</div>` : ''}
-        <div class="sub-q">
-          <div class="sub-q-label">問：${q.question}</div>
-          <div class="choices" id="choices">
-            ${q.choices.map((c, i) => `
-              <button class="choice-btn" data-i="${i}" onclick="selectChoice(${i})">
-                <span class="ci">${SYMBOLS[i]}</span>
-                <span>${c}</span>
-              </button>`).join('')}
-          </div>
-        </div>
-      </div>
-      <div class="action-row">
-        <button class="btn-primary" id="submit-btn" onclick="submitAnswer()" disabled>回答する</button>
-      </div>
-      <div class="result-banner" id="result-banner">
-        <span class="icon" id="result-icon"></span>
-        <span id="result-text"></span>
-        <button class="explanation-link" onclick="openModal(${current})">解説を見る</button>
-      </div>
+  <p style="margin-top:10px;font-weight:700;font-size:.88rem;">【コ】の解答群</p>
+  <div class="fig-box" style="margin-top:4px;">
+    ⓪ i - 1　　① i　　② Bunya_tokuten[i - 1]　　③ Bunya_tokuten[i]　　④ Bunya[i - 1]　　⑤ Bunya[i]
+  </div>
+
+  <p style="margin-top:10px;font-weight:700;font-size:.88rem;">【サ】の解答群</p>
+  <div class="fig-box" style="margin-top:4px;">
+    ⓪ Bunya_kijun[i - 1]　　① Bunya_kijun[i] - 1　　② 要素数(Bunya_kijun) - 1<br>
+    ③ 要素数(Bunya_kijun)　　④ 要素数(Bunya_kijun[i - 1])　　⑤ 要素数(Bunya_kijun[i]) - 1
+  </div>
+</div>
+
+<!-- 問3(ク) -->
+<div class="setsumon" id="qs6">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（ク）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">空欄 <b>【ク】</b>（Sさんの答案を改定後の合否判定で判定した結果）に入れるのに最も適当なものを選べ。<br>
+  <span class="note">（Sさんの得点：合計75点，分野A：50点，分野B：15点，分野C：10点）</span></div>
+  <div class="choices" id="ch6">
+    <button class="choice-btn" onclick="sel(6,0)"><span class="ci">⓪</span><span>条件a）と条件b）を満たし合格</span></button>
+    <button class="choice-btn" onclick="sel(6,1)"><span class="ci">①</span><span>条件b）は満たさないが，条件a）を満たし合格</span></button>
+    <button class="choice-btn" onclick="sel(6,2)"><span class="ci">②</span><span>条件a）を満たさず不合格</span></button>
+    <button class="choice-btn" onclick="sel(6,3)"><span class="ci">③</span><span>条件a）を満たすが，分野Bの得点が基準点を満たさず不合格</span></button>
+    <button class="choice-btn" onclick="sel(6,4)"><span class="ci">④</span><span>条件a）を満たすが，分野Cの得点が基準点を満たさず不合格</span></button>
+    <button class="choice-btn" onclick="sel(6,5)"><span class="ci">⑤</span><span>条件a）を満たすが，分野BとCの得点が基準点を満たさず不合格</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab6" onclick="judge(6)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw6">
+    <div class="result-banner" id="rb6"><span class="result-icon" id="ri6"></span><span id="rt6"></span><button class="exp-btn" onclick="toggleExp(6)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep6">
+      <span class="ans-label">✓ 正解：④　条件a）を満たすが，分野Cの得点が基準点を満たさず不合格</span>
+      <p>Sさんの分野別得点を確認します：<br>
+      ・分野A（添字0〜5）：不正解はk=2のみ → 10×5問 ＝ 50点（基準30点 ✓）<br>
+      ・分野B（添字6〜9）：不正解はk=7のみ → 5×3問 ＝ 15点（基準15点 ✓）<br>
+      ・分野C（添字10〜13）：不正解はk=10,13の2問 → 5×2問 ＝ 10点（基準15点 <b>✗</b>）<br>
+      ・合計：75点（条件a：60点以上 ✓）<br><br>
+      条件aは満たしますが，<b>分野C（10点）が基準点15点に達しない</b>ため条件bを満たせず「不合格」となります。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　分野Cが基準を満たさないため条件b）を満たせない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">①〜③ 誤り</span>　条件aは満たす。分野BとCの得点を確認すると分野Bは基準達成，分野Cのみ未達。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">④ 正しい</span>　合計75点で条件a）はクリアだが，分野C（10点）が基準15点未満で不合格。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⑤ 誤り</span>　分野B（15点）は基準（15点）を満たしている。</div>
     </div>
-    <div class="action-row" id="next-row" style="display:none">
-      ${current < questions.length - 1
-        ? `<button class="btn-primary" onclick="nextQuestion()">次の問題へ →</button>`
-        : `<button class="btn-primary" onclick="showResult()">結果を見る</button>`}
-    </div>`;
-}
+  </div>
+</div>
 
-function selectChoice(i) {
-  if (answered) return;
-  selected = i;
-  document.querySelectorAll('.choice-btn').forEach((b, idx) => b.classList.toggle('selected', idx === i));
-  document.getElementById('submit-btn').disabled = false;
-}
+<!-- 問3(ケ) -->
+<div class="setsumon" id="qs7">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（ケ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">空欄 <b>【ケ】</b>（(08)行目：変数 hantei の初期値）に入れるのに最も適当なものを選べ。</div>
+  <div class="choices" id="ch7">
+    <button class="choice-btn" onclick="sel(7,0)"><span class="ci">⓪</span><span>"「合格」"</span></button>
+    <button class="choice-btn" onclick="sel(7,1)"><span class="ci">①</span><span>"「不合格」"</span></button>
+    <button class="choice-btn" onclick="sel(7,2)"><span class="ci">②</span><span>""（空文字）</span></button>
+    <button class="choice-btn" onclick="sel(7,3)"><span class="ci">③</span><span>"0"</span></button>
+    <button class="choice-btn" onclick="sel(7,4)"><span class="ci">④</span><span>0</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab7" onclick="judge(7)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw7">
+    <div class="result-banner" id="rb7"><span class="result-icon" id="ri7"></span><span id="rt7"></span><button class="exp-btn" onclick="toggleExp(7)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep7">
+      <span class="ans-label">✓ 正解：①　"「不合格」"</span>
+      <p>プログラムの構造を読むと：<br>
+      ・(08)行目で hantei を初期化<br>
+      ・(13)〜(18)行目で条件a）と条件b）を両方満たした場合にのみ(18)行目で <code>hantei = "「合格」"</code> に変更<br>
+      ・(19)行目で hantei を表示<br><br>
+      つまり，<b>最初は不合格と仮定しておき，条件をすべて満たせば合格に書き換える</b>という設計です。初期値が "「合格」" だと条件チェックの意味がなくなります。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　"「合格」"を初期値にすると，条件を満たさなくても合格になってしまう。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 正しい</span>　まず不合格と設定し，条件を満たせば(18)行目で合格に書き換える設計。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">②③④ 誤り</span>　空文字や数値では合否の文字列として表示できない。</div>
+    </div>
+  </div>
+</div>
 
-function submitAnswer() {
-  if (selected === null || answered) return;
-  answered = true; answers[current] = selected;
-  const q = questions[current];
-  const ok = selected === q.correct;
-  document.getElementById('submit-btn').disabled = true;
-  document.querySelectorAll('.choice-btn').forEach((b, idx) => {
-    b.disabled = true; b.classList.remove('selected');
-    if (idx === q.correct) b.classList.add('correct');
-    else if (idx === selected && !ok) b.classList.add('wrong');
+<!-- 問3(コ) -->
+<div class="setsumon" id="qs8">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（コ）</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">空欄 <b>【コ】</b>（(11)行目：<code>Bunya_tokuten</code> の添字。正解時に該当分野の得点に Haiten[i] を加算するための添字）に入れるのに最も適当なものを選べ。</div>
+  <div class="choices" id="ch8">
+    <button class="choice-btn" onclick="sel(8,0)"><span class="ci">⓪</span><span>i - 1</span></button>
+    <button class="choice-btn" onclick="sel(8,1)"><span class="ci">①</span><span>i</span></button>
+    <button class="choice-btn" onclick="sel(8,2)"><span class="ci">②</span><span>Bunya_tokuten[i - 1]</span></button>
+    <button class="choice-btn" onclick="sel(8,3)"><span class="ci">③</span><span>Bunya_tokuten[i]</span></button>
+    <button class="choice-btn" onclick="sel(8,4)"><span class="ci">④</span><span>Bunya[i - 1]</span></button>
+    <button class="choice-btn" onclick="sel(8,5)"><span class="ci">⑤</span><span>Bunya[i]</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab8" onclick="judge(8)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw8">
+    <div class="result-banner" id="rb8"><span class="result-icon" id="ri8"></span><span id="rt8"></span><button class="exp-btn" onclick="toggleExp(8)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep8">
+      <span class="ans-label">✓ 正解：⑤　Bunya[i]</span>
+      <p>配列 Bunya[i] には，i番目の小問が属する分野番号（0=分野A，1=分野B，2=分野C）が格納されています。</p>
+      <p>(11)行目では，正解の小問iが属する分野の得点配列を更新します。「i番目の小問の分野番号」は <code>Bunya[i]</code> なので，<code>Bunya_tokuten[Bunya[i]]</code> が「i番目の小問が属する分野の累積得点」になります。</p>
+      <p>例：添字i=6のとき，<code>Bunya[6]</code>=1（分野B）なので <code>Bunya_tokuten[1]</code>（分野Bの得点）に Haiten[6] を加算します。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪① 誤り</span>　i や i-1 は小問の添字であり，分野番号ではない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">②③ 誤り</span>　Bunya_tokuten[i] は添字の中に配列参照があり，文法的・意味的に不適切。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">④ 誤り</span>　Bunya[i-1] は1つ前の小問の分野番号になってしまう。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⑤ 正しい</span>　Bunya[i] で「i番目の小問が属する分野番号」を取得し，該当分野の得点配列にアクセス。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 問3(サ) -->
+<div class="setsumon" id="qs9">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（サ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【サ】</b>（(17)行目：全分野の基準点クリアを確認する条件の右辺）に入れるのに最も適当なものを選べ。</div>
+  <div class="choices" id="ch9">
+    <button class="choice-btn" onclick="sel(9,0)"><span class="ci">⓪</span><span>Bunya_kijun[i - 1]</span></button>
+    <button class="choice-btn" onclick="sel(9,1)"><span class="ci">①</span><span>Bunya_kijun[i] - 1</span></button>
+    <button class="choice-btn" onclick="sel(9,2)"><span class="ci">②</span><span>要素数(Bunya_kijun) - 1</span></button>
+    <button class="choice-btn" onclick="sel(9,3)"><span class="ci">③</span><span>要素数(Bunya_kijun)</span></button>
+    <button class="choice-btn" onclick="sel(9,4)"><span class="ci">④</span><span>要素数(Bunya_kijun[i - 1])</span></button>
+    <button class="choice-btn" onclick="sel(9,5)"><span class="ci">⑤</span><span>要素数(Bunya_kijun[i]) - 1</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab9" onclick="judge(9)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw9">
+    <div class="result-banner" id="rb9"><span class="result-icon" id="ri9"></span><span id="rt9"></span><button class="exp-btn" onclick="toggleExp(9)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep9">
+      <span class="ans-label">✓ 正解：③　要素数(Bunya_kijun)</span>
+      <p>(14)〜(16)行目のループの動きを追います：<br>
+      ・(14) i ← 0 で初期化<br>
+      ・(15) 「i &lt; 要素数(Bunya_kijun)」かつ「Bunya_tokuten[i] &gt;= Bunya_kijun[i]」が成り立つ間，(16)行目を繰り返す<br>
+      ・(16) i を1増やす<br><br>
+      Bunya_kijun の要素数は3（分野A・B・C）。<br>
+      ・分野A（i=0）の得点が基準以上 → i=1に進む<br>
+      ・分野B（i=1）の得点が基準以上 → i=2に進む<br>
+      ・分野C（i=2）の得点が基準以上 → i=3に進む → 「i &lt; 3」が偽となりループ終了<br><br>
+      全3分野がクリアされた場合，ループは3回実行されて i=3 でループを抜けます。<br>
+      途中でいずれかの分野が基準未達なら，その時点でループが終わり i は3未満になります。<br><br>
+      (17)行目「もし i == <b>サ</b> ならば」は「全分野クリアしたか？」の判定なので，<b>サ = 3 = 要素数(Bunya_kijun)</b> が正解です。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　要素数(Bunya_kijun)−1 = 2 であり，全分野クリア時の i=3 とは一致しない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">③ 正しい</span>　要素数(Bunya_kijun) = 3 ＝ 全分野クリア時の i の値。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪①④⑤ 誤り</span>　配列の要素値や誤った要素数の計算式であり不適切。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 結果サマリ -->
+<div id="summary">
+  <h2>第3問　完了！</h2>
+  <div class="score-big" id="sum-score"></div>
+  <div class="score-sub" id="sum-pts"></div>
+  <table class="sum-tbl" id="sum-tbl">
+    <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>
+  </table>
+  <button class="btn-retry" onclick="location.reload()">もう一度挑戦する</button>
+</div>
+</main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+
+<script>
+const SYM=['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+const QS=[
+  {qi:0, correct:2, pts:2, label:'問1（ア）'},
+  {qi:1, correct:1, pts:1, label:'問1（イ）'},
+  {qi:2, correct:2, pts:3, label:'問1（ウエ）'},
+  {qi:3, correct:3, pts:3, label:'問2（オ）'},
+  {qi:4, correct:2, pts:3, label:'問2（カ）'},
+  {qi:5, correct:0, pts:3, label:'問2（キ）'},
+  {qi:6, correct:4, pts:2, label:'問3（ク）'},
+  {qi:7, correct:1, pts:2, label:'問3（ケ）'},
+  {qi:8, correct:5, pts:4, label:'問3（コ）'},
+  {qi:9, correct:3, pts:3, label:'問3（サ）'},
+];
+const state={};
+let answeredCount=0;
+
+function updateHeader(){
+  document.getElementById('hdr-score').textContent=
+    answeredCount+' / '+QS.length+' 問回答済';
+}
+function sel(qi,ci){
+  if(state['done_'+qi]) return;
+  state['sel_'+qi]=ci;
+  document.querySelectorAll('#ch'+qi+' .choice-btn')
+    .forEach((b,i)=>b.classList.toggle('selected',i===ci));
+  document.getElementById('ab'+qi).disabled=false;
+}
+function judge(qi){
+  const q=QS.find(x=>x.qi===qi);
+  const chosen=state['sel_'+qi];
+  if(chosen===undefined||state['done_'+qi]) return;
+  state['done_'+qi]=true; state[qi]=chosen;
+  document.getElementById('ab'+qi).disabled=true;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>{
+    b.disabled=true; b.classList.remove('selected');
+    if(i===q.correct) b.classList.add('correct');
+    else if(i===chosen&&chosen!==q.correct) b.classList.add('wrong');
   });
-  const banner = document.getElementById('result-banner');
-  banner.classList.add('show');
-  if (ok) {
-    banner.classList.add('correct');
-    document.getElementById('result-icon').textContent = '✓';
-    document.getElementById('result-text').textContent = '正解！';
-    document.querySelector('.explanation-link').style.opacity = '0.5';
-  } else {
-    banner.classList.add('wrong');
-    document.getElementById('result-icon').textContent = '✗';
-    document.getElementById('result-text').textContent = `不正解。正解は${SYMBOLS[q.correct]}`;
-  }
-  document.getElementById('next-row').style.display = 'flex';
+  const ok=(chosen===q.correct);
+  const rw=document.getElementById('rw'+qi);
+  const rb=document.getElementById('rb'+qi);
+  rw.classList.add('show'); rb.classList.add(ok?'ok':'ng');
+  document.getElementById('ri'+qi).textContent=ok?'✓':'✗';
+  document.getElementById('rt'+qi).textContent=
+    ok?'正解！':'不正解。正解は '+SYM[q.correct];
+  if(ok) rb.querySelector('.exp-btn').style.opacity='0.5';
+  document.getElementById('qs'+qi).classList.add('answered');
+  answeredCount++; updateHeader();
+  if(answeredCount===QS.length) setTimeout(showSummary,600);
 }
-
-function nextQuestion() { current++; if (current < questions.length) renderQuestion(); else showResult(); }
-
-function showResult() {
-  let correct = 0, points = 0, maxPoints = 0;
-  questions.forEach((q, i) => { maxPoints += q.points; if (answers[i] === q.correct) { correct++; points += q.points; } });
-  document.getElementById('prog-label').textContent = '終了';
-  document.getElementById('prog-fill').style.width = '100%';
-  const rows = questions.map((q, i) => {
-    const ok = answers[i] === q.correct;
-    return `<tr><td>${q.section}</td><td>${answers[i] !== null ? SYMBOLS[answers[i]] : '未回答'}</td><td>${SYMBOLS[q.correct]}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?q.points:0}/${q.points}</td></tr>`;
+function toggleExp(qi){
+  const ep=document.getElementById('ep'+qi);
+  const btn=document.querySelector('#rw'+qi+' .exp-btn');
+  const open=ep.classList.toggle('open');
+  btn.textContent=open?'解説を閉じる ▲':'解説を見る ▼';
+}
+function showSummary(){
+  const TOTAL=QS.reduce((a,q)=>a+q.pts,0);
+  let correct=0,pts=0;
+  const rows=QS.map(q=>{
+    const ok=(state[q.qi]===q.correct);
+    if(ok){correct++;pts+=q.pts;}
+    return '<tr><td>'+q.label+'</td><td>'+(state[q.qi]!==undefined?SYM[state[q.qi]]:'未回答')+'</td><td>'+SYM[q.correct]+'</td><td class="'+(ok?'ok-td':'ng-td')+'">'+(ok?'○':'✗')+'</td><td>'+(ok?q.pts:0)+'/'+q.pts+'</td></tr>';
   }).join('');
-  document.getElementById('quiz-area').innerHTML = `
-    <div style="background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 24px;text-align:center">
-      <h2 style="font-size:1.4rem;color:var(--primary);margin-bottom:6px">第3問 終了！</h2>
-      <div style="margin:16px 0">
-        <div class="score-big">${correct}<span class="score-denom"> / ${questions.length}問</span></div>
-        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxPoints}点</div>
-      </div>
-      <table class="result-table">
-        <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
-      </table>
-      <div style="margin-top:24px"><button class="btn-secondary" onclick="restartQuiz()">もう一度挑戦する</button></div>
-    </div>`;
+  document.getElementById('sum-score').textContent=correct+' / '+QS.length+'問';
+  document.getElementById('sum-pts').textContent='獲得点数：'+pts+' / '+TOTAL+'点';
+  document.getElementById('sum-tbl').innerHTML+=rows;
+  const s=document.getElementById('summary');
+  s.style.display='block'; s.scrollIntoView({behavior:'smooth'});
 }
-
-function restartQuiz() { current = 0; answers = new Array(questions.length).fill(null); selected = null; answered = false; renderQuestion(); }
-
-function openModal(idx) {
-  const q = questions[idx]; const exp = q.explanation;
-  const opts = exp.options.map(o => `<div class="option-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('');
-  document.getElementById('modal-title').textContent = `${q.section} 解説`;
-  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:12px">${opts}</div>`;
-  document.getElementById('modal-overlay').classList.add('show');
-}
-function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
-function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
-
-renderQuestion();
+updateHeader();
 </script>
 </body>
 </html>
