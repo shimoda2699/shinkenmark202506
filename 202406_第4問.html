@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2024年6月｜第4問</title>
+<style>
+:root{--bg:#f0f4f8;--card:#fff;--primary:#2e7d32;--pl:#eaf6eb;--ok:#1a7a4a;--ok-bg:#e6f4ec;--ng:#b91c1c;--ng-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(46,125,50,.10);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.8;}
+header{background:var(--primary);color:#fff;padding:12px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:space-between;}
+header h1{font-size:.95rem;font-weight:700;}
+.score-disp{font-size:.82rem;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;white-space:nowrap;}
+main{max-width:800px;margin:0 auto;padding:24px 16px 80px;}
+.mondai-title{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:4px;}
+.mondai-meta{font-size:.82rem;color:var(--muted);margin-bottom:20px;}
+.mondai-bun{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:20px;}
+.mondai-bun h3{font-size:.92rem;font-weight:800;color:var(--primary);border-left:4px solid var(--primary);padding-left:8px;margin-bottom:14px;line-height:1.6;}
+.mondai-bun p{margin-bottom:.75em;}
+.speaker{font-weight:700;}
+.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:.86rem;}
+.tbl th,.tbl td{border:1px solid var(--border);padding:5px 8px;text-align:left;vertical-align:top;}
+.tbl th{background:var(--pl);font-weight:700;}
+.tbl-label{font-weight:700;font-size:.88rem;margin:10px 0 4px;display:block;}
+.fig-box{background:#f7f9fc;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
+.fig-title{font-weight:700;color:var(--primary);display:block;margin-bottom:5px;}
+.note{font-size:.83rem;color:var(--muted);}
+.section-sep{border:none;border-top:2px dashed var(--border);margin:28px 0;}
+.graph-wrap{background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px;margin:10px 0;overflow-x:auto;}
+.setsumon{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 20px 16px;margin-bottom:24px;border-left:4px solid var(--border);transition:border-color .2s;}
+.setsumon.answered{border-left-color:var(--primary);}
+.setsumon-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.setsumon-badge{background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+.setsumon-pts{font-size:.72rem;color:var(--muted);}
+.setsumon-q{font-size:.92rem;font-weight:600;margin-bottom:12px;line-height:1.65;}
+.choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.5;transition:border-color .15s,background .15s;width:100%;}
+.choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--pl);}
+.ci{font-weight:700;color:var(--primary);min-width:24px;flex-shrink:0;}
+.choice-btn.selected{border-color:var(--primary);background:var(--pl);}
+.choice-btn.correct{border-color:var(--ok);background:var(--ok-bg);}
+.choice-btn.wrong{border-color:var(--ng);background:var(--ng-bg);}
+.choice-btn:disabled{cursor:default;}
+.answer-row{margin-top:14px;}
+.btn-ans{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.btn-ans:disabled{background:#aaa;cursor:default;}
+.result-wrap{display:none;margin-top:12px;}
+.result-wrap.show{display:block;}
+.result-banner{border-radius:8px;padding:11px 14px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.result-banner.ok{background:var(--ok-bg);color:var(--ok);}
+.result-banner.ng{background:var(--ng-bg);color:var(--ng);}
+.result-icon{font-size:1.2rem;}
+.exp-btn{font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;white-space:nowrap;margin-left:auto;}
+.exp-btn:hover{background:var(--pl);}
+.exp-panel{display:none;margin-top:10px;background:#f7f9fc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:.88rem;line-height:1.8;}
+.exp-panel.open{display:block;}
+.ans-label{background:var(--ok-bg);border-left:4px solid var(--ok);padding:7px 12px;border-radius:4px;margin-bottom:10px;font-weight:700;color:var(--ok);display:block;}
+.exp-panel p{margin-bottom:.6em;}
+.opt-row{margin:5px 0;padding:6px 10px;background:#fff;border-radius:6px;font-size:.86rem;}
+.opt-row.ok-opt{border-left:3px solid var(--ok);}
+.opt-row.ng-opt{border-left:3px solid var(--ng);}
+.lbl-ok{color:var(--ok);font-weight:700;}
+.lbl-ng{color:var(--ng);font-weight:700;}
+#summary{display:none;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 24px;text-align:center;margin-top:16px;}
+#summary h2{font-size:1.3rem;color:var(--primary);margin-bottom:8px;}
+.score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+.score-sub{color:var(--muted);margin-top:4px;font-size:.9rem;}
+.sum-tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:.87rem;}
+.sum-tbl th,.sum-tbl td{border:1px solid var(--border);padding:6px 10px;text-align:center;}
+.sum-tbl th{background:var(--pl);font-weight:700;}
+.sum-tbl td.ok-td{color:var(--ok);font-weight:700;}
+.sum-tbl td.ng-td{color:var(--ng);font-weight:700;}
+.btn-retry{margin-top:20px;background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;}
+.btn-retry:hover{background:var(--pl);}
+@media(max-width:540px){.mondai-bun,.setsumon{padding:16px 13px;}.choice-btn{font-size:.84rem;}.score-big{font-size:2.2rem;}.tbl{font-size:.78rem;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>情報Ⅰ 進研模試 2024年6月 ｜ 第4問（配点25点）</h1>
+  <div class="score-disp" id="hdr-score">0 / 7 問回答済</div>
+</header>
+<main>
+
+<div style="text-align:center; margin:10px 0;">
+<a href="index.html" style="display:inline-block;background:#2e7d32;color:white;text-decoration:none;padding:8px 20px;border-radius:8px;font-weight:bold;">← トップへ戻る</a>
+</div>
+
+<div class="mondai-title">第4問　次の文章を読み，後の問い（問1〜3）に答えよ。</div>
+<div class="mondai-meta">配点 25点｜データの活用</div>
+
+<!-- ====================================================
+     共通問題文（表1・各項目の詳細）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問1〜問3　共通問題文</h3>
+  <p>ある高校の授業で，生徒4人（A，B，C，D）が，内閣府が実施した「令和4年度 青少年のインターネット利用環境実態調査」をもとに，青少年のスマートフォン利用の実態を調べている。</p>
+  <p>生徒4人は，この調査結果からスマートフォン利用等に関係するデータを収集し，表計算ソフトウェア上で表1のように都道府県別に整理した。表1のとおり，1行目には各列のデータを説明する項目名，1列目（A列）の2行目以降には都道府県名が表示されている。なお，各項目の詳細については次のとおりである。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">【各項目の詳細】</span>
+    <p style="margin-bottom:.5em;"><b>「ニュース割合」「動画視聴割合」「ゲーム割合」</b><br>
+    スマートフォンでインターネットを利用していると回答した人の中で，「あなたはインターネットを使って何をしていますか。（複数回答可）」という質問に対して，「ニュースをみる」「動画をみる」「ゲームをする」と回答した人のそれぞれの割合。</p>
+    <p style="margin-bottom:.5em;"><b>「平均使用時間」</b><br>
+    スマートフォンでインターネットを利用していると回答した人の中で，「あなたは平日（土日祝を除いて）1日に平均してどのくらいの時間，スマートフォンでインターネットを使いますか。」という質問に対して，回答した時間（分）の平均。</p>
+    <p style="margin-bottom:.5em;"><b>「趣味・娯楽時間」</b><br>
+    （スマートフォン以外の端末も含めて）インターネットを利用していると回答した人の中で，「平日1日の利用時間のうち，目的別にどのくらいの時間，インターネットを使いますか。」という質問における「趣味・娯楽」の項目で，回答した時間（分）の平均。</p>
+    <p style="margin-bottom:.5em;"><b>「マイナス割合」</b><br>
+    （スマートフォン以外の端末も含めて）インターネットを利用していると回答した人の中で，「インターネットにのめりこんで勉強に集中できなかったり，睡眠不足になったりしたことがある」と回答した人の割合。</p>
+    <p><b>「ルールあり割合」</b><br>
+    （スマートフォン以外の端末も含めて）「あなたの家では，インターネットの使い方について，何か家庭でルールを決めていますか。」という質問に対して，「はい」と回答した人の割合。</p>
+  </div>
+
+  <span class="tbl-label">表1　「令和4年度 青少年のインターネット利用環境実態調査」におけるスマートフォン利用等に関する都道府県データ（一部）</span>
+  <div style="overflow-x:auto;">
+    <table class="tbl">
+      <tr>
+        <th style="min-width:60px;">A列<br>都道府県名</th>
+        <th>B列<br>ニュース<br>割合(%)</th>
+        <th>C列<br>動画視聴<br>割合(%)</th>
+        <th>D列<br>ゲーム<br>割合(%)</th>
+        <th>E列<br>平均使用<br>時間(分)</th>
+        <th>F列<br>趣味・娯楽<br>時間(分)</th>
+        <th>G列<br>マイナス<br>割合(%)</th>
+        <th>H列<br>ルールあり<br>割合(%)</th>
+      </tr>
+      <tr><td>北海道</td><td>41.7</td><td>89.8</td><td>74.8</td><td>204.8</td><td>206.1</td><td>22.0</td><td>57.7</td></tr>
+      <tr><td>青森県</td><td>52.2</td><td>100.0</td><td>82.6</td><td>177.3</td><td>199.2</td><td>33.3</td><td>63.3</td></tr>
+      <tr><td>岩手県</td><td>37.1</td><td>88.6</td><td>65.7</td><td>136.8</td><td>160.9</td><td>21.2</td><td>69.2</td></tr>
+      <tr><td style="text-align:center;color:var(--muted);">…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+      <tr><td>沖縄県</td><td>37.9</td><td>93.1</td><td>86.2</td><td>176.5</td><td>177.2</td><td>13.2</td><td>57.9</td></tr>
+    </table>
+  </div>
+  <p class="note">※ 表1のデータは47都道府県分（全48行）。上記は北海道・青森県・岩手県と沖縄県の抜粋。</p>
+  <p class="note">※ 第4問の図，表はすべて，内閣府「令和4年度青少年のインターネット利用環境実態調査 青少年調査集計表」により作成。</p>
+</div>
+
+<!-- ====================================================
+     問1 問題文（会話文・欠損値確認）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問1　生徒4人（A，B，C，D）による次の会話文を読み，後の問い（(1)・(2)）に答えよ。</h3>
+
+  <p><span class="speaker">A：</span><u>₍ₐ₎表1のデータからいろいろなことを分析することができるね</u>。さっそく，分析を始めようか。</p>
+  <p><span class="speaker">B：</span>ちょっと待って。いきなりデータを分析する前に，データがきちんと整理されているか確認した方がよくないかな。</p>
+  <p><span class="speaker">C：</span>そうだね。慎重に扱ったつもりだけど，整理するときにうっかりデータを消去してしまったりしていないか，<u>₍ᵦ₎欠損値が含まれるかどうか</u>は確認しておいた方がいいね。</p>
+  <p><span class="speaker">D：</span>じゃあ，まずは欠損値がないか確認しよう。</p>
+</div>
+
+<!-- 問1(1) ア -->
+<div class="setsumon" id="qs0">
+  <div class="setsumon-head"><span class="setsumon-badge">問1(1)</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">下線部(a)について，表1のデータだけからは調べることができないことを，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch0">
+    <button class="choice-btn" onclick="sel(0,0)"><span class="ci">⓪</span><span>スマートフォンでインターネットを利用している人の中で，「動画をみる」と回答した人の割合が80.0%以下の都道府県はいくつあるか。</span></button>
+    <button class="choice-btn" onclick="sel(0,1)"><span class="ci">①</span><span>スマートフォンでインターネットを利用している時間の平日1日の平均が，最も長い都道府県はどこか。</span></button>
+    <button class="choice-btn" onclick="sel(0,2)"><span class="ci">②</span><span>「インターネットにのめりこんで勉強に集中できなかったり，睡眠不足になったりしたことがある」と回答した人数が最も少ない都道府県はどこか。</span></button>
+    <button class="choice-btn" onclick="sel(0,3)"><span class="ci">③</span><span>「ルールあり割合」の最大値と最小値の差は，30%以上あるかどうか。</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab0" onclick="judge(0)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw0">
+    <div class="result-banner" id="rb0"><span class="result-icon" id="ri0"></span><span id="rt0"></span><button class="exp-btn" onclick="toggleExp(0)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep0">
+      <span class="ans-label">✓ 正解：②</span>
+      <p>表1の各項目が「割合（%）」や「時間の平均（分）」であることに注目します。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 調べられる</span>　C列「動画視聴割合（%）」のデータから，80.0%以下の都道府県の数を数えることができる。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 調べられる</span>　E列「平均使用時間（分）」のデータから，最大値の都道府県を特定できる。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 調べられない（正解）</span>　G列「マイナス割合」は「と回答した人の<b>割合</b>についてのデータ」であって，「回答した人数についてのデータではない」。人数を求めるには各都道府県の調査対象人数が必要だが，表1にはない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">③ 調べられる</span>　H列「ルールあり割合（%）」の最大値と最小値の差は表1のデータから計算できる。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 問1(2) イ（欠損値確認方法） -->
+<div class="setsumon" id="qs1">
+  <div class="setsumon-head"><span class="setsumon-badge">問1(2)</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">下線部(b)について，表1のデータの「ゲーム割合」のD列に欠損値が含まれるかどうかを判断するときを考える。表計算ソフトウェアを活用して，表1のデータのD列以外の列との整合性を保ちながら判断する方法として最も適当なものを，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch1">
+    <button class="choice-btn" onclick="sel(1,0)"><span class="ci">⓪</span><span>D列の2行目以降のセルにおいて，数値が入力されているセルの個数を数える関数を入力し，その関数の結果が47未満であればD列に欠損値が含まれていると判断する。</span></button>
+    <button class="choice-btn" onclick="sel(1,1)"><span class="ci">①</span><span>D列の2行目以降のセルのみを降順に並び替えて保存し，その結果の最下部（もしくは最上部）を確認して，空白のセルがあればD列に欠損値が含まれていると判断する。</span></button>
+    <button class="choice-btn" onclick="sel(1,2)"><span class="ci">②</span><span>D列の2行目以降のセルに入力されている数値の最小値を特定する関数を入力し，その関数の結果が0となれば，D列に欠損値が含まれていると判断する。</span></button>
+    <button class="choice-btn" onclick="sel(1,3)"><span class="ci">③</span><span>D列の2行目以降のセルに入力されている数値の平均値を求める関数を入力し，その結果と，「（D列の2行目以降のセルに入力されている数値すべての和）÷47」の結果が一致すれば，D列に欠損値が含まれていると判断する。</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab1" onclick="judge(1)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw1">
+    <div class="result-banner" id="rb1"><span class="result-icon" id="ri1"></span><span id="rt1"></span><button class="exp-btn" onclick="toggleExp(1)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep1">
+      <span class="ans-label">✓ 正解：⓪</span>
+      <p>データは47都道府県分（47個）あるので，値が存在しないセルが存在するかどうかを調べることで，欠損値の有無を確認できます。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　数値が入力されているセルの個数を数える関数（COUNT関数等）を使い，その結果が47未満であればD列に欠損値が含まれていると判断できる。D列以外との整合性も保たれる。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　D列のみを降順に並び替えると，A列（都道府県名）など他の列との対応関係（整合性）が崩れてしまう。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　「ゲーム割合」が0%の都道府県が存在する可能性があり，0%は欠損値（データが存在しない）とはいえない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　D列のすべてのデータの和は正の値であるから，関数により求めた平均値と「（D列の2行目以降のセルに入力されている数値すべての和）÷47」の結果が一致しなければ，D列に欠損値が含まれていると判断できる（一致すれば欠損なし）。問題文の「一致すれば欠損あり」という記述が逆。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     問2 問題文（箱ひげ図・外れ値・相関）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問2　欠損値などを適切に処理した後，生徒4人（A，B，C，D）は，表1のデータの可視化を試みている。次の会話文を読み，空欄【ウ】〜【キ】に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。ただし，空欄【エ】・【オ】，空欄【カ】・【キ】はそれぞれ解答の順序は問わない。</h3>
+
+  <p><span class="speaker">A：</span>表1の「ニュース割合」のデータと「ゲーム割合」のデータを，それぞれ箱ひげ図（平均値は×，外れ値は。で表記）にして図1に表してみたよ。ちなみに，外れ値は重なっていないよ。</p>
+  <p><span class="speaker">B：</span>外れ値はデータを分析するうえで除かなくていいの？</p>
+  <p><span class="speaker">C：</span>外れ値から読み取れることもあるから，単純に除く必要はないよ。ただ，除く場合は注意が必要だよ。外れ値を含めるか除くかで，例えば，<b>ウ</b> からね。</p>
+  <p><span class="speaker">B：</span>なるほど。じゃあ，ここでは外れ値を含めて考えよう。</p>
+  <p><span class="speaker">D：</span>この箱ひげ図からは，「ニュース割合」と「ゲーム割合」それぞれについてデータの特徴が読み取れて，<b>エ</b> ことや <b>オ</b> ことなどがわかるよ。</p>
+  <p><span class="speaker">A：</span>そうだね。それに加えて，二つのデータの関係性に注目してみるのも面白そうだよ。</p>
+  <p><span class="speaker">B：</span>確かに。例えば，「ニュース割合」と「ゲーム割合」に相関があるかどうかを調べてみようか。</p>
+  <p><span class="speaker">D：</span>これら二つのデータに相関があるかどうかや，相関がある場合に相関が強いか弱いかは，両データ間の <b>カ</b> や <b>キ</b> を確認すればいいね。</p>
+  <p><span class="speaker">B：</span>確かにそうだね。</p>
+
+  <!-- 図1 箱ひげ図（SVGで再現） -->
+  <div class="graph-wrap">
+    <div style="font-size:.85rem;font-weight:700;text-align:center;margin-bottom:4px;">図1　「ニュース割合」（左）と「ゲーム割合」（右）の箱ひげ図</div>
+    <svg viewBox="0 0 320 220" style="width:100%;max-width:380px;display:block;margin:0 auto;">
+      <!-- 軸 -->
+      <line x1="45" y1="10" x2="45" y2="185" stroke="#999" stroke-width="1.5"/>
+      <line x1="45" y1="185" x2="300" y2="185" stroke="#999" stroke-width="1.5"/>
+      <!-- Y軸ラベル -->
+      <text x="38" y="188" font-size="9" text-anchor="end" fill="#555">0</text>
+      <text x="38" y="158" font-size="9" text-anchor="end" fill="#555">10</text>
+      <text x="38" y="128" font-size="9" text-anchor="end" fill="#555">20</text>
+      <text x="38" y="98"  font-size="9" text-anchor="end" fill="#555">30</text>
+      <text x="38" y="68"  font-size="9" text-anchor="end" fill="#555">40</text>
+      <text x="38" y="38"  font-size="9" text-anchor="end" fill="#555">50</text>
+      <text x="38" y="14"  font-size="9" text-anchor="end" fill="#555">(%)</text>
+      <!-- グリッド -->
+      <line x1="45" y1="158" x2="300" y2="158" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="45" y1="128" x2="300" y2="128" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="45" y1="98"  x2="300" y2="98"  stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="45" y1="68"  x2="300" y2="68"  stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="45" y1="38"  x2="300" y2="38"  stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- ===== ニュース割合（左） =====
+           最小値≒20%→y=128, Q1≒32%→y=92, 中央値≒38%→y=74, 平均≒42%→y=62, Q3≒46%→y=50, 最大値≒57%→y=17, 外れ値≒80%は除外表示
+           y = 185 - value*3 -->
+      <!-- 外れ値 (約80%) → y=185-80*3=(-55)→スケール調整: y=185-value*(175/90) -->
+      <!-- スケール: 0〜90%を175px -->
+      <!-- ニュース: min20→y=185-20*1.94=146, Q1=32→y=123, med=38→y=111, avg=42→y=104, Q3=46→y=96, max=57→y=75 -->
+      <!-- 外れ値80→y=185-80*1.94=30 -->
+      <circle cx="100" cy="30" r="4" fill="none" stroke="#1a56a0" stroke-width="1.5"/><!-- 外れ値 -->
+      <!-- ひげ上端（最大値除外後）75 -->
+      <line x1="75" y1="75" x2="125" y2="75" stroke="#333" stroke-width="1.5"/>
+      <line x1="100" y1="75" x2="100" y2="96" stroke="#333" stroke-width="1.5"/>
+      <!-- 箱 Q1=123, Q3=96 -->
+      <rect x="75" y="96" width="50" height="27" fill="none" stroke="#333" stroke-width="2"/>
+      <!-- 中央値 111 -->
+      <line x1="75" y1="111" x2="125" y2="111" stroke="#333" stroke-width="2.5"/>
+      <!-- 平均値 × 104 -->
+      <text x="100" y="107" font-size="10" text-anchor="middle" fill="#e85d26" font-weight="700">×</text>
+      <!-- ひげ下 min=146 -->
+      <line x1="100" y1="123" x2="100" y2="146" stroke="#333" stroke-width="1.5"/>
+      <line x1="75" y1="146" x2="125" y2="146" stroke="#333" stroke-width="1.5"/>
+      <!-- X軸ラベル -->
+      <text x="100" y="200" font-size="10" text-anchor="middle" fill="#333">ニュース割合</text>
+
+      <!-- ===== ゲーム割合（右） =====
+           min≒30%→y=127, Q1≒65%→y=59, med≒72%→y=46, avg=71%→y=48, Q3≒82%→y=25, max≒90%→y=10
+           外れ値≒30（低）
+           ゲーム: min=30→y=127, Q1=65→y=59, med=72→y=46, avg71→y=48, Q3=82→y=25, max=90→y=12 -->
+      <!-- 外れ値（低い方）≒30% → y=127 -->
+      <circle cx="210" cy="127" r="4" fill="none" stroke="#1a56a0" stroke-width="1.5"/>
+      <!-- ひげ上 max=12 -->
+      <line x1="185" y1="12" x2="235" y2="12" stroke="#333" stroke-width="1.5"/>
+      <line x1="210" y1="12" x2="210" y2="25" stroke="#333" stroke-width="1.5"/>
+      <!-- 箱 Q1=59, Q3=25 -->
+      <rect x="185" y="25" width="50" height="34" fill="none" stroke="#333" stroke-width="2"/>
+      <!-- 中央値 46 -->
+      <line x1="185" y1="46" x2="235" y2="46" stroke="#333" stroke-width="2.5"/>
+      <!-- 平均値 × 48 -->
+      <text x="210" y="52" font-size="10" text-anchor="middle" fill="#e85d26" font-weight="700">×</text>
+      <!-- ひげ下 (外れ値除いた最小) Q1からの延長 ≒50% → y=88 -->
+      <line x1="210" y1="59" x2="210" y2="88" stroke="#333" stroke-width="1.5"/>
+      <line x1="185" y1="88" x2="235" y2="88" stroke="#333" stroke-width="1.5"/>
+      <!-- X軸ラベル -->
+      <text x="210" y="200" font-size="10" text-anchor="middle" fill="#333">ゲーム割合</text>
+
+      <!-- 凡例 -->
+      <text x="48" y="215" font-size="9" fill="#555">× ＝平均値　。＝外れ値</text>
+    </svg>
+    <div class="fig-box" style="margin-top:6px;font-size:.83rem;">
+      <span class="fig-title">図1 読み取り値（概算）</span>
+      <b>ニュース割合：</b>外れ値≒80%，最大値≒57%，Q3≒46%，中央値≒38%，平均値≒42%，Q1≒32%，最小値≒20%<br>
+      <b>ゲーム割合：</b>最大値≒90%，Q3≒82%，中央値≒72%，平均値≒71%，Q1≒65%，最小値（外れ値除く）≒50%，外れ値≒30%
+    </div>
+  </div>
+
+  <div class="fig-box" style="margin-top:10px;">
+    <span class="fig-title">【ウ】の解答群</span>
+    ⓪ 外れ値を含んだデータから算出される最大値が，外れ値を除いたデータから算出される最大値より小さくなる可能性がある<br>
+    ① 外れ値を含んだデータから算出される平均値と，外れ値を除いたデータから算出される平均値は必ず異なる<br>
+    ② 外れ値を含んだデータから作成された箱ひげ図の箱の長さ（第3四分位数−第1四分位数）と，外れ値を除いたデータから作成された箱ひげ図の箱の長さは異なることがある<br>
+    ③ 外れ値を含んだデータから算出される中央値と，外れ値を除いたデータから算出される中央値は必ず異なる
+  </div>
+  <div class="fig-box">
+    <span class="fig-title">【エ】・【オ】の解答群</span>
+    ⓪ 「ニュース割合」も「ゲーム割合」も，30%未満の都道府県が一つ以上ある<br>
+    ① データの散らばりの度合い（データの範囲）は，「ニュース割合」の方が「ゲーム割合」より大きい<br>
+    ② 「ニュース割合」が45%程度の都道府県においては，「ゲーム割合」が70%程度である<br>
+    ③ 「ニュース割合」の平均値と「ゲーム割合」の平均値の差は，およそ40%である<br>
+    ④ 全都道府県の70%以上は，「ニュース割合」より「ゲーム割合」の方が大きい
+  </div>
+  <div class="fig-box">
+    <span class="fig-title">【カ】・【キ】の解答群</span>
+    ⓪ クロス集計表　　① 相関係数　　② 回帰直線の式　　③ ヒストグラム　　④ 散布図
+  </div>
+</div>
+
+<!-- 問2 ウ -->
+<div class="setsumon" id="qs2">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（ウ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">空欄 <b>【ウ】</b>（「外れ値を含めるか除くかで変わること」として適当なもの）を選べ。</div>
+  <div class="choices" id="ch2">
+    <button class="choice-btn" onclick="sel(2,0)"><span class="ci">⓪</span><span>外れ値を含んだデータから算出される最大値が，外れ値を除いたデータから算出される最大値より小さくなる可能性がある</span></button>
+    <button class="choice-btn" onclick="sel(2,1)"><span class="ci">①</span><span>外れ値を含んだデータから算出される平均値と，外れ値を除いたデータから算出される平均値は必ず異なる</span></button>
+    <button class="choice-btn" onclick="sel(2,2)"><span class="ci">②</span><span>外れ値を含んだデータから作成された箱ひげ図の箱の長さ（第3四分位数−第1四分位数）と，外れ値を除いたデータから作成された箱ひげ図の箱の長さは異なることがある</span></button>
+    <button class="choice-btn" onclick="sel(2,3)"><span class="ci">③</span><span>外れ値を含んだデータから算出される中央値と，外れ値を除いたデータから算出される中央値は必ず異なる</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab2" onclick="judge(2)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw2">
+    <div class="result-banner" id="rb2"><span class="result-icon" id="ri2"></span><span id="rt2"></span><button class="exp-btn" onclick="toggleExp(2)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep2">
+      <span class="ans-label">✓ 正解：②　箱の長さ（四分位範囲）は異なることがある</span>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　外れ値を含んだデータの最大値が，外れ値を除いたデータの最大値より小さくなることはありえない（外れ値を除けば最大値は同じか小さくなる）。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　平均値が一致している異なる2つのデータを合わせても平均値は変わらない。したがって，外れ値を除いたデータの平均値と外れ値のみのデータの平均値が一致するとき，「外れ値を含んだデータの平均値」と「外れ値を除いたデータの平均値」が一致する場合がある。必ず異なるとはいえない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">② 正しい</span>　外れ値を除くことでデータの値の個数が変わり，四分位数の再算出を行うため，四分位範囲（箱の長さ）が変わることがある。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　例えば，中央値より大きい外れ値と中央値より小さい外れ値が同数の場合，外れ値を含んだデータの中央値と外れ値を除いたデータの中央値は一致することがある。必ず異なるとはいえない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 問2 エ・オ（2つ選ぶ） -->
+<div class="setsumon" id="qs3">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（エ）・（オ）</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">空欄 <b>【エ】</b>・<b>【オ】</b>（箱ひげ図から読み取れること）を，解答群⓪〜④のうちから<b>二つ</b>選べ。解答の順序は問わない。</div>
+  <div class="choices" id="ch3">
+    <button class="choice-btn" onclick="sel(3,0)"><span class="ci">⓪</span><span>「ニュース割合」も「ゲーム割合」も，30%未満の都道府県が一つ以上ある</span></button>
+    <button class="choice-btn" onclick="sel(3,1)"><span class="ci">①</span><span>データの散らばりの度合い（データの範囲）は，「ニュース割合」の方が「ゲーム割合」より大きい</span></button>
+    <button class="choice-btn" onclick="sel(3,2)"><span class="ci">②</span><span>「ニュース割合」が45%程度の都道府県においては，「ゲーム割合」が70%程度である</span></button>
+    <button class="choice-btn" onclick="sel(3,3)"><span class="ci">③</span><span>「ニュース割合」の平均値と「ゲーム割合」の平均値の差は，およそ40%である</span></button>
+    <button class="choice-btn" onclick="sel(3,4)"><span class="ci">④</span><span>全都道府県の70%以上は，「ニュース割合」より「ゲーム割合」の方が大きい</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab3" onclick="judge(3)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw3">
+    <div class="result-banner" id="rb3"><span class="result-icon" id="ri3"></span><span id="rt3"></span><button class="exp-btn" onclick="toggleExp(3)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep3">
+      <span class="ans-label">✓ 正解：①と④（順序不同）</span>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　「ニュース割合」では外れ値を除いた最小値は約20%で30%未満だが，「ゲーム割合」のすべての値は約30%以上（外れ値の。が約30%だが，外れ値は30%未満ではない）。したがって，「ゲーム割合」が30%未満の都道府県が一つ以上あるとはいえない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 正しい</span>　「ニュース割合」のデータの範囲は外れ値を含め約57%（最大80%−最小20%=60%程度），「ゲーム割合」のデータの範囲は約60%（最大90%−最小30%=60%）。正確には，外れ値含め「ニュース割合」が約60%で「ゲーム割合」が約50%と「ニュース割合」の方が大きい。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　箱ひげ図だけでは個別の都道府県がどこに位置するかは読み取れない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　平均値（×）は「ニュース割合」≒42%，「ゲーム割合」≒71%。差は約30%で，40%ではない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">④ 正しい</span>　「ゲーム割合」の第1四分位数は約65%，「ニュース割合」の外れ値を除いた最大値は約57%。全都道府県の少なくとも75%（Q1より上）でゲーム割合が65%以上であり，ニュース割合の最大値57%より大きい。よって全都道府県の70%以上でゲーム割合がニュース割合より大きい。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 問2 カ・キ（2つ選ぶ） -->
+<div class="setsumon" id="qs4">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（カ）・（キ）</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">空欄 <b>【カ】</b>・<b>【キ】</b>（二つのデータに相関があるかどうか，相関が強いか弱いかを確認するのに使うもの）を，解答群⓪〜④のうちから<b>二つ</b>選べ。解答の順序は問わない。</div>
+  <div class="choices" id="ch4">
+    <button class="choice-btn" onclick="sel(4,0)"><span class="ci">⓪</span><span>クロス集計表</span></button>
+    <button class="choice-btn" onclick="sel(4,1)"><span class="ci">①</span><span>相関係数</span></button>
+    <button class="choice-btn" onclick="sel(4,2)"><span class="ci">②</span><span>回帰直線の式</span></button>
+    <button class="choice-btn" onclick="sel(4,3)"><span class="ci">③</span><span>ヒストグラム</span></button>
+    <button class="choice-btn" onclick="sel(4,4)"><span class="ci">④</span><span>散布図</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab4" onclick="judge(4)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw4">
+    <div class="result-banner" id="rb4"><span class="result-icon" id="ri4"></span><span id="rt4"></span><button class="exp-btn" onclick="toggleExp(4)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep4">
+      <span class="ans-label">✓ 正解：①と④（順序不同）</span>
+      <p>選択肢の各用語の役割を整理します：</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ クロス集計表</span>　集計方法の1つで，複数の属性や質問項目で掛け合わせて，それぞれの選択肢に該当する度数・割合などを集計する表。相関の確認には使わない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 相関係数</span>　相関の強さを判断する指標の1つであり，相関の強さを表す数値。−1（強い負の相関）〜1（強い正の相関）の範囲で表す。→ 相関があるかどうか・強いか弱いかの確認に使える。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 回帰直線の式</span>　2つのデータの関係を表す直線の式。変数xから変数yを予測するために使われる。相関確認には直接使わない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ ヒストグラム</span>　各階級の幅を横軸に，対応する度数を縦軸にしたグラフ。データの分布を見るもので相関確認には使わない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">④ 散布図</span>　2つの変数をもつデータの1つ1つを点で表し，変数間の相関の強さを表現した図。→ 相関があるかどうかの確認に使える。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     問3 問題文（散布図・回帰直線・相関係数）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問3　生徒4人（A，B，C，D）は，表1のデータの各項目どうしの関係を可視化するため，図2のように散布図を作り，回帰直線と相関係数（r）を求めた。</h3>
+
+  <div class="graph-wrap">
+    <div style="font-size:.85rem;font-weight:700;text-align:center;margin-bottom:4px;">図2　表1の各データから求めた散布図・回帰直線の式・相関係数（r）</div>
+
+    <!-- 3つの散布図を並べる -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+
+      <!-- 散布図1：動画視聴割合 vs ゲーム割合 -->
+      <div style="text-align:center;">
+        <svg viewBox="0 0 180 160" style="width:180px;">
+          <line x1="30" y1="10" x2="30" y2="135" stroke="#999" stroke-width="1.5"/>
+          <line x1="30" y1="135" x2="175" y2="135" stroke="#999" stroke-width="1.5"/>
+          <!-- Y軸 ゲーム割合(%) 0〜100 -->
+          <text x="5" y="138" font-size="7" fill="#555">0</text>
+          <text x="5" y="108" font-size="7" fill="#555">20</text>
+          <text x="5" y="78" font-size="7" fill="#555">40</text>
+          <text x="5" y="48" font-size="7" fill="#555">60</text>
+          <text x="5" y="18" font-size="7" fill="#555">80</text>
+          <text x="0" y="8" font-size="6" fill="#555">(%)</text>
+          <!-- X軸 動画視聴割合(%) 0〜100 -->
+          <text x="30" y="148" font-size="7" text-anchor="middle" fill="#555">0</text>
+          <text x="68" y="148" font-size="7" text-anchor="middle" fill="#555">20</text>
+          <text x="106" y="148" font-size="7" text-anchor="middle" fill="#555">40</text>
+          <text x="144" y="148" font-size="7" text-anchor="middle" fill="#555">60</text>
+          <text x="175" y="148" font-size="7" text-anchor="middle" fill="#555">80</text>
+          <!-- 回帰直線 y=0.51x+26.34, r=0.38 -->
+          <!-- x:20→y≒36.5, x:100→y≒77.3 → x座標: 30+20*1.45=59, 30+100*1.45=175 y:135-36.5*1.25=89.4, 135-77.3*1.25=38.6 -->
+          <line x1="30" y1="103" x2="175" y2="35" stroke="#e85d26" stroke-width="1.5"/>
+          <!-- データ点（ランダム散布イメージ） -->
+          <circle cx="120" cy="58" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="135" cy="50" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="148" cy="42" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="88" cy="78" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="100" cy="70" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="160" cy="30" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="75" cy="90" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="110" cy="65" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="55" cy="105" r="2.5" fill="#1a56a0" opacity=".7"/><!-- 外れ値的 -->
+          <circle cx="140" cy="55" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="125" cy="62" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="95" cy="75" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="115" cy="60" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="105" cy="68" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="130" cy="52" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <!-- 式・r -->
+          <text x="32" y="22" font-size="6.5" fill="#333">y=0.51x+26.34</text>
+          <text x="32" y="30" font-size="6.5" fill="#e85d26">r=0.38</text>
+          <!-- 軸ラベル -->
+          <text x="103" y="158" font-size="7" text-anchor="middle" fill="#555">動画視聴割合</text>
+          <text x="15" y="75" font-size="6.5" fill="#555" transform="rotate(-90,15,75)">ゲーム割合</text>
+        </svg>
+      </div>
+
+      <!-- 散布図2：平均使用時間 vs 趣味・娯楽時間 -->
+      <div style="text-align:center;">
+        <svg viewBox="0 0 190 160" style="width:190px;">
+          <line x1="35" y1="10" x2="35" y2="135" stroke="#999" stroke-width="1.5"/>
+          <line x1="35" y1="135" x2="185" y2="135" stroke="#999" stroke-width="1.5"/>
+          <!-- Y軸 趣味・娯楽時間(分) 0〜250 -->
+          <text x="0" y="138" font-size="7" fill="#555">0</text>
+          <text x="0" y="111" font-size="7" fill="#555">50</text>
+          <text x="0" y="84" font-size="7" fill="#555">100</text>
+          <text x="0" y="57" font-size="7" fill="#555">150</text>
+          <text x="0" y="30" font-size="7" fill="#555">200</text>
+          <text x="0" y="12" font-size="6" fill="#555">(分)</text>
+          <!-- X軸 平均使用時間(分) 0〜250 -->
+          <text x="35" y="148" font-size="7" text-anchor="middle" fill="#555">0</text>
+          <text x="68" y="148" font-size="7" text-anchor="middle" fill="#555">50</text>
+          <text x="101" y="148" font-size="7" text-anchor="middle" fill="#555">100</text>
+          <text x="134" y="148" font-size="7" text-anchor="middle" fill="#555">150</text>
+          <text x="167" y="148" font-size="7" text-anchor="middle" fill="#555">200</text>
+          <!-- 回帰直線 y=0.43x+86.78, r=0.54 -->
+          <line x1="35" y1="100" x2="185" y2="60" stroke="#e85d26" stroke-width="1.5"/>
+          <!-- データ点 -->
+          <circle cx="110" cy="88" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="125" cy="82" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="140" cy="76" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="155" cy="70" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="100" cy="92" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="90" cy="96" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="170" cy="62" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="80" cy="100" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="160" cy="67" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="115" cy="85" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="135" cy="79" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="120" cy="84" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="145" cy="74" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="105" cy="90" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="175" cy="58" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <!-- 式・r -->
+          <text x="37" y="20" font-size="6.5" fill="#333">y=0.43x+86.78</text>
+          <text x="37" y="28" font-size="6.5" fill="#e85d26">r=0.54</text>
+          <!-- 軸ラベル -->
+          <text x="110" y="158" font-size="7" text-anchor="middle" fill="#555">平均使用時間</text>
+          <text x="15" y="75" font-size="6.5" fill="#555" transform="rotate(-90,15,75)">趣味・娯楽時間</text>
+        </svg>
+      </div>
+
+      <!-- 散布図3：マイナス割合 vs ルールあり割合 -->
+      <div style="text-align:center;">
+        <svg viewBox="0 0 170 160" style="width:170px;">
+          <line x1="30" y1="10" x2="30" y2="135" stroke="#999" stroke-width="1.5"/>
+          <line x1="30" y1="135" x2="165" y2="135" stroke="#999" stroke-width="1.5"/>
+          <!-- Y軸 ルールあり割合(%) 0〜90 -->
+          <text x="3" y="138" font-size="7" fill="#555">0</text>
+          <text x="3" y="120" font-size="7" fill="#555">20</text>
+          <text x="3" y="102" font-size="7" fill="#555">40</text>
+          <text x="3" y="84"  font-size="7" fill="#555">60</text>
+          <text x="3" y="66"  font-size="7" fill="#555">80</text>
+          <text x="0" y="12"  font-size="6" fill="#555">(%)</text>
+          <!-- X軸 マイナス割合(%) 0〜90 -->
+          <text x="30" y="148" font-size="7" text-anchor="middle" fill="#555">0</text>
+          <text x="63" y="148" font-size="7" text-anchor="middle" fill="#555">20</text>
+          <text x="96" y="148" font-size="7" text-anchor="middle" fill="#555">40</text>
+          <text x="129" y="148" font-size="7" text-anchor="middle" fill="#555">60</text>
+          <text x="162" y="148" font-size="7" text-anchor="middle" fill="#555">80</text>
+          <!-- 回帰直線 y=0.14x+64.22, r=0.12 -->
+          <line x1="30" y1="86" x2="165" y2="83" stroke="#e85d26" stroke-width="1.5"/>
+          <!-- データ点（ほぼランダム散布） -->
+          <circle cx="65" cy="90" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="85" cy="83" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="75" cy="75" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="100" cy="92" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="55" cy="78" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="110" cy="70" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="90" cy="88" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="70" cy="97" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="120" cy="80" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="80" cy="65" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="95" cy="85" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="60" cy="100" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="115" cy="76" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="78" cy="72" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <circle cx="105" cy="88" r="2.5" fill="#1a56a0" opacity=".7"/>
+          <!-- 式・r -->
+          <text x="32" y="20" font-size="6.5" fill="#333">y=0.14x+64.22</text>
+          <text x="32" y="28" font-size="6.5" fill="#e85d26">r=0.12</text>
+          <!-- 軸ラベル -->
+          <text x="97" y="158" font-size="7" text-anchor="middle" fill="#555">マイナス割合</text>
+          <text x="15" y="75" font-size="6.5" fill="#555" transform="rotate(-90,15,75)">ルールあり割合</text>
+        </svg>
+      </div>
+    </div><!-- end flex -->
+  </div>
+
+  <p>生徒4人はこれらの図からいえることを考え，それぞれ次のように述べている。</p>
+  <div class="fig-box">
+    <p><span class="speaker">A：</span>「動画視聴割合」が比較的小さい都道府県では，「ゲーム割合」が比較的大きいと解釈できる。</p>
+    <p><span class="speaker">B：</span>「平均使用時間」が10分増加すると，「趣味・娯楽時間」が0.43分増加すると解釈できる。</p>
+    <p><span class="speaker">C：</span>「平均使用時間」が他の青少年より長い青少年は，「趣味・娯楽時間」も他の青少年より長いと解釈できる。</p>
+    <p><span class="speaker">D：</span>「マイナス割合」が比較的大きい都道府県でも，「ルールあり割合」が比較的大きいとは限らないと解釈できる。</p>
+  </div>
+</div>
+
+<!-- 問3 ク（最も適当な解釈） -->
+<div class="setsumon" id="qs5">
+  <div class="setsumon-head"><span class="setsumon-badge">問3</span><span class="setsumon-pts">5点</span></div>
+  <div class="setsumon-q">生徒4人のうち，最も適当な解釈を述べている生徒は誰か。次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch5">
+    <button class="choice-btn" onclick="sel(5,0)"><span class="ci">⓪</span><span>Aさん</span></button>
+    <button class="choice-btn" onclick="sel(5,1)"><span class="ci">①</span><span>Bさん</span></button>
+    <button class="choice-btn" onclick="sel(5,2)"><span class="ci">②</span><span>Cさん</span></button>
+    <button class="choice-btn" onclick="sel(5,3)"><span class="ci">③</span><span>Dさん</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab5" onclick="judge(5)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw5">
+    <div class="result-banner" id="rb5"><span class="result-icon" id="ri5"></span><span id="rt5"></span><button class="exp-btn" onclick="toggleExp(5)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep5">
+      <span class="ans-label">✓ 正解：③　Dさん</span>
+      <div class="opt-row ng-opt"><span class="lbl-ng">A 誤り</span>　「動画視聴割合」と「ゲーム割合」の相関係数はr=0.38で正の相関。つまり「動画視聴割合が比較的小さい都道府県では，ゲーム割合も比較的小さい」傾向がある。Aさんの解釈は負の相関を示しており誤り。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">B 誤り</span>　「平均使用時間」と「趣味・娯楽時間」の回帰直線の式は y=0.43x+86.78 である。xは「平均使用時間」が対応している。x=10としたとき，0.43×10=4.3となるから，約4.3分増加するといえる（0.43分でなく）。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">C 誤り</span>　「平均使用時間」と「趣味・娯楽時間」の相関係数はr=0.54であるため正の相関はある。「平均使用時間が他の都道府県より長い都道府県ほど，趣味・娯楽時間も長い」と解釈できるが，青少年一人ひとりについて傾向は読み取れない（データは都道府県ごとの平均値）。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">D 正しい</span>　「マイナス割合」と「ルールあり割合」の相関係数はr=0.12でほとんど相関がない。よって，「マイナス割合が比較的大きい都道府県でも，ルールあり割合が比較的大きいとは限らない」と解釈できる。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 結果サマリ -->
+<div id="summary">
+  <h2>第4問　完了！</h2>
+  <div class="score-big" id="sum-score"></div>
+  <div class="score-sub" id="sum-pts"></div>
+  <table class="sum-tbl" id="sum-tbl">
+    <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>
+  </table>
+  <button class="btn-retry" onclick="location.reload()">もう一度挑戦する</button>
+</div>
+
+<div style="text-align:center; margin:30px 0;">
+<a href="index.html" style="display:inline-block;background:#2e7d32;color:white;text-decoration:none;padding:10px 24px;border-radius:8px;font-weight:bold;">↑ トップへ戻る</a>
+</div>
+</main>
+
+<script>
+const SYM=['⓪','①','②','③','④','⑤'];
+const QS=[
+  {qi:0, correct:2,       pts:4, label:'問1(1)（表1から調べられないこと）'},
+  {qi:1, correct:0,       pts:4, label:'問1(2)（欠損値の確認方法）'},
+  {qi:2, correct:2,       pts:2, label:'問2（ウ）外れ値の扱い'},
+  {qi:3, correct:[1,4],   pts:4, label:'問2（エ）・（オ）箱ひげ図', multi:true},
+  {qi:4, correct:[1,4],   pts:4, label:'問2（カ）・（キ）相関確認ツール', multi:true},
+  {qi:5, correct:3,       pts:5, label:'問3（ク）最も適当な解釈'},
+];
+const state={};
+let answeredCount=0;
+function updateHeader(){document.getElementById('hdr-score').textContent=answeredCount+' / '+QS.length+' 問回答済';}
+function sel(qi,ci){
+  if(state['done_'+qi]) return;
+  state['sel_'+qi]=ci;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>b.classList.toggle('selected',i===ci));
+  document.getElementById('ab'+qi).disabled=false;
+}
+function judge(qi){
+  const q=QS.find(x=>x.qi===qi);
+  const chosen=state['sel_'+qi];
+  if(chosen===undefined||state['done_'+qi]) return;
+  state['done_'+qi]=true; state[qi]=chosen;
+  document.getElementById('ab'+qi).disabled=true;
+  const ok=q.multi ? q.correct.includes(chosen) : chosen===q.correct;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>{
+    b.disabled=true; b.classList.remove('selected');
+    const isRight=q.multi ? q.correct.includes(i) : i===q.correct;
+    if(isRight) b.classList.add('correct');
+    else if(i===chosen&&!ok) b.classList.add('wrong');
+  });
+  const rw=document.getElementById('rw'+qi);
+  const rb=document.getElementById('rb'+qi);
+  rw.classList.add('show'); rb.classList.add(ok?'ok':'ng');
+  document.getElementById('ri'+qi).textContent=ok?'✓':'✗';
+  const cLabel=q.multi ? q.correct.map(x=>SYM[x]).join('か') : SYM[q.correct];
+  document.getElementById('rt'+qi).textContent=ok?'正解！':'不正解。正解は '+cLabel;
+  if(ok) rb.querySelector('.exp-btn').style.opacity='0.5';
+  document.getElementById('qs'+qi).classList.add('answered');
+  answeredCount++; updateHeader();
+  if(answeredCount===QS.length) setTimeout(showSummary,600);
+}
+function toggleExp(qi){
+  const ep=document.getElementById('ep'+qi);
+  const btn=document.querySelector('#rw'+qi+' .exp-btn');
+  const open=ep.classList.toggle('open');
+  btn.textContent=open?'解説を閉じる ▲':'解説を見る ▼';
+}
+function showSummary(){
+  const TOTAL=QS.reduce((a,q)=>a+q.pts,0);
+  let correct=0,pts=0;
+  const rows=QS.map(q=>{
+    const ok=q.multi ? q.correct.includes(state[q.qi]) : state[q.qi]===q.correct;
+    if(ok){correct++;pts+=q.pts;}
+    const cLabel=q.multi ? q.correct.map(x=>SYM[x]).join('/') : SYM[q.correct];
+    return '<tr><td>'+q.label+'</td><td>'+(state[q.qi]!==undefined?SYM[state[q.qi]]:'未回答')+'</td><td>'+cLabel+'</td><td class="'+(ok?'ok-td':'ng-td')+'">'+(ok?'○':'✗')+'</td><td>'+(ok?q.pts:0)+'/'+q.pts+'</td></tr>';
+  }).join('');
+  document.getElementById('sum-score').textContent=correct+' / '+QS.length+'問';
+  document.getElementById('sum-pts').textContent='獲得点数：'+pts+' / '+TOTAL+'点';
+  document.getElementById('sum-tbl').innerHTML+=rows;
+  const s=document.getElementById('summary');
+  s.style.display='block'; s.scrollIntoView({behavior:'smooth'});
+}
+updateHeader();
+</script>
+</body>
+</html>

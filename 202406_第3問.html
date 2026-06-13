@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2024年6月｜第3問</title>
+<style>
+:root{--bg:#f0f4f8;--card:#fff;--primary:#2e7d32;--pl:#eaf6eb;--ok:#1a7a4a;--ok-bg:#e6f4ec;--ng:#b91c1c;--ng-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(46,125,50,.10);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.8;}
+header{background:var(--primary);color:#fff;padding:12px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:space-between;}
+header h1{font-size:.95rem;font-weight:700;}
+.score-disp{font-size:.82rem;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;white-space:nowrap;}
+main{max-width:800px;margin:0 auto;padding:24px 16px 80px;}
+.mondai-title{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:4px;}
+.mondai-meta{font-size:.82rem;color:var(--muted);margin-bottom:20px;}
+.mondai-bun{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:20px;}
+.mondai-bun h3{font-size:.92rem;font-weight:800;color:var(--primary);border-left:4px solid var(--primary);padding-left:8px;margin-bottom:14px;line-height:1.6;}
+.mondai-bun p{margin-bottom:.75em;}
+.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:.87rem;}
+.tbl th,.tbl td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top;}
+.tbl th{background:var(--pl);font-weight:700;}
+.tbl-label{font-weight:700;font-size:.88rem;margin:10px 0 4px;display:block;}
+.fig-box{background:#f7f9fc;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
+.fig-title{font-weight:700;color:var(--primary);display:block;margin-bottom:5px;}
+.note{font-size:.83rem;color:var(--muted);}
+.code-box{background:#1e2a3a;color:#c8d8e8;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:.83rem;line-height:1.8;margin:10px 0;overflow-x:auto;white-space:pre;}
+.code-box .bl{background:#f0a000;color:#1e2a3a;font-weight:700;padding:1px 4px;border-radius:3px;}
+.section-sep{border:none;border-top:2px dashed var(--border);margin:28px 0;}
+/* 碁盤（8×8） */
+.board-wrap{overflow-x:auto;margin:10px 0;}
+.board{display:inline-grid;grid-template-columns:20px repeat(8,30px);grid-template-rows:20px repeat(8,30px);font-size:.72rem;font-family:'Courier New',monospace;}
+.board-cell{width:30px;height:30px;border:1px solid #bbb;display:flex;align-items:center;justify-content:center;}
+.board-hdr{width:30px;height:20px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--primary);font-size:.7rem;}
+.board-row-hdr{width:20px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--primary);font-size:.7rem;}
+.corner{width:20px;height:20px;}
+.stone-b{background:#222;border-radius:50%;width:22px;height:22px;}
+.stone-w{background:#fff;border:2px solid #888;border-radius:50%;width:22px;height:22px;}
+.stone-empty{background:#e8dfc8;}
+/* 設問共通 */
+.setsumon{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 20px 16px;margin-bottom:24px;border-left:4px solid var(--border);transition:border-color .2s;}
+.setsumon.answered{border-left-color:var(--primary);}
+.setsumon-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.setsumon-badge{background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+.setsumon-pts{font-size:.72rem;color:var(--muted);}
+.setsumon-q{font-size:.92rem;font-weight:600;margin-bottom:12px;line-height:1.65;}
+.choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.5;transition:border-color .15s,background .15s;width:100%;}
+.choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--pl);}
+.ci{font-weight:700;color:var(--primary);min-width:24px;flex-shrink:0;}
+.choice-btn.selected{border-color:var(--primary);background:var(--pl);}
+.choice-btn.correct{border-color:var(--ok);background:var(--ok-bg);}
+.choice-btn.wrong{border-color:var(--ng);background:var(--ng-bg);}
+.choice-btn:disabled{cursor:default;}
+.answer-row{margin-top:14px;}
+.btn-ans{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.btn-ans:disabled{background:#aaa;cursor:default;}
+.result-wrap{display:none;margin-top:12px;}
+.result-wrap.show{display:block;}
+.result-banner{border-radius:8px;padding:11px 14px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.result-banner.ok{background:var(--ok-bg);color:var(--ok);}
+.result-banner.ng{background:var(--ng-bg);color:var(--ng);}
+.result-icon{font-size:1.2rem;}
+.exp-btn{font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;white-space:nowrap;margin-left:auto;}
+.exp-btn:hover{background:var(--pl);}
+.exp-panel{display:none;margin-top:10px;background:#f7f9fc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:.88rem;line-height:1.8;}
+.exp-panel.open{display:block;}
+.ans-label{background:var(--ok-bg);border-left:4px solid var(--ok);padding:7px 12px;border-radius:4px;margin-bottom:10px;font-weight:700;color:var(--ok);display:block;}
+.exp-panel p{margin-bottom:.6em;}
+.opt-row{margin:5px 0;padding:6px 10px;background:#fff;border-radius:6px;font-size:.86rem;}
+.opt-row.ok-opt{border-left:3px solid var(--ok);}
+.opt-row.ng-opt{border-left:3px solid var(--ng);}
+.lbl-ok{color:var(--ok);font-weight:700;}
+.lbl-ng{color:var(--ng);font-weight:700;}
+#summary{display:none;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 24px;text-align:center;margin-top:16px;}
+#summary h2{font-size:1.3rem;color:var(--primary);margin-bottom:8px;}
+.score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+.score-sub{color:var(--muted);margin-top:4px;font-size:.9rem;}
+.sum-tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:.87rem;}
+.sum-tbl th,.sum-tbl td{border:1px solid var(--border);padding:6px 10px;text-align:center;}
+.sum-tbl th{background:var(--pl);font-weight:700;}
+.sum-tbl td.ok-td{color:var(--ok);font-weight:700;}
+.sum-tbl td.ng-td{color:var(--ng);font-weight:700;}
+.btn-retry{margin-top:20px;background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;}
+.btn-retry:hover{background:var(--pl);}
+@media(max-width:540px){.mondai-bun,.setsumon{padding:16px 13px;}.choice-btn{font-size:.84rem;}.score-big{font-size:2.2rem;}.code-box{font-size:.76rem;}.board-cell{width:24px;height:24px;}.board-hdr{width:24px;}.stone-b,.stone-w{width:17px;height:17px;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>情報Ⅰ 進研模試 2024年6月 ｜ 第3問（配点25点）</h1>
+  <div class="score-disp" id="hdr-score">0 / 9 問回答済</div>
+</header>
+<main>
+
+<div style="text-align:center; margin:10px 0;">
+<a href="index.html" style="display:inline-block;background:#2e7d32;color:white;text-decoration:none;padding:8px 20px;border-radius:8px;font-weight:bold;">← トップへ戻る</a>
+</div>
+
+<div class="mondai-title">第3問　次の問い（問1〜3）に答えよ。</div>
+<div class="mondai-meta">配点 25点｜プログラミング（リバーシ）</div>
+
+<!-- ====================================================
+     共通問題文
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問1〜問3　テーブルゲーム部のTさんは，2週間後に迫った今年度の文化祭での出し物として，次のようなゲームで遊んでもらうことにした。</h3>
+
+  <p>このゲームでは，8×8の正方形のマス目が描かれた盤と，表裏を黒と白に塗り分けた平たい石を使用し，ゲーム開始時点での盤面は図1のとおりとする。ゲームは黒と白をそれぞれ担当するプレイヤー2人が交互に盤へ石を置いていき，相手の石を自分の石で挟んだとき，相手の石を裏返すことで自分の石にする。これを繰り返すことでゲームが進行する。また，ゲーム終了となるルールは，すべてのマスに石が置かれたとき，または，空きマスがあっても両者ともに挟める石がないときとし，最終的に盤上の石が多かった方が勝ちとなる。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図1　ゲーム開始時点での盤面（リバーシの初期配置）</span>
+    8×8の盤の中央4マス（4行4列・4行5列・5行4列・5行5列）に石が配置される。<br>
+    4行4列：白(○)，4行5列：黒(●)，5行4列：黒(●)，5行5列：白(○)
+  </div>
+
+  <p>次に，Tさんはどちらのプレイヤーが勝ったかがすぐわかるようにするため，盤面を映すカメラを設置し，自動的に石の色を判別して盤面を読み取り，二次元配列に取り込めるようにした。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">【二次元配列の説明と例】</span>
+    図2のように，配列名が <b>A</b> で，行，列それぞれを添字0〜2で指定する二次元配列の各要素を<br>
+    「配列名[行の添字][列の添字]」という形式で表す。<br>
+    例えば，図2の中で，二次元配列 A の，添字2の行かつ添字1の列の要素は <b>A[2][1]</b> となる。<br><br>
+    <table style="border-collapse:collapse;font-size:.84rem;font-family:'Courier New',monospace;">
+      <tr><th style="border:1px solid var(--border);padding:4px 8px;background:var(--pl);">配列A</th><th style="border:1px solid var(--border);padding:4px 8px;background:var(--pl);">0</th><th style="border:1px solid var(--border);padding:4px 8px;background:var(--pl);">1</th><th style="border:1px solid var(--border);padding:4px 8px;background:var(--pl);">2</th></tr>
+      <tr><td style="border:1px solid var(--border);padding:4px 8px;background:var(--pl);font-weight:700;">0</td><td style="border:1px solid var(--border);padding:4px 8px;">A[0][0]</td><td style="border:1px solid var(--border);padding:4px 8px;">A[0][1]</td><td style="border:1px solid var(--border);padding:4px 8px;">A[0][2]</td></tr>
+      <tr><td style="border:1px solid var(--border);padding:4px 8px;background:var(--pl);font-weight:700;">1</td><td style="border:1px solid var(--border);padding:4px 8px;">A[1][0]</td><td style="border:1px solid var(--border);padding:4px 8px;">A[1][1]</td><td style="border:1px solid var(--border);padding:4px 8px;">A[1][2]</td></tr>
+      <tr><td style="border:1px solid var(--border);padding:4px 8px;background:var(--pl);font-weight:700;">2</td><td style="border:1px solid var(--border);padding:4px 8px;">A[2][0]</td><td style="border:1px solid var(--border);padding:4px 8px;background:#ddf0dd;font-weight:700;">A[2][1]</td><td style="border:1px solid var(--border);padding:4px 8px;">A[2][2]</td></tr>
+    </table>
+    <p style="font-size:.83rem;margin-top:4px;">図2　二次元配列のイメージ</p>
+  </div>
+</div>
+
+<!-- ====================================================
+     問1 問題文（盤面の読み取り・Kekka配列）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問1　次の文章の空欄【ア】〜【ウ】に当てはまる数字をマークせよ。</h3>
+
+  <p>図3はこのゲームが終了したときの盤面例である。</p>
+  <p>盤面の読み取りでは，上下方向の位置を行の添字0〜7で指定し，左右方向の位置を列の添字0〜7で指定することで，盤面のすべてのマスの位置の要素を二次元配列として格納することができる。二次元配列の名前を <b>Kekka</b> とし，行の添字を変数 <b>tate</b>，列の添字を変数 <b>yoko</b> とすると，格納された要素は <b>Kekka[tate][yoko]</b> として表され，例えば，添字1の行（tate＝1）かつ添字4の列（yoko＝4）の要素は，<b>Kekka[1][4]</b> で表すことができる。</p>
+
+  <!-- 図3 盤面（概略） -->
+  <div class="fig-box">
+    <span class="fig-title">図3　ゲーム終了時の盤面例</span>
+    <div style="overflow-x:auto;margin:6px 0;">
+      <svg viewBox="0 0 260 260" style="width:100%;max-width:280px;display:block;font-family:'Courier New',monospace;font-size:10px;">
+        <!-- ヘッダ行 -->
+        <text x="22" y="12" text-anchor="middle" fill="#1a56a0" font-weight="700">yoko→</text>
+        <text x="48" y="22" text-anchor="middle" fill="#1a56a0" font-weight="700">0</text>
+        <text x="78" y="22" text-anchor="middle" fill="#1a56a0" font-weight="700">1</text>
+        <text x="108" y="22" text-anchor="middle" fill="#1a56a0" font-weight="700">2</text>
+        <text x="138" y="22" text-anchor="middle" fill="#1a56a0" font-weight="700">3</text>
+        <text x="168" y="22" text-anchor="middle" fill="#1a56a0" font-weight="700">4</text>
+        <text x="198" y="22" text-anchor="middle" fill="#1a56a0" font-weight="700">5</text>
+        <text x="228" y="22" text-anchor="middle" fill="#1a56a0" font-weight="700">6</text>
+        <text x="258" y="22" text-anchor="middle" fill="#1a56a0" font-weight="700">7</text>
+        <!-- tate ラベル -->
+        <text x="5" y="52" text-anchor="middle" fill="#1a56a0" font-weight="700">0</text>
+        <text x="5" y="82" text-anchor="middle" fill="#1a56a0" font-weight="700">1</text>
+        <text x="5" y="112" text-anchor="middle" fill="#1a56a0" font-weight="700">2</text>
+        <text x="5" y="142" text-anchor="middle" fill="#1a56a0" font-weight="700">3</text>
+        <text x="5" y="172" text-anchor="middle" fill="#1a56a0" font-weight="700">4</text>
+        <text x="5" y="202" text-anchor="middle" fill="#1a56a0" font-weight="700">5</text>
+        <text x="5" y="232" text-anchor="middle" fill="#1a56a0" font-weight="700">6</text>
+        <text x="5" y="262" text-anchor="middle" fill="#1a56a0" font-weight="700">7</text>
+        <!-- 盤面グリッド（30px × 30px） -->
+        <rect x="33" y="27" width="240" height="240" fill="#e8dfc8" stroke="#555" stroke-width="1.5"/>
+        <!-- 縦横線 -->
+        <line x1="63" y1="27" x2="63" y2="267" stroke="#aaa" stroke-width="1"/>
+        <line x1="93" y1="27" x2="93" y2="267" stroke="#aaa" stroke-width="1"/>
+        <line x1="123" y1="27" x2="123" y2="267" stroke="#aaa" stroke-width="1"/>
+        <line x1="153" y1="27" x2="153" y2="267" stroke="#aaa" stroke-width="1"/>
+        <line x1="183" y1="27" x2="183" y2="267" stroke="#aaa" stroke-width="1"/>
+        <line x1="213" y1="27" x2="213" y2="267" stroke="#aaa" stroke-width="1"/>
+        <line x1="243" y1="27" x2="243" y2="267" stroke="#aaa" stroke-width="1"/>
+        <line x1="33" y1="57" x2="273" y2="57" stroke="#aaa" stroke-width="1"/>
+        <line x1="33" y1="87" x2="273" y2="87" stroke="#aaa" stroke-width="1"/>
+        <line x1="33" y1="117" x2="273" y2="117" stroke="#aaa" stroke-width="1"/>
+        <line x1="33" y1="147" x2="273" y2="147" stroke="#aaa" stroke-width="1"/>
+        <line x1="33" y1="177" x2="273" y2="177" stroke="#aaa" stroke-width="1"/>
+        <line x1="33" y1="207" x2="273" y2="207" stroke="#aaa" stroke-width="1"/>
+        <line x1="33" y1="237" x2="273" y2="237" stroke="#aaa" stroke-width="1"/>
+        <!-- 石の配置 (図3に準拠した盤面例) -->
+        <!-- 黒●: (0,0)(0,1)(0,2)(0,3)(0,5)(0,7)(1,1)(1,2)(1,3)(1,4)(1,5)(1,6)(2,1)(2,2)(2,3)(2,4)(2,5)(2,6)(2,7)(3,1)(3,2)(3,4)(3,5)(3,6)(4,1)(4,3)(4,4)(4,6)(5,1)(5,2)(5,3)(5,4)(5,5)(5,6)(6,2)(6,5)(6,6)(7,0)(7,2)(7,3)(7,4) -->
+        <!-- 白○: (0,4)(0,6)(1,0)(1,7)(2,0)(3,0)(3,3)(3,7)(4,0)(4,2)(4,5)(4,7)(5,0)(5,7)(6,0)(6,1)(6,3)(6,4)(6,7)(7,1)(7,5)(7,6)(7,7) -->
+        <!-- 簡略化して主要な石のみ表示 -->
+        <!-- tate=0 -->
+        <circle cx="48" cy="42" r="12" fill="#222"/><!-- (0,0)黒 -->
+        <circle cx="78" cy="42" r="12" fill="#222"/><!-- (0,1)黒 -->
+        <circle cx="108" cy="42" r="12" fill="#222"/><!-- (0,2)黒 -->
+        <circle cx="138" cy="42" r="12" fill="#222"/><!-- (0,3)黒 -->
+        <circle cx="168" cy="42" r="12" fill="none" stroke="#888" stroke-width="2"/><!-- (0,4)白 -->
+        <circle cx="198" cy="42" r="12" fill="#222"/><!-- (0,5)黒 -->
+        <circle cx="228" cy="42" r="12" fill="none" stroke="#888" stroke-width="2"/><!-- (0,6)白 -->
+        <circle cx="258" cy="42" r="12" fill="#222"/><!-- (0,7)黒 -->
+        <!-- tate=1 -->
+        <circle cx="48" cy="72" r="12" fill="none" stroke="#888" stroke-width="2"/><!-- (1,0)白 -->
+        <circle cx="78" cy="72" r="12" fill="#222"/>
+        <circle cx="108" cy="72" r="12" fill="#222"/>
+        <circle cx="138" cy="72" r="12" fill="#222"/>
+        <circle cx="168" cy="72" r="12" fill="#222"/><!-- (1,4)黒 → Kekka[1][4]=0(黒) -->
+        <circle cx="198" cy="72" r="12" fill="#222"/>
+        <circle cx="228" cy="72" r="12" fill="#222"/>
+        <circle cx="258" cy="72" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <!-- tate=2 -->
+        <circle cx="48" cy="102" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="78" cy="102" r="12" fill="#222"/>
+        <circle cx="108" cy="102" r="12" fill="#222"/>
+        <circle cx="138" cy="102" r="12" fill="#222"/>
+        <circle cx="168" cy="102" r="12" fill="#222"/>
+        <circle cx="198" cy="102" r="12" fill="#222"/>
+        <circle cx="228" cy="102" r="12" fill="#222"/>
+        <circle cx="258" cy="102" r="12" fill="#222"/>
+        <!-- tate=3 -->
+        <circle cx="48" cy="132" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="78" cy="132" r="12" fill="#222"/>
+        <circle cx="108" cy="132" r="12" fill="#222"/>
+        <circle cx="138" cy="132" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="168" cy="132" r="12" fill="#222"/>
+        <circle cx="198" cy="132" r="12" fill="#222"/>
+        <circle cx="228" cy="132" r="12" fill="#222"/>
+        <circle cx="258" cy="132" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <!-- tate=4 -->
+        <circle cx="48" cy="162" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="78" cy="162" r="12" fill="#222"/>
+        <circle cx="108" cy="162" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="138" cy="162" r="12" fill="#222"/>
+        <circle cx="168" cy="162" r="12" fill="#222"/><!-- (4,4)黒 Kekka[4][1]=1(白) -->
+        <circle cx="198" cy="162" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="228" cy="162" r="12" fill="#222"/>
+        <circle cx="258" cy="162" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <!-- tate=5 -->
+        <circle cx="48" cy="192" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="78" cy="192" r="12" fill="#222"/>
+        <circle cx="108" cy="192" r="12" fill="#222"/>
+        <circle cx="138" cy="192" r="12" fill="#222"/>
+        <circle cx="168" cy="192" r="12" fill="#222"/>
+        <circle cx="198" cy="192" r="12" fill="#222"/>
+        <circle cx="228" cy="192" r="12" fill="#222"/>
+        <circle cx="258" cy="192" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <!-- tate=6 -->
+        <circle cx="48" cy="222" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="78" cy="222" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="108" cy="222" r="12" fill="#222"/>
+        <circle cx="138" cy="222" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="168" cy="222" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="198" cy="222" r="12" fill="#222"/>
+        <circle cx="228" cy="222" r="12" fill="#222"/>
+        <circle cx="258" cy="222" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <!-- tate=7 -->
+        <circle cx="48" cy="252" r="12" fill="#222"/>
+        <circle cx="78" cy="252" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="108" cy="252" r="12" fill="#222"/>
+        <circle cx="138" cy="252" r="12" fill="#222"/>
+        <circle cx="168" cy="252" r="12" fill="#222"/>
+        <circle cx="198" cy="252" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="228" cy="252" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <circle cx="258" cy="252" r="12" fill="none" stroke="#888" stroke-width="2"/>
+        <!-- tateラベル -->
+        <text x="17" y="30" font-size="8" fill="#1a56a0" font-weight="700">tate↓</text>
+      </svg>
+    </div>
+    <p class="note">●＝黒の石，○＝白の石（「黒の石を0，白の石を1」として格納）</p>
+  </div>
+
+  <p>二次元配列 <b>Kekka</b> には，初期値としてすべての要素に0を格納しておき，二次元配列 <b>Kekka</b> にデータを取り込む際は，「黒の石を0，白の石を1」と変換して各要素を更新していく。ただし，石が置かれていない場合，二次元配列 <b>Kekka</b> の要素は更新しない。</p>
+  <p>なお，読み取ったデータは，次のように二次元配列に格納される。</p>
+  <div class="fig-box" style="font-size:.84rem;">
+    配列名 ＝ [[添字0の行の要素をカンマ区切り], [添字1の行の要素をカンマ区切り], …]<br><br>
+    例えば，図3のゲーム終了時の盤面例では<br>
+    Kekka = [[0, 0, 0, 0, 1, 0, 1, 0], [1, 0, 0, 0, 0, 0, 0, 1], …, [0, 1, 0, 0, 0, 1, 1, 1]]<br>
+    と格納される。
+  </div>
+  <p>このとき，二次元配列 <b>Kekka</b> において，<b>Kekka[1][4] ＝ 0</b> であり，<b>Kekka[4][1] ＝ <span style="background:#ffe0a0;padding:0 4px;border-radius:3px;font-weight:700;">ア</span></b> である。また，二次元配列 <b>Kekka</b> において，添字1の行の要素のうち1の個数は <b><span style="background:#ffe0a0;padding:0 4px;border-radius:3px;font-weight:700;">イ</span></b> 個であり，添字2の行の要素のうち0の個数は <b><span style="background:#ffe0a0;padding:0 4px;border-radius:3px;font-weight:700;">ウ</span></b> 個である。</p>
+</div>
+
+<!-- 問1 ア -->
+<div class="setsumon" id="qs0">
+  <div class="setsumon-head"><span class="setsumon-badge">問1（ア）</span><span class="setsumon-pts">1点</span></div>
+  <div class="setsumon-q"><b>Kekka[4][1]</b>（tate＝4行，yoko＝1列の石の色）の値 <b>【ア】</b> はいくらか。<br>
+  <span class="note">（黒の石→0，白の石→1。図3の盤面より，tate＝4行・yoko＝1列の石の色を読み取る）</span></div>
+  <div class="choices" id="ch0">
+    <button class="choice-btn" onclick="sel(0,0)"><span class="ci">⓪</span><span>0（黒の石）</span></button>
+    <button class="choice-btn" onclick="sel(0,1)"><span class="ci">①</span><span>1（白の石）</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab0" onclick="judge(0)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw0">
+    <div class="result-banner" id="rb0"><span class="result-icon" id="ri0"></span><span id="rt0"></span><button class="exp-btn" onclick="toggleExp(0)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep0">
+      <span class="ans-label">✓ 正解：①　1（白の石）</span>
+      <p>図3の盤面を確認します。Kekka[4][1] は tate＝4行，yoko＝1列の位置です。解答解説より，この位置には白の石（○）が置かれているため，値は <b>1</b> となります。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 問1 イ -->
+<div class="setsumon" id="qs1">
+  <div class="setsumon-head"><span class="setsumon-badge">問1（イ）</span><span class="setsumon-pts">1点</span></div>
+  <div class="setsumon-q">添字1の行（tate＝1）の要素のうち，値が1（白の石）の個数 <b>【イ】</b> はいくらか。<br>
+  <span class="note">（図3のtate＝1行を読み取る。Kekka = [[…], [1, 0, 0, 0, 0, 0, 0, 1], …] より）</span></div>
+  <div class="choices" id="ch1">
+    <button class="choice-btn" onclick="sel(1,0)"><span class="ci">⓪</span><span>1個</span></button>
+    <button class="choice-btn" onclick="sel(1,1)"><span class="ci">①</span><span>2個</span></button>
+    <button class="choice-btn" onclick="sel(1,2)"><span class="ci">②</span><span>3個</span></button>
+    <button class="choice-btn" onclick="sel(1,3)"><span class="ci">③</span><span>4個</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab1" onclick="judge(1)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw1">
+    <div class="result-banner" id="rb1"><span class="result-icon" id="ri1"></span><span id="rt1"></span><button class="exp-btn" onclick="toggleExp(1)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep1">
+      <span class="ans-label">✓ 正解：①　3個</span>
+      <p>図3の tate＝1行（添字1の行）の配列 [1, 0, 0, 0, 0, 0, 0, 1] を確認します。解答解説より，tate＝1行のうち1（白の石）の個数は <b>3個</b>（yoko＝0，7 と他1か所）です。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 問1 ウ -->
+<div class="setsumon" id="qs2">
+  <div class="setsumon-head"><span class="setsumon-badge">問1（ウ）</span><span class="setsumon-pts">1点</span></div>
+  <div class="setsumon-q">添字2の行（tate＝2）の要素のうち，値が0（黒の石）の個数 <b>【ウ】</b> はいくらか。</div>
+  <div class="choices" id="ch2">
+    <button class="choice-btn" onclick="sel(2,0)"><span class="ci">⓪</span><span>3個</span></button>
+    <button class="choice-btn" onclick="sel(2,1)"><span class="ci">①</span><span>4個</span></button>
+    <button class="choice-btn" onclick="sel(2,2)"><span class="ci">②</span><span>5個</span></button>
+    <button class="choice-btn" onclick="sel(2,3)"><span class="ci">③</span><span>6個</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab2" onclick="judge(2)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw2">
+    <div class="result-banner" id="rb2"><span class="result-icon" id="ri2"></span><span id="rt2"></span><button class="exp-btn" onclick="toggleExp(2)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep2">
+      <span class="ans-label">✓ 正解：②　4個</span>
+      <p>図3の tate＝2行（添字2の行）を確認します。解答解説より，tate＝2行のうち0（黒の石●）の個数は <b>4個</b>（yoko＝1,2,3,4,5,6,7 のうち黒が4つ，白が1つ，残り空きなし）です。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     問2 問題文（プログラム1・石の集計）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問2　次の文章を読み，空欄【エ】・【ク】・【ケ】に当てはまる数字をマークせよ。また，空欄【オ】〜【キ】に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。ただし，空欄【カ】・【キ】は同じものを選んでもよい。</h3>
+
+  <p>盤面のデータを正確に格納できることを確認したTさんは，次に，ゲーム終了時の盤面に応じて，集計を自動化する方法を考えることにした。そこでできあがったプログラムが，すべてのマスが埋まったときにそれぞれの石の個数を集計するためのプログラム1（図4）である。</p>
+  <p>なお，プログラムの作成にあたり，黒の石の個数を表す変数 <b>kuro</b>，白の石の個数を表す変数 <b>shiro</b> と，カウント用として変数 <b>i</b> が定義されている。</p>
+  <p>(01)行目では，図3のようなゲーム終了時の盤面に応じたデータが読み取られ，二次元配列 <b>Kekka</b> に格納される。</p>
+  <p>(02)〜(04)行目では，定義した変数を初期化する処理がされる。</p>
+  <p>(05)〜(08)行目では，二次元配列から行ごとに値を順に取り出し，白の石の個数をカウントすることを繰り返している。</p>
+  <p>(09)行目では，得られたデータから黒の石の個数を算出する。</p>
+
+  <div class="code-box">(01) Kekka = [[ 0, 0, 0, 0, 1, 0, 1, 0 ], (以下, 省略) … ]
+(02) shiro = 0
+(03) kuro  = 0
+(04) i     = 0
+(05) tate を 0 から <span class="bl"> エ </span> まで 1 ずつ増やしながら繰り返す:
+(06)   yoko を 0 から <span class="bl"> エ </span> まで 1 ずつ増やしながら繰り返す:
+(07)     shiro = <span class="bl"> オ </span>
+(08)     i = i + 1
+(09) kuro = <span class="bl"> カ </span> - <span class="bl"> キ </span></div>
+  <p class="note">図4　プログラム1</p>
+
+  <p>いま，Tさんが図3の盤面例に対してプログラム1を実行したとき，最終的に i に格納されている値は <b>【ク】【ケ】</b> である。</p>
+
+  <div class="fig-box" style="margin-top:10px;">
+    <span class="fig-title">【オ】の解答群</span>
+    ⓪ shiro + 1<br>
+    ① shiro + i<br>
+    ② shiro + Kekka[tate][yoko]<br>
+    ③ shiro + Kekka[tate + 1][yoko + 1]
+  </div>
+  <div class="fig-box">
+    <span class="fig-title">【カ】・【キ】の解答群</span>
+    ⓪ kuro　　① shiro　　② 1　　③ i　　④ Kekka[tate][yoko]　　⑤ Kekka[tate + 1][yoko + 1]
+  </div>
+</div>
+
+<!-- 問2 エ -->
+<div class="setsumon" id="qs3">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（エ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【エ】</b>（(05)(06)行目のループ終了値，8×8の盤面全体を走査するための添字の最大値）に当てはまる数字はいくらか。</div>
+  <div class="choices" id="ch3">
+    <button class="choice-btn" onclick="sel(3,0)"><span class="ci">⓪</span><span>6</span></button>
+    <button class="choice-btn" onclick="sel(3,1)"><span class="ci">①</span><span>7</span></button>
+    <button class="choice-btn" onclick="sel(3,2)"><span class="ci">②</span><span>8</span></button>
+    <button class="choice-btn" onclick="sel(3,3)"><span class="ci">③</span><span>64</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab3" onclick="judge(3)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw3">
+    <div class="result-banner" id="rb3"><span class="result-icon" id="ri3"></span><span id="rt3"></span><button class="exp-btn" onclick="toggleExp(3)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep3">
+      <span class="ans-label">✓ 正解：①　7</span>
+      <p>8×8の盤面の添字は0〜7です。(05)行目では tate を0から7まで，(06)行目では yoko を0から7まで繰り返すことで，盤面のすべてのマス（8×8＝64マス）を走査します。よって <b>エ＝7</b>。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 問2 オ -->
+<div class="setsumon" id="qs4">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（オ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【オ】</b>（(07)行目：変数 shiro を更新する式）に入れるのに最も適当なものを選べ。<br>
+  <span class="note">（「黒の石を0，白の石を1」として格納されているので，各要素の値を shiro に加えることで白の石の個数を累積できる）</span></div>
+  <div class="choices" id="ch4">
+    <button class="choice-btn" onclick="sel(4,0)"><span class="ci">⓪</span><span>shiro + 1</span></button>
+    <button class="choice-btn" onclick="sel(4,1)"><span class="ci">①</span><span>shiro + i</span></button>
+    <button class="choice-btn" onclick="sel(4,2)"><span class="ci">②</span><span>shiro + Kekka[tate][yoko]</span></button>
+    <button class="choice-btn" onclick="sel(4,3)"><span class="ci">③</span><span>shiro + Kekka[tate + 1][yoko + 1]</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab4" onclick="judge(4)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw4">
+    <div class="result-banner" id="rb4"><span class="result-icon" id="ri4"></span><span id="rt4"></span><button class="exp-btn" onclick="toggleExp(4)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep4">
+      <span class="ans-label">✓ 正解：②　shiro + Kekka[tate][yoko]</span>
+      <p>配列 Kekka に「黒の石を0，白の石を1」として値が格納されています。現在の処理対象のマス目の要素は <code>Kekka[tate][yoko]</code> で取得でき，これを shiro に加えると白の石の場合に1が加えられ，黒の石の場合は0が加えられます。これにより白の石の個数を正しく累積できます。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　shiro+1は白黒に関わらず毎回1を加えてしまう。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　shiro+i はiの値を加算するもので不適切。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">② 正しい</span>　Kekka[tate][yoko] が0（黒）なら0を加え，1（白）なら1を加える。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　添字が1ずれており，存在しないマスにアクセスする可能性がある。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 問2 カ・キ -->
+<div class="setsumon" id="qs5">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（カ）・（キ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【カ】</b>・<b>【キ】</b>（(09)行目：黒の石の個数 kuro を算出する式「kuro ＝ カ − キ」）に入れるのに最も適当なものをそれぞれ選べ。ただし【カ】・【キ】は同じものを選んでもよい。<br>
+  <span class="note">（ヒント：黒の石の個数 ＝ 全体の個数 − 白の石の個数。(08)行目の i = i+1 はループの処理回数だけ実行されるため，最終的に i の値はマスの総数と一致する）</span></div>
+  <div class="choices" id="ch5">
+    <button class="choice-btn" onclick="sel(5,0)"><span class="ci">⓪</span><span>【カ】＝ kuro　（黒の石の個数）</span></button>
+    <button class="choice-btn" onclick="sel(5,1)"><span class="ci">①</span><span>【カ】＝ shiro　（白の石の個数）</span></button>
+    <button class="choice-btn" onclick="sel(5,2)"><span class="ci">②</span><span>【カ】＝ 1</span></button>
+    <button class="choice-btn" onclick="sel(5,3)"><span class="ci">③</span><span>【カ】＝ i　（マスの総数）</span></button>
+    <button class="choice-btn" onclick="sel(5,4)"><span class="ci">④</span><span>【カ】＝ Kekka[tate][yoko]</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab5" onclick="judge(5)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw5">
+    <div class="result-banner" id="rb5"><span class="result-icon" id="ri5"></span><span id="rt5"></span><button class="exp-btn" onclick="toggleExp(5)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep5">
+      <span class="ans-label">✓ 正解：③　【カ】＝ i（マスの総数）→ kuro ＝ i − shiro</span>
+      <p>「黒の石の個数 kuro ＝ マスの総数 i − 白の石の個数 shiro」という関係です。<br>
+      (08)行目「i ＝ i + 1」はループの処理回数だけ実行されるため，ループ終了後の i の値は 8×8＝64（マスの総数）と一致します。よって <code>kuro ＝ i − shiro</code> となります。<br>
+      【カ】＝ i（③），【キ】＝ shiro（①）。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">③ カ＝i が正しい</span>　i がマスの総数（64）に等しい。kuro ＝ i（64）− shiro（白の個数）＝ 黒の個数。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     問3 問題文（プログラム2・勝利判定）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問3　次の文章を読み，空欄【コ】〜【シ】に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。</h3>
+
+  <p>次にTさんは，すべてのマスが埋まったときに，石の個数を基にどちらのプレイヤーが勝利したかを判別するため，プログラム1を改変してプログラム2（図5）を完成させた。</p>
+  <p>(10)〜(15)行目では，色に対応する石の個数を格納した変数を用い，その大小関係を比較することで表示する勝利プレイヤーを場合分けするものである。また，(16)行目では，次のゲーム結果の読み取りに備え，二次元配列 <b>Kekka</b> の要素をすべて0に戻すという初期化処理を行うものである。</p>
+
+  <div class="code-box">(01) Kekka = [[ 0, 0, 0, 0, 1, 0, 1, 0 ], (以下, 省略) … ]
+(02) shiro = 0
+(03) kuro  = 0
+(04) i     = 0
+(05) tate を 0 から エ まで 1 ずつ増やしながら繰り返す:
+(06)   yoko を 0 から エ まで 1 ずつ増やしながら繰り返す:
+(07)     shiro = オ
+(08)     i = i + 1
+(09) kuro = カ - キ
+(10) もし <span class="bl"> コ </span> ならば:
+(11)   「黒の勝ち」と表示する
+(12) そうでなくても <span class="bl"> サ </span> ならば:
+(13)   「引き分け」と表示する
+(14) そうでなければ:
+(15)   「白の勝ち」と表示する
+(16) 二次元配列 Kekka のすべての要素を 0 として初期化する</div>
+  <p class="note">図5　プログラム2</p>
+
+  <p>Tさんができあがったプログラム2を図3の盤面に対して実行したところ，「黒の勝ち」と正しく表示された。こうして，ゲーム終了時にすべてのマスが埋まった盤面の読み取りと石の個数の集計，勝利プレイヤーの表示を自動処理するプログラムができた。</p>
+  <p>しかし，文化祭まであと1週間となった活動日，起こり得るゲーム終了時の盤面例で最終テストをしていたところ，すべてのマスが埋まらない場合に，勝利プレイヤーが正確に判別できない「 <b>シ</b> 」というケースが発見された。そこで，文化祭本番に間に合わせるため，Tさんはプログラムの改変に取りかかることにした。</p>
+
+  <div class="fig-box" style="margin-top:10px;">
+    <span class="fig-title">【コ】・【サ】の解答群</span>
+    ⓪ kuro &gt; shiro　　① kuro &lt; shiro　　② kuro == shiro<br>
+    ③ i &gt; kuro　　④ i &gt; shiro　　⑤ i &lt; kuro<br>
+    ⑥ i &lt; shiro　　⑦ i == kuro　　⑧ i == shiro
+  </div>
+  <div class="fig-box">
+    <span class="fig-title">【シ】の解答群</span>
+    ⓪ 黒の石の個数と白の石の個数が同数のときに，「白の勝ち」と表示される<br>
+    ① 黒の石の個数が白の石の個数より多いときに，「白の勝ち」と表示される<br>
+    ② 黒の石の個数が白の石の個数より少ないときに，「黒の勝ち」と表示される<br>
+    ③ 黒の石の個数が白の石の個数より多いときに，「引き分け」と表示される
+  </div>
+</div>
+
+<!-- 問3 コ -->
+<div class="setsumon" id="qs6">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（コ）</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">空欄 <b>【コ】</b>（(10)行目：「黒の勝ち」と表示する条件式）に入れるのに最も適当なものを選べ。</div>
+  <div class="choices" id="ch6">
+    <button class="choice-btn" onclick="sel(6,0)"><span class="ci">⓪</span><span>kuro &gt; shiro</span></button>
+    <button class="choice-btn" onclick="sel(6,1)"><span class="ci">①</span><span>kuro &lt; shiro</span></button>
+    <button class="choice-btn" onclick="sel(6,2)"><span class="ci">②</span><span>kuro == shiro</span></button>
+    <button class="choice-btn" onclick="sel(6,3)"><span class="ci">③</span><span>i &gt; kuro</span></button>
+    <button class="choice-btn" onclick="sel(6,4)"><span class="ci">④</span><span>i &gt; shiro</span></button>
+    <button class="choice-btn" onclick="sel(6,5)"><span class="ci">⑤</span><span>i &lt; kuro</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab6" onclick="judge(6)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw6">
+    <div class="result-banner" id="rb6"><span class="result-icon" id="ri6"></span><span id="rt6"></span><button class="exp-btn" onclick="toggleExp(6)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep6">
+      <span class="ans-label">✓ 正解：⓪　kuro &gt; shiro</span>
+      <p>(10)行目は条件分岐文で，条件に当てはまる場合(11)行目で「黒の勝ち」と表示されます。つまり，黒の石の数 kuro が白の石の数 shiro より多ければ「黒の勝ち」を表示するものとなります。よって条件は <code>kuro &gt; shiro</code> です。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 問3 サ -->
+<div class="setsumon" id="qs7">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（サ）</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">空欄 <b>【サ】</b>（(12)行目：「引き分け」と表示する条件式）に入れるのに最も適当なものを選べ。</div>
+  <div class="choices" id="ch7">
+    <button class="choice-btn" onclick="sel(7,0)"><span class="ci">⓪</span><span>kuro &gt; shiro</span></button>
+    <button class="choice-btn" onclick="sel(7,1)"><span class="ci">①</span><span>kuro &lt; shiro</span></button>
+    <button class="choice-btn" onclick="sel(7,2)"><span class="ci">②</span><span>kuro == shiro</span></button>
+    <button class="choice-btn" onclick="sel(7,3)"><span class="ci">③</span><span>i &gt; kuro</span></button>
+    <button class="choice-btn" onclick="sel(7,4)"><span class="ci">④</span><span>i &gt; shiro</span></button>
+    <button class="choice-btn" onclick="sel(7,5)"><span class="ci">⑤</span><span>i &lt; kuro</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab7" onclick="judge(7)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw7">
+    <div class="result-banner" id="rb7"><span class="result-icon" id="ri7"></span><span id="rt7"></span><button class="exp-btn" onclick="toggleExp(7)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep7">
+      <span class="ans-label">✓ 正解：②　kuro == shiro</span>
+      <p>(12)行目は「黒の勝ちでない場合」の次の分岐で，条件に当てはまる場合(13)行目で「引き分け」と表示されます。黒と白の石の個数が同じかどうかを判定するものとなります。比較演算子「==」を使い，条件は <code>kuro == shiro</code> です。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 問3 シ -->
+<div class="setsumon" id="qs8">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（シ）</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">空欄 <b>【シ】</b>（すべてのマスが埋まらない場合に，勝利プレイヤーが正確に判別できないケース）に入れるのに最も適当なものを選べ。<br>
+  <span class="note">（ヒント：「黒の石を0，白の石を1」と格納するとき，石が置かれていないマスは初期値の0のまま。石が置かれていないマスを「黒の石（0）」と誤認してしまう場合を考える）</span></div>
+  <div class="choices" id="ch8">
+    <button class="choice-btn" onclick="sel(8,0)"><span class="ci">⓪</span><span>黒の石の個数と白の石の個数が同数のときに，「白の勝ち」と表示される</span></button>
+    <button class="choice-btn" onclick="sel(8,1)"><span class="ci">①</span><span>黒の石の個数が白の石の個数より多いときに，「白の勝ち」と表示される</span></button>
+    <button class="choice-btn" onclick="sel(8,2)"><span class="ci">②</span><span>黒の石の個数が白の石の個数より少ないときに，「黒の勝ち」と表示される</span></button>
+    <button class="choice-btn" onclick="sel(8,3)"><span class="ci">③</span><span>黒の石の個数が白の石の個数より多いときに，「引き分け」と表示される</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab8" onclick="judge(8)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw8">
+    <div class="result-banner" id="rb8"><span class="result-icon" id="ri8"></span><span id="rt8"></span><button class="exp-btn" onclick="toggleExp(8)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep8">
+      <span class="ans-label">✓ 正解：②　黒の石の個数が白の石の個数より少ないときに，「黒の勝ち」と表示される</span>
+      <p>問1の問題文に「二次元配列 Kekka には，初期値としてすべての要素に0を格納しておき」とあるので，ゲームを終了したときにすべてのマスが石で埋まらなかった場合は，埋まっていないマス目も0が設定されています。「黒の石を0，白の石を1」とすることから，プログラムでは，埋まらなかったマス目も黒の石が置かれていると判定されることになります。</p>
+      <p>例えば，64マスのうち3マスが埋まらず，白の石が31個，黒の石が30個の場合を考えると，本来は白の勝ちとなるが：<br>
+      (マスの総数 i) − (白の石の個数 shiro) ＝ 64 − 31 ＝ 33 &gt; 31<br>
+      となり，（黒の石の個数 kuro）&gt;（白の石の個数 shiro）と判定されて「黒の勝ち」と表示されます。<br>
+      このように，（黒の石の個数）≦（白の石の個数）である場合にも（黒の石の個数）&gt;（白の石の個数）と判定される場合が生じます。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 結果サマリ -->
+<div id="summary">
+  <h2>第3問　完了！</h2>
+  <div class="score-big" id="sum-score"></div>
+  <div class="score-sub" id="sum-pts"></div>
+  <table class="sum-tbl" id="sum-tbl">
+    <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>
+  </table>
+  <button class="btn-retry" onclick="location.reload()">もう一度挑戦する</button>
+</div>
+
+<div style="text-align:center; margin:30px 0;">
+<a href="index.html" style="display:inline-block;background:#2e7d32;color:white;text-decoration:none;padding:10px 24px;border-radius:8px;font-weight:bold;">↑ トップへ戻る</a>
+</div>
+</main>
+
+<script>
+const SYM=['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+const QS=[
+  {qi:0, correct:1, pts:1, label:'問1（ア）Kekka[4][1]'},
+  {qi:1, correct:1, pts:1, label:'問1（イ）tate=1行の1の個数'},
+  {qi:2, correct:2, pts:1, label:'問1（ウ）tate=2行の0の個数'},
+  {qi:3, correct:1, pts:3, label:'問2（エ）ループ終了値'},
+  {qi:4, correct:2, pts:3, label:'問2（オ）shiroの更新式'},
+  {qi:5, correct:3, pts:3, label:'問2（カ）kuroの算出・カ'},
+  {qi:6, correct:0, pts:4, label:'問3（コ）黒の勝ち条件'},
+  {qi:7, correct:2, pts:4, label:'問3（サ）引き分け条件'},
+  {qi:8, correct:2, pts:4, label:'問3（シ）バグのケース'},
+];
+const state={};
+let answeredCount=0;
+function updateHeader(){document.getElementById('hdr-score').textContent=answeredCount+' / '+QS.length+' 問回答済';}
+function sel(qi,ci){
+  if(state['done_'+qi]) return;
+  state['sel_'+qi]=ci;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>b.classList.toggle('selected',i===ci));
+  document.getElementById('ab'+qi).disabled=false;
+}
+function judge(qi){
+  const q=QS.find(x=>x.qi===qi);
+  const chosen=state['sel_'+qi];
+  if(chosen===undefined||state['done_'+qi]) return;
+  state['done_'+qi]=true; state[qi]=chosen;
+  document.getElementById('ab'+qi).disabled=true;
+  const ok=(chosen===q.correct);
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>{
+    b.disabled=true; b.classList.remove('selected');
+    if(i===q.correct) b.classList.add('correct');
+    else if(i===chosen&&!ok) b.classList.add('wrong');
+  });
+  const rw=document.getElementById('rw'+qi);
+  const rb=document.getElementById('rb'+qi);
+  rw.classList.add('show'); rb.classList.add(ok?'ok':'ng');
+  document.getElementById('ri'+qi).textContent=ok?'✓':'✗';
+  document.getElementById('rt'+qi).textContent=ok?'正解！':'不正解。正解は '+SYM[q.correct];
+  if(ok) rb.querySelector('.exp-btn').style.opacity='0.5';
+  document.getElementById('qs'+qi).classList.add('answered');
+  answeredCount++; updateHeader();
+  if(answeredCount===QS.length) setTimeout(showSummary,600);
+}
+function toggleExp(qi){
+  const ep=document.getElementById('ep'+qi);
+  const btn=document.querySelector('#rw'+qi+' .exp-btn');
+  const open=ep.classList.toggle('open');
+  btn.textContent=open?'解説を閉じる ▲':'解説を見る ▼';
+}
+function showSummary(){
+  const TOTAL=QS.reduce((a,q)=>a+q.pts,0);
+  let correct=0,pts=0;
+  const rows=QS.map(q=>{
+    const ok=(state[q.qi]===q.correct);
+    if(ok){correct++;pts+=q.pts;}
+    return '<tr><td>'+q.label+'</td><td>'+(state[q.qi]!==undefined?SYM[state[q.qi]]:'未回答')+'</td><td>'+SYM[q.correct]+'</td><td class="'+(ok?'ok-td':'ng-td')+'">'+(ok?'○':'✗')+'</td><td>'+(ok?q.pts:0)+'/'+q.pts+'</td></tr>';
+  }).join('');
+  document.getElementById('sum-score').textContent=correct+' / '+QS.length+'問';
+  document.getElementById('sum-pts').textContent='獲得点数：'+pts+' / '+TOTAL+'点';
+  document.getElementById('sum-tbl').innerHTML+=rows;
+  const s=document.getElementById('summary');
+  s.style.display='block'; s.scrollIntoView({behavior:'smooth'});
+}
+updateHeader();
+</script>
+</body>
+</html>

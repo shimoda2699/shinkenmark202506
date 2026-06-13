@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2024年6月｜第2問</title>
+<style>
+:root{
+  --bg:#f0f4f8;--card:#fff;--primary:#2e7d32;--pl:#eaf6eb;
+  --ok:#1a7a4a;--ok-bg:#e6f4ec;--ng:#b91c1c;--ng-bg:#fde8e8;
+  --text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;
+  --radius:10px;--shadow:0 2px 12px rgba(46,125,50,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.8;}
+header{background:var(--primary);color:#fff;padding:12px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:space-between;}
+header h1{font-size:.95rem;font-weight:700;}
+.score-disp{font-size:.82rem;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;white-space:nowrap;}
+main{max-width:800px;margin:0 auto;padding:24px 16px 80px;}
+.mondai-title{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:4px;}
+.mondai-meta{font-size:.82rem;color:var(--muted);margin-bottom:20px;}
+.mondai-bun{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:20px;}
+.mondai-bun h3{font-size:.92rem;font-weight:800;color:var(--primary);border-left:4px solid var(--primary);padding-left:8px;margin-bottom:14px;line-height:1.6;}
+.mondai-bun p{margin-bottom:.75em;}
+.speaker{font-weight:700;}
+.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:.87rem;}
+.tbl th,.tbl td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top;}
+.tbl th{background:var(--pl);font-weight:700;}
+.tbl-label{font-weight:700;font-size:.88rem;margin:10px 0 4px;display:block;}
+.fig-box{background:#f7f9fc;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
+.fig-title{font-weight:700;color:var(--primary);display:block;margin-bottom:5px;}
+.note{font-size:.83rem;color:var(--muted);}
+.setting-box{display:inline-block;background:#fff;border:2px solid #555;border-radius:4px;padding:8px 14px;font-size:.88rem;margin:8px 0;}
+.setting-row{display:flex;align-items:center;gap:12px;margin:3px 0;font-family:'Courier New',monospace;}
+.setting-label{color:#555;min-width:80px;}
+.setting-val{background:#e8f0fb;border:1px solid #aaa;border-radius:3px;padding:1px 10px;font-weight:700;}
+.section-sep{border:none;border-top:2px dashed var(--border);margin:28px 0;}
+/* 箱ひげ図 */
+.boxplot-wrap{background:#fff;border:1px solid var(--border);border-radius:6px;padding:12px;margin:10px 0;overflow-x:auto;}
+/* スプレッドシート風テーブル */
+.ss-tbl{border-collapse:collapse;font-size:.82rem;font-family:'Courier New',monospace;margin:10px 0;}
+.ss-tbl th,.ss-tbl td{border:1px solid var(--border);padding:4px 8px;text-align:center;}
+.ss-tbl th{background:var(--pl);font-weight:700;}
+.ss-tbl .col-a{background:#f0f0f0;font-weight:700;}
+/* 方向矢印図 */
+.arrow-fig{display:flex;justify-content:center;margin:10px 0;}
+/* 設問 */
+.setsumon{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 20px 16px;margin-bottom:24px;border-left:4px solid var(--border);transition:border-color .2s;}
+.setsumon.answered{border-left-color:var(--primary);}
+.setsumon-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.setsumon-badge{background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+.setsumon-pts{font-size:.72rem;color:var(--muted);}
+.setsumon-q{font-size:.92rem;font-weight:600;margin-bottom:12px;line-height:1.65;}
+.choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.5;transition:border-color .15s,background .15s;width:100%;}
+.choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--pl);}
+.ci{font-weight:700;color:var(--primary);min-width:24px;flex-shrink:0;}
+.choice-btn.selected{border-color:var(--primary);background:var(--pl);}
+.choice-btn.correct{border-color:var(--ok);background:var(--ok-bg);}
+.choice-btn.wrong{border-color:var(--ng);background:var(--ng-bg);}
+.choice-btn:disabled{cursor:default;}
+.answer-row{margin-top:14px;}
+.btn-ans{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.btn-ans:disabled{background:#aaa;cursor:default;}
+.result-wrap{display:none;margin-top:12px;}
+.result-wrap.show{display:block;}
+.result-banner{border-radius:8px;padding:11px 14px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.result-banner.ok{background:var(--ok-bg);color:var(--ok);}
+.result-banner.ng{background:var(--ng-bg);color:var(--ng);}
+.result-icon{font-size:1.2rem;}
+.exp-btn{font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;white-space:nowrap;margin-left:auto;}
+.exp-btn:hover{background:var(--pl);}
+.exp-panel{display:none;margin-top:10px;background:#f7f9fc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:.88rem;line-height:1.8;}
+.exp-panel.open{display:block;}
+.ans-label{background:var(--ok-bg);border-left:4px solid var(--ok);padding:7px 12px;border-radius:4px;margin-bottom:10px;font-weight:700;color:var(--ok);display:block;}
+.exp-panel p{margin-bottom:.6em;}
+.opt-row{margin:5px 0;padding:6px 10px;background:#fff;border-radius:6px;font-size:.86rem;}
+.opt-row.ok-opt{border-left:3px solid var(--ok);}
+.opt-row.ng-opt{border-left:3px solid var(--ng);}
+.lbl-ok{color:var(--ok);font-weight:700;}
+.lbl-ng{color:var(--ng);font-weight:700;}
+#summary{display:none;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 24px;text-align:center;margin-top:16px;}
+#summary h2{font-size:1.3rem;color:var(--primary);margin-bottom:8px;}
+.score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+.score-sub{color:var(--muted);margin-top:4px;font-size:.9rem;}
+.sum-tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:.87rem;}
+.sum-tbl th,.sum-tbl td{border:1px solid var(--border);padding:6px 10px;text-align:center;}
+.sum-tbl th{background:var(--pl);font-weight:700;}
+.sum-tbl td.ok-td{color:var(--ok);font-weight:700;}
+.sum-tbl td.ng-td{color:var(--ng);font-weight:700;}
+.btn-retry{margin-top:20px;background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;}
+.btn-retry:hover{background:var(--pl);}
+@media(max-width:540px){.mondai-bun,.setsumon{padding:16px 13px;}.choice-btn{font-size:.84rem;}.score-big{font-size:2.2rem;}.tbl{font-size:.8rem;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>情報Ⅰ 進研模試 2024年6月 ｜ 第2問（配点30点）</h1>
+  <div class="score-disp" id="hdr-score">0 / 8 問回答済</div>
+</header>
+<main>
+
+<div style="text-align:center; margin:10px 0;">
+<a href="index.html" style="display:inline-block;background:#2e7d32;color:white;text-decoration:none;padding:8px 20px;border-radius:8px;font-weight:bold;">← トップへ戻る</a>
+</div>
+
+<div class="mondai-title">第2問　次の問い（A・B）に答えよ。</div>
+<div class="mondai-meta">配点 30点</div>
+
+<!-- ====================================================
+     第2問A 問題文
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>A　次の楓さんと父の会話を読み，後の問い（問1〜5）に答えよ。</h3>
+
+  <p><span class="speaker">楓：</span>ただいま！　今日は友達と一緒に買い物とカラオケに行ってきたよ。カラオケでたくさん歌って楽しかったけど，カラオケ店で流す曲の知的財産権はちゃんと処理されているのかな？</p>
+  <p><span class="speaker">父：</span>知的財産権を気にするなんて，大人になったね。カラオケでの曲の使用に関しては <b>ア</b> に対して著作権や著作隣接権が認められていて，これを侵害しないように必要な手続きがとられているから大丈夫だよ。</p>
+  <p><span class="speaker">楓：</span>そうなんだ。心配ご無用ってことね。あと聞いて！　採点機能で初めて98点もとれたんだ。あれってどうやって点数をつけているのかな？</p>
+  <p><span class="speaker">父：</span>会社や機種によって違うと思うけど，音程ならマイクで拾った人間の歌声と，その曲を歌うときの理想の歌声の波形を比べて正確性を確かめているみたいだね。ちなみに，物理学的な話をすると，マイクは声を出すことで発生した空気の振動を電気のアナログ信号に変換する機器だよ。</p>
+  <p><span class="speaker">楓：</span>コンピュータの中に音声を保存するときにはそれがデジタル化されるんだよね。</p>
+  <p><span class="speaker">父：</span>そうだね。音声をデジタル化するときには，<u>₍ₐ₎3種類の工程を経る必要があるんだ</u>。そのときの設定によってはデータ量も出力したときの聞こえ方も違ってくるんだよ。ちょうど父さんの部屋にコンピュータとオーディオセットがあるから確かめてみようか。</p>
+  <p><span class="speaker">楓：</span>ちょっと興味あるな。私の声がちゃんと録音できるかやってみてよ。</p>
+  <p><span class="speaker">父：</span>わかった。じゃあコンピュータにマイクをつなげて，音を波で表現できるこの音楽ソフトウェアを起動するよ。「周波数 44.1kHz，ビット数 16ビット」って表示されている（図1）けど，この設定が一般的な音楽のCD規格だね。</p>
+  <p><span class="speaker">楓：</span>じゃあちょっと歌ってみるね。（60秒間，楓さんは得意な曲を歌い，録音した。）すごい，ちゃんと波形で表示されている！（図2）</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図1　音楽ソフトウェアの設定画面（CD規格）</span>
+    <div class="setting-box">
+      <div class="setting-row"><span class="setting-label">周波数(kHz)</span><span class="setting-val">44.1</span></div>
+      <div class="setting-row"><span class="setting-label">ビット数</span><span class="setting-val">16</span></div>
+    </div>
+    <p class="note" style="margin-top:4px;">図2　録音された音声波形（音楽ソフトウェアの画面）※ 会話文中では「ちゃんと波形で表示されている」と確認された。</p>
+  </div>
+
+  <p><span class="speaker">楓：</span>あれっ。録音の設定は「周波数 88.2kHz，ビット数 24ビット」のように変更できるんだね。（図3）</p>
+  <p><span class="speaker">父：</span>それはハイレゾといって，<b>ウ</b> のことだよ。試しに周波数とビット数以外は同じ設定にして，ハイレゾで録音してみようか。</p>
+  <p><span class="speaker">楓：</span>歌ってみる！（楓さんはハイレゾでの録音を終え，CD規格の録音と聴き比べた。）うーん，聞こえ方の違いはよくわからないな。でも，データ量が全然違う……わかった。周波数は倍になったし，ビット数も増えているから，さっきのCD規格の60秒のデータとハイレゾの <b>エ</b> 秒のデータが同じデータ量になるんだ！</p>
+  <p><span class="speaker">父：</span>そうだね。聞こえ方の違いはわからないかもしれないけど，ある音響関係のプロが，<u>₍ᵦ₎音源をハイレゾで録音することの原理的な効果</u>について語っていたよ。将来，プロに録音してもらえるように，次は父さんとカラオケに行って歌の練習をしようか。</p>
+  <p><span class="speaker">楓：</span>私と一緒に行きたいだけじゃないの！？</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図3　音楽ソフトウェアの設定画面（ハイレゾ）</span>
+    <div class="setting-box">
+      <div class="setting-row"><span class="setting-label">周波数(kHz)</span><span class="setting-val">88.2</span></div>
+      <div class="setting-row"><span class="setting-label">ビット数</span><span class="setting-val">24</span></div>
+    </div>
+  </div>
+
+  <div class="fig-box" style="margin-top:10px;">
+    <span class="fig-title">問5の補足：音の波形と周波数・振幅の関係（図4・図5）</span>
+    <b>図4：</b>高い音ほど周波数が高い（波の間隔が狭い）←→ 低い音ほど周波数が低い（波の間隔が広い）<br>
+    <b>図5：</b>大きい音ほど振幅（波の高さ）が大きい ←→ 小さい音ほど振幅が小さい<br><br>
+    ハイレゾでの録音とCD規格の録音のサンプリング周波数の違いから，ハイレゾの原理的な効果（下線部b）を考える。<br>
+    ・サンプリング周波数が高い → 1秒間に標本化（サンプリング）する回数が多い → 波の間隔が狭い（高周波数の）音の波形も精細に再現できる
+  </div>
+</div>
+
+<!-- A-問1 ア（著作権） -->
+<div class="setsumon" id="qs0">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問1</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">空欄 <b>【ア】</b>（カラオケでの曲の使用に関して著作権や著作隣接権が認められている対象）に当てはまる記述として<b>適当でないもの</b>を，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch0">
+    <button class="choice-btn" onclick="sel(0,0)"><span class="ci">⓪</span><span>原曲を演奏するアーティスト</span></button>
+    <button class="choice-btn" onclick="sel(0,1)"><span class="ci">①</span><span>原曲の歌詞やメロディーを制作した作詞家や作曲家</span></button>
+    <button class="choice-btn" onclick="sel(0,2)"><span class="ci">②</span><span>カラオケ用の音響機材を開発した会社</span></button>
+    <button class="choice-btn" onclick="sel(0,3)"><span class="ci">③</span><span>カラオケ用に原曲をアレンジしたカラオケ用音源を制作した会社</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab0" onclick="judge(0)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw0">
+    <div class="result-banner" id="rb0"><span class="result-icon" id="ri0"></span><span id="rt0"></span><button class="exp-btn" onclick="toggleExp(0)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep0">
+      <span class="ans-label">✓ 正解：②（適当でない）</span>
+      <p>「著作権」（広義）は，著作者がもつ「著作権」と，伝達者がもつ「著作隣接権」に分類されます。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 適当</span>　原曲を演奏するアーティストは，著作物の伝達者として著作隣接権の対象。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 適当</span>　作詞家や作曲家が創作した歌詞やメロディーは著作権の典型的な対象。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 不適当（正解）</span>　音響機材を開発した会社は音楽作品自体を創作しておらず，著作権や著作隣接権の対象とならない。著作権は具体的な表現形式をもつ作品（歌詞・メロディー等）に適用される。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">③ 適当</span>　カラオケ用に原曲をアレンジした音源は，元の作品に基づいた新たな創造的表現として著作権・著作隣接権の対象となる。</div>
+    </div>
+  </div>
+</div>
+
+<!-- A-問2 イ（音のデジタル化3工程） -->
+<div class="setsumon" id="qs1">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問2</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">下線部(a)について，次に示すA〜Cの三つの工程はそれぞれ何というか。その組合せとして最も適当なものを，次の⓪〜⑦のうちから一つ選べ。<br><br>
+  <b>A</b>　音の波の高さを一定の時間間隔で測定し，観測された値を記録する<br>
+  <b>B</b>　記録した値を整数などの段階値で近似させる<br>
+  <b>C</b>　近似させた値を2進法で表現する<br><br>
+  ア　符号化　　イ　構造化　　ウ　標本化　　エ　量子化</div>
+  <div class="choices" id="ch1">
+    <button class="choice-btn" onclick="sel(1,0)"><span class="ci">⓪</span><span>A－ア，B－イ，C－ウ</span></button>
+    <button class="choice-btn" onclick="sel(1,1)"><span class="ci">①</span><span>A－ア，B－ウ，C－エ</span></button>
+    <button class="choice-btn" onclick="sel(1,2)"><span class="ci">②</span><span>A－イ，B－ウ，C－エ</span></button>
+    <button class="choice-btn" onclick="sel(1,3)"><span class="ci">③</span><span>A－イ，B－エ，C－ア</span></button>
+    <button class="choice-btn" onclick="sel(1,4)"><span class="ci">④</span><span>A－ウ，B－ア，C－イ</span></button>
+    <button class="choice-btn" onclick="sel(1,5)"><span class="ci">⑤</span><span>A－ウ，B－エ，C－ア</span></button>
+    <button class="choice-btn" onclick="sel(1,6)"><span class="ci">⑥</span><span>A－エ，B－ア，C－イ</span></button>
+    <button class="choice-btn" onclick="sel(1,7)"><span class="ci">⑦</span><span>A－エ，B－イ，C－ウ</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab1" onclick="judge(1)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw1">
+    <div class="result-banner" id="rb1"><span class="result-icon" id="ri1"></span><span id="rt1"></span><button class="exp-btn" onclick="toggleExp(1)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep1">
+      <span class="ans-label">✓ 正解：⑤　A－ウ（標本化），B－エ（量子化），C－ア（符号化）</span>
+      <p>音のデジタル化は「<b>標本化 → 量子化 → 符号化</b>」の順に行われます。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">A－ウ（標本化）</span>　音の波の高さを一定の時間間隔で測定し，観測された値を記録する（サンプリング）。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">B－エ（量子化）</span>　記録した値を整数などの段階値で近似させる。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">C－ア（符号化）</span>　近似させた値を2進法で表現する。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">イ（構造化）</span>　音のデジタル化の工程には含まれない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- A-問3 ウ（ハイレゾの説明） -->
+<div class="setsumon" id="qs2">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問3</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【ウ】</b>（ハイレゾに当てはまる記述）として最も適当なものを，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch2">
+    <button class="choice-btn" onclick="sel(2,0)"><span class="ci">⓪</span><span>元の音の波をCD規格より細かくデジタル化したもの</span></button>
+    <button class="choice-btn" onclick="sel(2,1)"><span class="ci">①</span><span>人間の可聴域のノイズを除去して音質を高めたもの</span></button>
+    <button class="choice-btn" onclick="sel(2,2)"><span class="ci">②</span><span>非可逆圧縮技術を用いてデータ量を縮減したもの</span></button>
+    <button class="choice-btn" onclick="sel(2,3)"><span class="ci">③</span><span>元の音の波を増幅させて音量を上げたもの</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab2" onclick="judge(2)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw2">
+    <div class="result-banner" id="rb2"><span class="result-icon" id="ri2"></span><span id="rt2"></span><button class="exp-btn" onclick="toggleExp(2)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep2">
+      <span class="ans-label">✓ 正解：⓪　元の音の波をCD規格より細かくデジタル化したもの</span>
+      <p>ハイレゾ（High Resolution）は，CDの標準的な音質（44.1kHz，16ビット）を超える，より高いサンプリング周波数と量子化ビット数で音の波をデジタル化した音源です。「細かく」デジタル化することで，より精密に元の音波を再現できます。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　CD規格（44.1kHz，16ビット）より高い周波数・ビット数でデジタル化したもの。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　ノイズ除去は周波数やビット数と直接関係がない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　ハイレゾは圧縮技術ではなく，むしろデータ量が増える。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　音の増幅は周波数やビット数の設定とは無関係。</div>
+    </div>
+  </div>
+</div>
+
+<!-- A-問4 エ（ハイレゾの秒数計算） -->
+<div class="setsumon" id="qs3">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問4</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">空欄 <b>【エ】</b>（CD規格の60秒のデータとハイレゾの何秒のデータが同じデータ量になるか）に当てはまる数値として最も適当なものを，次の⓪〜⑤のうちから一つ選べ。<br>
+  <span class="note">（CD規格：周波数44.1kHz，ビット数16ビット　ハイレゾ：周波数88.2kHz，ビット数24ビット）</span></div>
+  <div class="choices" id="ch3">
+    <button class="choice-btn" onclick="sel(3,0)"><span class="ci">⓪</span><span>10</span></button>
+    <button class="choice-btn" onclick="sel(3,1)"><span class="ci">①</span><span>15</span></button>
+    <button class="choice-btn" onclick="sel(3,2)"><span class="ci">②</span><span>20</span></button>
+    <button class="choice-btn" onclick="sel(3,3)"><span class="ci">③</span><span>30</span></button>
+    <button class="choice-btn" onclick="sel(3,4)"><span class="ci">④</span><span>45</span></button>
+    <button class="choice-btn" onclick="sel(3,5)"><span class="ci">⑤</span><span>90</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab3" onclick="judge(3)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw3">
+    <div class="result-banner" id="rb3"><span class="result-icon" id="ri3"></span><span id="rt3"></span><button class="exp-btn" onclick="toggleExp(3)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep3">
+      <span class="ans-label">✓ 正解：②　20秒</span>
+      <p>1秒当たりのデータ量は「サンプリング周波数 × 量子化ビット数」で比較できます。<br><br>
+      CD規格の1秒当たりのデータ量：44.1kHz × 16ビット<br>
+      ハイレゾの1秒当たりのデータ量：88.2kHz × 24ビット<br><br>
+      ハイレゾ / CD規格 ＝ (88.2/44.1) × (24/16) ＝ 2 × 3/2 ＝ <b>3倍</b><br><br>
+      つまり，ハイレゾは1秒間でCD規格の3倍のデータ量が必要。<br>
+      CD規格の60秒と同じデータ量になるハイレゾの録音時間は：<br>
+      60 ÷ 3 ＝ <b>20秒</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- A-問5 オ（ハイレゾの原理的効果） -->
+<div class="setsumon" id="qs4">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問5</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">ハイレゾでの録音とCD規格の録音のサンプリング周波数の違いから，ハイレゾの原理的な効果（下線部b）として最も適当なものを，次の⓪〜③のうちから一つ選べ。<br>
+  <span class="note">（図4：高い音ほど周波数が高く波の間隔が狭い／低い音ほど周波数が低く波の間隔が広い　図5：大きい音ほど振幅が大きい／小さい音ほど振幅が小さい）</span></div>
+  <div class="choices" id="ch4">
+    <button class="choice-btn" onclick="sel(4,0)"><span class="ci">⓪</span><span>CD規格の録音では低い音の波形は再現しにくいが，ハイレゾでの録音は元の音の波形により近い形で再現できる。</span></button>
+    <button class="choice-btn" onclick="sel(4,1)"><span class="ci">①</span><span>CD規格の録音では高い音の波形は再現しにくいが，ハイレゾでの録音は元の音の波形により近い形で再現できる。</span></button>
+    <button class="choice-btn" onclick="sel(4,2)"><span class="ci">②</span><span>CD規格の録音では低い音の波形は再現しにくいが，ハイレゾでの録音は音の大きさをより増幅させた波形として再現できる。</span></button>
+    <button class="choice-btn" onclick="sel(4,3)"><span class="ci">③</span><span>CD規格の録音では高い音の波形は再現しにくいが，ハイレゾでの録音は音の大きさをより増幅させた波形として再現できる。</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab4" onclick="judge(4)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw4">
+    <div class="result-banner" id="rb4"><span class="result-icon" id="ri4"></span><span id="rt4"></span><button class="exp-btn" onclick="toggleExp(4)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep4">
+      <span class="ans-label">✓ 正解：①　CD規格では高い音の波形は再現しにくいが，ハイレゾは元の音の波形により近い形で再現できる</span>
+      <p>サンプリング周波数が高いほど，1秒間に標本化（サンプリング）する回数が多くなります。</p>
+      <p>高い音は波の間隔が狭い（周波数が高い）ため，CD規格のサンプリング周波数では波形の再現が難しくなります。一方，ハイレゾはサンプリング周波数が高くなることで1秒間の標本化する点数が増え，高音域の音の波形もCD規格より精細に再現することが可能になります。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　低い音の波形は波の間隔が広いため，サンプリング周波数が低くても再現しやすい。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 正しい</span>　高い音の波形こそサンプリング周波数が重要。ハイレゾは高音域を精細に再現できる。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">②③ 誤り</span>　ハイレゾの利点は音の大きさ（振幅）の増幅ではなく，波形の精細な再現。</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- ====================================================
+     第2問B 問題文
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>B　次の太郎さんと花子さんの会話文を読み，後の問い（問1〜3）に答えよ。</h3>
+
+  <p>太郎さんと花子さんは，1，2，3，4の数字が一つずつ書かれたルーレットを使用した脱出ゲームを考案した。このゲームのルールは図1のとおりである。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図1　脱出ゲームのルール</span>
+    ルール1：参加者は，ルーレットの四つの数字それぞれに対して，動く方向を決める。<br>
+    ルール2：参加者は円の中心からゲームをスタートする。<br>
+    ルール3：参加者はそれぞれルーレットを1回まわし，出た数字に対応した方向に1マスだけ移動する。全参加者が移動すると，1ターンが終了する。<br>
+    ルール4：ターンは，参加者のうち少なくとも誰か1人が半径5の円の外側に出るまで繰り返す。ただし，円周上は円の内側とする。<br>
+    ルール5：ターンの終了時，半径5の円の外側に出ている人を勝ちとし，ゲームを終了する。ただし，同一のターンで全員が円の外側に出た場合は引き分けとし，ゲームを終了する。
+  </div>
+
+  <p>太郎さんと花子さんは，実際に脱出ゲームをする前に，ゲームがどれくらいのターンで終了するのか疑問に思い，1人で脱出ゲームを行う場合をモデル化し，シミュレーションを実行した。なお，図2は1人で脱出ゲームを行う場合をモデル化したものであり，表計算ソフトウェアの各列の項目の説明は表1のとおりである。</p>
+
+  <span class="tbl-label">図2　表計算ソフトウェアによる脱出ゲームのモデル化（1人用）</span>
+  <div style="overflow-x:auto;">
+    <table class="ss-tbl">
+      <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th></tr>
+      <tr><td class="col-a">1</td><td>ターン</td><td>方向</td><td>x軸</td><td>y軸</td><td>x座標</td><td>y座標</td><td>距離</td><td>判定</td></tr>
+      <tr><td class="col-a">2</td><td>0</td><td>−</td><td>−</td><td>−</td><td>0</td><td>0</td><td>0.00</td><td>0</td></tr>
+      <tr><td class="col-a">3</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1.00</td><td>0</td></tr>
+      <tr><td class="col-a">4</td><td>2</td><td>4</td><td>0</td><td>−1</td><td>1</td><td>−1</td><td>1.41</td><td>0</td></tr>
+      <tr><td class="col-a">5</td><td>3</td><td>3</td><td>−1</td><td>0</td><td>0</td><td>−1</td><td>1.00</td><td>0</td></tr>
+      <tr><td class="col-a">6</td><td>4</td><td>4</td><td>0</td><td>−1</td><td>0</td><td>−2</td><td>2.00</td><td>0</td></tr>
+      <tr><td class="col-a">7</td><td>5</td><td>4</td><td>0</td><td>−1</td><td>0</td><td>−3</td><td>3.00</td><td>0</td></tr>
+      <tr><td class="col-a">8</td><td>6</td><td>2</td><td>0</td><td>1</td><td>0</td><td>−2</td><td>2.00</td><td>0</td></tr>
+      <tr><td class="col-a">9</td><td>7</td><td>4</td><td>0</td><td>−1</td><td>0</td><td>−3</td><td>3.00</td><td>0</td></tr>
+      <tr><td class="col-a">10</td><td>8</td><td>3</td><td>−1</td><td>0</td><td>−1</td><td>−3</td><td>3.16</td><td>0</td></tr>
+      <tr><td class="col-a">11</td><td>9</td><td>4</td><td>0</td><td>−1</td><td>−1</td><td>−4</td><td>4.12</td><td>0</td></tr>
+      <tr><td class="col-a">12</td><td>10</td><td>4</td><td>0</td><td>−1</td><td>−1</td><td>−5</td><td>5.10</td><td>1</td></tr>
+    </table>
+  </div>
+
+  <span class="tbl-label">表1　表計算ソフトウェアの各列の項目の説明</span>
+  <table class="tbl">
+    <tr><th>列</th><th>項目</th><th>説明</th></tr>
+    <tr><td>A</td><td>ターン</td><td>ゲームのターン（0は初期状態）</td></tr>
+    <tr><td>B</td><td>方向</td><td>ルーレットで出た数字（1〜4）</td></tr>
+    <tr><td>C</td><td>x軸</td><td>ルーレットで出た数字に対応したx軸方向の移動距離</td></tr>
+    <tr><td>D</td><td>y軸</td><td>ルーレットで出た数字に対応したy軸方向の移動距離</td></tr>
+    <tr><td>E</td><td>x座標</td><td>移動後のx座標</td></tr>
+    <tr><td>F</td><td>y座標</td><td>移動後のy座標</td></tr>
+    <tr><td>G</td><td>距離</td><td>原点（0，0）からの距離</td></tr>
+    <tr><td>H</td><td>判定</td><td>円の外側に出たかどうかの判定（内側：0，外側：1）</td></tr>
+  </table>
+</div>
+
+<!-- B-問1 カ（方向を示す図） -->
+<div class="setsumon" id="qs5">
+  <div class="setsumon-head"><span class="setsumon-badge">B 問1</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">図2のモデル化において，ルール1で決めた「ルーレットの四つの数字それぞれに対して動く方向」を表した図として最も適当なものを，次の⓪〜③のうちから一つ選べ。なお，図中の右向きの矢印はx軸の方向，上向きの矢印はy軸の方向を示し，1〜4はルーレットの数字を表している。</div>
+  <div class="choices" id="ch5">
+    <button class="choice-btn" onclick="sel(5,0)"><span class="ci">⓪</span><span>
+      1:上，2:左，3:下，4:右（右=x軸，上=y軸方向）
+    </span></button>
+    <button class="choice-btn" onclick="sel(5,1)"><span class="ci">①</span><span>
+      1:上，3:左，2:下，4:右
+    </span></button>
+    <button class="choice-btn" onclick="sel(5,2)"><span class="ci">②</span><span>
+      2:上，3:左，1:右，4:下
+    </span></button>
+    <button class="choice-btn" onclick="sel(5,3)"><span class="ci">③</span><span>
+      3:上，2:左，1:右，4:下
+    </span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab5" onclick="judge(5)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw5">
+    <div class="result-banner" id="rb5"><span class="result-icon" id="ri5"></span><span id="rt5"></span><button class="exp-btn" onclick="toggleExp(5)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep5">
+      <span class="ans-label">✓ 正解：②　2:上，3:左，1:右，4:下</span>
+      <p>図2のB列（方向）とC列（x軸移動距離）・D列（y軸移動距離）の対応を読み取ります：<br>
+      ・3行目：方向1 → x:+1，y:0 → <b>右</b>（x軸正方向）<br>
+      ・8行目：方向2 → x:0，y:+1 → <b>上</b>（y軸正方向）<br>
+      ・5行目：方向3 → x:−1，y:0 → <b>左</b>（x軸負方向）<br>
+      ・4行目：方向4 → x:0，y:−1 → <b>下</b>（y軸負方向）<br><br>
+      よって：1:右，2:上，3:左，4:下 → これは②（2:上，3:左，1:右，4:下）に対応。</p>
+    </div>
+  </div>
+</div>
+
+<!-- B-問2 キク（フローチャート・2つ選ぶ） -->
+<div class="setsumon" id="qs6">
+  <div class="setsumon-head"><span class="setsumon-badge">B 問2</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">図2の表計算ソフトウェアのH列「判定」には，G列「距離」が円の内側か外側かを判定する関数が入力されている。H列「判定」に入力されている関数を表したフローチャートとして適当なものを，次の⓪〜⑤のうちから<b>二つ</b>選べ。ただし，解答の順序は問わない。<br>
+  <span class="note">（ルール4より：半径5の円の外側に出たとき判定＝1。円周上（距離＝5）は内側なので判定＝0。距離＞5のとき判定＝1）</span></div>
+  <div class="choices" id="ch6">
+    <button class="choice-btn" onclick="sel(6,0)"><span class="ci">⓪</span><span>距離＝5 → Yes：判定←1，No：判定←0</span></button>
+    <button class="choice-btn" onclick="sel(6,1)"><span class="ci">①</span><span>距離≠5 → Yes：判定←1，No：判定←0</span></button>
+    <button class="choice-btn" onclick="sel(6,2)"><span class="ci">②</span><span>距離＞5 → Yes：判定←1，No：判定←0</span></button>
+    <button class="choice-btn" onclick="sel(6,3)"><span class="ci">③</span><span>距離≧5 → Yes：判定←1，No：判定←0</span></button>
+    <button class="choice-btn" onclick="sel(6,4)"><span class="ci">④</span><span>距離＜5 → Yes：判定←1，No：判定←0</span></button>
+    <button class="choice-btn" onclick="sel(6,5)"><span class="ci">⑤</span><span>距離≦5 → Yes：判定←1，No：判定←0</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab6" onclick="judge(6)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw6">
+    <div class="result-banner" id="rb6"><span class="result-icon" id="ri6"></span><span id="rt6"></span><button class="exp-btn" onclick="toggleExp(6)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep6">
+      <span class="ans-label">✓ 正解：②と⑤（順序不同）</span>
+      <p>ルール4「円周上は円の内側とする」より，距離が5より大きいとき（距離＞5）のみ判定＝1（外側）となります。距離がちょうど5のときは内側（判定＝0）。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　距離＝5のときのみ判定1となる→距離ちょうど5が外側になってしまう。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　距離≠5（5以外すべて）のとき判定1→内側でも判定1になってしまう。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">② 正しい</span>　距離＞5のとき判定1（外側），それ以外0（内側）→正しい。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　距離≧5（5を含む）のとき判定1→円周上も外側になってしまう。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">④ 誤り</span>　距離＜5のとき判定1→内側のほうが1になってしまう（逆）。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⑤ 正しい</span>　距離≦5のとき判定0（Noの場合）→距離＞5のとき判定1→②と等価で正しい。</div>
+    </div>
+  </div>
+</div>
+
+<!-- B-問3 ケコ（箱ひげ図の読み取り・2つ選ぶ） -->
+<div class="mondai-bun" style="margin-top:0;">
+  <h3>問3の補足　シミュレーション結果</h3>
+  <p>太郎さんと花子さんは，図2に示した表計算ソフトウェアによる脱出ゲームのモデルを2人用に改良し，シミュレーションを100回実行した。図3の箱ひげ図（平均値は×，外れ値は。で表記）は，シミュレーション結果である「脱出ゲームが終了するまでに要したターン数」100回分の分布を表したものである。なお，箱ひげ図の縦軸は「脱出ゲームが終了するまでに要したターン数」を表している。</p>
+  <div class="boxplot-wrap">
+    <div style="font-size:.85rem;font-weight:700;text-align:center;margin-bottom:6px;">図3　シミュレーション結果の分布（2人用・100回）</div>
+    <svg viewBox="0 0 200 220" style="width:100%;max-width:280px;display:block;margin:0 auto;">
+      <!-- 軸 -->
+      <line x1="40" y1="10" x2="40" y2="190" stroke="#999" stroke-width="1.5"/>
+      <line x1="40" y1="190" x2="180" y2="190" stroke="#999" stroke-width="1.5"/>
+      <!-- Y軸ラベル -->
+      <text x="35" y="193" font-size="9" text-anchor="end" fill="#555">0</text>
+      <text x="35" y="153" font-size="9" text-anchor="end" fill="#555">10</text>
+      <text x="35" y="113" font-size="9" text-anchor="end" fill="#555">20</text>
+      <text x="35" y="73" font-size="9" text-anchor="end" fill="#555">30</text>
+      <text x="35" y="33" font-size="9" text-anchor="end" fill="#555">40</text>
+      <!-- グリッド -->
+      <line x1="40" y1="153" x2="180" y2="153" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="40" y1="113" x2="180" y2="113" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="40" y1="73" x2="180" y2="73" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="40" y1="33" x2="180" y2="33" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- 外れ値（約45ターン）: y=10+45*4=190-45*4=10 -->
+      <circle cx="110" cy="17" r="4" fill="none" stroke="#1a56a0" stroke-width="1.5"/>
+      <!-- ひげ上端（約35ターン）: 190-35*4=50 -->
+      <line x1="90" y1="50" x2="130" y2="50" stroke="#333" stroke-width="1.5"/>
+      <!-- ひげ上（第3四分位→上端）: 190-25*4=90 → 50 -->
+      <line x1="110" y1="50" x2="110" y2="90" stroke="#333" stroke-width="1.5"/>
+      <!-- 箱（第1四分位〜第3四分位: 約10〜25ターン）: 190-10*4=150, 190-25*4=90 -->
+      <rect x="75" y="90" width="70" height="60" fill="none" stroke="#333" stroke-width="2"/>
+      <!-- 中央値（約16ターン）: 190-16*4=126 -->
+      <line x1="75" y1="126" x2="145" y2="126" stroke="#333" stroke-width="2.5"/>
+      <!-- 平均値（×マーク，約18ターン）: 190-18*4=118 -->
+      <text x="110" y="121" font-size="11" text-anchor="middle" fill="#e85d26" font-weight="700">×</text>
+      <!-- ひげ下（第1四分位→下端: 約6ターン）: 190-6*4=166 -->
+      <line x1="110" y1="150" x2="110" y2="166" stroke="#333" stroke-width="1.5"/>
+      <line x1="90" y1="166" x2="130" y2="166" stroke="#333" stroke-width="1.5"/>
+      <!-- Y軸タイトル -->
+      <text x="12" y="110" font-size="9" fill="#555" transform="rotate(-90,12,110)">(ターン)</text>
+    </svg>
+    <div class="fig-box" style="margin-top:8px;font-size:.83rem;">
+      <span class="fig-title">図3 読み取り値（概算）</span>
+      外れ値：約45ターン<br>
+      ひげ上端（最大値・外れ値除く）：約35ターン<br>
+      第3四分位数：約25ターン<br>
+      中央値（第2四分位数）：約16ターン<br>
+      平均値（×）：約18ターン<br>
+      第1四分位数：約10ターン<br>
+      ひげ下端（最小値）：約6ターン
+    </div>
+  </div>
+</div>
+
+<div class="setsumon" id="qs7">
+  <div class="setsumon-head"><span class="setsumon-badge">B 問3</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">脱出ゲームの特性を踏まえたうえで，箱ひげ図から述べることができることとして適当なものを，次の⓪〜⑤のうちから<b>二つ</b>選べ。ただし，解答の順序は問わない。</div>
+  <div class="choices" id="ch7">
+    <button class="choice-btn" onclick="sel(7,0)"><span class="ci">⓪</span><span>このシミュレーション結果から，プレイヤーの少なくとも一方が16ターンで円から脱出していると考えられる。</span></button>
+    <button class="choice-btn" onclick="sel(7,1)"><span class="ci">①</span><span>このシミュレーション結果には外れ値が生じているが，再度シミュレーションを実行すると外れ値が生じないことも考えられる。</span></button>
+    <button class="choice-btn" onclick="sel(7,2)"><span class="ci">②</span><span>このシミュレーションの結果，脱出ゲームが終了するまでに最大45ターンかかっているが，実際のゲームでは50ターン以上かかることも考えられる。</span></button>
+    <button class="choice-btn" onclick="sel(7,3)"><span class="ci">③</span><span>100回シミュレーションした結果のうち，15ターン以上25ターン以下の範囲に収まっているのは，25回より少ないと考えられる。</span></button>
+    <button class="choice-btn" onclick="sel(7,4)"><span class="ci">④</span><span>今回のシミュレーション結果におけるターン数の最小値は6であるが，実際のゲームではこれを下回ることも考えられる。</span></button>
+    <button class="choice-btn" onclick="sel(7,5)"><span class="ci">⑤</span><span>この脱出ゲームのシミュレーションでは，基本的に平均値よりも中央値の方が大きい値になると考えられる。</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab7" onclick="judge(7)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw7">
+    <div class="result-banner" id="rb7"><span class="result-icon" id="ri7"></span><span id="rt7"></span><button class="exp-btn" onclick="toggleExp(7)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep7">
+      <span class="ans-label">✓ 正解：①と②（順序不同）</span>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　中央値（第2四分位数）は約16ターンだが，それ以外のターン数でも円から脱出している（中央値は「ちょうど16ターンで脱出した」を意味しない）。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 正しい</span>　シミュレーションはランダムな値を生成して行われるので，100回シミュレーションすると外れ値が生じない場合も考えられる。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">② 正しい</span>　外れ値が約45ターンなので脱出ゲームが終了するまでに最大約45ターンかかっている。しかし，ルーレットの値はランダムに決まるため，実際のゲームでは50ターン以上かかる可能性もある。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　第2四分位数（中央値）は約16ターン，第3四分位数は約25ターンなので，少なくとも25回は15ターン以上25ターン以下の範囲に収まっている（箱の上半分）。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">④ 誤り</span>　半径5の円なので，毎回1ずつ原点から離れたとしても，距離が5を超えるまでに最低6ターンはかかる。よって6ターンを下回ることはない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⑤ 誤り</span>　シミュレーションはランダムな値を生成して行われるため，平均値よりも中央値の方が大きい値になるとは限らない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 結果サマリ -->
+<div id="summary">
+  <h2>第2問　完了！</h2>
+  <div class="score-big" id="sum-score"></div>
+  <div class="score-sub" id="sum-pts"></div>
+  <table class="sum-tbl" id="sum-tbl">
+    <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>
+  </table>
+  <button class="btn-retry" onclick="location.reload()">もう一度挑戦する</button>
+</div>
+
+<div style="text-align:center; margin:30px 0;">
+<a href="index.html" style="display:inline-block;background:#2e7d32;color:white;text-decoration:none;padding:10px 24px;border-radius:8px;font-weight:bold;">↑ トップへ戻る</a>
+</div>
+</main>
+
+<script>
+const SYM=['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+const QS=[
+  {qi:0, correct:2,       pts:2, label:'A-問1（著作権）'},
+  {qi:1, correct:5,       pts:3, label:'A-問2（音のデジタル化3工程）'},
+  {qi:2, correct:0,       pts:3, label:'A-問3（ハイレゾ）'},
+  {qi:3, correct:2,       pts:3, label:'A-問4（データ量計算）'},
+  {qi:4, correct:1,       pts:4, label:'A-問5（ハイレゾの効果）'},
+  {qi:5, correct:2,       pts:2, label:'B-問1（方向の図）'},
+  {qi:6, correct:[2,5],   pts:3, label:'B-問2（フローチャート）', multi:true},
+  {qi:7, correct:[1,2],   pts:3, label:'B-問3（箱ひげ図）', multi:true},
+];
+const state={};
+let answeredCount=0;
+function updateHeader(){document.getElementById('hdr-score').textContent=answeredCount+' / '+QS.length+' 問回答済';}
+function sel(qi,ci){
+  if(state['done_'+qi]) return;
+  state['sel_'+qi]=ci;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>b.classList.toggle('selected',i===ci));
+  document.getElementById('ab'+qi).disabled=false;
+}
+function judge(qi){
+  const q=QS.find(x=>x.qi===qi);
+  const chosen=state['sel_'+qi];
+  if(chosen===undefined||state['done_'+qi]) return;
+  state['done_'+qi]=true; state[qi]=chosen;
+  document.getElementById('ab'+qi).disabled=true;
+  const ok=q.multi ? q.correct.includes(chosen) : chosen===q.correct;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>{
+    b.disabled=true; b.classList.remove('selected');
+    const isRight=q.multi ? q.correct.includes(i) : i===q.correct;
+    if(isRight) b.classList.add('correct');
+    else if(i===chosen&&!ok) b.classList.add('wrong');
+  });
+  const rw=document.getElementById('rw'+qi);
+  const rb=document.getElementById('rb'+qi);
+  rw.classList.add('show'); rb.classList.add(ok?'ok':'ng');
+  document.getElementById('ri'+qi).textContent=ok?'✓':'✗';
+  const cLabel=q.multi?q.correct.map(x=>SYM[x]).join('か'):SYM[q.correct];
+  document.getElementById('rt'+qi).textContent=ok?'正解！':'不正解。正解は '+cLabel;
+  if(ok) rb.querySelector('.exp-btn').style.opacity='0.5';
+  document.getElementById('qs'+qi).classList.add('answered');
+  answeredCount++; updateHeader();
+  if(answeredCount===QS.length) setTimeout(showSummary,600);
+}
+function toggleExp(qi){
+  const ep=document.getElementById('ep'+qi);
+  const btn=document.querySelector('#rw'+qi+' .exp-btn');
+  const open=ep.classList.toggle('open');
+  btn.textContent=open?'解説を閉じる ▲':'解説を見る ▼';
+}
+function showSummary(){
+  const TOTAL=QS.reduce((a,q)=>a+q.pts,0);
+  let correct=0,pts=0;
+  const rows=QS.map(q=>{
+    const ok=q.multi?q.correct.includes(state[q.qi]):state[q.qi]===q.correct;
+    if(ok){correct++;pts+=q.pts;}
+    const cLabel=q.multi?q.correct.map(x=>SYM[x]).join('/'):SYM[q.correct];
+    return '<tr><td>'+q.label+'</td><td>'+(state[q.qi]!==undefined?SYM[state[q.qi]]:'未回答')+'</td><td>'+cLabel+'</td><td class="'+(ok?'ok-td':'ng-td')+'">'+(ok?'○':'✗')+'</td><td>'+(ok?q.pts:0)+'/'+q.pts+'</td></tr>';
+  }).join('');
+  document.getElementById('sum-score').textContent=correct+' / '+QS.length+'問';
+  document.getElementById('sum-pts').textContent='獲得点数：'+pts+' / '+TOTAL+'点';
+  document.getElementById('sum-tbl').innerHTML+=rows;
+  const s=document.getElementById('summary');
+  s.style.display='block'; s.scrollIntoView({behavior:'smooth'});
+}
+updateHeader();
+</script>
+</body>
+</html>

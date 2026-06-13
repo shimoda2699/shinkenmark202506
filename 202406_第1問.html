@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2024年6月｜第1問</title>
+<style>
+:root{
+  --bg:#f0f4f8;--card:#fff;--primary:#2e7d32;--pl:#eaf6eb;
+  --ok:#1a7a4a;--ok-bg:#e6f4ec;--ng:#b91c1c;--ng-bg:#fde8e8;
+  --text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;
+  --radius:10px;--shadow:0 2px 12px rgba(46,125,50,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.8;}
+header{background:var(--primary);color:#fff;padding:12px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:space-between;}
+header h1{font-size:.95rem;font-weight:700;}
+.score-disp{font-size:.82rem;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;white-space:nowrap;}
+main{max-width:800px;margin:0 auto;padding:24px 16px 80px;}
+.mondai-title{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:4px;}
+.mondai-meta{font-size:.82rem;color:var(--muted);margin-bottom:20px;}
+.mondai-bun{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:20px;}
+.mondai-bun h3{font-size:.92rem;font-weight:800;color:var(--primary);border-left:4px solid var(--primary);padding-left:8px;margin-bottom:14px;line-height:1.6;}
+.mondai-bun p{margin-bottom:.75em;}
+.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:.87rem;}
+.tbl th,.tbl td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top;}
+.tbl th{background:var(--pl);font-weight:700;}
+.tbl-label{font-weight:700;font-size:.88rem;margin:10px 0 4px;display:block;}
+.fig-box{background:#f7f9fc;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
+.fig-title{font-weight:700;color:var(--primary);display:block;margin-bottom:5px;}
+.note{font-size:.83rem;color:var(--muted);}
+.indent{margin-left:1.4em;}
+.section-sep{border:none;border-top:2px dashed var(--border);margin:28px 0;}
+/* グリル格子 */
+.grid-wrap{display:flex;gap:24px;flex-wrap:wrap;margin:10px 0;align-items:flex-start;}
+.grid-box{text-align:center;}
+.grid-box p{font-size:.82rem;margin-top:4px;color:var(--muted);}
+.grill{display:inline-grid;grid-template-columns:repeat(4,36px);grid-template-rows:repeat(4,36px);border:2px solid #555;}
+.grill-cell{width:36px;height:36px;border:1px solid #bbb;display:flex;align-items:center;justify-content:center;font-size:1rem;background:#fff;}
+.grill-cell.hole{background:#333;color:#fff;}
+.grill-cell.letter{font-size:.88rem;font-weight:700;}
+/* 真理値表 */
+.truth-wrap{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0;}
+.truth-tbl{border-collapse:collapse;font-size:.84rem;font-family:'Courier New',monospace;}
+.truth-tbl th,.truth-tbl td{border:1px solid var(--border);padding:4px 8px;text-align:center;}
+.truth-tbl th{background:var(--pl);font-weight:700;}
+/* レイアウト図 */
+.layout-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.layout-box{border:2px solid var(--border);border-radius:6px;padding:10px;font-size:.84rem;text-align:center;background:#fff;}
+.layout-box .lbl{font-size:.72rem;color:var(--muted);margin-bottom:4px;}
+.layout-item{background:var(--pl);border-radius:4px;padding:4px 8px;margin:4px 0;font-size:.82rem;}
+.layout-item.btn{background:#e85d26;color:#fff;font-size:.78rem;display:inline-block;padding:3px 10px;border-radius:3px;}
+/* 設問 */
+.setsumon{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 20px 16px;margin-bottom:24px;border-left:4px solid var(--border);transition:border-color .2s;}
+.setsumon.answered{border-left-color:var(--primary);}
+.setsumon-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.setsumon-badge{background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+.setsumon-pts{font-size:.72rem;color:var(--muted);}
+.setsumon-q{font-size:.92rem;font-weight:600;margin-bottom:12px;line-height:1.65;}
+.choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.5;transition:border-color .15s,background .15s;width:100%;}
+.choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--pl);}
+.ci{font-weight:700;color:var(--primary);min-width:24px;flex-shrink:0;}
+.choice-btn.selected{border-color:var(--primary);background:var(--pl);}
+.choice-btn.correct{border-color:var(--ok);background:var(--ok-bg);}
+.choice-btn.wrong{border-color:var(--ng);background:var(--ng-bg);}
+.choice-btn:disabled{cursor:default;}
+.answer-row{margin-top:14px;}
+.btn-ans{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.btn-ans:disabled{background:#aaa;cursor:default;}
+.result-wrap{display:none;margin-top:12px;}
+.result-wrap.show{display:block;}
+.result-banner{border-radius:8px;padding:11px 14px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.result-banner.ok{background:var(--ok-bg);color:var(--ok);}
+.result-banner.ng{background:var(--ng-bg);color:var(--ng);}
+.result-icon{font-size:1.2rem;}
+.exp-btn{font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;white-space:nowrap;margin-left:auto;}
+.exp-btn:hover{background:var(--pl);}
+.exp-panel{display:none;margin-top:10px;background:#f7f9fc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:.88rem;line-height:1.8;}
+.exp-panel.open{display:block;}
+.ans-label{background:var(--ok-bg);border-left:4px solid var(--ok);padding:7px 12px;border-radius:4px;margin-bottom:10px;font-weight:700;color:var(--ok);display:block;}
+.exp-panel p{margin-bottom:.6em;}
+.opt-row{margin:5px 0;padding:6px 10px;background:#fff;border-radius:6px;font-size:.86rem;}
+.opt-row.ok-opt{border-left:3px solid var(--ok);}
+.opt-row.ng-opt{border-left:3px solid var(--ng);}
+.lbl-ok{color:var(--ok);font-weight:700;}
+.lbl-ng{color:var(--ng);font-weight:700;}
+#summary{display:none;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 24px;text-align:center;margin-top:16px;}
+#summary h2{font-size:1.3rem;color:var(--primary);margin-bottom:8px;}
+.score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+.score-sub{color:var(--muted);margin-top:4px;font-size:.9rem;}
+.sum-tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:.87rem;}
+.sum-tbl th,.sum-tbl td{border:1px solid var(--border);padding:6px 10px;text-align:center;}
+.sum-tbl th{background:var(--pl);font-weight:700;}
+.sum-tbl td.ok-td{color:var(--ok);font-weight:700;}
+.sum-tbl td.ng-td{color:var(--ng);font-weight:700;}
+.btn-retry{margin-top:20px;background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;}
+.btn-retry:hover{background:var(--pl);}
+@media(max-width:540px){.mondai-bun,.setsumon{padding:16px 13px;}.choice-btn{font-size:.84rem;}.score-big{font-size:2.2rem;}.grill{grid-template-columns:repeat(4,28px);grid-template-rows:repeat(4,28px);}.grill-cell{width:28px;height:28px;font-size:.75rem;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>情報Ⅰ 進研模試 2024年6月 ｜ 第1問（配点20点）</h1>
+  <div class="score-disp" id="hdr-score">0 / 10 問回答済</div>
+</header>
+<main>
+
+<div style="text-align:center; margin:10px 0;">
+<a href="index.html" style="display:inline-block;background:#2e7d32;color:white;text-decoration:none;padding:8px 20px;border-radius:8px;font-weight:bold;">← トップへ戻る</a>
+</div>
+
+<div class="mondai-title">第1問　次の問い（問1〜4）に答えよ。</div>
+<div class="mondai-meta">配点 20点</div>
+
+<!-- ====================================================
+     問1 問題文
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問1　次の文章を読み，後の問い（a・b）に答えよ。</h3>
+  <p>ICTを活用することで，単純業務や定型業務を機械が代替することやより付加価値の高いサービスを生み出すことが可能となり，企業活動の生産性を高めることが期待される。特に，中小企業をはじめ，十分な労働力の確保に苦しでいた企業の成長に貢献すると考えられる。</p>
+  <p>また，企業による<u>₍ₐ₎ICTの利活用</u>により，情報銀行などの新たなビジネスモデルの創出が可能となるほか，キャッシュレス決済やクラウドサービスの推進が進むことで企業と国民の両方が便益を享受することができ，我が国の経済活性化につながることが期待される。さらに，企業などでのAIの活用により我が国の経済や社会に多大な便益を広範にもたらすことが期待されており，安心・安全で信頼性のあるAIの社会実装が求められている。</p>
+  <p>また，全体的にはICTの利活用が進展している一方で，年齢や地理的条件などによってインターネット利用率に一定の差異が見られるところである。今後，<u>₍ᵦ₎「誰一人取り残さない」デジタル化を実現するために</u>，高齢者を含む国民のデジタル化への不安感・抵抗感を解消し，デジタル活用能力の向上に向けた取組を進めるなど，年齢的・地理的条件などによるデジタルデバイドを是正することが必要である。</p>
+  <p class="note">引用：総務省の令和4年度情報通信白書「ICT利活用の推進」（一部改変）</p>
+</div>
+
+<!-- 問1a -->
+<div class="setsumon" id="qs0">
+  <div class="setsumon-head"><span class="setsumon-badge">問1 a</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">下線部(a)に関して，ICTの利活用による業務改善やサービス向上などを図った事例として<b>誤っているもの</b>を，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch0">
+    <button class="choice-btn" onclick="sel(0,0)"><span class="ci">⓪</span><span>店舗内の全商品に電子タグを装着し，商品の流れすべてを電子タグによって管理することで，店舗での在庫管理の作業時間を大幅に短縮した。</span></button>
+    <button class="choice-btn" onclick="sel(0,1)"><span class="ci">①</span><span>レジで消費者一人ひとりの購買履歴に応じたクーポンを自動的に発行することで，追加購入や再度の来店を促した。</span></button>
+    <button class="choice-btn" onclick="sel(0,2)"><span class="ci">②</span><span>店舗で接客にあたる従業員にセンサーを付けて行動パターンを可視化し，動線分析などを行うことにより店舗内のオペレーションを改善した。</span></button>
+    <button class="choice-btn" onclick="sel(0,3)"><span class="ci">③</span><span>店舗内において書面でのアンケート調査を実施し，幅広い年齢層の意見を業務に反映することにより顧客満足度の改善と各種サービスの効率化を図った。</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab0" onclick="judge(0)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw0">
+    <div class="result-banner" id="rb0"><span class="result-icon" id="ri0"></span><span id="rt0"></span><button class="exp-btn" onclick="toggleExp(0)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep0">
+      <span class="ans-label">✓ 正解：③（誤り）</span>
+      <p>「書面でのアンケート調査」は情報通信技術（ICT）を用いていないため，ICTの利活用による業務改善の事例とはいえません。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　電子タグ（RFID）による在庫管理はICT利活用の典型例。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 正しい</span>　購買履歴データを活用した自動クーポン発行はICT利活用。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">② 正しい</span>　センサーと動線分析によるオペレーション改善はICT利活用。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り（正解）</span>　書面アンケートはICTを使用していない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 問1b -->
+<div class="setsumon" id="qs1">
+  <div class="setsumon-head"><span class="setsumon-badge">問1 b</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">下線部(b)に関して，誰でも支障なく情報通信を利用できるようにすることを<b>情報バリアフリー</b>という。高齢者や障がい者を対象とした情報バリアフリーに関連する取り組みとして<b>誤っているもの</b>を，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch1">
+    <button class="choice-btn" onclick="sel(1,0)"><span class="ci">⓪</span><span>高齢者や障がい者を含む誰もが利用しやすいように，大きなフォントや見やすい配色などアクセシビリティに配慮したWebサイトを提供する。</span></button>
+    <button class="choice-btn" onclick="sel(1,1)"><span class="ci">①</span><span>視覚障がい者向けに，テキスト情報を音声に変換する読み上げソフトウェアや，画面上のテキストを音声で読み上げるスクリーンリーダーの利用を促進する。</span></button>
+    <button class="choice-btn" onclick="sel(1,2)"><span class="ci">②</span><span>高齢者を狙った振り込め詐欺や架空料金請求詐欺などの被害を減少させるため，高齢者を対象としたセミナーを開催し，詐欺の手口や予防策について啓発する。</span></button>
+    <button class="choice-btn" onclick="sel(1,3)"><span class="ci">③</span><span>デジタル活用に不安のある高齢者などを対象として，オンラインによる行政手続きなどに関する助言・相談の支援を行う。</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab1" onclick="judge(1)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw1">
+    <div class="result-banner" id="rb1"><span class="result-icon" id="ri1"></span><span id="rt1"></span><button class="exp-btn" onclick="toggleExp(1)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep1">
+      <span class="ans-label">✓ 正解：②（誤り）</span>
+      <p>「詐欺の手口や予防策についての啓発」は，情報通信を支障なく利用できるようにすること（情報バリアフリー）とは直接の関係がありません。詐欺対策は情報セキュリティの範疇であり，情報バリアフリーの取り組みとはいえません。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　アクセシビリティ配慮のWebサイトは情報バリアフリーの取り組み。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 正しい</span>　読み上げソフト・スクリーンリーダーの普及促進は情報バリアフリーの取り組み。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り（正解）</span>　詐欺対策セミナーは情報バリアフリーではなく情報セキュリティの取り組み。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">③ 正しい</span>　デジタル活用支援は情報バリアフリーの取り組み。</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- ====================================================
+     問2 問題文（回転グリル式暗号）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問2　次の文章を読み，空欄【ウ】・【エ】に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。</h3>
+  <p>古来より，暗号は秘匿通信のために世界中で用いられてきた。1881年，オーストリアのフライスナーが発表した<b>回転グリル式暗号</b>も暗号化手段の一種である。回転グリル式暗号では，4×4の正方形に並んだマス目の板（グリル）に穴（●）を開け，次の【書き込む（読み取る）マス目を移動する手順】に従ってグリルの穴の開いたマス目を移動しながら，下の紙に文字を書き込んだり，書き込まれた文字を読み取ったりする。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">【書き込む（読み取る）マス目を移動する手順】</span>
+    Ⅰ　一番上の段の左端を始まりとする。<br>
+    Ⅱ　それぞれの段では，左から右へと1マスずつ移り，右端まで到達したら一つ下の段の左端に移る。<br>
+    Ⅲ　一番下の段（最後の段）の右端まで移ったら，グリルを時計回りに90度回転させる。<br><br>
+    以上の手順Ⅰ〜Ⅲを4回繰り返し，それぞれのマスに文字を書き込んだり，書き込まれた文字を読み取ったりする。
+  </div>
+
+  <p>例えば，図1のグリルで図3の文字盤ができたとき，図1のグリルを当てて穴の開いたマスを読むと「だいがく」と解読でき，図2のようにグリルを時計回りに90度回転させて穴の開いたマスを読むと「しんけん」と解読できる。</p>
+
+  <div class="grid-wrap">
+    <div class="grid-box">
+      <div class="grill">
+        <div class="grill-cell"></div><div class="grill-cell hole">●</div><div class="grill-cell"></div><div class="grill-cell"></div>
+        <div class="grill-cell hole">●</div><div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell"></div>
+        <div class="grill-cell"></div><div class="grill-cell hole">●</div><div class="grill-cell"></div><div class="grill-cell"></div>
+        <div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell hole">●</div>
+      </div>
+      <p>図1　グリル</p>
+    </div>
+    <div class="grid-box">
+      <div class="grill">
+        <div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell hole">●</div><div class="grill-cell"></div>
+        <div class="grill-cell"></div><div class="grill-cell hole">●</div><div class="grill-cell"></div><div class="grill-cell hole">●</div>
+        <div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell"></div>
+        <div class="grill-cell hole">●</div><div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell"></div>
+      </div>
+      <p>図2　図1を時計回りに90度回転</p>
+    </div>
+    <div class="grid-box">
+      <div class="grill">
+        <div class="grill-cell letter">も</div><div class="grill-cell letter">だ</div><div class="grill-cell letter">し</div><div class="grill-cell letter">ら</div>
+        <div class="grill-cell letter">い</div><div class="grill-cell letter">ん</div><div class="grill-cell letter">し</div><div class="grill-cell letter">け</div>
+        <div class="grill-cell letter">さ</div><div class="grill-cell letter">が</div><div class="grill-cell letter">く</div><div class="grill-cell letter">さ</div>
+        <div class="grill-cell letter">ん</div><div class="grill-cell letter">。</div><div class="grill-cell letter">く</div><div class="grill-cell letter">く</div>
+      </div>
+      <p>図3　ひらがなの文字列</p>
+    </div>
+  </div>
+
+  <p>いま，図4のグリルを用いて，図5のアルファベットが書かれた紙から文字列を読み取る。このとき，【書き込む（読み取る）マス目を移動する手順】に従うとする。</p>
+
+  <div class="grid-wrap">
+    <div class="grid-box">
+      <div class="grill">
+        <div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell hole">●</div><div class="grill-cell"></div>
+        <div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell hole">●</div>
+        <div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell hole">●</div><div class="grill-cell"></div>
+        <div class="grill-cell hole">●</div><div class="grill-cell"></div><div class="grill-cell"></div><div class="grill-cell"></div>
+      </div>
+      <p>図4　グリル</p>
+    </div>
+    <div class="grid-box">
+      <div class="grill">
+        <div class="grill-cell letter">L</div><div class="grill-cell letter">P</div><div class="grill-cell letter">E</div><div class="grill-cell letter">N</div>
+        <div class="grill-cell letter">I</div><div class="grill-cell letter">A</div><div class="grill-cell letter">T</div><div class="grill-cell letter">A</div>
+        <div class="grill-cell letter">T</div><div class="grill-cell letter">G</div><div class="grill-cell letter">E</div><div class="grill-cell letter">L</div>
+        <div class="grill-cell letter">B</div><div class="grill-cell letter">M</div><div class="grill-cell letter">Y</div><div class="grill-cell letter">E</div>
+      </div>
+      <p>図5　アルファベットの文字列</p>
+    </div>
+  </div>
+
+  <p>手順Ⅰ〜Ⅲを4回繰り返すと16文字の情報が得られ，得られた順番どおりに文字を並べていくと，表1が完成される。表1の「6，10，12，16」番目に入る文字をつないで現れる英単語は <b>【ウ】</b> である。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">表1　得られた16文字の情報（一部）</span>
+    <table style="border-collapse:collapse;font-size:.84rem;font-family:'Courier New',monospace;width:100%;">
+      <tr>
+        <th style="border:1px solid var(--border);padding:4px 6px;">読み取る順番</th>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">1</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">2</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">3</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">4</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">5</td><td style="border:1px solid var(--border);padding:4px 6px;background:var(--ok-bg);font-weight:700;">6</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">7</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">8</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">9</td><td style="border:1px solid var(--border);padding:4px 6px;background:var(--ok-bg);font-weight:700;">10</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">11</td><td style="border:1px solid var(--border);padding:4px 6px;background:var(--ok-bg);font-weight:700;">12</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">13</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">14</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">15</td><td style="border:1px solid var(--border);padding:4px 6px;background:var(--ok-bg);font-weight:700;">16</td>
+      </tr>
+      <tr>
+        <th style="border:1px solid var(--border);padding:4px 6px;">読み取った文字</th>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">E</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">L</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;background:var(--ok-bg);font-weight:700;">?</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;">N</td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;background:var(--ok-bg);font-weight:700;">?</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;background:var(--ok-bg);font-weight:700;">P</td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td>
+        <td style="border:1px solid var(--border);padding:4px 6px;text-align:center;"></td><td style="border:1px solid var(--border);padding:4px 6px;text-align:center;background:var(--ok-bg);font-weight:700;">?</td>
+      </tr>
+    </table>
+    <p class="note" style="margin-top:6px;">※ 表1の一部のみ埋まっており，6・10・16番目は未記入。12番目はP。</p>
+  </div>
+
+  <p>このように，グリルの穴の開け方を工夫することで4×4の正方形のマス目に書かれた文字をすべて読み取ることができる。</p>
+  <p>しかし，図6のグリルだと，aとbの穴を回転させたときに読み取れる文字情報は同じになる。このように考えると，グリルが <b>【エ】</b> であるときは，グリルを何回回転させても16文字すべてが読み取られることはない。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図6　グリル（aとbの位置が対称）</span>
+    aの穴（1行1列）とbの穴（4行4列）が対称の位置にある例。<br>
+    回転すると同じ位置が読まれてしまうため，重複が生じて16文字すべてが読み取れない。
+  </div>
+
+  <div class="fig-box" style="margin-top:10px;">
+    <span class="fig-title">【エ】の解答群（4種類のグリルパターン）</span>
+    ⓪ 穴が4つ全て異なる位置（ランダム）<br>
+    ① 穴が縦に並んでいる（同じ列）<br>
+    ② 穴が中央4マスにある<br>
+    ③ 穴が隅4マスと隣接位置（対称ペアを含む）
+  </div>
+</div>
+
+<!-- 問2 ウ -->
+<div class="setsumon" id="qs2">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（ウ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">表1の「6，10，12，16」番目に入る文字をつないで現れる英単語 <b>【ウ】</b> を選べ。<br>
+  <span class="note">（図4のグリルを図5に当てて，手順Ⅰ〜Ⅲを4回繰り返す。1回目：E→順番1，5番目→L，9番目→N，13番目→…順に読む）</span></div>
+  <div class="choices" id="ch2">
+    <button class="choice-btn" onclick="sel(2,0)"><span class="ci">⓪</span><span>BALL</span></button>
+    <button class="choice-btn" onclick="sel(2,1)"><span class="ci">①</span><span>GAME</span></button>
+    <button class="choice-btn" onclick="sel(2,2)"><span class="ci">②</span><span>GATE</span></button>
+    <button class="choice-btn" onclick="sel(2,3)"><span class="ci">③</span><span>PLAY</span></button>
+    <button class="choice-btn" onclick="sel(2,4)"><span class="ci">④</span><span>TEAM</span></button>
+    <button class="choice-btn" onclick="sel(2,5)"><span class="ci">⑤</span><span>TIME</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab2" onclick="judge(2)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw2">
+    <div class="result-banner" id="rb2"><span class="result-icon" id="ri2"></span><span id="rt2"></span><button class="exp-btn" onclick="toggleExp(2)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep2">
+      <span class="ans-label">✓ 正解：①　GAME</span>
+      <p>図4のグリルを図5に当て，手順Ⅰ〜Ⅲを4回繰り返すと：<br>
+      <b>1回目</b>（穴：1行3列, 2行4列, 3行3列, 4行1列）<br>
+      　→ 順番1:E, 2:A, 3:E, 4:B → 順番1:E（1行3列）, 8:A（2行4列）, 11:E（3行3列）, 13:B（4行1列）<br>
+      ※ 各回転で穴が読む位置が変わります。解答解説より全16文字が<br>
+      　1:E, 2:A, 3:E, 4:B, 5:L, <b>6:G</b>, 7:L, 8:Y, 9:N, <b>10:A</b>, 11:T, <b>12:M</b>, 13:P, 14:I, 15:T, <b>16:E</b><br>
+      6番目：G，10番目：A，12番目：M，16番目：E → <b>GAME</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- 問2 エ -->
+<div class="setsumon" id="qs3">
+  <div class="setsumon-head"><span class="setsumon-badge">問2（エ）</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">グリルを何回回転させても16文字すべてが読み取られることがないのは，グリル <b>【エ】</b> のときである。最も適当なものを選べ。<br>
+  <span class="note">（図6の説明：aとbの穴を回転させたときに読み取れる文字情報は同じになる。対称ペアが存在するグリルが該当）</span></div>
+  <div class="choices" id="ch3">
+    <button class="choice-btn" onclick="sel(3,0)"><span class="ci">⓪</span><span>
+      <span style="display:inline-grid;grid-template-columns:repeat(4,20px);grid-template-rows:repeat(4,20px);border:1px solid #555;gap:0;vertical-align:middle;">
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+      </span>　（⓪）
+    </span></button>
+    <button class="choice-btn" onclick="sel(3,1)"><span class="ci">①</span><span>
+      <span style="display:inline-grid;grid-template-columns:repeat(4,20px);grid-template-rows:repeat(4,20px);border:1px solid #555;gap:0;vertical-align:middle;">
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span>
+      </span>　（①）
+    </span></button>
+    <button class="choice-btn" onclick="sel(3,2)"><span class="ci">②</span><span>
+      <span style="display:inline-grid;grid-template-columns:repeat(4,20px);grid-template-rows:repeat(4,20px);border:1px solid #555;gap:0;vertical-align:middle;">
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+      </span>　（②）
+    </span></button>
+    <button class="choice-btn" onclick="sel(3,3)"><span class="ci">③</span><span>
+      <span style="display:inline-grid;grid-template-columns:repeat(4,20px);grid-template-rows:repeat(4,20px);border:1px solid #555;gap:0;vertical-align:middle;">
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span>
+        <span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#fff;"></span><span style="width:20px;height:20px;border:1px solid #ccc;background:#333;"></span>
+      </span>　（③）
+    </span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab3" onclick="judge(3)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw3">
+    <div class="result-banner" id="rb3"><span class="result-icon" id="ri3"></span><span id="rt3"></span><button class="exp-btn" onclick="toggleExp(3)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep3">
+      <span class="ans-label">✓ 正解：③（対角線上に穴が並ぶグリル）</span>
+      <p>グリルを回転させたときに読み取れる位置が同じになるのは，穴が回転の軸（対称軸）に対して対称な位置にある場合です。</p>
+      <p>4×4のグリルを90度ずつ回転させると，中央の4マス（A：中央4マス），隅の4マス（B：4隅），時計回り方向に2番目の4マス（C），3番目の4マス（D）という4グループに分かれます。各グループ内のマスは90度回転させると互いに入れ替わります。</p>
+      <p>③は対角線（左上→右下）上に穴があり，90度回転させると穴の位置が重なる（例：1行1列 → 1行4列 → 4行4列 → 4行1列 → 元に戻る の中に2個入ってしまう）ため，16文字すべての読み取りができません。解答解説より③が正解です。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪①② 誤り</span>　これらのグリルは4回転すると16か所すべて異なる位置を読み取れる。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">③ 正しい</span>　対角線上の穴は回転時に重複が生じ，16文字すべては読み取れない。</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- ====================================================
+     問3 問題文（論理回路・階段スイッチ）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問3　次の文章を読み，空欄【オ】〜【ク】に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。ただし，空欄【カ】・【キ】は同じものを選んでもよい。</h3>
+
+  <p>基本的な論理回路には，論理積（AND）回路，論理和（OR）回路，否定（NOT）回路が挙げられ，これらの入力と出力の関係は表2のように示される。</p>
+
+  <div class="truth-wrap">
+    <div>
+      <p style="font-size:.83rem;font-weight:700;margin-bottom:4px;">論理積（AND）回路</p>
+      <table class="truth-tbl">
+        <tr><th colspan="2">入力</th><th>出力</th></tr>
+        <tr><th>A</th><th>B</th><th>X</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td></tr>
+      </table>
+    </div>
+    <div>
+      <p style="font-size:.83rem;font-weight:700;margin-bottom:4px;">論理和（OR）回路</p>
+      <table class="truth-tbl">
+        <tr><th colspan="2">入力</th><th>出力</th></tr>
+        <tr><th>A</th><th>B</th><th>X</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td></tr>
+      </table>
+    </div>
+    <div>
+      <p style="font-size:.83rem;font-weight:700;margin-bottom:4px;">否定（NOT）回路</p>
+      <table class="truth-tbl">
+        <tr><th>入力</th><th>出力</th></tr>
+        <tr><th>A</th><th>X</th></tr>
+        <tr><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p>学校の教室にあるような電灯スイッチは，片方を押し込めば電源が切れ，もう片方を押し込めば電源が入るようになっている。これは<b>片切スイッチ</b>と呼ばれ，図7のように回路に連動しているスイッチが押し込まれることによって通電する仕組みになっている。図7では，スイッチの状態が0のとき消灯し，スイッチの状態が1のとき点灯する。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図7　片切スイッチ（スイッチの状態0：消灯，1：点灯）</span>
+    スイッチ状態0：回路が開（電流流れない）→ 電灯消灯<br>
+    スイッチ状態1：回路が閉（電流流れる）→ 電灯点灯
+  </div>
+
+  <p>これをもとに，図8のように，1階と2階にそれぞれ設置された，どちらからでも点灯・消灯することが可能な階段の電灯スイッチについて考える。どちらのスイッチからも点灯・消灯の操作ができるようにするためには，片切スイッチのような1本の電線では実現できない。そこで，図8のように1階のスイッチXと2階のスイッチYを2本の電線でつなぎ，図9のようなスイッチを使用する。このスイッチは，一方を押し込むことで2本の電線のうちどちらにつながるかを切り替えられる構造になっている。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図8・図9　2階スイッチの構造</span>
+    スイッチX（1階）とスイッチY（2階）を2本の電線でつなぐ。<br>
+    各スイッチは状態0か1かで，2本の電線のどちらかに接続される。<br>
+    X:0, Y:0 のとき　→　（特定の接続）<br>
+    X:0, Y:1 のとき　→　（別の接続）<br>
+    X:1, Y:0 のとき　→　（別の接続）<br>
+    X:1, Y:1 のとき　→　（特定の接続）
+  </div>
+
+  <p>この回路において，スイッチの状態がX:0，Y:0のときに階段の電灯が点灯したとする。このとき，階段の電灯が点灯するスイッチの他の状態として，<b>オ</b> のときがある。</p>
+
+  <div class="fig-box" style="margin-top:8px;">
+    <span class="fig-title">【オ】の解答群</span>
+    ⓪ X:0, Y:1　　① X:1, Y:0　　② X:1, Y:1
+  </div>
+
+  <p style="margin-top:12px;">同様に，1階と2階と3階を結ぶ階段の電灯スイッチは，1階のスイッチをS，2階のスイッチをT，3階のスイッチをUとしてそれぞれ2本の電線でつなぎ，図10のように2階のスイッチTだけを交差する回路に変わるスイッチとすることで，どのスイッチからも電灯の点灯・消灯を操作することができる。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">図10　3階スイッチ（S・T・U）の構造</span>
+    スイッチS（1階），T（2階・交差型），U（3階）。<br>
+    S:0, T:0, U:0 のとき電灯が点灯したとする。<br>
+    ・S:0, T:0, U:1 のとき → 消灯または点灯<br>
+    ・S:1, T:1, U:0 のとき → 消灯または点灯
+  </div>
+
+  <p>この回路において，スイッチの状態がS:0，T:0，U:0のときに階段の電灯が点灯したとする。このとき，S:0，T:0，U:1であれば電灯は <b>カ</b> し，S:1，T:1，U:0であれば電灯は <b>キ</b> する。</p>
+  <p>次に，この回路において，スイッチの状態がS:0，T:0，U:0のときに階段の電灯が消灯したとする。この回路の出力結果（電灯）を，0が消灯，1が点灯として入出力の関係を真理値表で表すと <b>ク</b> となる。</p>
+
+  <div class="fig-box" style="margin-top:8px;">
+    <span class="fig-title">【カ】・【キ】の解答群</span>
+    ⓪ 消灯　　① 点灯
+  </div>
+  <div class="fig-box" style="margin-top:8px;">
+    <span class="fig-title">【ク】の解答群（真理値表の形）</span>
+    ⓪〜③ の4種類の真理値表が示されている（S,T,U → 電灯の8パターン）。問題文より S:0,T:0,U:0 のとき電灯＝0（消灯）が条件。
+  </div>
+</div>
+
+<!-- 問3 オ -->
+<div class="setsumon" id="qs4">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（オ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">X:0，Y:0のときに点灯したとする。階段の電灯が点灯するスイッチの<b>他の状態</b> <b>【オ】</b> はどれか。</div>
+  <div class="choices" id="ch4">
+    <button class="choice-btn" onclick="sel(4,0)"><span class="ci">⓪</span><span>X:0，Y:1</span></button>
+    <button class="choice-btn" onclick="sel(4,1)"><span class="ci">①</span><span>X:1，Y:0</span></button>
+    <button class="choice-btn" onclick="sel(4,2)"><span class="ci">②</span><span>X:1，Y:1</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab4" onclick="judge(4)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw4">
+    <div class="result-banner" id="rb4"><span class="result-icon" id="ri4"></span><span id="rt4"></span><button class="exp-btn" onclick="toggleExp(4)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep4">
+      <span class="ans-label">✓ 正解：②　X:1，Y:1</span>
+      <p>2階スイッチ回路（図9）の特性：X:0,Y:0 で点灯するとき，どちらか一方のみ変えると回路が切断されて消灯します。両方変える（X:1,Y:1）と再び回路がつながり点灯します。</p>
+      <p>「どちらのスイッチからも点灯・消灯の操作ができる」という条件から，X:0,Y:0（点灯）の状態でどちらかのスイッチを操作すると消灯（X:0,Y:1 → 消灯，X:1,Y:0 → 消灯），両方操作すると点灯（X:1,Y:1 → 点灯）となります。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　X:0,Y:1 のときは消灯（Y のみ変わる）。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　X:1,Y:0 のときは消灯（X のみ変わる）。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">② 正しい</span>　X:1,Y:1 のときは点灯（両方変わると回路が再接続）。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 問3 カ -->
+<div class="setsumon" id="qs5">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（カ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">S:0，T:0，U:0のとき点灯したとする。S:0，T:0，U:1のとき電灯は <b>【カ】</b> する。</div>
+  <div class="choices" id="ch5">
+    <button class="choice-btn" onclick="sel(5,0)"><span class="ci">⓪</span><span>消灯</span></button>
+    <button class="choice-btn" onclick="sel(5,1)"><span class="ci">①</span><span>点灯</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab5" onclick="judge(5)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw5">
+    <div class="result-banner" id="rb5"><span class="result-icon" id="ri5"></span><span id="rt5"></span><button class="exp-btn" onclick="toggleExp(5)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep5">
+      <span class="ans-label">✓ 正解：⓪　消灯</span>
+      <p>S:0,T:0,U:0 のとき点灯しているとき，Uだけを0→1に変えると回路が切断されて消灯します。「どのスイッチを操作しても点灯・消灯が切り替わる」という3階スイッチの特性より，U:1（Uのみ操作）→ 消灯に切り替わります。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 問3 キ -->
+<div class="setsumon" id="qs6">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（キ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">S:0，T:0，U:0のとき点灯したとする。S:1，T:1，U:0のとき電灯は <b>【キ】</b> する。</div>
+  <div class="choices" id="ch6">
+    <button class="choice-btn" onclick="sel(6,0)"><span class="ci">⓪</span><span>消灯</span></button>
+    <button class="choice-btn" onclick="sel(6,1)"><span class="ci">①</span><span>点灯</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab6" onclick="judge(6)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw6">
+    <div class="result-banner" id="rb6"><span class="result-icon" id="ri6"></span><span id="rt6"></span><button class="exp-btn" onclick="toggleExp(6)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep6">
+      <span class="ans-label">✓ 正解：①　点灯</span>
+      <p>S:0,T:0,U:0（点灯）の状態から，SとTの両方を変える（S:1,T:1,U:0）と，解答解説より点灯します。3スイッチ回路では，2つのスイッチを同時に操作すると元の状態（点灯）が維持されます。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 問3 ク -->
+<div class="setsumon" id="qs7">
+  <div class="setsumon-head"><span class="setsumon-badge">問3（ク）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">S:0，T:0，U:0のとき<b>消灯した</b>とする。この回路の入出力関係（0＝消灯，1＝点灯）を真理値表で表すと <b>【ク】</b> となる。最も適当なものを選べ。</div>
+  <div class="choices" id="ch7">
+    <button class="choice-btn" onclick="sel(7,0)"><span class="ci">⓪</span><span>
+      S:0,T:0,U:0→0　S:0,T:0,U:1→1　S:0,T:1,U:0→1　S:0,T:1,U:1→1<br>
+      S:1,T:0,U:0→1　S:1,T:0,U:1→1　S:1,T:1,U:0→1　S:1,T:1,U:1→0
+    </span></button>
+    <button class="choice-btn" onclick="sel(7,1)"><span class="ci">①</span><span>
+      S:0,T:0,U:0→0　S:0,T:0,U:1→1　S:0,T:1,U:0→1　S:0,T:1,U:1→0<br>
+      S:1,T:0,U:0→1　S:1,T:0,U:1→0　S:1,T:1,U:0→0　S:1,T:1,U:1→1
+    </span></button>
+    <button class="choice-btn" onclick="sel(7,2)"><span class="ci">②</span><span>
+      S:0,T:0,U:0→0　S:0,T:0,U:1→1　S:0,T:1,U:0→1　S:0,T:1,U:1→0<br>
+      S:1,T:0,U:0→1　S:1,T:0,U:1→0　S:1,T:1,U:0→1　S:1,T:1,U:1→0 （一部変更）
+    </span></button>
+    <button class="choice-btn" onclick="sel(7,3)"><span class="ci">③</span><span>
+      S:0,T:0,U:0→0　S:0,T:0,U:1→1　S:0,T:1,U:0→0　S:0,T:1,U:1→0<br>
+      S:1,T:0,U:0→0　S:1,T:0,U:1→1　S:1,T:1,U:0→0　S:1,T:1,U:1→1
+    </span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab7" onclick="judge(7)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw7">
+    <div class="result-banner" id="rb7"><span class="result-icon" id="ri7"></span><span id="rt7"></span><button class="exp-btn" onclick="toggleExp(7)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep7">
+      <span class="ans-label">✓ 正解：②</span>
+      <p>S:0,T:0,U:0 のとき消灯（出力0）という条件のもと，解答解説より3スイッチ回路の真理値表は②となります。</p>
+      <p>3スイッチ回路の特性：いずれかのスイッチを1つ操作すると点灯・消灯が切り替わります。S:0,T:0,U:0→消灯（0）を基準に，スイッチを操作するごとに出力が反転します。S,T,Uのうち奇数個が1のとき出力1（点灯），偶数個が1のとき出力0（消灯）となるパターンが②に対応しています。</p>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- ====================================================
+     問4 問題文（Webデザイン・メトニミー）
+     ==================================================== -->
+<div class="mondai-bun">
+  <h3>問4　次の文章を読み，空欄【ケ】・【コ】に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。</h3>
+  <p>サッカー部に所属している高校生の太郎さんは，新入生を対象にサッカー部への入部誘致を目的としたWebサイトのデザインを担当している。いま，太郎さんは，トップページに掲載する「キャッチコピー」の表現と，入部希望者が情報入力フォームのページへ移動する際に押す「入部ボタン」のデザインを考えていて，これらに関する以下のような資料を入手した。</p>
+
+  <div class="fig-box">
+    <span class="fig-title">【文章の表現に関する資料】</span>
+    言葉を用いた情報伝達では，比喩表現を用いると効果的なときがある。代表的な比喩表現の一つに<b>メトニミー</b>がある。<br><br>
+    メトニミーとは，あるモノを示すとき，それと関係のある他のモノの言葉を用いて表現する方法である。<br><br>
+    例：「甲子園で頂点に立つ」という表現は，「全国高校野球選手権大会で優勝する」ということである。「全国高校野球選手権大会」が「甲子園」で行われることから，「甲子園」という言葉を用いて「全国高校野球選手権大会」を示し，「頂点に立つ」という言葉を用いて「優勝する」ということを示している。
+  </div>
+
+  <div class="fig-box">
+    <span class="fig-title">【ボタンのデザインに関する資料】</span>
+    ユーザが何かを操作する際に，その操作を理解，想起しやすくするために構築する心的なモデルを，<b>メンタルモデル</b>と呼ぶ。<br><br>
+    「オンラインショッピングの際に，カゴのアイコンを押すと，購入するものの一覧が見られるページに移動するだろう」というイメージは，メンタルモデルの一例である。
+  </div>
+
+  <div class="fig-box">
+    <span class="fig-title">【WebページJJAA覧時の視線に関する資料】</span>
+    Webページなどさまざまな情報が掲載されているものを閲覧する際には，基本的に視線が左上から右上，左下，右下の順に移動するように情報を読み取っているといわれている。伝えたい内容の順番がこのような視線の流れに沿うように工夫することが重要である。
+  </div>
+
+  <p>太郎さんは，資料の内容を踏まえて，メトニミーを用いて「キャッチコピー」を作成し，メンタルモデルを用いて「入部ボタン」を作成した。太郎さんが作成した「キャッチコピー」と「入部ボタン」の組合せとして最も適当なものは <b>【ケ】</b> である。</p>
+  <p>さらに太郎さんは，トップページのレイアウトを，最初に「キャッチコピー」，次にサッカー部を紹介した「本文」，最後に「入部ボタン」という順番でユーザが見るように構成したいと考えている。資料の内容を踏まえたとき，トップページに掲載する際のレイアウトとして最も適当なものは <b>【コ】</b> である。</p>
+</div>
+
+<!-- 問4 ケ -->
+<div class="setsumon" id="qs8">
+  <div class="setsumon-head"><span class="setsumon-badge">問4（ケ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">太郎さんが作成した「キャッチコピー」（メトニミーを使用）と「入部ボタン」（メンタルモデルを使用）の組合せとして最も適当なものを選べ。</div>
+  <div class="choices" id="ch8">
+    <button class="choice-btn" onclick="sel(8,0)"><span class="ci">⓪</span><span>キャッチコピー：「ボールをつなぐ仲間　募集中！」　　入部ボタン：書類・ペンのアイコン（情報入力フォームを想起）</span></button>
+    <button class="choice-btn" onclick="sel(8,1)"><span class="ci">①</span><span>キャッチコピー：「サッカー部員　募集中！」　　入部ボタン：ゴールネットのアイコン</span></button>
+    <button class="choice-btn" onclick="sel(8,2)"><span class="ci">②</span><span>キャッチコピー：「サッカー大好き人間　募集中！」　　入部ボタン：ボールを蹴る人のアイコン</span></button>
+    <button class="choice-btn" onclick="sel(8,3)"><span class="ci">③</span><span>キャッチコピー：「サッカー初心者歓迎！」　　入部ボタン：封筒のアイコン</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab8" onclick="judge(8)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw8">
+    <div class="result-banner" id="rb8"><span class="result-icon" id="ri8"></span><span id="rt8"></span><button class="exp-btn" onclick="toggleExp(8)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep8">
+      <span class="ans-label">✓ 正解：⓪　「ボールをつなぐ仲間　募集中！」＋書類・ペンのアイコン</span>
+      <p><b>メトニミー</b>の観点：「ボールをつなぐ」という「サッカー」と関係のある他のモノの言葉を用いて「サッカー部員を募集する」ことを表現しています（「サッカー」を直接示さず，関係するモノ「ボール」の言葉で示している）。①〜③は「サッカー」という直接的な表現を使っているためメトニミーではありません。</p>
+      <p><b>メンタルモデル</b>の観点：入部ボタンを押すと「情報入力フォームに移動する」という操作に対し，書類・ペンのアイコンは「情報を書き込む（フォームに記入する）」という操作を想起させます。ゴールネット・サッカー選手・封筒は情報入力フォームへの移動を想起させにくい。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　メトニミー（ボール→サッカー部）＋メンタルモデル（書類・ペン→フォーム入力）。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">①〜③ 誤り</span>　キャッチコピーはメトニミーでなく直接的な表現，またはボタンがフォームを想起させない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 問4 コ -->
+<div class="setsumon" id="qs9">
+  <div class="setsumon-head"><span class="setsumon-badge">問4（コ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">「キャッチコピー → 本文 → 入部ボタン」の順で視線が自然に移動するレイアウト <b>【コ】</b> として最も適当なものを選べ。<br>
+  <span class="note">（Webページの視線：左上 → 右上 → 左下 → 右下 の順に移動）</span></div>
+  <div class="choices" id="ch9">
+    <button class="choice-btn" onclick="sel(9,0)"><span class="ci">⓪</span><span>
+      <div class="layout-box" style="max-width:180px;">
+        <div class="layout-item">キャッチコピー（左上）</div>
+        <div class="layout-item">本文（中央）</div>
+        <div class="layout-item btn">入部ボタン（右下）</div>
+      </div>
+      ⓪ キャッチコピー左上 → 本文中央 → 入部ボタン右下
+    </span></button>
+    <button class="choice-btn" onclick="sel(9,1)"><span class="ci">①</span><span>
+      <div class="layout-box" style="max-width:180px;">
+        <div class="layout-item btn">入部ボタン（右上）</div>
+        <div class="layout-item">本文（中央）</div>
+        <div class="layout-item">キャッチコピー（左下）</div>
+      </div>
+      ① 入部ボタン右上 → 本文中央 → キャッチコピー左下
+    </span></button>
+    <button class="choice-btn" onclick="sel(9,2)"><span class="ci">②</span><span>
+      <div class="layout-box" style="max-width:180px;">
+        <div class="layout-item">本文（上段）</div>
+        <div style="display:flex;gap:4px;margin:2px 0;"><div class="layout-item btn" style="flex:1;">入部ボタン</div><div class="layout-item" style="flex:1;">キャッチコピー</div></div>
+      </div>
+      ② 本文上段 → 入部ボタン（左下）・キャッチコピー（右下）
+    </span></button>
+    <button class="choice-btn" onclick="sel(9,3)"><span class="ci">③</span><span>
+      <div class="layout-box" style="max-width:180px;">
+        <div class="layout-item">本文（上段）</div>
+        <div style="display:flex;gap:4px;margin:2px 0;"><div class="layout-item btn" style="flex:1;">入部ボタン</div><div class="layout-item" style="flex:1;">キャッチコピー</div></div>
+      </div>
+      ③ 本文上段 → キャッチコピー（右下）・入部ボタン（左下）
+    </span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab9" onclick="judge(9)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw9">
+    <div class="result-banner" id="rb9"><span class="result-icon" id="ri9"></span><span id="rt9"></span><button class="exp-btn" onclick="toggleExp(9)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep9">
+      <span class="ans-label">✓ 正解：⓪　キャッチコピー（左上）→ 本文（中央）→ 入部ボタン（右下）</span>
+      <p>Webページの視線は「左上 → 右上 → 左下 → 右下」の順に移動します。「キャッチコピー → 本文 → 入部ボタン」の順にユーザが見るようにするには，この視線の流れに沿って配置する必要があります。</p>
+      <p>⓪のレイアウトは，キャッチコピーを左上，本文を中央（左上〜右下を覆う），入部ボタンを右下に配置しており，視線の流れ（左上→中央→右下）に自然に沿っています。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　左上（キャッチコピー）→中央（本文）→右下（入部ボタン）で視線の流れに沿う。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">①〜③ 誤り</span>　視線の流れと「キャッチコピー→本文→入部ボタン」の順序が一致しない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 結果サマリ -->
+<div id="summary">
+  <h2>第1問　完了！</h2>
+  <div class="score-big" id="sum-score"></div>
+  <div class="score-sub" id="sum-pts"></div>
+  <table class="sum-tbl" id="sum-tbl">
+    <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>
+  </table>
+  <button class="btn-retry" onclick="location.reload()">もう一度挑戦する</button>
+</div>
+
+<div style="text-align:center; margin:30px 0;">
+<a href="index.html" style="display:inline-block;background:#2e7d32;color:white;text-decoration:none;padding:10px 24px;border-radius:8px;font-weight:bold;">↑ トップへ戻る</a>
+</div>
+</main>
+
+<script>
+const SYM=['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+const QS=[
+  {qi:0, correct:3, pts:2, label:'問1a（ICT利活用）'},
+  {qi:1, correct:2, pts:3, label:'問1b（情報バリアフリー）'},
+  {qi:2, correct:1, pts:2, label:'問2（ウ）回転グリル'},
+  {qi:3, correct:3, pts:3, label:'問2（エ）グリルの条件'},
+  {qi:4, correct:2, pts:2, label:'問3（オ）2階スイッチ'},
+  {qi:5, correct:0, pts:2, label:'問3（カ）3階スイッチ消灯'},
+  {qi:6, correct:1, pts:2, label:'問3（キ）3階スイッチ点灯'},
+  {qi:7, correct:2, pts:2, label:'問3（ク）真理値表'},
+  {qi:8, correct:0, pts:2, label:'問4（ケ）メトニミー＋メンタルモデル'},
+  {qi:9, correct:0, pts:2, label:'問4（コ）レイアウト'},
+];
+const state={};
+let answeredCount=0;
+function updateHeader(){document.getElementById('hdr-score').textContent=answeredCount+' / '+QS.length+' 問回答済';}
+function sel(qi,ci){
+  if(state['done_'+qi]) return;
+  state['sel_'+qi]=ci;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>b.classList.toggle('selected',i===ci));
+  document.getElementById('ab'+qi).disabled=false;
+}
+function judge(qi){
+  const q=QS.find(x=>x.qi===qi);
+  const chosen=state['sel_'+qi];
+  if(chosen===undefined||state['done_'+qi]) return;
+  state['done_'+qi]=true; state[qi]=chosen;
+  document.getElementById('ab'+qi).disabled=true;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>{
+    b.disabled=true; b.classList.remove('selected');
+    if(i===q.correct) b.classList.add('correct');
+    else if(i===chosen&&chosen!==q.correct) b.classList.add('wrong');
+  });
+  const ok=(chosen===q.correct);
+  const rw=document.getElementById('rw'+qi);
+  const rb=document.getElementById('rb'+qi);
+  rw.classList.add('show'); rb.classList.add(ok?'ok':'ng');
+  document.getElementById('ri'+qi).textContent=ok?'✓':'✗';
+  document.getElementById('rt'+qi).textContent=ok?'正解！':'不正解。正解は '+SYM[q.correct];
+  if(ok) rb.querySelector('.exp-btn').style.opacity='0.5';
+  document.getElementById('qs'+qi).classList.add('answered');
+  answeredCount++; updateHeader();
+  if(answeredCount===QS.length) setTimeout(showSummary,600);
+}
+function toggleExp(qi){
+  const ep=document.getElementById('ep'+qi);
+  const btn=document.querySelector('#rw'+qi+' .exp-btn');
+  const open=ep.classList.toggle('open');
+  btn.textContent=open?'解説を閉じる ▲':'解説を見る ▼';
+}
+function showSummary(){
+  const TOTAL=QS.reduce((a,q)=>a+q.pts,0);
+  let correct=0,pts=0;
+  const rows=QS.map(q=>{
+    const ok=(state[q.qi]===q.correct);
+    if(ok){correct++;pts+=q.pts;}
+    return '<tr><td>'+q.label+'</td><td>'+(state[q.qi]!!==undefined?SYM[state[q.qi]]:'未回答')+'</td><td>'+SYM[q.correct]+'</td><td class="'+(ok?'ok-td':'ng-td')+'">'+(ok?'○':'✗')+'</td><td>'+(ok?q.pts:0)+'/'+q.pts+'</td></tr>';
+  }).join('');
+  document.getElementById('sum-score').textContent=correct+' / '+QS.length+'問';
+  document.getElementById('sum-pts').textContent='獲得点数：'+pts+' / '+TOTAL+'点';
+  document.getElementById('sum-tbl').innerHTML+=rows;
+  const s=document.getElementById('summary');
+  s.style.display='block'; s.scrollIntoView({behavior:'smooth'});
+}
+updateHeader();
+</script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 進研模試 2025年6月｜第2問</title>
+<style>
+:root{
+  --bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--pl:#e8f0fb;
+  --ok:#1a7a4a;--ok-bg:#e6f4ec;--ng:#b91c1c;--ng-bg:#fde8e8;
+  --text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;
+  --radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.8;}
+header{background:var(--primary);color:#fff;padding:12px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:space-between;}
+header h1{font-size:.95rem;font-weight:700;}
+.score-disp{font-size:.82rem;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;white-space:nowrap;}
+main{max-width:800px;margin:0 auto;padding:24px 16px 80px;}
+.mondai-title{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:4px;}
+.mondai-meta{font-size:.82rem;color:var(--muted);margin-bottom:20px;}
+.mondai-bun{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:20px;}
+.mondai-bun h3{font-size:.92rem;font-weight:800;color:var(--primary);border-left:4px solid var(--primary);padding-left:8px;margin-bottom:14px;line-height:1.6;}
+.mondai-bun p{margin-bottom:.75em;}
+.speaker{font-weight:700;}
+.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:.87rem;}
+.tbl th,.tbl td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top;}
+.tbl th{background:var(--pl);font-weight:700;}
+.fig-box{background:#f7f9fc;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.87rem;line-height:1.7;}
+.fig-title{font-weight:700;color:var(--primary);display:block;margin-bottom:5px;}
+.note{font-size:.83rem;color:var(--muted);}
+.tbl-label{font-weight:700;font-size:.88rem;margin:10px 0 4px;display:block;}
+.tbl-row{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0;}
+.tbl-row>*{flex:1;min-width:180px;}
+.section-sep{border:none;border-top:2px dashed var(--border);margin:28px 0;}
+.setsumon{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 20px 16px;margin-bottom:24px;border-left:4px solid var(--border);transition:border-color .2s;}
+.setsumon.answered{border-left-color:var(--primary);}
+.setsumon-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.setsumon-badge{background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+.setsumon-pts{font-size:.72rem;color:var(--muted);}
+.setsumon-q{font-size:.92rem;font-weight:600;margin-bottom:12px;line-height:1.65;}
+.choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.5;transition:border-color .15s,background .15s;width:100%;}
+.choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--pl);}
+.ci{font-weight:700;color:var(--primary);min-width:24px;flex-shrink:0;}
+.choice-btn.selected{border-color:var(--primary);background:var(--pl);}
+.choice-btn.correct{border-color:var(--ok);background:var(--ok-bg);}
+.choice-btn.wrong{border-color:var(--ng);background:var(--ng-bg);}
+.choice-btn:disabled{cursor:default;}
+.answer-row{margin-top:14px;}
+.btn-ans{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.btn-ans:disabled{background:#aaa;cursor:default;}
+.result-wrap{display:none;margin-top:12px;}
+.result-wrap.show{display:block;}
+.result-banner{border-radius:8px;padding:11px 14px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.result-banner.ok{background:var(--ok-bg);color:var(--ok);}
+.result-banner.ng{background:var(--ng-bg);color:var(--ng);}
+.result-icon{font-size:1.2rem;}
+.exp-btn{font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;white-space:nowrap;margin-left:auto;}
+.exp-btn:hover{background:var(--pl);}
+.exp-panel{display:none;margin-top:10px;background:#f7f9fc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:.88rem;line-height:1.8;}
+.exp-panel.open{display:block;}
+.ans-label{background:var(--ok-bg);border-left:4px solid var(--ok);padding:7px 12px;border-radius:4px;margin-bottom:10px;font-weight:700;color:var(--ok);display:block;}
+.exp-panel p{margin-bottom:.6em;}
+.opt-row{margin:5px 0;padding:6px 10px;background:#fff;border-radius:6px;font-size:.86rem;}
+.opt-row.ok-opt{border-left:3px solid var(--ok);}
+.opt-row.ng-opt{border-left:3px solid var(--ng);}
+.lbl-ok{color:var(--ok);font-weight:700;}
+.lbl-ng{color:var(--ng);font-weight:700;}
+#summary{display:none;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 24px;text-align:center;margin-top:16px;}
+#summary h2{font-size:1.3rem;color:var(--primary);margin-bottom:8px;}
+.score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+.score-sub{color:var(--muted);margin-top:4px;font-size:.9rem;}
+.sum-tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:.87rem;}
+.sum-tbl th,.sum-tbl td{border:1px solid var(--border);padding:6px 10px;text-align:center;}
+.sum-tbl th{background:var(--pl);font-weight:700;}
+.sum-tbl td.ok-td{color:var(--ok);font-weight:700;}
+.sum-tbl td.ng-td{color:var(--ng);font-weight:700;}
+.btn-retry{margin-top:20px;background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:10px 24px;font-size:.9rem;font-weight:700;cursor:pointer;}
+.btn-retry:hover{background:var(--pl);}
+@media(max-width:540px){.mondai-bun,.setsumon{padding:16px 13px;}.choice-btn{font-size:.84rem;}.score-big{font-size:2.2rem;}.tbl{font-size:.8rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{
+    max-width:800px;
+    margin:14px auto;
+    padding:0 16px;
+    text-align:left;
+  }
+  .back-to-index-wrap.bottom{
+    margin:28px auto 36px;
+    text-align:center;
+  }
+  .back-to-index-btn{
+    display:inline-block;
+    background:var(--primary,#1a56a0);
+    color:#fff;
+    text-decoration:none;
+    padding:8px 18px;
+    border-radius:8px;
+    font-weight:700;
+    font-size:.88rem;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+  }
+  .back-to-index-btn:hover{
+    background:#154080;
+  }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>情報Ⅰ 進研模試 2025年6月 ｜ 第2問（配点30点）</h1>
+  <div class="score-disp" id="hdr-score">0 / 12 問回答済</div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main>
+<div class="mondai-title">第2問　次の問い（A・B）に答えよ。</div>
+<div class="mondai-meta">配点 30点</div>
+
+<!-- ===== A 問題文 ===== -->
+<div class="mondai-bun">
+  <h3>A　ユイさんの通う高校では，日常生活で利用するモノをより便利にするアイデアを，縦横それぞれ200ピクセル・24ビットカラーの画像で表現する授業が行われており，来週の授業では，その制作意図をプレゼンテーションすることになっている。ユイさんが考えたアイデアについて，授業中のユイさんと先生の会話文を読み，後の問い（問1〜5）に答えよ。</h3>
+  <p><span class="speaker">ユイ：</span>先生，この前の授業で考えたアイデアについて質問があるのですが，お聞きしてもいいですか？</p>
+  <p><span class="speaker">先生：</span>はい。ペンにストップウォッチ機能を搭載し，計測した時間をスマートフォンのアプリケーションに勉強時間として記録するアイデア（図1）でしたね。データ処理の設計を取り入れた，レベルの高い斬新なアイデアなので，ほかの誰も考えついていないものかどうか，特許庁が管轄する<u>₍ₐ₎知的財産権</u>を調べてもよいかもしれません。</p>
+  <div class="fig-box">
+    <span class="fig-title">図1　ユイさんが考えたアイデアのイメージ</span>
+    ペンの側面にストップウォッチの表示（45:17）→ スマートフォンアプリに「勉強時間　○月△日　45:17」と記録される。<br>
+    ファイル名：design1417.bmp　　ファイルサイズ：約 <b>【イ】</b> KB
+  </div>
+  <p><span class="speaker">ユイ：</span>授業が終わったら調べてみます！　それで保存したときに気づいたのですが，ファイルのデータ量が以前授業で習った方法で計算したデータ量と少し違うんです。</p>
+  <p><span class="speaker">先生：</span>その計算式はどういうものだったか覚えていますか？</p>
+  <p><span class="speaker">ユイ：</span>「画像を構成する総ピクセル数×色情報ビット数」で計算できたと思います。ファイルの拡張子を無圧縮のbmpにしたので，データ量は削減されていないはずです。あと，フルカラーの24ビットはバイトに変換したので，間違ってはいないと思うのですが…。</p>
+  <p><span class="speaker">先生：</span><u>₍ᵦ₎圧縮される形式</u>ではないので理論的には計算式どおりのデータ量になるはずですね。ただ，補助単位はどのように処理したのでしょう。SIとよばれる国際単位系ではkを10³と定めていますが，コンピュータの中でデジタル化されたデータではKに対して2¹⁰（＝1024）が用いられることがあります。</p>
+  <p><span class="speaker">ユイ：</span>確かに1024で計算するとデータ量は約<b>【イ】</b>KBになり，ファイルサイズの表記とぴったり合います！</p>
+  <p><span class="speaker">先生：</span>疑問が解決してよかったです。それと提出する画像のファイル形式は，色を劣化させることのない可逆圧縮の <b>【ウ】</b> に変えておいてくださいね。</p>
+  <p><span class="speaker">ユイ：</span>忘れていました。後でなおしておきます。</p>
+  <p><span class="speaker">先生：</span>いよいよ来週はアイデアのプレゼンテーションですね。スライドの準備は進んでいますか？</p>
+  <p><span class="speaker">ユイ：</span>はい，順調です。<u>₍꜀₎プレゼンテーションで気をつけるところ</u>もしっかり考えて発表がんばります！</p>
+</div>
+
+<!-- A-問1 -->
+<div class="setsumon" id="qs0">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問1</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">下線部(a)について，知的財産権のうちの産業財産権は次の4種類に分けられる。図1に示されたユイさんのアイデアが，ほかの誰も考えたことのないアイデアの場合，このアイデアに対する権利はどれに相当すると考えられるか。最も適当なものを，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch0">
+    <button class="choice-btn" onclick="sel(0,0)"><span class="ci">⓪</span><span>特許権（プログラムやシステム等を含む新規かつ高度な発明を保護する。）</span></button>
+    <button class="choice-btn" onclick="sel(0,1)"><span class="ci">①</span><span>実用新案権（実用的な物品の形状や構造を対象とした考案を保護する。）</span></button>
+    <button class="choice-btn" onclick="sel(0,2)"><span class="ci">②</span><span>意匠権（物品の独創的な形状や色彩などの外観デザインを保護する。）</span></button>
+    <button class="choice-btn" onclick="sel(0,3)"><span class="ci">③</span><span>商標権（商品やサービスに使用されるロゴやマークを保護する。）</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab0" onclick="judge(0)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw0">
+    <div class="result-banner" id="rb0"><span class="result-icon" id="ri0"></span><span id="rt0"></span><button class="exp-btn" onclick="toggleExp(0)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep0">
+      <span class="ans-label">✓ 正解：⓪　特許権</span>
+      <p>先生の発言「データ処理の設計を取り入れた，レベルの高い斬新なアイデア」から，プログラムやシステム等を含む新規かつ高度な発明に当たります。よって<b>特許権</b>が該当します。デザインやマークではないため意匠権・商標権には当てはまらず，単なる物品の形状でもないため実用新案権でもありません。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　データ処理を含む高度な発明 → 特許権。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　実用新案権は物品の形状・構造の考案を保護。プログラムには非該当。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　意匠権は外観デザインを保護。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　商標権はロゴやマークを保護。</div>
+    </div>
+  </div>
+</div>
+
+<!-- A-問2 -->
+<div class="setsumon" id="qs1">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問2</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">会話文中の空欄 <b>【イ】</b> に入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。ただし，図1下の空欄【イ】には，会話文中の【イ】と同じものが入る。<br><span class="note">（画像仕様：縦200×横200ピクセル，24ビットカラー，無圧縮bmp。1KB＝1024バイトで計算）</span></div>
+  <div class="choices" id="ch1">
+    <button class="choice-btn" onclick="sel(1,0)"><span class="ci">⓪</span><span>4.7</span></button>
+    <button class="choice-btn" onclick="sel(1,1)"><span class="ci">①</span><span>14.6</span></button>
+    <button class="choice-btn" onclick="sel(1,2)"><span class="ci">②</span><span>117.2</span></button>
+    <button class="choice-btn" onclick="sel(1,3)"><span class="ci">③</span><span>937.5</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab1" onclick="judge(1)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw1">
+    <div class="result-banner" id="rb1"><span class="result-icon" id="ri1"></span><span id="rt1"></span><button class="exp-btn" onclick="toggleExp(1)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep1">
+      <span class="ans-label">✓ 正解：②　117.2</span>
+      <p>計算手順：<br>
+      ① 総ピクセル数 = 200 × 200 = 40,000<br>
+      ② 24ビットカラー → 24ビット ÷ 8 = 3バイト / ピクセル<br>
+      ③ 総バイト数 = 40,000 × 3 = 120,000 バイト<br>
+      ④ KB変換（1K=1024） = 120,000 ÷ 1024 ≒ <b>117.1875 ≒ 117.2 KB</b></p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪① 誤り</span>　計算が合わない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">② 正しい</span>　200×200×24÷8÷1024 ≒ 117.2 KB。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　1024ではなく1000で割った場合などの誤計算。</div>
+    </div>
+  </div>
+</div>
+
+<!-- A-問3 -->
+<div class="setsumon" id="qs2">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問3</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">会話文中の空欄 <b>【ウ】</b> に入れるファイル形式とその説明として最も適当なものを，次の⓪〜③のうちから一つ選べ。<br><span class="note">（条件：色を劣化させることのない「可逆圧縮」の画像ファイル形式）</span></div>
+  <div class="choices" id="ch2">
+    <button class="choice-btn" onclick="sel(2,0)"><span class="ci">⓪</span><span>png：元データを再現することができる，24ビットカラーの圧縮画像ファイル形式</span></button>
+    <button class="choice-btn" onclick="sel(2,1)"><span class="ci">①</span><span>gif：元データを再現することができる，色数を256色に絞った圧縮画像ファイル形式</span></button>
+    <button class="choice-btn" onclick="sel(2,2)"><span class="ci">②</span><span>jpg：一部のデータを間引いた，24ビットカラーの圧縮画像ファイル形式</span></button>
+    <button class="choice-btn" onclick="sel(2,3)"><span class="ci">③</span><span>mp3：一部のデータを間引いた，一般的なビットレートの圧縮音声ファイル形式</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab2" onclick="judge(2)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw2">
+    <div class="result-banner" id="rb2"><span class="result-icon" id="ri2"></span><span id="rt2"></span><button class="exp-btn" onclick="toggleExp(2)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep2">
+      <span class="ans-label">✓ 正解：⓪　png（可逆圧縮・24ビットカラー）</span>
+      <p>条件は「可逆圧縮（色を劣化させない）」かつ「24ビットカラー」。pngはこの両方を満たします。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　png：可逆圧縮・24ビットカラー対応。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　gif：可逆圧縮だが256色に制限されるため，24ビットカラー画像では色が劣化する可能性がある。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　jpg：非可逆圧縮でデータを間引くため色が劣化する。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　mp3は音声ファイル形式であり画像ではない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- A-問4 問題文 -->
+<div class="mondai-bun">
+  <h3>問4　下線部(b)について，次の文章を読み，空欄【エ】，【キ】【ク】に当てはまる数字をマークせよ。また，空欄【オ】・【カ】に入れるのに最も適当なものを，後の⓪〜⑤のうちからそれぞれ一つずつ選べ。</h3>
+  <p>データ量の圧縮方法の一つとして，データの中に同じデータが1回以上並んで現れた場合，その個数をデータの直後に付加し「文字，回数」というデータに置き換える<b>ランレングス圧縮</b>がある。</p>
+  <p>例えば，「○×××△△△□□」の文字列をランレングス圧縮すると「○1×3△3□2」と置き換えられる。このとき，「○×△□」や数字をそれぞれ1文字分のデータ量と考えると，結果的に <b>【エ】</b> 文字分のデータ量を減らすことができる。しかし，データによっては，ランレングス圧縮を行ったことで逆にデータ量が大きくなってしまうこともある。</p>
+  <p>次の⓪〜⑤の文字列をランレングス圧縮したとき，圧縮前と圧縮後のデータ量に変化がないのは <b>【オ】</b> の文字列である。また，圧縮前と圧縮後のデータ量に一番大きな差が出るのは <b>【カ】</b> の文字列であり，結果的に <b>【キ】【ク】</b> 文字分のデータ量の差が出る。</p>
+  <table class="tbl">
+    <tr><th style="width:3em;text-align:center;">記号</th><th>文字列（各24文字）</th></tr>
+    <tr><td style="text-align:center;">⓪</td><td>○○○×××△△△□□□○○○×××△△△□□□</td></tr>
+    <tr><td style="text-align:center;">①</td><td>○×△□○×△□○×△□○×△□○×△□○×△□</td></tr>
+    <tr><td style="text-align:center;">②</td><td>△△△△△△○○○○○○△△△△△△○○○○○○</td></tr>
+    <tr><td style="text-align:center;">③</td><td>○×△□□□□□□□□□○×△□□□□□□□□□</td></tr>
+    <tr><td style="text-align:center;">④</td><td>××××××△□○○○○○××××××△□○○○○○</td></tr>
+    <tr><td style="text-align:center;">⑤</td><td>○○○×△□□□□○×××△△△□□○×△△□□</td></tr>
+  </table>
+</div>
+
+<!-- A-問4(エ) -->
+<div class="setsumon" id="qs3">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問4（エ）</span><span class="setsumon-pts">1点</span></div>
+  <div class="setsumon-q">「○×××△△△□□」をランレングス圧縮したとき，減らすことができるデータ量 <b>【エ】</b> は何文字分か。当てはまる数字を選べ。</div>
+  <div class="choices" id="ch3">
+    <button class="choice-btn" onclick="sel(3,0)"><span class="ci">⓪</span><span>0文字</span></button>
+    <button class="choice-btn" onclick="sel(3,1)"><span class="ci">①</span><span>1文字</span></button>
+    <button class="choice-btn" onclick="sel(3,2)"><span class="ci">②</span><span>2文字</span></button>
+    <button class="choice-btn" onclick="sel(3,3)"><span class="ci">③</span><span>3文字</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab3" onclick="judge(3)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw3">
+    <div class="result-banner" id="rb3"><span class="result-icon" id="ri3"></span><span id="rt3"></span><button class="exp-btn" onclick="toggleExp(3)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep3">
+      <span class="ans-label">✓ 正解：①　1文字</span>
+      <p>元データ「○×××△△△□□」＝9文字。<br>
+      圧縮後「○1×3△3□2」＝8文字（○×△□や数字を各1文字と数える）。<br>
+      9 − 8 ＝ <b>1文字</b>削減。</p>
+    </div>
+  </div>
+</div>
+
+<!-- A-問4(オ) -->
+<div class="setsumon" id="qs4">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問4（オ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">圧縮前と圧縮後のデータ量に<b>変化がない</b>文字列 <b>【オ】</b> を，上の表の⓪〜⑤から選べ。</div>
+  <div class="choices" id="ch4">
+    <button class="choice-btn" onclick="sel(4,0)"><span class="ci">⓪</span><span>○○○×××△△△□□□○○○×××△△△□□□</span></button>
+    <button class="choice-btn" onclick="sel(4,1)"><span class="ci">①</span><span>○×△□○×△□○×△□○×△□○×△□○×△□</span></button>
+    <button class="choice-btn" onclick="sel(4,2)"><span class="ci">②</span><span>△△△△△△○○○○○○△△△△△△○○○○○○</span></button>
+    <button class="choice-btn" onclick="sel(4,3)"><span class="ci">③</span><span>○×△□□□□□□□□□○×△□□□□□□□□□</span></button>
+    <button class="choice-btn" onclick="sel(4,4)"><span class="ci">④</span><span>××××××△□○○○○○××××××△□○○○○○</span></button>
+    <button class="choice-btn" onclick="sel(4,5)"><span class="ci">⑤</span><span>○○○×△□□□□○×××△△△□□○×△△□□</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab4" onclick="judge(4)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw4">
+    <div class="result-banner" id="rb4"><span class="result-icon" id="ri4"></span><span id="rt4"></span><button class="exp-btn" onclick="toggleExp(4)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep4">
+      <span class="ans-label">✓ 正解：⑤　○○○×△□□□□○×××△△△□□○×△△□□</span>
+      <p>各文字列の圧縮後文字数を計算します：<br>
+      ⓪ ○3×3△3□3○3×3△3□3 → 16文字（元24→8削減）<br>
+      ① ○1×1△1□1○1×1△1□1…×6 → 48文字（元24→24増加）<br>
+      ② △6○6△6○6 → 8文字（元24→16削減）<br>
+      ③ ○1×1△1□9○1×1△1□9 → 16文字（元24→8削減）<br>
+      ④ ×6△1□1○5×6△1□1○5 → 16文字（元24→8削減）<br>
+      <b>⑤ ○3×1△1□5○1×3△3□2○1×1△2□2 → 24文字（元24→変化なし）</b></p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⑤ 正しい</span>　圧縮後も24文字で変化なし。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪②③④ 誤り</span>　圧縮でデータ量が削減される。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　圧縮後に逆に増加する（1文字ずつ異なるため）。</div>
+    </div>
+  </div>
+</div>
+
+<!-- A-問4(カ) -->
+<div class="setsumon" id="qs5">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問4（カ）</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">圧縮前と圧縮後のデータ量の差が<b>一番大きい</b>文字列 <b>【カ】</b> を，上の表の⓪〜⑤から選べ。なお，その差は <b>【キ】【ク】</b> 文字分となる。</div>
+  <div class="choices" id="ch5">
+    <button class="choice-btn" onclick="sel(5,0)"><span class="ci">⓪</span><span>○○○×××△△△□□□○○○×××△△△□□□</span></button>
+    <button class="choice-btn" onclick="sel(5,1)"><span class="ci">①</span><span>○×△□○×△□○×△□○×△□○×△□○×△□</span></button>
+    <button class="choice-btn" onclick="sel(5,2)"><span class="ci">②</span><span>△△△△△△○○○○○○△△△△△△○○○○○○</span></button>
+    <button class="choice-btn" onclick="sel(5,3)"><span class="ci">③</span><span>○×△□□□□□□□□□○×△□□□□□□□□□</span></button>
+    <button class="choice-btn" onclick="sel(5,4)"><span class="ci">④</span><span>××××××△□○○○○○××××××△□○○○○○</span></button>
+    <button class="choice-btn" onclick="sel(5,5)"><span class="ci">⑤</span><span>○○○×△□□□□○×××△△△□□○×△△□□</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab5" onclick="judge(5)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw5">
+    <div class="result-banner" id="rb5"><span class="result-icon" id="ri5"></span><span id="rt5"></span><button class="exp-btn" onclick="toggleExp(5)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep5">
+      <span class="ans-label">✓ 正解：①（差24文字が最大）→ 【キ】【ク】＝24</span>
+      <p>各文字列の差（絶対値）：⓪:8，<b>①:24（最大）</b>，②:16，③:8，④:8，⑤:0<br>
+      ①は1文字ずつ異なる（○×△□が繰り返す）ため，圧縮すると「○1×1△1□1…」と全文字に「1」が付き，元24文字→圧縮後48文字となり，差が24文字で最大。<br>
+      よって<b>【キ】＝2，【ク】＝4</b>。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">① 正しい</span>　全文字が1文字ずつ異なるため圧縮後に24文字増加→差が最大。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　差は16文字。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪③④ 誤り</span>　差は8文字。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⑤ 誤り</span>　変化なし（差0）。</div>
+    </div>
+  </div>
+</div>
+
+<!-- A-問5 -->
+<div class="setsumon" id="qs6">
+  <div class="setsumon-head"><span class="setsumon-badge">A 問5</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">下線部(c)について，次のあ〜えの記述のうち，効果的なプレゼンテーションを実施するための有効なデザインや発表の心構えとして<b>適当でないもの</b>をすべて選んだ組合せを，後の⓪〜ⓐのうちから一つ選べ。<br><br>
+  <b>あ</b>　視認性向上のため，1枚のスライド内で使用する文字と背景を同じような色や明るさで統一する。<br>
+  <b>い</b>　話の流れを理解しやすくするため，スライドを「導入・展開・まとめ」の流れで整理する。<br>
+  <b>う</b>　可読性向上のため，スライドに解説したい事柄の詳細を記述するようにする。<br>
+  <b>え</b>　聞き手に誤解を与えないようにするため，印刷した原稿に常に目を向けながら発表する。</div>
+  <div class="choices" id="ch6">
+    <button class="choice-btn" onclick="sel(6,0)"><span class="ci">⓪</span><span>あ，い</span></button>
+    <button class="choice-btn" onclick="sel(6,1)"><span class="ci">①</span><span>あ，う</span></button>
+    <button class="choice-btn" onclick="sel(6,2)"><span class="ci">②</span><span>あ，え</span></button>
+    <button class="choice-btn" onclick="sel(6,3)"><span class="ci">③</span><span>い，う</span></button>
+    <button class="choice-btn" onclick="sel(6,4)"><span class="ci">④</span><span>い，え</span></button>
+    <button class="choice-btn" onclick="sel(6,5)"><span class="ci">⑤</span><span>う，え</span></button>
+    <button class="choice-btn" onclick="sel(6,6)"><span class="ci">⑥</span><span>あ，い，う</span></button>
+    <button class="choice-btn" onclick="sel(6,7)"><span class="ci">⑦</span><span>あ，い，え</span></button>
+    <button class="choice-btn" onclick="sel(6,8)"><span class="ci">⑧</span><span>あ，う，え</span></button>
+    <button class="choice-btn" onclick="sel(6,9)"><span class="ci">⑨</span><span>い，う，え</span></button>
+    <button class="choice-btn" onclick="sel(6,10)"><span class="ci">ⓐ</span><span>あ，い，う，え</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab6" onclick="judge(6)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw6">
+    <div class="result-banner" id="rb6"><span class="result-icon" id="ri6"></span><span id="rt6"></span><button class="exp-btn" onclick="toggleExp(6)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep6">
+      <span class="ans-label">✓ 正解：⑧　あ，う，え</span>
+      <p><b>あ：不適当</b>　文字と背景を同じような色・明るさにすると文字が読みにくくなる（視認性が下がる）。<br>
+      <b>い：適当</b>　「導入・展開・まとめ」の構成は話の流れを理解しやすくする有効な方法。<br>
+      <b>う：不適当</b>　スライドに詳細を書きすぎると情報量が増えて視覚的負担が増し，内容が把握しにくくなる。<br>
+      <b>え：不適当</b>　原稿に常に目を向けると聴衆とのアイコンタクトが減り，聴衆の反応を把握しにくくなる。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">い：適当</span>　正しい発表構成であり，不適当ではない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">あ・う・え：不適当</span>　この3つが適当でない記述。</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- ===== B 問題文 ===== -->
+<div class="mondai-bun">
+  <h3>B　次の文章を読み，後の問い（問1〜5）に答えよ。</h3>
+  <p>あるコンビニエンスストアチェーンでは，<u>₍ₐ₎POSシステム（販売時点情報管理システム）</u>を用いて，商品情報や客ごとの売上情報が管理されている。売上情報には，どのような人が，どの時間帯に，どの店舗で，どの商品を購入したかといったデータが含まれている。収集したデータは集中管理するシステムに<u>₍ᵦ₎即時送信され適切に処理された後</u>，様々な場面で活用されている。</p>
+  <p>POSシステムで収集したデータの管理方法には様々なものがあるが，表形式でデータを管理するリレーショナルデータベースが一般的である。</p>
+  <p>表1は，POSシステムが収集した売上情報のリレーショナルデータベースの一部である。例えば，売上IDが3の行は，緑丘店で2025年6月2日の15時46分に1個250円の極上チョコロールが2個買われ，アプリケーションの会員コードが読み取られて精算が終わった売上情報であることを示している。このようにリレーショナルデータベースは，複数の属性を列（フィールド），データを行（レコード）に配置した表（テーブル）で示され，各テーブルには数多くのデータの中からレコードを一意に特定するためのフィールド（表1では「売上ID」）が必ず設けられる。</p>
+  <span class="tbl-label">表1　売上情報のリレーショナルデータベースの一部</span>
+  <table class="tbl" style="font-size:.84rem;">
+    <tr><th>売上ID</th><th>店舗名</th><th>日時</th><th>商品名</th><th>単価(円)</th><th>数量</th><th>合計金額(円)</th><th>アプリ</th></tr>
+    <tr><td>1</td><td>青空店</td><td>2025/6/1 12:32</td><td>じゅわっとモモ唐</td><td>200</td><td>1</td><td>200</td><td>あり</td></tr>
+    <tr><td>2</td><td>桜川店</td><td>2025/6/1 13:40</td><td>あっさりスナック</td><td>30</td><td>3</td><td>90</td><td>なし</td></tr>
+    <tr><td>3</td><td>緑丘店</td><td>2025/6/2 15:46</td><td>極上チョコロール</td><td>250</td><td>2</td><td>500</td><td>あり</td></tr>
+    <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+  </table>
+  <p>リレーショナルデータベースを構築するうえで必須となる考え方が，データを活用しやすいように一定のルールに基づいてデータを整理する<u>₍꜀₎正規化</u>である。正規化を行うことで，データの編集や更新の手間を最小限におさえ，データの整合性を保つことができる。</p>
+  <p>表2は，このコンビニエンスストアが展開しているアプリケーションに登録された10万人分の会員情報のリレーショナルデータベースの一部である。会員登録規則として，作成できるアカウントは一人につき1アカウントのみに制限されており，電話番号を用いて本人確認をしている。また，登録時には300ある店舗の中から必ず一つの「マイ店舗」を設定する必要があり，「マイ店舗」を設定するとその店舗だけで使用できるクーポンが毎週送られてくるようになっている。さらに，年間の購入金額ごとに4段階の会員ランクが設定され，会員ランクごとに値引きなどの異なる特典がつく。なお，このコンビニエンスストアに同じ店舗名の店は複数存在しないものとする。</p>
+  <span class="tbl-label">表2　アプリケーションに登録された会員情報のリレーショナルデータベースの一部</span>
+  <table class="tbl" style="font-size:.84rem;">
+    <tr><th>会員ID</th><th>会員名</th><th>電話番号</th><th>マイ店舗</th><th>会員ランク</th></tr>
+    <tr><td>000001</td><td>一田カレン</td><td>12-345-67</td><td>青空店</td><td>ゴールド</td></tr>
+    <tr><td>000002</td><td>二村フミヤ</td><td>98-765-43</td><td>緑丘店</td><td>一般</td></tr>
+    <tr><td>000003</td><td>三河ケンタ</td><td>13-579-00</td><td>桜川店</td><td>シルバー</td></tr>
+    <tr><td>000004</td><td>四藤アヤナ</td><td>24-680-01</td><td>青空店</td><td>一般</td></tr>
+    <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+  </table>
+</div>
+
+<!-- B-問1 -->
+<div class="setsumon" id="qs7">
+  <div class="setsumon-head"><span class="setsumon-badge">B 問1</span><span class="setsumon-pts">2点</span></div>
+  <div class="setsumon-q">下線部(a)について，コンビニエンスストアにPOSシステムを導入することで可能になると考えられることについて述べた文として<b>適当でないもの</b>を，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch7">
+    <button class="choice-btn" onclick="sel(7,0)"><span class="ci">⓪</span><span>リアルタイムでの在庫管理を行うことで，不足している商品を適切なタイミングで補充することができる。</span></button>
+    <button class="choice-btn" onclick="sel(7,1)"><span class="ci">①</span><span>店舗で売れ残っている商品を自動で廃棄することで，新商品の売り場を迅速につくることができる。</span></button>
+    <button class="choice-btn" onclick="sel(7,2)"><span class="ci">②</span><span>販売した商品や客の情報を分析することで，売れる傾向にある商品を店舗に並べることができる。</span></button>
+    <button class="choice-btn" onclick="sel(7,3)"><span class="ci">③</span><span>店舗別の売上情報を本部で一括管理することで，地域に応じたキャンペーンを展開することができる。</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab7" onclick="judge(7)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw7">
+    <div class="result-banner" id="rb7"><span class="result-icon" id="ri7"></span><span id="rt7"></span><button class="exp-btn" onclick="toggleExp(7)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep7">
+      <span class="ans-label">✓ 正解：①（適当でない）</span>
+      <p>POSシステムは商品情報や売上情報を管理するシステムですが，「商品の自動廃棄」はPOSシステムの機能ではありません。廃棄は人間が判断して行う作業です。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 不適当（正解）</span>　商品の自動廃棄はPOSシステムの機能ではない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪②③ 適当</span>　いずれもPOSデータの活用として正しい記述。</div>
+    </div>
+  </div>
+</div>
+
+<!-- B-問2 -->
+<div class="setsumon" id="qs8">
+  <div class="setsumon-head"><span class="setsumon-badge">B 問2</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">下線部(b)について，情報システムにおいて，対象のデータが発生すると同時に速やかに処理を行う方式は<b>リアルタイム処理</b>とよばれる。一方，一定期間ごとに蓄積されたデータをまとめて一括で処理する方式は<b>バッチ処理</b>とよばれる。バッチ処理が用いられている記述として最も適当なものを，次の⓪〜③のうちから一つ選べ。</div>
+  <div class="choices" id="ch8">
+    <button class="choice-btn" onclick="sel(8,0)"><span class="ci">⓪</span><span>各家庭の30分間ごとの電気使用量を，ネットワークに接続された電気メータを通じてシステムに集約して，1か月ごとの電気料金を計算する処理</span></button>
+    <button class="choice-btn" onclick="sel(8,1)"><span class="ci">①</span><span>動画投稿サイトでネットワークを経由して動画を視聴する際に，データを受信しながら同時に再生を行えるようにする処理</span></button>
+    <button class="choice-btn" onclick="sel(8,2)"><span class="ci">②</span><span>気象レーダーで30秒ごとに観測された情報を，みやすく加工したうえでその都度素早く配信するアプリケーションの処理</span></button>
+    <button class="choice-btn" onclick="sel(8,3)"><span class="ci">③</span><span>利用した飲食店での料金の支払いにおいて，支払いと同時にひも付けられた銀行口座から引き落としが実行されるカードの処理</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab8" onclick="judge(8)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw8">
+    <div class="result-banner" id="rb8"><span class="result-icon" id="ri8"></span><span id="rt8"></span><button class="exp-btn" onclick="toggleExp(8)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep8">
+      <span class="ans-label">✓ 正解：⓪（1か月ごとにまとめて計算）</span>
+      <p>バッチ処理＝「一定期間ごとに蓄積されたデータをまとめて一括で処理」する方式です。⓪は30分ごとのデータを集め，<b>1か月ごと</b>にまとめて電気料金を計算→バッチ処理。①②③はいずれもデータが発生したその都度処理している→リアルタイム処理。</p>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⓪ 正しい</span>　データを蓄積して1か月単位でまとめて処理→バッチ処理。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">①②③ 誤り</span>　その都度処理→リアルタイム処理。</div>
+    </div>
+  </div>
+</div>
+
+<!-- B-問3 -->
+<div class="setsumon" id="qs9">
+  <div class="setsumon-head"><span class="setsumon-badge">B 問3</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">表1のようなリレーショナルデータベースを構築するときの注意点を述べた文として最も適当なものを，次の⓪〜⑤のうちから一つ選べ。</div>
+  <div class="choices" id="ch9">
+    <button class="choice-btn" onclick="sel(9,0)"><span class="ci">⓪</span><span>「商品名」フィールドのデータは，アルファベットや数字が含まれないようにしなければならない。</span></button>
+    <button class="choice-btn" onclick="sel(9,1)"><span class="ci">①</span><span>「日時」フィールドのデータは，和暦と西暦のどちらでも入力できるようにしなければならない。</span></button>
+    <button class="choice-btn" onclick="sel(9,2)"><span class="ci">②</span><span>「店舗名」フィールドのデータは，3文字以内で入力できるようにしなければならない。</span></button>
+    <button class="choice-btn" onclick="sel(9,3)"><span class="ci">③</span><span>「アプリケーション」フィールドのデータは，「あり」「なし」以外のデータも入力できるようにしなければならない。</span></button>
+    <button class="choice-btn" onclick="sel(9,4)"><span class="ci">④</span><span>「売上ID」フィールドのデータは，同じ値が存在しないようにしなければならない。</span></button>
+    <button class="choice-btn" onclick="sel(9,5)"><span class="ci">⑤</span><span>「数量」フィールドのデータは，0も入力できるようにしなければならない。</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab9" onclick="judge(9)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw9">
+    <div class="result-banner" id="rb9"><span class="result-icon" id="ri9"></span><span id="rt9"></span><button class="exp-btn" onclick="toggleExp(9)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep9">
+      <span class="ans-label">✓ 正解：④（売上IDは同じ値が存在してはならない）</span>
+      <p>問題文に「各テーブルには数多くのデータの中からレコードを一意に特定するためのフィールド（表1では「売上ID」）が必ず設けられる」とあります。一意に特定するためには，そのフィールドに<b>同じ値が存在してはならない</b>という制約が必要です。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　商品名にアルファベットや数字が含まれることはありうる。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　日時は統一して管理すべきで，両方対応の必要はない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　3文字以内に制限する根拠はない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">③ 誤り</span>　「あり」「なし」以外の値を許す必要はない。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">④ 正しい</span>　主キー（売上ID）は一意でなければならない。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⑤ 誤り</span>　数量0の販売は記録する意味がない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- B-問4 -->
+<div class="setsumon" id="qs10">
+  <div class="setsumon-head"><span class="setsumon-badge">B 問4</span><span class="setsumon-pts">3点</span></div>
+  <div class="setsumon-q">下線部(c)について，リレーショナルデータベースの正規化は何段階かの手順に分けて行う必要があるが，表1において必要な最初の手順は<b>ほかのフィールドのデータから算出できるようなフィールドを削除すること</b>である。表1のリレーショナルデータベースのうち，この正規化の手順で削除されるフィールドはどれか。次の⓪〜⑦のうちから一つ選べ。</div>
+  <div class="choices" id="ch10">
+    <button class="choice-btn" onclick="sel(10,0)"><span class="ci">⓪</span><span>売上ID</span></button>
+    <button class="choice-btn" onclick="sel(10,1)"><span class="ci">①</span><span>店舗名</span></button>
+    <button class="choice-btn" onclick="sel(10,2)"><span class="ci">②</span><span>日時</span></button>
+    <button class="choice-btn" onclick="sel(10,3)"><span class="ci">③</span><span>商品名</span></button>
+    <button class="choice-btn" onclick="sel(10,4)"><span class="ci">④</span><span>単価（円）</span></button>
+    <button class="choice-btn" onclick="sel(10,5)"><span class="ci">⑤</span><span>数量</span></button>
+    <button class="choice-btn" onclick="sel(10,6)"><span class="ci">⑥</span><span>合計金額（円）</span></button>
+    <button class="choice-btn" onclick="sel(10,7)"><span class="ci">⑦</span><span>アプリケーション</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab10" onclick="judge(10)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw10">
+    <div class="result-banner" id="rb10"><span class="result-icon" id="ri10"></span><span id="rt10"></span><button class="exp-btn" onclick="toggleExp(10)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep10">
+      <span class="ans-label">✓ 正解：⑥　合計金額（円）</span>
+      <p><b>合計金額（円）＝ 単価（円）× 数量</b> で算出できます。よって「ほかのフィールドから算出できる」フィールドに該当し，正規化の最初の手順で削除されます。他のフィールドは互いに独立した情報です。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪〜⑤⑦ 誤り</span>　これらは他フィールドから算出できない独立した情報。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">⑥ 正しい</span>　合計金額 ＝ 単価 × 数量 で算出可能→削除対象。</div>
+    </div>
+  </div>
+</div>
+
+<!-- B-問5 問題文（表3） -->
+<div class="mondai-bun">
+  <h3>問5　リレーショナルデータベースの正規化を行う過程で，目的に合わせてテーブルが分割される。正規化の結果，表2が表3のように分割されたとき，正規化の利点が最も生かされる状況として最も適当なものを，後の⓪〜④のうちから一つ選べ。</h3>
+  <span class="tbl-label">表3　分割されたテーブル（正規化後）</span>
+  <div class="tbl-row">
+    <div>
+      <table class="tbl" style="font-size:.83rem;">
+        <tr><th>会員ID</th><th>会員名</th><th>電話番号</th><th>マイ店舗ID</th><th>会員ランクID</th></tr>
+        <tr><td>000001</td><td>一田カレン</td><td>12-345-67</td><td>001</td><td>4</td></tr>
+        <tr><td>000002</td><td>二村フミヤ</td><td>98-765-43</td><td>002</td><td>1</td></tr>
+        <tr><td>000003</td><td>三河ケンタ</td><td>13-579-00</td><td>003</td><td>3</td></tr>
+        <tr><td>000004</td><td>四藤アヤナ</td><td>24-680-01</td><td>001</td><td>1</td></tr>
+        <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+      </table>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <table class="tbl" style="font-size:.83rem;">
+        <tr><th>マイ店舗ID</th><th>マイ店舗名</th></tr>
+        <tr><td>001</td><td>青空店</td></tr>
+        <tr><td>002</td><td>緑丘店</td></tr>
+        <tr><td>003</td><td>桜川店</td></tr>
+        <tr><td>…</td><td>…</td></tr>
+      </table>
+      <table class="tbl" style="font-size:.83rem;">
+        <tr><th>会員ランクID</th><th>会員ランク名</th></tr>
+        <tr><td>1</td><td>一般</td></tr>
+        <tr><td>2</td><td>ブロンズ</td></tr>
+        <tr><td>3</td><td>シルバー</td></tr>
+        <tr><td>4</td><td>ゴールド</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- B-問5 -->
+<div class="setsumon" id="qs11">
+  <div class="setsumon-head"><span class="setsumon-badge">B 問5</span><span class="setsumon-pts">4点</span></div>
+  <div class="setsumon-q">正規化の利点が最も生かされる状況として最も適当なものを，次の⓪〜④のうちから一つ選べ。</div>
+  <div class="choices" id="ch11">
+    <button class="choice-btn" onclick="sel(11,0)"><span class="ci">⓪</span><span>一田カレンさんの電話番号が「12-345-89」に変更されるとき</span></button>
+    <button class="choice-btn" onclick="sel(11,1)"><span class="ci">①</span><span>会員退会により会員ID「000002」の二村フミヤさんのデータがすべて削除されるとき</span></button>
+    <button class="choice-btn" onclick="sel(11,2)"><span class="ci">②</span><span>新店舗である「黒田店」が新しくマイ店舗に追加されるとき</span></button>
+    <button class="choice-btn" onclick="sel(11,3)"><span class="ci">③</span><span>会員ランク名が「一般」から「レギュラー」に変更されるとき</span></button>
+    <button class="choice-btn" onclick="sel(11,4)"><span class="ci">④</span><span>三河ケンタさんのマイ店舗が「緑丘店」に変更されるとき</span></button>
+  </div>
+  <div class="answer-row"><button class="btn-ans" id="ab11" onclick="judge(11)" disabled>回答する</button></div>
+  <div class="result-wrap" id="rw11">
+    <div class="result-banner" id="rb11"><span class="result-icon" id="ri11"></span><span id="rt11"></span><button class="exp-btn" onclick="toggleExp(11)">解説を見る ▼</button></div>
+    <div class="exp-panel" id="ep11">
+      <span class="ans-label">✓ 正解：③　会員ランク名「一般」→「レギュラー」に変更されるとき</span>
+      <p>正規化の利点は「データの編集や更新の手間を最小限におさえ，データの整合性を保つことができる」ことです。</p>
+      <p>正規化前（表2）では「一般」という値を持つ全レコード（10万人中の多数）をひとつひとつ変更する必要があります。正規化後（表3）では<b>会員ランクテーブルの「一般」という1か所だけを変更</b>すれば全員に反映されます。これが正規化の利点が最も発揮される状況です。</p>
+      <div class="opt-row ng-opt"><span class="lbl-ng">⓪ 誤り</span>　電話番号は個人固有で1レコードのみの変更。正規化の恩恵は小さい。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">① 誤り</span>　退会削除は1件のみ。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">② 誤り</span>　新店舗追加は店舗テーブルへの1行追加のみ。</div>
+      <div class="opt-row ok-opt"><span class="lbl-ok">③ 正しい</span>　多数の会員に影響する変更が1か所の更新で済む→正規化の利点が最大。</div>
+      <div class="opt-row ng-opt"><span class="lbl-ng">④ 誤り</span>　マイ店舗変更は1会員レコードのみの変更。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 結果サマリ -->
+<div id="summary">
+  <h2>第2問　完了！</h2>
+  <div class="score-big" id="sum-score"></div>
+  <div class="score-sub" id="sum-pts"></div>
+  <table class="sum-tbl" id="sum-tbl">
+    <tr><th>設問</th><th>あなたの回答</th><th>正解</th><th>正誤</th><th>得点</th></tr>
+  </table>
+  <button class="btn-retry" onclick="location.reload()">もう一度挑戦する</button>
+</div>
+</main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+
+<script>
+const SYM=['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ','ⓑ'];
+const QS=[
+  {qi:0,  correct:0,  pts:2, label:'A-問1（知的財産権）'},
+  {qi:1,  correct:2,  pts:2, label:'A-問2（ファイルサイズ）'},
+  {qi:2,  correct:0,  pts:2, label:'A-問3（ファイル形式）'},
+  {qi:3,  correct:1,  pts:1, label:'A-問4（エ）'},
+  {qi:4,  correct:5,  pts:2, label:'A-問4（オ）'},
+  {qi:5,  correct:1,  pts:2, label:'A-問4（カ）'},
+  {qi:6,  correct:8,  pts:2, label:'A-問5（プレゼン）'},
+  {qi:7,  correct:1,  pts:2, label:'B-問1（POS）'},
+  {qi:8,  correct:0,  pts:3, label:'B-問2（バッチ処理）'},
+  {qi:9,  correct:4,  pts:3, label:'B-問3（DB構築）'},
+  {qi:10, correct:6,  pts:3, label:'B-問4（正規化）'},
+  {qi:11, correct:3,  pts:4, label:'B-問5（正規化の利点）'},
+];
+const state={};
+let answeredCount=0;
+
+function updateHeader(){
+  document.getElementById('hdr-score').textContent=
+    answeredCount+' / '+QS.length+' 問回答済';
+}
+function sel(qi,ci){
+  if(state['done_'+qi]) return;
+  state['sel_'+qi]=ci;
+  document.querySelectorAll('#ch'+qi+' .choice-btn')
+    .forEach((b,i)=>b.classList.toggle('selected',i===ci));
+  document.getElementById('ab'+qi).disabled=false;
+}
+function judge(qi){
+  const q=QS.find(x=>x.qi===qi);
+  const chosen=state['sel_'+qi];
+  if(chosen===undefined||state['done_'+qi]) return;
+  state['done_'+qi]=true; state[qi]=chosen;
+  document.getElementById('ab'+qi).disabled=true;
+  document.querySelectorAll('#ch'+qi+' .choice-btn').forEach((b,i)=>{
+    b.disabled=true; b.classList.remove('selected');
+    if(i===q.correct) b.classList.add('correct');
+    else if(i===chosen&&chosen!==q.correct) b.classList.add('wrong');
+  });
+  const ok=(chosen===q.correct);
+  const rw=document.getElementById('rw'+qi);
+  const rb=document.getElementById('rb'+qi);
+  rw.classList.add('show'); rb.classList.add(ok?'ok':'ng');
+  document.getElementById('ri'+qi).textContent=ok?'✓':'✗';
+  document.getElementById('rt'+qi).textContent=
+    ok?'正解！':'不正解。正解は '+SYM[q.correct];
+  if(ok) rb.querySelector('.exp-btn').style.opacity='0.5';
+  document.getElementById('qs'+qi).classList.add('answered');
+  answeredCount++; updateHeader();
+  if(answeredCount===QS.length) setTimeout(showSummary,600);
+}
+function toggleExp(qi){
+  const ep=document.getElementById('ep'+qi);
+  const btn=document.querySelector('#rw'+qi+' .exp-btn');
+  const open=ep.classList.toggle('open');
+  btn.textContent=open?'解説を閉じる ▲':'解説を見る ▼';
+}
+function showSummary(){
+  const TOTAL=QS.reduce((a,q)=>a+q.pts,0);
+  let correct=0,pts=0;
+  const rows=QS.map(q=>{
+    const ok=(state[q.qi]===q.correct);
+    if(ok){correct++;pts+=q.pts;}
+    return '<tr><td>'+q.label+'</td><td>'+(state[q.qi]!==undefined?SYM[state[q.qi]]:'未回答')+'</td><td>'+SYM[q.correct]+'</td><td class="'+(ok?'ok-td':'ng-td')+'">'+(ok?'○':'✗')+'</td><td>'+(ok?q.pts:0)+'/'+q.pts+'</td></tr>';
+  }).join('');
+  document.getElementById('sum-score').textContent=correct+' / '+QS.length+'問';
+  document.getElementById('sum-pts').textContent='獲得点数：'+pts+' / '+TOTAL+'点';
+  document.getElementById('sum-tbl').innerHTML+=rows;
+  const s=document.getElementById('summary');
+  s.style.display='block'; s.scrollIntoView({behavior:'smooth'});
+}
+updateHeader();
+</script>
+</body>
+</html>
