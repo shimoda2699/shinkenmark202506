@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2024年9月｜第3問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .codeblock{background:#1e2a3a;color:#e8f0fb;border-radius:8px;padding:12px 16px;margin:10px 0;font-family:'SFMono-Regular',Consolas,'Courier New',monospace;font-size:.82rem;line-height:1.9;overflow-x:auto;}
+  .codeblock .ln{color:#7ea6d8;margin-right:10px;user-select:none;}
+  .codeblock .hl{background:#3a5a8a;color:#fff;padding:1px 5px;border-radius:3px;}
+  .choice-btn code{font-family:'SFMono-Regular',Consolas,'Courier New',monospace;background:rgba(0,0,0,.05);padding:1px 4px;border-radius:3px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2024年9月（ベネッセ・駿台マーク模試）｜第3問（配点25）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 問1 ─────────
+{
+  title: "問1　次の文章の空欄ア〜エに入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。",
+  context: `
+<p>　J高校のボランティア部では，ある奉仕活動のメンバーとして部員10名のなかから3名を選出することになった。全員が参加を希望したため，話し合いの結果，参加する3名を「くじ」で決めることになり，AさんとBさんが「くじ」のプログラム作成を任された。</p>
+<p>A：ボランティア部には10名の部員がいるから，1から10までの整数からランダムに三つを選んで，対応する部員の名前を表示するプログラムが必要だね。<br>
+B：図1のようにプログラムを考えてみたんだけど，みてくれる？<br>
+A：もちろん。（01）行目の配列Buinが10名の部員を表しているんだね。（02）行目の変数sentakuはメンバーとして選出する人数のこと？<br>
+B：うん，そのとおり。ちなみに，（03）行目の変数iが「0から<span class="blank">ア</span>まで」になっているのは，配列の添字が0から始まるからだよ。<br>
+A：（04）行目の処理がよくわからないな。どういう仕組みで，1から10までの整数からランダムに一つの番号を選んでいるんだい？<br>
+B：（04）行目の「乱数()」は0以上1未満の実数をランダムに選んで返す関数で，まず「乱数()＊<span class="blank">イ</span>」とすることで，0以上<span class="blank">イ</span>未満の実数になるよね。次に「乱数()＊<span class="blank">イ</span>＋1」とすることで，1以上<span class="blank">ウ</span>未満の実数になる。「整数(n)」は実数nの整数部分を返す関数で，最後に「整数(乱数()＊<span class="blank">イ</span>＋1)」とすることで，1以上10以下の整数にしているよ。<br>
+A：なるほど，例えば「整数(5.67)」は「5」になるわけだね。その値を変数bangoに格納して，（05）行目で結果を表示しているんだね。ちょっと試しに実行してみよう。…あれ？「1人目：田中」，「2人目：伊藤」，「3人目：田中」って表示されたけど，田中さんが2回選ばれてしまっているね。<br>
+B：あ，本当だ。同じ部員が複数回選ばれてしまうときがあるね。これはプログラムの修正が必要だね。</p>
+<div class="codeblock">
+<span class="ln">(01)</span> Buin = ["伊藤","加藤","小林","佐藤","鈴木","高橋","田中","中村","山本","渡辺"]<br>
+<span class="ln">(02)</span> sentaku = 3<br>
+<span class="ln">(03)</span> iを0から <span class="hl">ア</span> まで1ずつ増やしながら繰り返す：<br>
+<span class="ln">(04)</span> ｜bango = 整数(乱数() * <span class="hl">イ</span> + 1)<br>
+<span class="ln">(05)</span> ｜表示する(i + 1, "人目：", <span class="hl">エ</span>)
+</div>
+<div class="fig"><div class="fig-cap">図1　10名の部員からランダムに3名を選ぶプログラム（重複あり）</div>
+上記のとおり。空欄ア〜エに入る内容を考える。
+</div>`,
+  items: [
+    {
+      label:"（ア）", points:1, type:"single",
+      qtext:`空欄アに入れるのに最も適当なものを，次の⓪〜②のうちから一つ選べ。`,
+      choices:["sentaku - 1","sentaku","sentaku + 1"],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`Aさんの会話文から，（04）行目は，1から10までの整数からランダムに一つの番号を選ぶ処理であることがわかる。そのため，（03）行目はこの（04）行目の処理を，メンバーを選ぶ回数分繰り返すための処理であると解釈できる。「1人目：田中」のように結果を表示するために，（05）行目でi+1人目：部員の名前の形式で出力するように記述しているので，変数iは，選出する回数を意味するものであると解釈できる。これらを踏まえて，（03）行目をみると，iは最初0が格納されたうえで繰り返しの処理が実行されることから，選出する回数分処理を実行するためには，iを0から「選出する回数−1」回分まで1ずつ増やしながら繰り返す必要がある。この「選出する回数」は（02）行目より変数sentakuに格納されていることがわかるので，正解は⓪「sentaku－1」である。`
+      }
+    },
+    {
+      label:"（イ・ウ）", points:2, type:"choicegroup",
+      qtext:`空欄イ・ウに入れるのに最も適当なものを，次の⓪〜③のうちからそれぞれ一つずつ選べ（同じ選択肢を選んでもよい）。`,
+      blanks:[
+        {label:"イ", choices:["8","9","10","11"], correct:2},
+        {label:"ウ", choices:["8","9","10","11"], correct:3}
+      ],
+      exp:{
+        answer:"イ＝10　ウ＝11",
+        text:`Bさんの会話文から，「『整数(乱数()＊イ＋1)』は，1以上10以下の整数」であることがわかる。このことから，「『整数(乱数()＊イ)』は，0以上9以下の整数になる」と解釈できる。同様にBさんの会話文から「『乱数()』は，0以上1未満の実数をランダムに選んで返す関数」であることがわかるため，「乱数()＊イ」は0以上9.99999…以下の数になる。よってイの正解は「10」である。イが「10」であることから，「乱数()＊イ＋1」は1以上11未満の実数になることがわかる。よってウの正解は「11」である。`
+      }
+    },
+    {
+      label:"（エ）", points:2, type:"single",
+      qtext:`空欄エに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["Buin[i]","Buin[bango]","Buin[i + 1]","Buin[bango - 1]"],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`会話文中の実行結果をみると，「2人目：伊藤」のような結果が表示されていることがわかる。このことから（05）行目では，何回目の選出で誰が選ばれたのかを表示していると解釈できる。部員の名前は配列Buinに格納されていることと，（04）行目の処理で変数bangoに1〜10までの整数のいずれか一つが格納されていることを踏まえると，（05）行目ではこの変数bangoを用いて，配列の添字を指定して，それに該当する要素に対応した部員の名前を出力していることがわかる。配列の添字は0から始まるため，配列Buinでは0番目は伊藤，1番目は加藤，…，9番目は渡辺に対応している。以上から正解は，③「Buin[bango－1]」である。`
+      }
+    }
+  ]
+},
+
+// ───────── 問2 ─────────
+{
+  title: "問2　次の文章の空欄オ〜キに入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。",
+  context: `
+<p>B：選ばれるメンバーが重複しないようにプログラムを修正したよ（図2）。<br>
+A：（02）行目の配列Tosenには10個の「0」が格納されているけど，これは何を表しているの？<br>
+B：配列Tosenは10名の各部員がメンバーに選ばれているかどうかを表していて，選ばれていない場合が「0」，選ばれている場合が「1」になるようにしているんだ。ちなみに，配列Buinと配列Tosenの順番はそれぞれ対応しているよ。<br>
+A：（04）〜（09）行目の繰り返しの条件を<span class="blank">オ</span>にすることで，指定した人数を満たすまでメンバーを選出しているんだね。<br>
+B：うん，そのとおり。（06）〜（09）行目の条件分岐の処理では，もしTosen[<span class="blank">カ</span>]が「0」だった場合，つまり，まだメンバーに選ばれていないときは，配列Tosenの要素に「1」を代入して，変数ninzuに<span class="blank">キ</span>を代入しているんだ。<br>
+A：なるほど。じゃあ，もしTosen[<span class="blank">カ</span>]が「1」だった場合，つまり既にメンバーに選ばれていたときは，もう一度メンバーを選び直すっていうことだね。<br>
+B：そういうこと。じゃあ，実際にプログラムを実行してみよう。…うん，同じ部員が選択されることはなくなったね。</p>
+<div class="codeblock">
+<span class="ln">(01)</span> Buin = ["伊藤","加藤","小林","佐藤","鈴木","高橋","田中","中村","山本","渡辺"]<br>
+<span class="ln">(02)</span> Tosen = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]<br>
+<span class="ln">(03)</span> ninzu = 0, sentaku = 3<br>
+<span class="ln">(04)</span> <span class="hl">オ</span> の間繰り返す：<br>
+<span class="ln">(05)</span> ｜bango = 整数(乱数() * 10 + 1)<br>
+<span class="ln">(06)</span> ｜もしTosen[<span class="hl">カ</span>] == 0ならば：<br>
+<span class="ln">(07)</span> ｜｜Tosen[<span class="hl">カ</span>] = 1<br>
+<span class="ln">(08)</span> ｜｜ninzu = <span class="hl">キ</span><br>
+<span class="ln">(09)</span> ｜｜表示する(ninzu, "人目：", Buin[bango - 1])
+</div>
+<div class="fig"><div class="fig-cap">図2　10名の部員からランダムに3名を選ぶプログラム（重複なし）</div>
+上記のとおり。
+</div>`,
+  items: [
+    {
+      label:"（オ）", points:3, type:"single",
+      qtext:`空欄オに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["ninzu < sentaku","ninzu <= sentaku","ninzu > sentaku","ninzu >= sentaku"],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`Bさんの会話文から，「配列Tosenに含まれる10個の要素のうち，1である要素の数」はメンバーに選ばれた人数を意味することがわかる。よって，この数がメンバーに選びたい人数と一致するまで（04）行目から（09）行目の繰り返しの処理を行うことで，必要な人数分メンバーを選ぶことができる。選択肢をみると，変数ninzuと変数sentakuの大小比較によって，この一致するかどうかを判断していることがわかる。そのため，選出したい人数が格納されている変数sentakuと変数ninzuが一致した時点で繰り返しの処理を終了すればよい。つまり，sentakuよりninzuが小さい間は処理を繰り返すことになるので，正解は⓪「ninzu < sentaku」である。`
+      }
+    },
+    {
+      label:"（カ）", points:4, type:"single",
+      qtext:`空欄カに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["ninzu","ninzu - 1","bango","bango - 1"],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`Bさんの会話文から，配列Buinと配列Tosenの順番が対応していることがわかる。また繰り返しの処理によって，配列Tosenの10個の要素「0」の中から，選ばれた人に対応する位置の要素を「1」に変更している。さらに，空欄エより，配列Buinの添字を指定して，それに該当する要素に対応した部員の名前を抽出するために変数bangoが用いられている。つまり，Tosen[bango－1]の要素を「1」に変更するとともに，これに対応する配列Buin[bango－1]の要素が，メンバーに選ばれた部員の名前となっているのである。よって正解は③「bango－1」である。`
+      }
+    },
+    {
+      label:"（キ）", points:3, type:"single",
+      qtext:`空欄キに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["ninzu - 1","ninzu + 1","bango - 1","bango + 1"],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`（08）行目では，変数ninzuに何かを格納している。空欄オから，変数sentakuより変数ninzuが小さい間は，処理を繰り返すことになることがわかっている。また（03）行目の段階では，変数ninzuに0が格納されていることから，この段階では，変数sentakuと変数ninzuの差は，変数sentakuに格納された数字と同じである。そして，（04）〜（07）行目までの処理では，メンバーを1人選んだことを表す処理は行われていない。以上のことを踏まえると，このプログラムでは，1人選ぶごとに変数sentakuと変数ninzuの差を1ずつ縮めていき，変数sentakuと変数ninzuの値が一致した時点で繰り返しの処理を終えていることがわかる。選択肢のなかで，変数sentakuと変数ninzuの差を1ずつ縮めているものは①「ninzu＋1」であるため，これが正解である。`
+      }
+    }
+  ]
+},
+
+// ───────── 問3 ─────────
+{
+  title: "問3　次の文章の空欄ク〜コに入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。",
+  context: `
+<p>　作成したプログラムをボランティア部の部員全員にみてもらったところ，メンバーに選ばれた3名が「五十音順」（あいうえお順）で表示されるようにできないかという要望が出た。これを受けてAさんとBさんは，「五十音順」でメンバーが表示されるようにプログラムを修正した（図3）。なお，（01）行目の配列Buinに格納されている部員は「五十音順」である。また，（03）行目の「要素数(Buin)」は，配列Buinの要素の数を返している。</p>
+<div class="codeblock">
+<span class="ln">(01)</span> Buin = ["伊藤","加藤","小林","佐藤","鈴木","高橋","田中","中村","山本","渡辺"]<br>
+<span class="ln">(02)</span> Tosen = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]<br>
+<span class="ln">(03)</span> buinsu = 要素数(Buin)<br>
+<span class="ln">(04)</span> ninzu = 0, sentaku = 3<br>
+<span class="ln">(05)</span> オ の間繰り返す：<br>
+<span class="ln">(06)</span> ｜bango = 整数(乱数() * buinsu + 1)<br>
+<span class="ln">(07)</span> ｜もしTosen[カ] == 0ならば：<br>
+<span class="ln">(08)</span> ｜｜Tosen[カ] = 1<br>
+<span class="ln">(09)</span> ｜｜ninzu = キ<br>
+<span class="ln">(10)</span> ninzu = 1<br>
+<span class="ln">(11)</span> iを0から <span class="hl">ク</span> まで1ずつ増やしながら繰り返す：<br>
+<span class="ln">(12)</span> ｜もし <span class="hl">ケ</span> ならば：<br>
+<span class="ln">(13)</span> ｜｜表示する(ninzu, "人目：", <span class="hl">コ</span>)<br>
+<span class="ln">(14)</span> ｜｜ninzu = キ
+</div>
+<div class="fig"><div class="fig-cap">図3　選ばれたメンバーが「五十音順」で表示されるプログラム</div>
+上記のとおり。（05）〜（09）行目は図2と同じ（オ・カ・キはすでに求めた値と同じ）。
+</div>`,
+  items: [
+    {
+      label:"（ク）", points:3, type:"single",
+      qtext:`空欄クに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["buinsu","buinsu - 1","ninzu","ninzu - 1"],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`図3の（09）行目までは，図2とほぼ同じである。また，名前を表示する処理が（13）行目にある。このことから，まず（09）行目までで，くじで選ばれる要素（配列Tosenの要素）が決定されたことがわかる。次に（10）行目以降で，これらの決定された要素の添字に対応する，配列Buinの添字の位置に格納された名前を，添字が小さい順に表示することで，（配列Buinの要素が五十音順に格納されているため）五十音順に表示している。（11）行目から繰り返しの処理が始まり，（12）行目で1回のみ条件分岐が入り，これに該当した場合，（13）行目で選ばれた1人分のみ名前を表示していることがわかる。これらのことを踏まえると，（11）行目からは，配列Tosenのすべての要素に対してそれぞれ一つずつ「1」が格納されていないか，添字が小さい順に調べていき，「1」が格納された要素の添字があるときに，その添字に対応した，配列Buinに格納された要素の名前を表示していることがわかる。（11）行目の変数iにははじめ0が格納されており，かつ，配列Tosenのすべての要素数分，調べていく必要があるので，正解は①「buinsu－1」である。`
+      }
+    },
+    {
+      label:"（ケ）", points:4, type:"single",
+      qtext:`空欄ケに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["Tosen[i] == 0","Tosen[i + 1] == 0","Tosen[i] == 1","Tosen[i + 1] == 1"],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`配列Tosenのすべての要素に対してそれぞれ一つずつ「1」が格納されているかどうかを調べるので，正解は②「Tosen[i] == 1」である。`
+      }
+    },
+    {
+      label:"（コ）", points:3, type:"single",
+      qtext:`空欄コに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["Buin[i]","Buin[ninzu]","Buin[i + 1]","Buin[ninzu - 1]"],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`配列Tosenの要素のうち1である要素の添字と，配列Buinの要素のうちメンバーとして選ばれた部員の名前である要素の添字が対応しているので，正解は⓪「Buin[i]」である。`
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : '不正解';
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i);
+    if (ok) { correct++; points += it.points; }
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?it.points:0}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第3問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+build();
+</script>
+</body>
+</html>

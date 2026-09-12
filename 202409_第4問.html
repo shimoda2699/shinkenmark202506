@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2024年9月｜第4問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2024年9月（ベネッセ・駿台マーク模試）｜第4問（配点25）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 問1 ─────────
+{
+  title: "問1　ハナコさんの探究活動",
+  context: `
+<p>高校生のハナコさんは，「プログラミングが好きな高校生はどのような人なのか」というテーマで，探究活動に取り組んでいる。そして，校内の各学年の生徒を対象にアンケート調査を実施し，収集した様々なデータを分析して考察しようとしている。</p>`,
+  items: [
+    {
+      label:"（ア）", points:3, type:"single",
+      qtext:`ハナコさんは，以下の要件を満たす調査方法を考えている。<br>
+・プログラミングの興味の度合いを数値で表現すること。<br>
+・その数値が大きいほど興味の度合いが高くなること。<br>
+この要件を満たす調査方法として最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "これまで受けてきたプログラミングのテストの点数（0〜100点）における，最も高い点数を匿名で回答してもらい，回答者ごとに，回答された点数を記録する。",
+        "プログラミングが好きかどうかを，「1　好き」もしくは「0　好きではない」の2択で回答してもらい，回答者ごとに，「好き」と回答したら「1」を，「好きではない」と回答したら「0」を記録する。",
+        "プログラミングの興味に関係する複数の質問文に，それぞれ0〜10点（興味があるほど点数が高い）で回答してもらい，回答者ごとに，各質問で回答した選択肢の数値の合計点を記録する。",
+        "プログラミングに興味がある理由を，十分な余白を設けた回答欄に自由記述で回答してもらい，回答者ごとに，回答欄に記述された文字の数（句読点を除く）を数えて，それを記録する。"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`問題文から，ハナコさんが「興味の度合い」を「数値の大小で判断」できるようなデータを収集しようとしていることがわかる。そのうえで，これらを満たすデータを収集する方法について判断しよう。②は「興味の度合い」を0〜10点に分けていることから，「数値の大小で判断」できるようなデータが収集できるため，正解は②である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"この方法で収集されるのは，テストの点数という「学力の度合い」のようなデータであり，「興味の度合い」についてのデータは収集できない。"},
+          {label:"① 誤り",ok:false,text:"この方法で収集されるのは，「プログラミングが好きかどうか」という好みについての2択のみのデータであり，「興味の度合い」についてのデータは収集できない。"},
+          {label:"② 正しい（正解）",ok:true,text:"「興味の度合い」を0〜10点に分けていることから，「数値の大小で判断」できるようなデータが収集できる。"},
+          {label:"③ 誤り",ok:false,text:"この方法で収集されるのは，興味の理由に関するデータである。かつ，文字数が多いほどその度合いが高いと確実にいえることはできないため，「数値の大小で判断」できない。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問2 ─────────
+{
+  title: "問2",
+  context: ``,
+  items: [
+    {
+      label:"（イ）", points:4, type:"single",
+      qtext:`次にハナコさんは，以下の要件を満たす質問文を考えている。<br>
+・プログラミングの学習意欲の有無を質問したい。<br>
+・質問文を，回答者の回答に影響を与えないような表現にしたい。<br>
+・学習意欲に関する回答データのみを収集したい。<br>
+この要件をすべて満たし，適切なデータを収集できる質問文として最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "あなたはプログラミングを学校の授業以外の機会（自宅やプログラミング教室など）でも学習したいと思いますか？「2　思う」「1　思わない」から一つ選んでください。「2　思う」を選んだ場合は，どのように学習したいのかについて，以下の回答欄に自由に記述してください。",
+        "プログラミングのスキルは将来重要だと多くの人が認識しています。あなたはプログラミングを今後も学習しようと思いますか？「4　思う」「3　やや思う」「2　あまり思わない」「1　思わない」から一つ選んでください。",
+        "あなたはプログラミングの学習にはとても価値があり，プログラミングを学習していて楽しいと思いますか？「4　思う」「3　やや思う」「2　あまり思わない」「1　思わない」から一つ選んでください。",
+        "あなたは過去3年の間に，どのようなプログラミング言語を学習しましたか？　具体的なプログラミング言語の名称を，以下の回答欄に自由に記述してください（学習していない方は未記入で構いません）。"
+      ],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`問題文から，ハナコさんが「学習意欲」に関するデータ「のみ」を，「回答者の回答に影響を与えないような表現」を用いた質問文を通して収集しようとしていることがわかる。そのうえで，これらを満たす質問文について判断しよう。⓪は学校の授業以外の機会で学習したいかどうかは「学習意欲」とみなされ，かつ，これに関するデータ「のみ」を収集できる。また，主観的な表現が含まれないことから，「回答者の回答に影響を与えないような表現」を用いた質問文となっているといえる。よって正解は⓪である。`,
+        options:[
+          {label:"⓪ 正しい（正解）",ok:true,text:"学校の授業以外の機会で学習したいかどうかは「学習意欲」とみなされ，学習意欲に関するデータのみを主観的な誘導なしに収集できる。"},
+          {label:"① 誤り",ok:false,text:"「プログラミングのスキルは…認識しています。」と表現することで，回答者が「今後も学習したい」と答えることを誘導するような影響を与えてしまう。"},
+          {label:"② 誤り",ok:false,text:"「学習には価値があるかどうか」と「学習していて楽しいかどうか」という二つのテーマに対し，同じ選択肢から一つしか回答できず，正確なデータが収集できない。"},
+          {label:"③ 誤り",ok:false,text:"この質問文では，「学習した言語の種類」についてのデータが収集され，「学習意欲」に関するデータは収集できない。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問3 ─────────
+{
+  title: "問3",
+  context: ``,
+  items: [
+    {
+      label:"（ウ）", points:3, type:"single",
+      qtext:`ハナコさんは質問文を作り，アンケートを完成させた。その後ハナコさんは，校内の各学年を同人数ずつ比較して，校内の生徒の特徴を明らかにしたいと考えた。そのために，校内の生徒（各学年300人，全体で900人）を母集団として，そのうち150人程度の生徒からなる標本を抽出したうえで，調査対象となった生徒にアンケートを回答してもらうように考えている。標本が母集団の特徴を可能な限り適切に代表する方法として最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "登校前の時間帯に，校門の前で生徒を待ち，登校してきた生徒一人ひとりにアンケートの回答を依頼し，150人程度回答を集める。",
+        "校内の生徒の男女比を確認し，この比率に沿って150人における男女の人数を決め，その人数分，全校生徒のなかからランダムに抽出して回答を集める。",
+        "学年ごとにランダムに50人程度ずつ抽出し，対象となった人にアンケートの回答を依頼し，150人程度回答を集める。",
+        "ハナコさんの友人にアンケートの回答とほかの生徒への共有を依頼し，150人程度回答を集める。"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`問題文から，母集団の特徴を可能な限り満たす標本を抽出できる方法を判断することが求められていることがわかる。ここでの母集団とは，ハナコさんの学校の生徒900人である。そして標本が，プログラミングに関する様々な特徴のうち，特定の特徴に偏らない集団になるように工夫する必要がある。さらに母集団の各学年の構成比が1:1:1であるため，標本のこの比率が，これとかけ離れたものにならないように工夫する必要がある。②の方法でデータを収集すると，学年の構成比が1:1:1になる。またランダムに回答者を選定しているので，特定の特徴に偏らない集団になる可能性が高いといえる。よって正解は②である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"登校してくる順に回答を集めた場合，「早く登校してくる生徒」という属性の標本になってしまう。また，学年の構成比が1:1:1になる可能性は偶然によるものであり，極めて低い。"},
+          {label:"① 誤り",ok:false,text:"この方法で収集したデータは，その男女比は校内の生徒の男女比と一致するが，学年の構成比は1:1:1にはならない可能性が高い。"},
+          {label:"② 正しい（正解）",ok:true,text:"学年ごとにランダムに50人ずつ抽出することで，学年の構成比が1:1:1になり，特定の特徴に偏らない集団になる可能性が高い。"},
+          {label:"③ 誤り",ok:false,text:"この方法で収集されたデータは，ハナコさんの学年の回答が多くなり，偏った学年の構成比になる可能性が高い。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問4 ─────────
+{
+  title: "問4",
+  context: `
+<p>ハナコさんは調査対象となった生徒から回答を収集して，表計算ソフトウェア上にデータを整理した（表1に一部を示す）。1行目には各列のデータを説明する項目が記載されている。</p>
+<div class="fig">
+<div class="fig-cap">表1　アンケートの回答データの一部</div>
+<table style="width:100%;border-collapse:collapse;text-align:center;font-size:.92rem;">
+<tr style="background:var(--primary-light);"><th style="border:1px solid var(--border);padding:6px;"></th><th style="border:1px solid var(--border);padding:6px;">A</th><th style="border:1px solid var(--border);padding:6px;">B</th><th style="border:1px solid var(--border);padding:6px;">C</th><th style="border:1px solid var(--border);padding:6px;">D</th></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">1</td><td style="border:1px solid var(--border);padding:6px;">ID</td><td style="border:1px solid var(--border);padding:6px;">学年</td><td style="border:1px solid var(--border);padding:6px;">コーディング時間</td><td style="border:1px solid var(--border);padding:6px;">SNS時間</td></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">2</td><td style="border:1px solid var(--border);padding:6px;">1</td><td style="border:1px solid var(--border);padding:6px;">2</td><td style="border:1px solid var(--border);padding:6px;">15.1</td><td style="border:1px solid var(--border);padding:6px;">9.6</td></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">3</td><td style="border:1px solid var(--border);padding:6px;">2</td><td style="border:1px solid var(--border);padding:6px;">2</td><td style="border:1px solid var(--border);padding:6px;">12.2</td><td style="border:1px solid var(--border);padding:6px;">7.9</td></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">4</td><td style="border:1px solid var(--border);padding:6px;">3</td><td style="border:1px solid var(--border);padding:6px;">1</td><td style="border:1px solid var(--border);padding:6px;">10.3</td><td style="border:1px solid var(--border);padding:6px;">9.7</td></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">︙</td><td style="border:1px solid var(--border);padding:6px;">︙</td><td style="border:1px solid var(--border);padding:6px;">︙</td><td style="border:1px solid var(--border);padding:6px;">︙</td><td style="border:1px solid var(--border);padding:6px;">︙</td></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">151</td><td style="border:1px solid var(--border);padding:6px;">150</td><td style="border:1px solid var(--border);padding:6px;">3</td><td style="border:1px solid var(--border);padding:6px;">16.4</td><td style="border:1px solid var(--border);padding:6px;">4.5</td></tr>
+</table>
+</div>
+<p>※表1の各項目の詳細は，次のとおりである。<br>
+A列「ID」：回答者に割り当てられた，1から150の数値。<br>
+B列「学年」：回答者の学年。1から3の数値。<br>
+C列「コーディング時間」：直近の1か月間で，授業以外でパソコンを使ってプログラミングを学習した時間（単位は時間で小数第1位まで記録）。<br>
+D列「SNS時間」：直近の1か月間で，娯楽を目的としてSNSに費やした時間（単位は時間で小数第1位まで記録）。</p>`,
+  items: [
+    {
+      label:"（エ・オ）", points:4, type:"multi", pick:2,
+      qtext:`ここで，C列以降の列において，ほかのデータとの整合性を保ちながら各列のデータに外れ値が含まれているか判断する方法として最も適当なものを，次の⓪〜④のうちから二つ選べ。ただし，解答の順序は問わない。`,
+      choices:[
+        "一つの列を選択し，その列に含まれるデータを値が昇順になるようにその列のみを並べ替える。その後，列の最上部と最下部の値と各四分位数との差を比較したうえで，それらが外れ値かどうか判断する。",
+        "一つの列を選択し，その列に含まれるデータから度数分布表を作成する。その後，分布の散らばり具合をもとに，分布の両端部分にあるデータが外れ値となるかどうか判断する。",
+        "一つの列を選択し，その列に数値として記録されているデータの個数を数える。その後，その個数が150未満である場合，150とその個数の差を外れ値として判断する。",
+        "一つの列を選択し，その列に含まれるデータの最頻値を求める関数の機能を利用して最頻値を出す。その後，その列に含まれるデータのなかで最頻値となるデータを外れ値として判断する。",
+        "一つの列を選択し，その列に含まれるデータから構成される箱ひげ図を作成する。その後，四分位範囲を大きく超える値がある場合，外れ値が含まれていると判断する。"
+      ],
+      correctSet:[1,4],
+      exp:{
+        answer:"①・④（順不同）",
+        text:`問題文から，ほかのデータとの整合性を保ちながら，外れ値を特定する方法を判断することが求められていることがわかる。外れ値とデータの整理の方法についての知識を活用することを意識しよう。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"この方法では，一つの列のデータのみ並べ替えられているため，ほかのデータとの整合性が取れなくなってしまう。"},
+          {label:"① 正しい（正解）",ok:true,text:"度数分布表を作成し，分布の散らばり具合から両端の外れ値を判断する方法は，他列の並びを崩さず整合性を保てる。"},
+          {label:"② 誤り",ok:false,text:"この方法では，欠損値が含まれているかどうかは判断できるが，外れ値が含まれているかどうかは判断できない。"},
+          {label:"③ 誤り",ok:false,text:"この方法では，最頻値が特定されるが，外れ値が含まれているかどうかは判断できない。"},
+          {label:"④ 正しい（正解）",ok:true,text:"箱ひげ図を作成し，四分位範囲を大きく超える値を外れ値と判断する方法は，他列の並びを崩さず整合性を保てる。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問5 ─────────
+{
+  title: "問5　ハナコさんとヨシコさんの会話",
+  context: `
+<p>ハナコさんは，表1のC，D列のデータを用いて，「コーディング時間」と「SNS時間」の散布図を作成した（図1）。図1には散布図のほかに両データの相関係数と回帰直線の式を示している。図1をもとに，ハナコさんと同級生のヨシコさんが以下のような会話をしている。会話文を読み，後の問い（a〜c）に答えよ。</p>
+<div class="fig">
+<div class="fig-cap">図1　「コーディング時間」と「SNS時間」の散布図</div>
+横軸「コーディング時間」（0〜27.5時間），縦軸「SNS時間」（0〜15時間）の散布図。全体として右下がりの緩やかな負の相関がみられ，コーディング時間が短い生徒ほどSNS時間が長く，コーディング時間が長い生徒ほどSNS時間が短い傾向にある。<br>
+相関係数 r：−0.49<br>
+回帰直線の式：y＝−0.25x＋11.16
+</div>
+<p>ハナコ：図1からこれらのデータ間には負の相関関係があることがわかったよ。また，回帰直線の式から，<span class="blank">カ</span>と解釈できるよね。この学校の生徒は，プログラミングの学習時間が増えるとSNS時間が減るのかな…？<br>
+ヨシコ：生徒全体という観点からは，確かに負の相関関係や増減についてはそのとおりだね。だけど，今回の結果からは，そのような因果関係の解釈は難しいかもしれないね。<span class="blank">キ</span>，というような別のデータの影響もありそうだし。<br>
+ハナコ：確かに。でもなんでこんな関係になったのかな。<br>
+ヨシコ：異なる集団（学年）のデータを，すべて一つの集団にまとめて分析しているからじゃないかな？　<u class="point">学年ごとでみると，実は各学年では両データに相関はない可能性があるよね。</u><br>
+ハナコ：確かにそうかも…。学年ごとに散布図と相関係数をみてみようか。</p>`,
+  items: [
+    {
+      label:"a（カ）", points:2, type:"single",
+      qtext:`空欄カに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "「SNS時間」が2倍になると，「コーディング時間」は0.25倍になる",
+        "「コーディング時間」が3倍になると，「SNS時間」は0.5倍になる",
+        "「SNS時間」が1時間増加すると，「コーディング時間」が約1.5時間減少する",
+        "「コーディング時間」が2時間増加すると，「SNS時間」が約0.5時間減少する"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`図1から回帰直線の式は y＝−0.25x＋11.16 であり，このxはコーディング時間，yはSNS時間である。xの係数が−0.25であるから，xの値が1増加すると，yは0.25だけ減少することがわかる。これと同様のことを述べている選択肢は，③「『コーディング時間』が2時間増加すると，『SNS時間』が約0.5時間減少する」である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"回帰直線はxからyを予測する一次式であり，「SNS時間が2倍になるとコーディング時間が0.25倍になる」という倍数関係は式から読み取れない。"},
+          {label:"① 誤り",ok:false,text:"「コーディング時間が3倍になるとSNS時間が0.5倍になる」という倍数関係も，回帰直線の式からは読み取れない。"},
+          {label:"② 誤り",ok:false,text:"回帰直線はx（コーディング時間）からy（SNS時間）を予測する式であり，yの変化からxの変化を読み取る向きの解釈は式の意味と逆である。"},
+          {label:"③ 正しい（正解）",ok:true,text:"xの係数−0.25より，コーディング時間が2時間増加するとSNS時間は0.25×2＝約0.5時間減少すると解釈できる。"}
+        ]
+      }
+    },
+    {
+      label:"b（キ）", points:5, type:"single",
+      qtext:`空欄キに入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "「SNS時間」の増加が原因となって「コーディング時間」の減少に影響を与え，結果的に「コーディング時間」が減少するような現象が生じた",
+        "プログラミングへの学習意欲が高いと「コーディング時間」が増加し，反対にSNSなどの娯楽への興味が薄れて「SNS時間」が減少した",
+        "「コーディング時間」と「SNS時間」との間には，正の相関関係も負の相関関係もなく，互いに増減の影響を与えない独立したデータだった",
+        "「コーディング時間」と「SNS時間」との間には実は正の相関関係があるが，データの収集や整理の方法が誤っていたため，負の相関関係になった"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`会話文から，ヨシコさんはコーディング時間とSNS時間との間の因果関係の成立が難しいと判断していることがわかる。またその理由として，別のデータの影響を挙げている。よって，この話に合う選択肢を選ぶことが求められている。①はプログラミングへの学習意欲が高いという別のデータがあり，このデータが両方のデータに影響を与えた可能性が言及されているため，正解は①である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"SNS時間とコーディング時間についてのみ述べており，別のデータの影響を述べていない。また，SNS時間の増減を原因として，その結果コーディング時間の増減に影響を与えているという「因果関係」について述べている点も誤りである。"},
+          {label:"① 正しい（正解）",ok:true,text:"プログラミングへの学習意欲が高いという別のデータがあり，このデータが両方のデータに影響を与えた可能性が言及されている。"},
+          {label:"② 誤り",ok:false,text:"両方のデータの関係性について述べられており，別のデータの影響については述べられていない。"},
+          {label:"③ 誤り",ok:false,text:"両方のデータの収集や整理の方法の妥当性について述べられており，別のデータの影響については述べられていない。"}
+        ]
+      }
+    },
+    {
+      label:"c（ク）", points:4, type:"single",
+      pre:`<div class="fig">
+<div class="fig-cap">図1の各点に学年の情報を追加した散布図⓪〜③（1年生●／2年生◇／3年生□）の学年別の傾向</div>
+<table style="width:100%;border-collapse:collapse;text-align:center;font-size:.9rem;">
+<tr style="background:var(--primary-light);"><th style="border:1px solid var(--border);padding:6px;">選択肢</th><th style="border:1px solid var(--border);padding:6px;">1年生（●）</th><th style="border:1px solid var(--border);padding:6px;">2年生（◇）</th><th style="border:1px solid var(--border);padding:6px;">3年生（□）</th></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">⓪</td><td style="border:1px solid var(--border);padding:6px;">負の相関</td><td style="border:1px solid var(--border);padding:6px;">負の相関</td><td style="border:1px solid var(--border);padding:6px;">負の相関</td></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">①</td><td style="border:1px solid var(--border);padding:6px;">相関なし</td><td style="border:1px solid var(--border);padding:6px;">相関なし</td><td style="border:1px solid var(--border);padding:6px;">相関なし</td></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">②</td><td style="border:1px solid var(--border);padding:6px;">正の相関</td><td style="border:1px solid var(--border);padding:6px;">負の相関</td><td style="border:1px solid var(--border);padding:6px;">正の相関</td></tr>
+<tr><td style="border:1px solid var(--border);padding:6px;">③</td><td style="border:1px solid var(--border);padding:6px;">負の相関</td><td style="border:1px solid var(--border);padding:6px;">負の相関</td><td style="border:1px solid var(--border);padding:6px;">負の相関</td></tr>
+</table>
+</div>`,
+      qtext:`次の⓪〜③の散布図は，図1の散布図の各点に，学年の情報を追加したものである。1年生の点は●，2年生は◇，3年生は□で表現している。下線部Aでヨシコさんが述べていることを表現した散布図として最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "どの学年においても，負の相関関係が確認できる散布図（⓪）",
+        "どの学年においても，相関関係が確認できない散布図（①）",
+        "2年生においては負の相関関係，1年生・3年生においては正の相関関係が確認できる散布図（②）",
+        "どの学年においても，負の相関関係が確認できる散布図（③，⓪とは学年ごとの分布の位置関係が異なる）"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`会話文から，ヨシコさんは各学年では両データ間に相関関係はない可能性があると判断していることがわかる。そのため，散布図ごとの傾向を読み取って比較し，どの学年も相関関係がないものを選択しよう。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"どの学年においても，負の相関関係が確認できる。"},
+          {label:"① 正しい（正解）",ok:true,text:"どの学年においても，相関関係が確認できない。"},
+          {label:"② 誤り",ok:false,text:"2年生においては負の相関関係，残り二つのデータについては正の相関関係が確認できる。"},
+          {label:"③ 誤り",ok:false,text:"どの学年においても，負の相関関係が確認できる。"}
+        ]
+      }
+    }
+  ]
+}
+
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : '不正解';
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i);
+    if (ok) { correct++; points += it.points; }
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?it.points:0}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第4問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+build();
+</script>
+</body>
+</html>

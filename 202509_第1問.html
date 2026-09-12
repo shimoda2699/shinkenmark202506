@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2025年9月｜第1問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年9月（ベネッセ・駿台マーク模試）｜第1問（配点20）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 問1 ─────────
+{
+  title: "問1　情報の取り扱いに関する次の問い（a・b）に答えよ。",
+  context: "",
+  items: [
+    {
+      label:"a（ア）", points:2, type:"single",
+      qtext:`自身で撮影した写真をインターネット上に公開する際に自分のプライバシーを保護するための行動として，<b>適当でないもの</b>を，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "自宅で撮影した写真を公開する際には，自身の部屋の中の写真ではなく，部屋の窓越しに撮影した外の景色の写真にとどめる。",
+        "自宅の近辺で自身を撮影した写真を公開する際には，意図しない情報が瞳に反射して映っていないか確認する。",
+        "有名な建築物の前など，容易に特定できる場所で撮影した写真をSNSに投稿する際は，その場所を離れてから行う。",
+        "個人情報がわずかでも含まれる写真を公開する際には，それを読み取ることができないように写真のその部分の解像度を落としてから行う。"
+      ],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`部屋の窓越しに撮影した外の景色（建物や道路標識など）から，自宅の場所が第三者に知られてしまうおそれがある。よってこれは，自分のプライバシーを保護するための行動として適当ではない。`,
+        options:[
+          {label:"⓪ 適当でない（正解）",ok:true,text:"外の景色にも自宅の場所を特定できる情報が映り込むおそれがある。"},
+          {label:"① 正しい",ok:false,text:"瞳に反射した情報の確認は，プライバシー保護に努めている行動。"},
+          {label:"② 正しい",ok:false,text:"場所を離れてから公開すれば，現在地の特定を防げる。"},
+          {label:"③ 正しい",ok:false,text:"個人情報部分の解像度を落とすのは適切な保護行動。"}
+        ]
+      }
+    },
+    {
+      label:"b（イ・ウ）", points:2, type:"multi", pick:2,
+      qtext:`SNSの利用に関する説明として適当なものを，次の⓪〜④のうちから<b>二つ</b>選べ。ただし，解答の順序は問わない。`,
+      choices:[
+        "未成年であれば，自身の投稿が原因でトラブルが起こったとしても，法的に責任を問われることはない。",
+        "投稿内容が24時間で閲覧できなくなるサービスを利用した場合でも，その投稿内容がインターネット上から完全に消えるとは限らない。",
+        "匿名で利用しているアカウントであれば，自身で氏名を明かさない限り，個人が特定されるリスクはない。",
+        "鍵付きアカウント（特定のユーザのみが閲覧できるアカウント）を利用していれば，サイバー犯罪の被害に遭うことはない。",
+        "自身にフォロー（SNS内での友達）申請をしてきたユーザのアカウント名がクラスの友人の名前だったとしても，それが友人本人であるとは限らない。"
+      ],
+      correctSet:[1,4],
+      exp:{
+        answer:"①・④",
+        text:`①は正しい。投稿内容は第三者に保存（スクリーンショットなど）され，再投稿されたりサービス内に一時的に保存されたりすることがある。④は正しい。SNSのユーザ名やアカウント名は自由に設定できるため，容易になりすましができる。仮にアカウント名が友人の名前であっても，本人である確証はない。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"未成年でも，内容や程度によっては法的な責任を問われることがある。"},
+          {label:"① 正しい（正解）",ok:true,text:"24時間で消える設定でも，保存・再投稿により完全には消えない場合がある。"},
+          {label:"② 誤り",ok:false,text:"投稿内容やアクセス履歴などから個人が特定される場合がある。"},
+          {label:"③ 誤り",ok:false,text:"鍵付きでも，閲覧を承認したユーザによる拡散やクラッキングのリスクがある。"},
+          {label:"④ 正しい（正解）",ok:true,text:"アカウント名は自由に設定できるため，なりすましの可能性がある。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問2 ─────────
+{
+  title: "問2　次の文章を読んで，後の問い（a〜c）に答えよ。",
+  context: `
+<p>　PERT図とは，プロジェクトにおける作業の所要時間や前後関係などを視覚的に表現した図であり，プロジェクトの工程管理などに用いられている。</p>
+<div class="fig">
+<div class="fig-cap">図1　PERT図の例</div>
+左端の(始)が初期状態，右端の(完)が完了状態，その他の○が途中の状態を示す。矢印は作業を表し，カッコ内の数値は作業完了までの所要時間を示す。ある○から出る矢印の作業は，その○に入るすべての矢印の作業を終わらせないと始められず，複数の作業は並行して進められる。<br>
+（始）─A(3)→○　　（始）─B(2)→○　　（同じ○）─C(4)→（完）<br>
+※ 作業Aと作業Bは並行して進められるが，作業Cは作業A・Bの双方が終わらないと始められない。
+</div>
+<p>　次の図2は，野外活動において，カレーライスを作る工程をPERT図で表したもの（所要時間の単位は分）である。</p>
+<div class="fig">
+<div class="fig-cap">図2　野外活動でのカレーライス作成工程（作業と所要時間・開始条件）</div>
+<table>
+<tr><th>作業</th><th>所要時間（分）</th><th>開始できる条件</th></tr>
+<tr><td>薪割り</td><td>3</td><td>最初から開始できる</td></tr>
+<tr><td>火起こし</td><td>2</td><td>「薪割り」の完了後</td></tr>
+<tr><td>米研ぎ</td><td>3</td><td>最初から開始できる</td></tr>
+<tr><td>肉炒め</td><td>5</td><td>「火起こし」・「米研ぎ」の両方の完了後</td></tr>
+<tr><td>野菜準備</td><td>9</td><td>最初から開始できる</td></tr>
+<tr><td>炊飯</td><td>40</td><td>「火起こし」の完了後</td></tr>
+<tr><td>野菜炒め</td><td>7</td><td>「肉炒め」・「野菜準備」の両方の完了後</td></tr>
+<tr><td>煮込み</td><td>25</td><td>「野菜炒め」の完了後</td></tr>
+<tr><td>盛付け</td><td>2</td><td>「炊飯」・「煮込み」の両方の完了後（完了で全工程終了）</td></tr>
+</table>
+</div>`,
+  items: [
+    {
+      label:"a（エ）", points:1, type:"single",
+      qtext:`図2から読み取れることとして，<b>適当でないもの</b>を，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "「火起こし」と「野菜準備」は並行して進めることができる。",
+        "「炊飯」と「煮込み」には前後関係はない。",
+        "「野菜炒め」を行うためには，「薪割り」が完了している必要がある。",
+        "「野菜準備」が完了していないと，「炊飯」を行うことができない。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`「炊飯」は「火起こし」の完了後に開始できる作業であり，「野菜準備」の完了は必要ない。よって③が適当でない。`,
+        options:[
+          {label:"⓪ 正しい",ok:false,text:"両者は前後関係がなく並行して進められる。"},
+          {label:"① 正しい",ok:false,text:"「盛付け」の前提として両方必要だが，互いの前後関係はない。"},
+          {label:"② 正しい",ok:false,text:"「野菜炒め」には「肉炒め」が必要で，「肉炒め」には「火起こし」（＝「薪割り」完了後）が必要。"},
+          {label:"③ 適当でない（正解）",ok:true,text:"「炊飯」は「火起こし」完了後に開始でき，「野菜準備」は無関係。"}
+        ]
+      }
+    },
+    {
+      label:"b（オ・カ）", points:2, type:"digits", blanks:2, correctDigits:['4','7'],
+      suffixText:"分",
+      qtext:`次の文を読み，空欄に当てはまる数字をマークせよ。<br>図2のすべての作業が完了するまでの最短所要時間は<span class="blank">オ</span><span class="blank">カ</span>分である。`,
+      exp:{
+        answer:"47",
+        text:`「肉炒め」を始めるには「薪割り」→「火起こし」（5分）と「米研ぎ」（3分）の両方が必要で，最短5分かかる。「野菜炒め」を始めるには「肉炒め」（10分終了）と「野菜準備」（9分）の両方が必要で最短10分，「野菜炒め」＋「煮込み」で42（10＋7＋25）分。一方「炊飯」は「火起こし」完了後（5分時点）にすぐ開始しても45（5＋40）分かかる。「盛付け」は「炊飯」と「煮込み」の両方が必要なので，max(45,42)＋2＝47分。よって最短所要時間は47分。`
+      }
+    },
+    {
+      label:"c（キ）", points:2, type:"single",
+      qtext:`図2のそれぞれの作業の所要時間が変化した場合に，すべての作業が完了するまでの最短所要時間（以下，「最短所要時間」とする）がどのように変化するかの説明として，最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "「米研ぎ」の所要時間を1分短くした場合，最短所要時間も1分短くなる。",
+        "「炊飯」の所要時間を4分短くした場合，最短所要時間も4分短くなる。",
+        "「煮込み」の所要時間を3分長くした場合でも，最短所要時間は変わらない。",
+        "「野菜準備」の所要時間を5分長くした場合でも，最短所要時間は変わらない。"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`⓪誤り。「米研ぎ」が2分になっても「肉炒め」開始に必要な所要時間は5分のままなので変化しない。①誤り。「炊飯」が36分になると，「肉炒め」→「野菜炒め」→「煮込み」の系列（42分）の方が長くなり，「盛付け」開始は42分後となるため最短所要時間は44分となり，3分しか短縮されない。②正しい。「煮込み」が28分になっても「盛付け」開始に必要な時間は45分のまま変わらない。③誤り。「野菜準備」が14分になると「野菜炒め」終了が21分となり，「盛付け」開始は最短46分後となるため，最終的な所要時間は48分となる。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"「肉炒め」開始条件（火起こし・米研ぎ）は5分のまま変わらない。"},
+          {label:"① 誤り",ok:false,text:"最短所要時間は44分となり，3分しか短縮されない。"},
+          {label:"② 正しい（正解）",ok:true,text:"「盛付け」開始は「炊飯」側の45分で決まるため変化しない。"},
+          {label:"③ 誤り",ok:false,text:"最終的な所要時間は48分となり変化する。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問3 ─────────
+{
+  title: "問3　次の文章を読み，空欄に当てはまる数字をマークせよ。ただし，小数第3位を四捨五入して答えよ。さらに，後の問い（a・b）に答えよ。",
+  context: `
+<p>　パリティビットとは，一定のビット列に含まれる1の個数が偶数か奇数かを判断するために付与されるビットのことであり，<u class="point">データの誤りの検出や訂正に使用される</u>。なお，ここでは「検出」は誤りがあるという事実がわかること，「訂正」は「検出」に加えて誤りの発生箇所まで特定できることを意味する。</p>
+<p>　まず，図3のような7ビットの一次元のデータを考える。ここに，1の個数の合計が偶数になるようにパリティビットを加えたデータが図4である（灰色がパリティビットを表す）。パリティビットを付与したデータのオーバーヘッド（本来のデータではないビットの割合）を「パリティビット数÷総ビット数」と定義すると，図4のオーバーヘッドは1÷8で0.125であり，小数第3位を四捨五入して0.13となる。</p>
+<div class="fig"><div class="fig-cap">図3　一次元のデータ／図4　パリティビットを付与した一次元のデータ</div>
+図3：0 1 0 0 1 0 1（7ビット）　→　図4：0 1 0 0 1 0 1 <b>1</b>（末尾の太字がパリティビット。1の合計が偶数になるように付与）</div>
+<p>　次に，図5のような7×7の二次元のビット列を考える。ここに，縦・横方向それぞれの1の個数の合計が偶数になるようにパリティビットを加えたビット列が図6である（灰色がパリティビットを表す）。パリティビットを付与したデータのオーバーヘッドを上記と同様に定義すると，図6のオーバーヘッドは0.<span class="blank">ク</span><span class="blank">ケ</span>となる。</p>
+<div class="fig"><div class="fig-cap">図5　二次元のデータ（7行×7列）</div>
+<table>
+<tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+</table></div>
+<div class="fig"><div class="fig-cap">図6　パリティビットを付与した二次元のデータ（8行×8列，右端・下端の列/行がパリティビット）</div>
+図5の各行・各列の1の個数の合計が偶数になるように，右端に列パリティビット，下端に行パリティビットを1行・1列ずつ追加した8×8のビット列。</div>`,
+  items: [
+    {
+      label:"（ク・ケ）", points:2, type:"digits", blanks:2, correctDigits:['2','2'],
+      prefixText:"0.",
+      qtext:`空欄<span class="blank">ク</span><span class="blank">ケ</span>に当てはまる数字をマークせよ。（図6のオーバーヘッド）`,
+      exp:{
+        answer:"0.22",
+        text:`図6において，パリティビット数は7＋7＝14，総ビット数は8×8－1＝63である。よってオーバーヘッドは，14÷63＝0.222……より，小数第3位を四捨五入して0.22となる。`
+      }
+    },
+    {
+      label:"a（コ）", points:2, type:"single",
+      qtext:`下線部に関して，一次元および二次元のパリティビットを付与したデータに，それぞれ1ビットだけの誤りが発生した場合について考える。このとき，誤りの訂正の可不可の組合せとして，最も適当なものを，次の⓪〜③のうちから一つ選べ。ただし，ビットの誤りはパリティビット以外の箇所に発生しているものとする。`,
+      choices:[
+        "一次元のパリティビットの訂正の可不可：不可　／　二次元のパリティビットの訂正の可不可：不可",
+        "一次元のパリティビットの訂正の可不可：不可　／　二次元のパリティビットの訂正の可不可：可",
+        "一次元のパリティビットの訂正の可不可：可　／　二次元のパリティビットの訂正の可不可：不可",
+        "一次元のパリティビットの訂正の可不可：可　／　二次元のパリティビットの訂正の可不可：可"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`一次元のデータについては，誤りの検出はできるがどこに誤りがあるのかを特定するための情報が得られないため，訂正は不可能である。一方で二次元のデータについては，各行と列に対してパリティビットを加えることになる。これによって，1ビットの誤りに限定すれば，各行と列のパリティビットを確認して，どの行および列に誤りがあるかを特定することができる。よって正解は①である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"二次元は1ビット誤りなら行・列の交点として訂正可能。"},
+          {label:"① 正しい（正解）",ok:true,text:"一次元は検出のみ可能，二次元は1ビット誤りなら訂正可能。"},
+          {label:"② 誤り",ok:false,text:"一次元は箇所の特定ができず訂正不可。"},
+          {label:"③ 誤り",ok:false,text:"一次元は訂正不可。"}
+        ]
+      }
+    },
+    {
+      label:"b（サ）", points:2, type:"single",
+      qtext:`パリティビットを付与した二次元のビット列に，2ビット以上の誤りが発生した場合について考える。このとき，誤りの検出も訂正も一切できない「誤り」発生箇所の組合せを，次の⓪〜③のうちから一つ選べ。ただし，灰色がパリティビット，「×」がビットの誤りを表し，すべてのマスには0か1のビットが入っているものとする。`,
+      choices:[
+        "同じ行にも同じ列にも属さない位置に2箇所（3行3列目・5行5列目）の誤りがある配置",
+        "同じ行に2箇所（3行3列目・3行5列目），かつそれとは別に1箇所（4行4列目）の誤りがある配置（計3箇所）",
+        "同じ行に2箇所，同じ列にも2箇所ずつ誤りが重なる位置（3行3列目・3行5列目・5行3列目・5行5列目）の配置",
+        "同じ行に2箇所（3行3列目・3行5列目），別の行に1箇所（4行4列目），さらに別の位置（5行3列目・5行5列目）に誤りがある配置（計5箇所）"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`二次元のデータにおいては，各行と列のパリティビットの値をもとに誤りの検出および訂正を試みる。2ビット以上の誤りがあるとき，同じ行や列において偶数個の誤りがある場合は，その行や列でのパリティビットの値は変化せず，誤りの検出ができない。このような行や列を含むものは⓪，①，③である。ただし，③の4行4列目のパリティビットの値からこの部分だけ検出および訂正はできる。また，⓪は誤りの検出は可能であるが，本来の誤りの箇所とは異なる3行5列目が誤検出されてしまう。よって検出も訂正も一切できないのは，同じ行や列において2ビット（偶数個）の誤りがあることだけを満たす②である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"検出はできるが誤検出が生じる（訂正は不可だが検出は可）。"},
+          {label:"① 誤り",ok:false,text:"一部は検出・訂正が可能な行列関係を含む。"},
+          {label:"② 正しい（正解）",ok:true,text:"行・列とも2箇所ずつの偶数個誤りとなり，検出も訂正も一切できない。"},
+          {label:"③ 誤り",ok:false,text:"一部（4行4列目）は検出・訂正できる。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問4 ─────────
+{
+  title: "問4　次のNさんとMさんの会話文を読み，後の問い（a〜c）に答えよ。",
+  context: `
+<p>Nさん：この間，妹とショッピングモールに買い物に行ったんだけど，途中で妹とはぐれてしまって大変だったよ。<br>
+Mさん：それは大変だね。けっきょく妹とは無事に合流できたの？<br>
+Nさん：なんとかね。でも1時間くらい探すことになったよ。<br>
+Mさん：そんなに見つからないものなんだね。どうやって探したの？<br>
+Nさん：お互いショッピングモールの中を行ったり来たりして探したんだよ。でもあとで妹と話すと何度か近くをすれ違っていたみたいなんだけど，お互い気づけなかったみたい。どう探したらもっと早く見つけられたのかな？<br>
+Mさん：近くをすれ違ったときに見つけられたらよさそうだね。<br>
+Nさん：今回は2人ともが歩き回って探したけれど，1人は動かずに待っていたらもっと早く見つかったのかな？<br>
+Mさん：どの方法が一番早く見つけられるのか，シミュレーションで確かめてみよう。<br>
+Nさん：どんなふうにシミュレーションするの？<br>
+Mさん：実際のショッピングモールをそのまま再現するのは難しいから，ここでは10×10のマス目状のフィールドをショッピングモールに見立ててシミュレーションしてみるよ。それ以外の条件は次のようにしてみよう。</p>
+<div class="fig">
+<div class="fig-cap">【条件】</div>
+① 縦10マス×横10マスのフィールド内で考える。<br>
+② 2人はそれぞれ一つのマスに位置し，開始時点での配置はランダムに決定する。<br>
+③ 移動する場合は1ターンにつき上下左右いずれかの方向にランダムに1マスだけ移動する。ただし，フィールドの外側に出ることはない。<br>
+④ パターンは次の4種類とする。いずれの場合も5,000ターン以内に合流しなければ，そのシミュレーションを終了する。<br>
+　パターン1　1人だけ移動する。2人が同時に同じマスにたどり着けば合流できる。<br>
+　パターン2　2人とも移動する。2人が同時に同じマスにたどり着けば合流できる。<br>
+　パターン3　1人だけ移動する。2人が同時に上下左右1マス以内にたどり着けば合流できる。<br>
+　パターン4　2人とも移動する。2人が同時に上下左右1マス以内にたどり着けば合流できる。
+</div>
+<p>Nさん：パターン1と2はすれ違っても気づかないパターンで，パターン3と4はすれ違ったときに気づいたパターンということだね。そうしたら早速シミュレーションしてみようよ。</p>`,
+  items: [
+    {
+      label:"a（シ）", points:1, type:"single",
+      qtext:`シミュレーションにおける繰り返しの回数についての説明として，最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "シミュレーションの条件設定が現実の状況を適切に再現できているかどうかを判断するため，繰り返し回数は少ない方がよい。",
+        "シミュレーションの条件設定が現実の状況を適切に再現できているかどうかを判断するため，繰り返し回数は多い方がよい。",
+        "偶然による誤差を減らすため，繰り返し回数は少ない方がよい。",
+        "偶然による誤差を減らすため，繰り返し回数は多い方がよい。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`⓪と①について，繰り返し回数の多寡と条件設定が現実の状況を適切に再現できているかどうかは関係しない。②と③について，一般的に，繰り返し回数が多いほど，結果のばらつきが小さくなり，偶然による誤差を減らすことができる。よって，正解は③である。`,
+        options:[
+          {label:"⓪① 誤り",ok:false,text:"繰り返し回数と条件設定の妥当性の判断は無関係。"},
+          {label:"② 誤り",ok:false,text:"誤差を減らすには繰り返し回数は多い方がよい。"},
+          {label:"③ 正しい（正解）",ok:true,text:"繰り返し回数が多いほど偶然による誤差（ばらつき）を減らせる。"}
+        ]
+      }
+    },
+    {
+      label:"b（ス）", points:2, type:"single",
+      pre:`<p>NさんとMさんは，各パターンとシミュレーション回数によって，結果がどのように変化するか同じ乱数列を用いて試してみた。その結果を表したものが表1である。グラフの横軸は合流までにかかったターン数であり，200回刻みで表現している。縦軸はシミュレーション全体の回数に占める割合である。ただし，各グラフの右端は5,000ターン以内に合流できなかった場合である。</p>
+<div class="fig"><div class="fig-cap">表1　各パターンのシミュレーション結果（概要）</div>
+パターン1（100回／100,000回とも）：横軸0〜200のところが最も高く（0.2〜0.3程度）その後なだらかに減少し，5,000での右端の棒はごく小さい。<br>
+パターン2（100回／100,000回とも）：横軸0〜200が高いが（0.2程度）その後急減し，5,000での右端の棒が突出して大きい（0.5前後＝5,000ターン以内に合流できない割合が大きい）。<br>
+パターン3（100,000回）：横軸0〜200が最も高く0.35程度で，ターン数が増えるにつれて滑らかに減少し，右端（5,000）の棒はごく小さい。<br>
+パターン3（100回＝空欄<span class="blank">ス</span>）：100,000回と同様の減少傾向だが，試行回数が少ない分ばらつきが大きい。<br>
+パターン4（100回／100,000回とも）：横軸0〜200が高く（0.5程度）その後急減するが，パターン2よりは5,000での右端の棒がやや小さい。
+</div>
+<div class="fig"><div class="fig-cap">スの解答群（グラフの概形）</div>
+⓪　0〜200が0.2程度で最も高い山から緩やかに減少し，1,300〜1,500付近に小さな山があり，右端（5,000）にも小さな棒がある概形。<br>
+①　0〜200が0.25，200〜400が0.3程度で最も高く，その後急激に減少して1,000以降はほぼ0に近づき，右端の棒もごく小さい概形。<br>
+②　0〜200が0.22程度で最も高いが，その後は緩やかに減少しながら5,000付近まで小さな棒が広く分布して続く概形。<br>
+③　200〜400に0.48程度の突出した山があり，それ以外はほぼ0に近く，右端（5,000）にも0.1程度の棒がある概形。
+</div>`,
+      qtext:`空欄<span class="blank">ス</span>に当てはまるグラフとして最も適当なものを，⓪〜③のうちから一つ選べ。`,
+      choices:["⓪の概形","①の概形","②の概形","③の概形"],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`パターン1，2，4の「シミュレーション100回」のグラフと「シミュレーション100,000回」のグラフを比較すると，5,000ターン以内に合流できた場合は，ともにターン数（横軸の数値）が少ない方が割合（縦軸の数値）が大きい傾向にあり，かつ「100回」の方が「100,000回」よりばらつきが大きいことがわかる。この特徴はパターン3でも同様であると考えられる。また，パターン3の「100,000回」のグラフは，ターン数が1〜200回の割合が0.35程度で最も大きく，ターン数が増えると徐々に小さくなっている。これらの情報をもとに最も適当なグラフを推定すると，①となる。`
+      }
+    },
+    {
+      label:"c（セ）", points:2, type:"single",
+      qtext:`表1から読み取れることとして，最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "パターン1からパターン4のいずれのシミュレーションにおいても，半分以上の割合で1,000ターン以内に合流できている。",
+        "パターン2において5,000ターン以内に合流できない割合はシミュレーション100回よりも100,000回の方が小さくなっており，繰り返しの回数を増やせばさらに小さくなる。",
+        "1人だけが移動するパターン1とパターン3を比較すると，グラフの形状に大きな差は見られず，どちらも合流にかかる時間は同じ程度である。",
+        "2人とも移動するパターン2とパターン4を比較すると，パターン4の方が早く合流できている割合が大きい。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`⓪誤り。すべてのパターンのシミュレーションにおいて半分以上の割合で1,000ターン以内に合流できているとはいえない。①誤り。パターン2において5,000ターン以内に合流できない割合が「100回」より「100,000回」の方が小さいのは，「100回」の方がばらつきが大きいことによる偶然の可能性がある。よって，繰り返しの回数を増やせば5,000ターン以内に合流できない割合が小さくなるかどうかはわからない。②誤り。パターン1と3の「100,000回」のグラフを比較すると，ターン数（横軸の数値）が少ない方が割合（縦軸の数値）が大きい傾向であるのは同じだが，200ターン以内に合流できる割合に10ポイント程度の差がある。また，パターン3では，2,000ターン以降に合流できる割合がほとんどないのに対し，パターン1では，4,800ターンまで確認できる。よって，パターン1と3で合流にかかる時間は同じ程度であるとはいえない。③正しい。パターン2では，200ターン以内に合流できる割合が20％程度かつ5,000ターン以内に合流できない割合が50％程度あるのに対し，パターン4では200ターン以内に合流できる割合が50％程度である。よってパターン4の方が早く合流できている割合が大きい。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"すべてのパターンで半分以上が1,000ターン以内とはいえない。"},
+          {label:"① 誤り",ok:false,text:"回数を増やせばさらに小さくなるかは，このデータだけでは分からない。"},
+          {label:"② 誤り",ok:false,text:"200ターン以内の割合や2,000ターン以降の分布に差があり，同程度とはいえない。"},
+          {label:"③ 正しい（正解）",ok:true,text:"パターン4は200ターン以内の合流割合が明確に大きい。"}
+        ]
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : '不正解';
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i);
+    if (ok) { correct++; points += it.points; }
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?it.points:0}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第1問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+build();
+</script>
+</body>
+</html>

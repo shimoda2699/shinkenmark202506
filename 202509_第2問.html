@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2025年9月｜第2問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .sub-title{background:#5a7ab0;color:#fff;font-weight:700;font-size:.85rem;padding:6px 14px;border-radius:6px;margin:18px 0 10px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年9月（ベネッセ・駿台マーク模試）｜第2問（配点30）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+const sections = [
+
+// ───────── A：文化祭・著作権・音声データ量 ─────────
+{
+  title: "A　ある高校の文化祭では，文化祭実行委員会が管理・運営を任されている。ステージ発表についての，次の実行委員の会話文を読み，問い（問1〜5）に答えよ。",
+  context: `
+<p>委員長：ステージ発表者の募集は初めての試みだったけど，応募がたくさんあってよかったね。<br>
+委員A：そうですね。応募数は全部で30組でした。1組当たりの持ち時間は，入れ替え時間も含めて10分です。この段取りなら，抽選なしですべての組が発表できます。コピーバンド（他者の曲を演奏するグループ）が多いんですけど，使う楽曲の著作権などは大丈夫でしょうか。<br>
+委員長：文化庁の資料（図1）で確認したけど，文化祭で著作権が発生する楽曲を使用することは，<u class="point">(A)一定の範囲であれば著作権者の了解なしに利用できる</u>場合に当てはまるから大丈夫みたいだよ。でも念のため，先生に確認しておくね。</p>
+<div class="fig">
+<div class="fig-cap">図1　文化祭，部活動などでの上演等における著作物利用のルール（第38条第1項）（出典：文化庁「学校における教育活動と著作権（令和5年度改訂版）」により作成）</div>
+▶どうすれば自由に利用できる？<br>
+①作品を利用する行為が上演，演奏，上映，口述（朗読など）のいずれかであること<br>
+②既に公表された著作物であること<br>
+③営利を目的としないこと<br>
+④聴衆又は観客から鑑賞のための料金等を取らないこと<br>
+⑤演奏したり，演じたりする者に報酬が支払われないこと<br>
+⑥原則として著作物の題名，著作者名などの「出所の明示」をすること
+</div>
+<p>委員B：来年のステージ発表のために，生徒会用として一時的に音源だけ記録しておこうと思います。ただ，記録用に500 MBのメモリーカードしかないので，容量に不安があるのですが。<br>
+委員長：そうだね。音声だけなら映像も記録するよりは容量が抑えられると思うけど，実際どれくらいの容量なのか計算してみようか。標準音質で録音すると<u class="point">(B)サンプリング周波数が44100 Hz</u>，量子化ビット数が16ビット，<u class="point">(C)チャンネル数が2</u>，これを全部掛け合わせたものがビットレートだよ。ビットレートに秒数を掛けるとデータ量が求められるから，長さが1分で圧縮していない音声データなら約<span class="blank">X</span>MBになるってことだね。この場合のビットレートは，パソコンでもこのように（図2），簡単に確認できるよ。</p>
+<div class="fig"><div class="fig-cap">図2　パソコン上に示された標準音質のビットレート</div>オーディオ ビットレート　1411 kbps</div>
+<p>委員A：へー，そうなんですね！　でも，その設定だとすべての組の発表を記録するには500 MBじゃ容量が足りないんじゃないですか？<br>
+委員長：そうだね。だから，明らかに音質が悪いと感じられない程度にビットレートを下げればいいんだよ。試しに今から少しずつビットレートを下げて音を出すから，音質が悪くなったと感じたところで教えてね。（少しずつビットレートを下げて音を出す）<br>
+委員A：96 kbpsで急に悪くなった気がします。<br>
+委員B：私は96 kbpsではそんなに気にならなかったけど，64 kbpsになると音質が悪くなったと感じました。</p>
+<div class="fig"><div class="fig-cap">表1　委員Aと委員Bが感じたビットレートごとによる音質</div>
+<table>
+<tr><th></th><th>64 kbps</th><th>96 kbps</th><th>128 kbps</th><th>160 kbps</th><th>192 kbps</th><th>320 kbps</th></tr>
+<tr><td>委員A</td><td>×</td><td>×</td><td>○</td><td>○</td><td>○</td><td>○</td></tr>
+<tr><td>委員B</td><td>×</td><td>△</td><td>○</td><td>○</td><td>○</td><td>○</td></tr>
+</table>
+○：音質に問題なし　△：音質に気になる点がある　×：音質が悪い</div>
+<p>委員長：2人とも128 kbpsなら問題なく聞こえるってことだから，ビットレートの下限は128 kbpsか。<br>
+委員A：でもせっかくならメモリーカードに収まる程度に，よい音質で録音したいですよね。<br>
+委員長：そうだね。改めて聞くけど，音のデータ量はどうやって求められる？<br>
+委員B：もう大丈夫です！　「ビットレート×秒数」で求められます！<br>
+委員長：正解。最後にビットからバイトへの変換も忘れずにね！<br>
+委員A：はい。500 MBのメモリーカードの容量をオーバーせず，10分ずつ30組分を録音するためには，表1のビットレートのうち一番高い<span class="blank">Y</span>kbpsで録音するようにマニュアルに書いておきます。<br>
+委員長：よろしく。初めてのステージ発表，成功させるぞー！<br>
+全員：おー！</p>`,
+  items: [
+    {
+      label:"問1（ア）", points:3, type:"single",
+      qtext:`学校の文化祭の運営方法において，図1の観点から，下線部(A)のような利用が認められないと判断できる記述を過不足なく含むものを，後の⓪〜⑨のうちから一つ選べ。<br><br>
+a　参加者に配る文化祭のパンフレットには，原曲と作曲者の情報を掲載する。<br>
+b　原曲とコピーバンドの演奏の両方を収録した音源を有償で配布する。<br>
+c　他校で人気のコピーバンドを，謝礼を支払って招く。<br>
+d　一般の来場者からは入場料を受け取るが，生徒や保護者は入場無料にする。`,
+      choices:["a，b","a，c","a，d","b，c","b，d","c，d","a，b，c","a，b，d","a，c，d","b，c，d"],
+      correct:9,
+      exp:{
+        answer:"⑨（b，c，d）",
+        text:`aは，図1の①〜⑥に反しているとはいえないため，利用が認められないとは判断できない。bは，原曲とコピーバンドの演奏の両方を収録した音源を有償で配布することは営利目的にあたり，図1の③に反する。cは，他校のバンドに謝礼を支払うことは，図1の⑤に反する。dは，一般の来場者から入場料を受け取ることは，図1の④に反する。したがって，利用が認められないと判断できるものはb，c，dであるから，正解は⑨である。`,
+        options:[
+          {label:"a：問題なし",ok:false,text:"パンフレットへの原曲・作曲者情報の掲載は出所の明示にあたり適切。"},
+          {label:"b：認められない",ok:true,text:"有償配布は「営利を目的としないこと」に反する。"},
+          {label:"c：認められない",ok:true,text:"謝礼の支払いは「報酬が支払われないこと」に反する。"},
+          {label:"d：認められない",ok:true,text:"一般来場者からの入場料徴収は「料金等を取らないこと」に反する。"}
+        ]
+      }
+    },
+    {
+      label:"問2（イ）", points:3, type:"single",
+      qtext:`下線部(B)について，サンプリング周波数とは，音をデジタル化する際に，1秒間に標本化する回数のことである。サンプリング周波数を，標準である44100 Hzから96000 Hzに変更して録音するとき，変更後のデータについて述べたこととして，最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "標本化周期が短くなり，元のデータよりもデータ量が減る。",
+        "標本化周期が短くなり，元のデータよりもデータ量が増える。",
+        "標本化周期が長くなり，元のデータよりもデータ量が減る。",
+        "標本化周期が長くなり，元のデータよりもデータ量が増える。"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`サンプリング周波数とは，「1秒間に標本化する回数のこと」であるから，サンプリング周波数が大きくなるほど標本化周期は短くなる。また，会話文から「サンプリング周波数，量子化ビット数，チャンネル数を全部掛け合わせたものがビットレートで，ビットレートに秒数を掛けるとデータ量が求められる」ことがわかる。そのため，サンプリング周波数が大きくなるとデータ量も大きくなる。よって正解は①である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"データ量は増える方向に変化する。"},
+          {label:"① 正しい（正解）",ok:true,text:"周波数増加→標本化周期は短く，データ量は増える。"},
+          {label:"② 誤り",ok:false,text:"標本化周期は短くなる。"},
+          {label:"③ 誤り",ok:false,text:"標本化周期は短くなる。"}
+        ]
+      }
+    },
+    {
+      label:"問3（ウ）", points:3, type:"single",
+      qtext:`下線部(C)について，チャンネル数とは，音の発生源の数を示す数値である。デジタルデータの音源を，チャンネル数を増やして録音・再生することで，人間の耳に聞こえる音質にはどのような効果があると考えられるか。最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "低音域の音がより強調され，低い音が明瞭に聞こえる。",
+        "高音域の音がより強調され，高い音が明瞭に聞こえる。",
+        "音波の相殺作用が得られ，よりノイズの少ない音に聞こえる。",
+        "立体的な音響効果が得られ，より臨場感のある音に聞こえる。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`問題文から「チャンネル数とは，音の発生源の数」であることがわかる。チャンネル数の増加は発生源の数の増加を意味するため，特定の音域の音の強調に直接影響しない。また，発生源の数を増やしたとしても，音波の相殺は生じない。一方で，発生源の数の増加によって，様々な音が届けられる。そのため，立体的な音響効果が得られる。よって正解は③である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"特定音域の強調には直接関係しない。"},
+          {label:"① 誤り",ok:false,text:"特定音域の強調には直接関係しない。"},
+          {label:"② 誤り",ok:false,text:"音波の相殺作用は生じない。"},
+          {label:"③ 正しい（正解）",ok:true,text:"発生源が増えることで立体的な音響効果が得られる。"}
+        ]
+      }
+    },
+    {
+      label:"問4（エ・オ）", points:4, type:"digits", blanks:2, correctDigits:['1','1'], suffixText:"MB",
+      qtext:`問題文中の<span class="blank">X</span>に当てはまる2桁の数字を，空欄<span class="blank">エ</span><span class="blank">オ</span>にマークせよ。ただし，1 MB＝1000 kB，1 kB＝1000 Bとし，小数点以下は切り上げて答えよ。また，1 kbpsは1秒間に1000ビットのデータを送受信できることを示す。`,
+      exp:{
+        answer:"11",
+        text:`会話文で「ビットレートに秒数を掛けるとデータ量が求められる」とあり，さらに図2からビットレートは1411 kbpsであることがわかる。よって，長さが1分（60秒）のデータ量は，1411 kbps×60秒＝84660 kbであり，これをMBになおすと，1 Byte＝8ビットであるから，84660 kb÷8÷1000＝10.5825 MBとなる。小数点以下を切り上げて，約11 MBとなる。`
+      }
+    },
+    {
+      label:"問5（カ）", points:2, type:"single",
+      qtext:`問題文中の<span class="blank">Y</span>に当てはまるものとして，最も適当なものを，次の⓪〜③のうちから一つ選べ。ただし，1 Mbps＝1000 kbpsとし，メモリーカードには，入れ替え時間も含めてすべての組の持ち時間を記録するものとする。`,
+      choices:["128","160","192","320"],
+      correct:2,
+      exp:{
+        answer:"②（192）",
+        text:`会話文から，メモリカードの容量は500 MB，音のデータ量は「ビットレート×秒数」で求められること，録音時間は（30組×10分＝）300分であることがわかる。この容量に収めるためのビットレートの最大値は，500×8（Mビット）÷（300×60）（秒）≒0.222（Mbps）である。0.222（Mbps）＝222（kbps）であるため，表1のビットレートのうち，この値を超えない最も高い値は192である。よって正解は②である。`
+      }
+    }
+  ]
+},
+
+// ───────── B：ネットワーク ─────────
+{
+  title: "B　次の文章を読み，後の問い（問1〜3）に答えよ。",
+  context: `
+<p>　コンピュータでインターネットにアクセスし，さまざまな情報を得ることができるのは，世界中のネットワーク上の機器が連携し，データが届けられる仕組みになっているからである。また，Webページを閲覧する際，パソコン内部では図3のように<u class="point">(a)五大装置が互いに連携してデータを処理している</u>。</p>
+<div class="fig"><div class="fig-cap">図3　五大装置のデータと制御の流れ</div>
+CPU（中央処理装置）＝制御装置・演算装置。制御装置は入力装置・出力装置・主記憶装置・補助記憶装置すべてに制御（命令）の流れを送り，演算装置とはデータの流れでつながる。入力装置→主記憶装置→出力装置の順にデータの流れがあり，主記憶装置と補助記憶装置の間にもデータの流れ（記憶装置）がある。</div>
+<p>　Webページにアクセスする際，ブラウザに指定されたURLには，Webサーバの住所にあたるドメイン名が含まれている。例えば，URL「https://www.example.com/top/index.html」の場合，「example.com」がドメイン名にあたる。<u class="point">(b)ユーザのコンピュータはホスト名＋ドメイン名に対応するIPアドレスをDNSサーバに問い合わせ，DNSサーバはwww.example.comに対応するサーバのIPアドレスを返す</u>。返されたIPアドレスに対応するWebサーバにアクセスすることで，Webページのデータが取得される仕組みである。</p>
+<p>　また，ドメイン名はメールアドレスの「@」以降にも使われ，DNSサーバはドメイン名に対応するメールサーバのIPアドレスなどを返す。一般的に，ドメイン名は組織名等を含んでおり，人間にとって理解しやすい形式である。一方，IPアドレスはコンピュータにとって理解しやすいものである。</p>
+<p>　インターネットの通信では，一般的に「パケット交換方式」が用いられており，通信データを小さなパケットに分けて送受信する。この方式により，特定のユーザが通信回線を占有することなく，多くのユーザで回線を共有することが可能である。多くの通信事業者は「ベストエフォート方式」を採用しており，技術規格上の最大速度を目指しつつも，実際の通信速度は回線の利用状況によって変動する。そのため，<u class="point">(c)同じ回線を多くの人が利用している時間帯では，通信速度が低下することがある</u>。</p>`,
+  items: [
+    {
+      label:"問1（キ）", points:2, type:"single",
+      qtext:`下線部(a)について，Webページを閲覧する際の処理と，その処理を行う装置の組合せとして最も適当なものを，後の⓪〜⑤のうちから一つ選べ。<br><br>
+A　Webページの表示に必要な数値計算やデータ処理を行う。<br>
+B　プログラムを解釈し，各装置に制御信号（命令）を出す。<br>
+C　Webページの内容をディスプレイに出力したり，スピーカーから音声を出力したりする。<br>
+D　Webページのデータや一時ファイルを保存し，ユーザが再度ページを開く際に迅速に表示するためにキャッシュとして利用する。<br>
+E　ユーザがURLを入力したり，検索バーに語句を入力したり，ボタンをクリックしたりする。`,
+      choices:[
+        "入力装置C／記憶装置A／制御装置B／演算装置D／出力装置E",
+        "入力装置C／記憶装置A／制御装置D／演算装置B／出力装置E",
+        "入力装置C／記憶装置D／制御装置B／演算装置A／出力装置E",
+        "入力装置E／記憶装置B／制御装置A／演算装置D／出力装置C",
+        "入力装置E／記憶装置B／制御装置D／演算装置A／出力装置C",
+        "入力装置E／記憶装置D／制御装置B／演算装置A／出力装置C"
+      ],
+      correct:5,
+      exp:{
+        answer:"⑤",
+        text:`A：「数値計算やデータ処理を行う」ことから，演算装置であることがわかる。B：「各装置に制御信号（命令）を出す」ことから，制御装置であることがわかる。C：「出力」という表現から，出力装置であることがわかる。D：「データや一時ファイルを保存」や「キャッシュ」という表現から，記憶装置であることがわかる。E：「入力」という表現から入力装置であることがわかる。よって正解は⑤である。`
+      }
+    },
+    {
+      label:"問2（ク）", points:2, type:"single",
+      pre:`<p>下線部(b)について，次の文章を読み，空欄<span class="blank">ク</span>〜<span class="blank">コ</span>に入れるのに最も適当なものを，解答群から一つずつ選べ。</p>
+<p>図4のようなネットワーク構成があるとする。DNSサーバで保持しているホスト名＋ドメイン名とIPアドレスとの対応関係は表2のとおりである。組織内のネットワークのみで通信可能なIPアドレスを「プライベートIPアドレス」といい，インターネット上で使われるIPアドレスを「グローバルIPアドレス」という。一般的に，ルータにはLAN側にプライベートIPアドレス，WAN側にグローバルIPアドレスの両方が設定されている。LAN内の端末からインターネットにアクセスする際は，アドレス変換機能を用いてプライベートIPアドレスをルータのグローバルIPアドレスに変換してから，接続先のサーバにアクセスしなければならない。なお，本問においては，図4の「172.16」や「10.」で始まるIPアドレスをグローバルIPアドレスとして使用する。</p>
+<div class="fig"><div class="fig-cap">図4　ネットワーク構成（Webサーバ）</div>
+LAN内：端末α（プライベートIPアドレス 192.168.1.2），端末β（プライベートIPアドレス 192.168.1.3）→ルータ（LAN側プライベートIPアドレス 192.168.1.1／WAN側グローバルIPアドレス 172.16.100.1）→インターネット→DNSサーバ（グローバルIPアドレス 10.1.0.1）／WEBサーバA（グローバルIPアドレス 10.1.0.2）／WEBサーバB（グローバルIPアドレス 172.16.1.1）</div>
+<div class="fig"><div class="fig-cap">表2　ホスト名＋ドメイン名とIPアドレスの対応表</div>
+<table>
+<tr><th>ホスト名＋ドメイン名</th><th>IPアドレス</th></tr>
+<tr><td>www.koukou.example.jp</td><td>10.1.0.2</td></tr>
+<tr><td>www.daigaku.example.jp</td><td>10.1.0.2</td></tr>
+<tr><td>www.example.com</td><td>172.16.1.1</td></tr>
+<tr><td>www.yobikou.example.jp</td><td>172.16.1.1</td></tr>
+</table></div>
+<p>端末αでWebページ「https://www.example.com/top/index.html」を閲覧するときの処理の流れは，次のとおりとなる。</p>
+<p>処理1　端末αは，設定されているDNSサーバ（ルータ）にWebページのURLを問い合わせる。<br>
+処理2　ルータは，端末αからの問い合わせに含まれる送信元IPアドレスを<span class="blank">ク</span>に変換し，ルータに設定してあるDNSサーバに問い合わせる。<br>
+処理3　DNSサーバは，ホスト名＋ドメイン名とIPアドレスの対応表をもとにして，問い合わせに対するIPアドレスを返す。表2より，WebページのIPアドレスは<span class="blank">ケ</span>であるから，<span class="blank">ケ</span>を，問い合わせを送ってきた<span class="blank">ク</span>に返す。<br>
+処理4　ルータは，受け取った情報を送信元であるIPアドレス<span class="blank">コ</span>に返す。</p>
+<p>その後，端末αは，IPアドレス<span class="blank">ケ</span>に対してWebページのデータを要求し，Webサーバからデータを受け取る。</p>`,
+      qtext:`空欄<span class="blank">ク</span>に当てはまるものを選べ。（解答群はク・ケ・コで共通）`,
+      choices:["10.1.0.1","10.1.0.2","172.16.1.1","172.16.100.1","192.168.1.1","192.168.1.2","192.168.1.3"],
+      correct:3,
+      exp:{
+        answer:"ク＝③（172.16.100.1）",
+        text:`問題文から「プライベートIPアドレスをルータのグローバルIPアドレスに変換してから，接続先のサーバにアクセスしなければならない」ことがわかる。そのため，クに当てはまるのは，ルータのグローバルIPアドレスであるから，正解は③である。`
+      }
+    },
+    {
+      label:"問2（ケ）", points:2, type:"single",
+      qtext:`空欄<span class="blank">ケ</span>に当てはまるものを選べ。`,
+      choices:["10.1.0.1","10.1.0.2","172.16.1.1","172.16.100.1","192.168.1.1","192.168.1.2","192.168.1.3"],
+      correct:2,
+      exp:{
+        answer:"ケ＝②（172.16.1.1）",
+        text:`「処理3」では，DNSサーバは「www.example.com」に対応するIPアドレスを，送信元として認識しているグローバルIPアドレス宛に返している。表2より，「www.example.com」に対応するIPアドレスは「172.16.1.1」であるから，ケに当てはまるのは「172.16.1.1」であり，正解は②である。`
+      }
+    },
+    {
+      label:"問2（コ）", points:2, type:"single",
+      qtext:`空欄<span class="blank">コ</span>に当てはまるものを選べ。`,
+      choices:["10.1.0.1","10.1.0.2","172.16.1.1","172.16.100.1","192.168.1.1","192.168.1.2","192.168.1.3"],
+      correct:5,
+      exp:{
+        answer:"コ＝⑤（192.168.1.2）",
+        text:`「処理4」では，DNSサーバからの応答をルータが受け取り，元の送信者である端末αに返すことが行われている。端末αのプライベートIPアドレスは図4から「192.168.1.2」とわかるため，コに当てはまるのは「192.168.1.2」であり，正解は⑤である。`
+      }
+    },
+    {
+      label:"問3（サ・シ）", points:3, type:"digits", blanks:2, correctDigits:['1','6'], suffixText:"％",
+      qtext:`下線部(c)について，bpsは通信速度を表す単位であり，1秒間に送受信できるデータ量を意味する。1 bpsは1秒間に1ビットのデータを送受信できることを示している。次の文章を読み，空欄<span class="blank">サ</span><span class="blank">シ</span>・<span class="blank">ス</span>に当てはまる数字をマークせよ。ただし，1 Gbps＝1000 Mbps，1 MB＝1000 kB，1 kB＝1000 Bとする。<br><br>
+通信事業者が提示した最大通信速度が1 Gbpsだったのに対して，ある時間帯の速度を調べると160 Mbpsであった。この場合，最大通信速度に対して，<span class="blank">サ</span><span class="blank">シ</span>％の通信速度であることになる。`,
+      exp:{
+        answer:"16（％）",
+        text:`最大通信速度は1 Gbps（1000 Mbps）であるため，実測値が160 Mbpsであれば，最大通信速度の（160÷1000）×100＝16（％）であることがわかる。よってサ＝1，シ＝6である。`
+      }
+    },
+    {
+      label:"問3（ス）", points:4, type:"digits", blanks:1, correctDigits:['3'], suffixText:"秒",
+      qtext:`また，160 Mbpsの通信速度で60 MBのデータを受信する場合，<span class="blank">ス</span>秒かかることになる。`,
+      exp:{
+        answer:"3（秒）",
+        text:`60 MB（＝480 Mビット）のデータを，160 Mbpsで受信する場合，所要時間は，480÷160＝3（秒）となる。`
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          ${it.hideBadgePoints ? '' : `<span class="q-point">${it.points}点</span>`}
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : '不正解';
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i);
+    if (ok) { correct++; points += it.points; }
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?it.points:0}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第2問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+build();
+</script>
+</body>
+</html>

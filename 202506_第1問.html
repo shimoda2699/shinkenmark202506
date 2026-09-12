@@ -81,33 +81,6 @@
   .mock-dialog .btn-row{display:flex;gap:10px;justify-content:center;margin-top:10px;}
   .mock-dialog .mock-btn{border:1.5px solid var(--text);border-radius:4px;padding:4px 14px;background:var(--bg);font-weight:700;}
   @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
-
-  /* トップページへ戻るボタン */
-  .back-to-index-wrap{
-    max-width:800px;
-    margin:14px auto;
-    padding:0 16px;
-    text-align:left;
-  }
-  .back-to-index-wrap.bottom{
-    margin:28px auto 36px;
-    text-align:center;
-  }
-  .back-to-index-btn{
-    display:inline-block;
-    background:var(--primary,#1a56a0);
-    color:#fff;
-    text-decoration:none;
-    padding:8px 18px;
-    border-radius:8px;
-    font-weight:700;
-    font-size:.88rem;
-    box-shadow:0 2px 8px rgba(0,0,0,.12);
-  }
-  .back-to-index-btn:hover{
-    background:#154080;
-  }
-
 </style>
 </head>
 <body>
@@ -119,12 +92,8 @@
     <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
   </div>
 </header>
-<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
-
 
 <main id="quiz-area"></main>
-<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
-
 
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal">

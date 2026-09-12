@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2025年9月｜第4問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.82rem;}
+  .context th,.context td{border:1px solid var(--border);padding:5px 7px;text-align:center;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}.context table{font-size:.72rem;}}
+
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年9月（ベネッセ・駿台マーク模試）｜第4問（配点25）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+const sections = [
+
+{
+  title: "第4問　次の文章を読み，後の問い（問1〜6）に答えよ。",
+  context: `
+<p>　近畿地方に住んでいるAさんの家に，北海道に住んでいる親戚のBさんが遊びに来た。2人は一緒に食事をしている。</p>
+<p>Aさん：私の周りでは，魚はブリを食べる人が多いよ。近畿地方の人は，他の地域の人よりもブリをよく食べているんじゃないかな？<br>
+Bさん：そうなんだ。北海道では，サケを食べる人の方が多いと思うよ。<br>
+Aさん：住んでいる地域によって，よく食べる魚に違いがあるのかもね。<br>
+Bさん：そういえば，学校の探究活動で地域ごとの魚介類への支出金額のデータを扱う予定だよ。そのデータをちょうど紙で持っているのだけど，見てくれるかな。</p>
+<p>　Bさんが見せたデータを次の表1，表2に示している。これらは総務省が公表している家計調査をもとに，都道府県庁所在地47市および政令指定都市（都道府県庁所在地を除く）5市の合計52市について，魚介類の「2人以上1世帯当たり年間支出金額（以下，支出金額とし，単位は円とする。）」をまとめたもので，日本の東側の26市の支出金額が表1，西側の26市の支出金額が表2に記載されている（表は一部を抜粋）。なお，「その他」は，表に記載されている6種類の魚介類以外の魚介類の合計である。</p>
+<div class="fig"><div class="fig-cap">表1　東側26市の魚介類の支出金額（円）（抜粋）</div>
+<table><tr><th></th><th>マグロ</th><th>カツオ</th><th>サケ</th><th>タイ</th><th>ブリ</th><th>カニ</th><th>その他</th></tr>
+<tr><td>札幌市</td><td>4,210</td><td>1,013</td><td>7,109</td><td>637</td><td>963</td><td>2,221</td><td>20,845</td></tr>
+<tr><td>青森市</td><td>3,856</td><td>1,069</td><td>5,209</td><td>438</td><td>1,186</td><td>1,367</td><td>20,568</td></tr>
+<tr><td>浜松市</td><td>6,855</td><td>2,508</td><td>4,229</td><td>664</td><td>1,962</td><td>1,278</td><td>16,527</td></tr>
+<tr><td>名古屋市</td><td>5,037</td><td>1,096</td><td>5,109</td><td>1,036</td><td>2,548</td><td>1,273</td><td>20,039</td></tr>
+<tr><td colspan="8" style="color:var(--muted)">（ほか東側22市，計26市分のデータが続く）</td></tr>
+</table></div>
+<div class="fig"><div class="fig-cap">表2　西側26市の魚介類の支出金額（円）（抜粋）</div>
+<table><tr><th></th><th>マグロ</th><th>カツオ</th><th>サケ</th><th>タイ</th><th>ブリ</th><th>カニ</th><th>その他</th></tr>
+<tr><td>津市</td><td>5,649</td><td>1,916</td><td>5,131</td><td>691</td><td>4,270</td><td>1,523</td><td>20,856</td></tr>
+<tr><td>大津市</td><td>4,034</td><td>1,339</td><td>4,957</td><td>1,617</td><td>3,443</td><td>1,331</td><td>25,063</td></tr>
+<tr><td>鹿児島市</td><td>2,079</td><td>1,364</td><td>5,025</td><td>1,704</td><td>2,913</td><td>893</td><td>16,429</td></tr>
+<tr><td>那覇市</td><td>4,214</td><td>651</td><td>4,349</td><td>777</td><td>1,065</td><td>247</td><td>13,394</td></tr>
+<tr><td colspan="8" style="color:var(--muted)">（ほか西側22市，計26市分のデータが続く）</td></tr>
+</table></div>`,
+  items: [
+    {
+      label:"問1（ア）", points:3, type:"single",
+      qtext:`Aさんは，表1と表2のデータから次のような仮説を考えた。表1と表2のデータだけからは<b>分析できない仮説</b>を，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "東側26市において，マグロの支出金額が多い市は，カニの支出金額も多くなる傾向があるのではないか。",
+        "西側26市において，ブリの支出金額が多い市は，サケの支出金額が少なくなる傾向があるのではないか。",
+        "東側26市と西側26市において，魚介類の支出金額は一年間に刺身を食べる回数と相関があるのではないか。",
+        "魚介類の支出金額は，東側26市と西側26市とで差がないのではないか。"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`表1と表2の項目に注目して，各選択肢が何の項目について言及しているのかを判断する。⓪は正しい。東側の地域におけるマグロとカニの支出金額の関係性についての仮説であり，これらのデータは表1に含まれるため，表1と表2のデータだけから分析できる仮説といえる。①は正しい。西側の地域におけるブリとサケの支出金額の関係性についての仮説であり，これらのデータは表2に含まれるため，分析できる仮説といえる。②は誤り。魚介類の支出金額と刺身を食べる回数の関係性についての仮説であるが，刺身を食べる回数は表1と表2に含まれないため，表1と表2のデータだけからは分析できない仮説である。③は正しい。東側の地域と西側のそれの関係性についての仮説であり，これらのデータは表1と表2に含まれるため，分析できる仮説といえる。よって，正解は②である。`,
+        options:[
+          {label:"⓪ 分析できる",ok:false,text:"マグロとカニはともに表1に含まれる項目。"},
+          {label:"① 分析できる",ok:false,text:"ブリとサケはともに表2に含まれる項目。"},
+          {label:"② 分析できない（正解）",ok:true,text:"「刺身を食べる回数」は表1・表2に含まれないデータ。"},
+          {label:"③ 分析できる",ok:false,text:"東側と西側の比較は表1・表2から可能。"}
+        ]
+      }
+    },
+    {
+      label:"問2（イ）", points:4, type:"single",
+      pre:`<p>AさんとBさんは，続けて次の会話をしている。下線部(X)のBさんの疑問を検証するのに必要な追加データと分析を述べたi〜ivの記述のうち，空欄に当てはまる記述として<b>適切でないもの</b>をすべて含む組合せを，後の解答群のうちから一つ選べ。</p>
+<p>Bさん：表1と表2のデータを見れば，<u class="point">(X)この52市のそれぞれでよく食べられている魚介類が何かを調べることができるかな？</u><br>
+Aさん：うーん，これらのデータだけでは調べることはできないかもね。「　　　」というような追加のデータ収集と分析が必要なんじゃないかな。<br>
+Bさん：なるほど，確かにそうだね……。とりあえず今はこのデータしかないから，私の疑問を検証する前の予備調査ということで，このデータのみを使っていろいろと分析してみようか。<br>
+Aさん：うん，私も手伝うよ。</p>
+<p>i　今回データを収集した全国52市での魚介類の消費量のデータを収集して，各市で多く消費されている魚介類が何かを分析する<br>
+ii　日本全国の漁港での各魚介類の年間水揚げ量のデータを収集して，各漁港で水揚げされる魚介類の種類と量にどのような違いがあるかを分析する<br>
+iii　今回調査しなかった他の市町村について，各魚介類の支出金額のデータを収集して，それらの各市町村で多く支出されている魚介類が何かを分析する<br>
+iv　「その他」に含まれる魚介類の支出金額を個別に分析する</p>`,
+      qtext:`空欄に当てはまる記述として適切でないものをすべて含む組合せを選べ。`,
+      choices:["i，ii","i，iii","i，iv","ii，iii","ii，iv","iii，iv","i，ii，iii","i，ii，iv","i，iii，iv","ii，iii，iv"],
+      correct:9,
+      exp:{
+        answer:"⑨（ii，iii，iv）",
+        text:`「52市でよく食べられている魚介類が何かを調べることができるか」という魚介類の消費量に関する疑問を検証するための，適切な方法を判断する。iは適切である。各市の魚介類の消費量のデータを比較することで，各市でよく食べられている魚介類が何かを調べることができるため，上記の疑問を検証する方法として適切であるといえる。iiは適切でない。ある漁港で水揚げされたすべての魚介類が，その漁港近くの市ですべて消費されるわけではない。つまり，各漁港の水揚げ量のデータは，各市の消費量との関係性が明確ではない。よって，上記の疑問を検証する方法として適切であるとはいえない。iiiは適切でない。下線部(X)には「この52市のそれぞれでよく食べられている魚介類」とあるので，今回調査しなかった他の市町村についてのデータを持ってくることは適切ではない。また，各魚介類の支出金額のデータを用いても消費量との関係性を明確にすることはできない。ivは適切でない。iiiと同様，「その他」の支出金額の内訳を明らかにしても，消費量との関係性を明確にすることはできない。よって，上記の疑問を検証する方法として適切であるとはいえない。よって，正解は⑨「ii，iii，iv」である。`
+      }
+    },
+    {
+      label:"問3（ウ）", points:3, type:"single",
+      pre:`<p>Aさんは，表1と表2のデータから，マグロの支出金額とブリの支出金額に注目し，それぞれを図1と図2の箱ひげ図にまとめた。ただし，それぞれの箱ひげ図の右側に示した値は中央値である。</p>
+<div class="fig"><div class="fig-cap">図1　マグロの支出金額の分布（五数要約，円）</div>
+<table><tr><th></th><th>最小値</th><th>第1四分位数</th><th>中央値</th><th>第3四分位数</th><th>最大値</th></tr>
+<tr><td>東側26市</td><td>約2,600</td><td>約4,300</td><td>5,445.0</td><td>約7,000</td><td>約10,000</td></tr>
+<tr><td>西側26市</td><td>約1,000</td><td>約1,800</td><td>2,241.5</td><td>約3,700</td><td>約4,700</td></tr></table></div>
+<div class="fig"><div class="fig-cap">図2　ブリの支出金額の分布（五数要約，円）</div>
+<table><tr><th></th><th>最小値</th><th>第1四分位数</th><th>中央値</th><th>第3四分位数</th><th>最大値</th></tr>
+<tr><td>東側26市</td><td>約1,000</td><td>約1,700</td><td>1,964.5</td><td>約2,700</td><td>約7,000</td></tr>
+<tr><td>西側26市</td><td>約1,100</td><td>約2,900</td><td>3,455.0</td><td>約4,000</td><td>約5,100</td></tr></table></div>`,
+      qtext:`これらの図から読み取れることとして最も適当なものを，後の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "東側26市の最小値と西側26市の最小値の差の絶対値は，ブリの支出金額の方がマグロの支出金額より大きい。",
+        "東側26市の中央値と西側26市の中央値の差の絶対値は，マグロの支出金額の方がブリの支出金額より大きい。",
+        "マグロの支出金額が6,000円以上の市の数は，東側26市においては全体の50％より多く，西側26市においては一つもない。",
+        "ブリの支出金額が3,000円未満の市の数は，東側26市においては全体の50％未満であり，西側26市においては全体の25％以上である。"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`⓪誤り。マグロの支出金額の最小値の差の絶対値は約1,500円で，ブリのそれは1,000円未満である。よって，ブリの支出金額の方がマグロの支出金額より，最小値の差の絶対値は小さい。①正しい。マグロの支出金額の中央値の差の絶対値は3,203.5円で，ブリのそれは1,490.5円である。よって，マグロの支出金額の方がブリの支出金額より，中央値の差の絶対値は大きい。②誤り。東側のマグロの支出金額の中央値は5,445円である。よって，東側の市においては，マグロの支出金額が6,000円以上の市の数は全体の50％を超えることはない。③誤り。東側のブリの支出金額の中央値は約1,965円であることから，東側においては，ブリの支出金額が3,000円未満の市の数は全体の50％以上である。なお，西側のブリの支出金額の第1四分位数は3,000円未満であることから，西側においては，ブリの支出金額が3,000円未満の市の数は全体の25％以上である。よって，正解は①である。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"最小値の差はブリの方がマグロより小さい。"},
+          {label:"① 正しい（正解）",ok:true,text:"中央値の差はマグロ（約3,203.5円）の方がブリ（約1,490.5円）より大きい。"},
+          {label:"② 誤り",ok:false,text:"東側マグロの中央値は5,445円で，6,000円以上が50％を超えることはない。"},
+          {label:"③ 誤り",ok:false,text:"東側は中央値が約1,965円なので50％以上，西側も第1四分位数から25％以上が該当し，記述の前半が誤り。"}
+        ]
+      }
+    },
+    {
+      label:"問4 a（エ）", points:4, type:"single",
+      pre:`<p>Bさんは，東側26市について，カツオの支出金額とサケの支出金額の関連を調べることにした。次の図3は，表1について，カツオの支出金額を横軸，サケの支出金額を縦軸にとった散布図に，回帰直線をかき加えたものである。</p>
+<div class="fig"><div class="fig-cap">図3　表1のカツオの支出金額とサケの支出金額の散布図と回帰直線</div>
+横軸：カツオの支出金額（円，500〜3,500）　縦軸：サケの支出金額（円，4,000〜7,500）<br>
+データ点は右下がりの傾向を示しながら散らばっており（カツオが安い市でサケが高額の点が複数ある一方，カツオが高い市でもサケが低めの点がある），回帰直線の式は　<b>y＝－0.3251x＋5841.6</b>　である。</div>`,
+      qtext:`図3から読み取れることとして最も適当なものを，次の⓪〜④のうちから一つ選べ。なお，ここでは，データの範囲を散らばりの度合いとして考えることとする。`,
+      choices:[
+        "サケの支出金額の方がカツオの支出金額より散らばりの度合いが大きいので，これらのデータには正の相関があることがわかる。",
+        "カツオの支出金額の方がサケの支出金額より散らばりの度合いが大きいので，これらのデータには負の相関があることがわかる。",
+        "サケの支出金額が多い市ほど，カツオの支出金額も多い傾向が見られる。",
+        "カツオの支出金額が多い市ほど，サケの支出金額は少ない傾向が見られる。",
+        "サケの支出金額とカツオの支出金額には，相関がない。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`散布図から，データの傾向や各点の値を読み取り，適切に解釈する。⓪誤り。データの散らばりの大小と相関の正負とは関係がない。①誤り。⓪と同様。②誤り。図3の散布図からは，「サケの支出金額が多い市ほど，カツオの支出金額は少ない傾向が見られる」という負の相関が確認できる。③正しい。回帰直線の傾きが負（－0.3251）であることからも，カツオの支出金額が多い市ほどサケの支出金額は少ない傾向にあるとわかる。④誤り。②と同様。よって，正解は③である。`
+      }
+    },
+    {
+      label:"問4 b（オ）", points:3, type:"single",
+      qtext:`この回帰直線の式をもとに，カツオの支出金額が2,800円のときのサケの支出金額を推定し，その一の位を四捨五入した値として最も適当なものを，次の⓪〜⑤のうちから一つ選べ。`,
+      choices:["4,730円","4,830円","4,930円","5,030円","5,130円","5,230円"],
+      correct:2,
+      exp:{
+        answer:"②　4,930円",
+        text:`散布図上の回帰直線の式を正確に理解することが求められている。式はy＝－0.3251x＋5841.6である。カツオの支出金額（x）が2,800円のとき，サケの支出金額（y）は，－0.3251×2800＋5841.6＝4931.32である。よって，一の位を四捨五入すると正解は②「4,930円」である。`
+      }
+    },
+    {
+      label:"問5（カ・キ）", points:4, type:"multi", pick:2,
+      pre:`<p>Aさんは，次の4種類の魚介類（マグロ，サケ，ブリ，カニ）の支出金額の関係も調べてみたいと思った。そこで，統計ソフトウェアを利用して表3のような相関行列を作成した。相関係数は，各項目の組合せについて，全国52市，東側26市，西側26市それぞれのデータから算出した値を掲載している。例えば，サケとマグロの支出金額の相関係数は，全国52市では0.259，東側26市では－0.079，西側26市では0.006である。</p>
+<div class="fig"><div class="fig-cap">表3　全国52市の相関行列</div>
+<table><tr><th></th><th>マグロ</th><th>サケ</th><th>ブリ</th><th>カニ</th></tr>
+<tr><td>マグロ</td><td>－</td><td>－</td><td>－</td><td>－</td></tr>
+<tr><td>サケ</td><td>全 0.259／東 －0.079／西 0.006</td><td>－</td><td>－</td><td>－</td></tr>
+<tr><td>ブリ</td><td>全 －0.437／東 －0.305／西 －0.049</td><td>全 －0.049／東 0.002／西 0.423</td><td>－</td><td>－</td></tr>
+<tr><td>カニ</td><td>全 －0.159／東 －0.319／西 0.355</td><td>全 －0.167／東 －0.119／西 －0.077</td><td>全 0.369／東 0.375／西 0.274</td><td>－</td></tr></table></div>
+<div class="fig"><div class="fig-cap">表4　相関係数と相関の有無</div>
+<table><tr><th>相関係数</th><th>相関の有無</th></tr>
+<tr><td>0.2以上</td><td>正の相関がある</td></tr>
+<tr><td>－0.2より大きく，0.2未満</td><td>相関はない</td></tr>
+<tr><td>－0.2以下</td><td>負の相関がある</td></tr></table></div>`,
+      qtext:`表3から読み取れることとして<b>誤っているもの</b>を，後の⓪〜④のうちから<b>二つ</b>選べ。ただし，解答の順序は問わない。相関係数と相関の有無については，表4のとおりとする。`,
+      choices:[
+        "マグロとカニの支出金額について，西側26市では正の相関があり，東側26市では負の相関があるが，全国52市では相関がない。",
+        "全国52市で相関がある項目の組合せのうち，西側26市と東側26市で分けたデータの両方で相関がある項目の組合せは，ブリとカニの支出金額のみである。",
+        "全国52市，西側26市，東側26市のいずれのデータでも相関がない項目の組合せは，マグロとサケの支出金額のみである。",
+        "ブリとマグロの支出金額について，西側26市では相関がないが，東側26市と全国52市では負の相関がある。",
+        "ブリとサケの支出金額について，正の相関がある西側26市では，ブリとサケを同時に購入する習慣がある人が多い傾向にあるといえる。"
+      ],
+      correctSet:[2,4],
+      exp:{
+        answer:"②・④",
+        text:`相関行列を読み取り，適切に判断することが求められている。⓪正しい。マグロとカニの支出金額の相関係数は，西側では0.355（正の相関がある），東側では－0.319（負の相関がある），全国では－0.159（相関がない）である。①正しい。全国52市で相関がある組合せは，マグロとサケ，マグロとブリ，ブリとカニの支出金額である。このうち，西側と東側で分けたデータの両方で相関がある項目の組合せは，ブリとカニの支出金額のみである。②誤り。全国，西側，東側のいずれのデータでも相関がない項目の組合せは，サケとカニの支出金額のみであり，マグロとサケの組合せではない。③正しい。ブリとマグロの支出金額の相関係数は，西側では－0.049（相関がない），東側では－0.305（負の相関がある），全国では－0.437（負の相関がある）である。④誤り。西側でのブリとサケの支出金額の相関係数は0.423（正の相関がある）であるが，これは，ブリの支出金額が大きい市ほどサケの支出金額が大きいことを意味するのみで，同時に購入する習慣がある人が多いかどうかまでは把握できない。よって，正解は②と④である。`,
+        options:[
+          {label:"⓪ 正しい記述",ok:false,text:"数値と相関の有無の対応が正しく記述されている。"},
+          {label:"① 正しい記述",ok:false,text:"両方のデータで相関があるのはブリとカニのみで正しい。"},
+          {label:"② 誤り（正解）",ok:true,text:"相関がない組合せはサケとカニのみであり，マグロとサケではない。"},
+          {label:"③ 正しい記述",ok:false,text:"ブリとマグロの相関係数の符号・値は記述のとおり。"},
+          {label:"④ 誤り（正解）",ok:true,text:"正の相関＝支出額の連動を示すのみで，購入習慣までは読み取れない。"}
+        ]
+      }
+    },
+    {
+      label:"問6（ク）", points:4, type:"single",
+      pre:`<p>Bさんは，全国の都市を7つの地域に分けたとき，魚介類の支出金額にどのような特徴が見られるのかを調べたいと思い，各地域の魚介類全体の支出金額の合計に占める，マグロ，カツオ，サケ，タイ，ブリ，カニ，その他の支出金額の割合を算出し，帯グラフを作成した（図4）。なお，グラフの右端には，各地域の魚介類の支出金額の合計を示している。</p>
+<div class="fig"><div class="fig-cap">図4　各地域の魚介類全体の支出金額の合計に占める各魚介類の支出金額の割合</div>
+<table><tr><th>地域</th><th>マグロ</th><th>カツオ</th><th>サケ</th><th>タイ</th><th>ブリ</th><th>カニ</th><th>その他</th><th>支出金額の合計</th></tr>
+<tr><td>北海道</td><td>11.4%</td><td>2.7%</td><td>19.2%</td><td>1.7%</td><td>2.6%</td><td>6.0%</td><td>56.3%</td><td>36,998円</td></tr>
+<tr><td>東北</td><td>14.6%</td><td>6.0%</td><td>15.0%</td><td>1.7%</td><td>2.6%</td><td>4.8%</td><td>55.4%</td><td>204,748円</td></tr>
+<tr><td>関東</td><td>19.1%</td><td>4.4%</td><td>14.8%</td><td>2.2%</td><td>3.0%</td><td>6.3%</td><td>50.2%</td><td>329,647円</td></tr>
+<tr><td>中部</td><td>14.3%</td><td>3.3%</td><td>13.9%</td><td>2.2%</td><td>8.5%</td><td>4.5%</td><td>53.4%</td><td>374,259円</td></tr>
+<tr><td>近畿</td><td>10.2%</td><td>3.6%</td><td>11.9%</td><td>3.9%</td><td>8.6%</td><td>5.1%</td><td>56.7%</td><td>329,483円</td></tr>
+<tr><td>中国・四国</td><td>6.2%</td><td>6.3%</td><td>13.3%</td><td>4.1%</td><td>10.1%</td><td>4.3%</td><td>55.6%</td><td>315,163円</td></tr>
+<tr><td>九州・沖縄</td><td>5.9%</td><td>2.9%</td><td>13.5%</td><td>5.1%</td><td>9.1%</td><td>3.3%</td><td>60.2%</td><td>313,841円</td></tr></table></div>
+<p>次のi〜ivの記述のうち，図4だけから読み取れることをすべて含む組合せを，後の⓪〜⑨のうちから一つ選べ。</p>
+<p>i　各地域の支出金額の割合は，「その他」を除くと，どの地域でもサケが最も大きい。<br>
+ii　マグロとカツオの支出金額の割合の合計値が15％を超えている地域の数は，そうでない地域の数よりも少ない。<br>
+iii　マグロの支出金額の合計は，東北地域の方が中部地域よりも少ない。<br>
+iv　カニの支出金額の割合は，北海道の方が沖縄県よりも大きい。</p>`,
+      qtext:`i〜ivのうち，図4だけから読み取れることをすべて含む組合せを選べ。`,
+      choices:["i","ii","iii","iv","i，ii","i，iii","i，iv","ii，iii","ii，iv","iii，iv"],
+      correct:7,
+      exp:{
+        answer:"⑦（ii，iii）",
+        text:`帯グラフに示された割合の値と，右端の支出金額の合計に着目する。iは誤り。関東地域や中部地域では，支出金額の割合はマグロが最も大きい。iiは正しい。マグロとカツオの支出金額の割合の合計が15％を超えているのは東北，関東，中部の3つである。よって，15％以下の地域の数よりも少ない。iiiは正しい。マグロの支出金額は，東北地域が204,748円の14.6％，中部地域が374,259円の14.3％であるから，支出金額の合計は東北地域の方が少ない。ivは誤り。沖縄県だけの支出金額の割合は，グラフに掲載されておらず読み取ることができない（図4は「九州・沖縄」地域としてまとめられている）。よって，正解は⑦「ii，iii」である。`
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : '不正解';
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i);
+    if (ok) { correct++; points += it.points; }
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${ok?'○':'✗'}</td><td>${ok?it.points:0}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第4問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+build();
+</script>
+</body>
+</html>
