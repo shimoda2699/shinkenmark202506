@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2024年11月｜第3問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2024年11月（ベネッセ・駿台マーク模試）｜第3問（配点25）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "説明図": {label:"箱の説明図", src:"img/202411_3_q1_boxes.jpg", cap:"箱を選び直すクイズの説明図"},
+  "図1": {label:"図1", src:"img/202411_3_fig1_prog.jpg", cap:"図1　挑戦者が箱を変えなかった場合の確率を求めるプログラム"},
+  "図2": {label:"図2", src:"img/202411_3_fig2_out.jpg",  cap:"図2　図1のプログラムの出力結果"},
+  "図3": {label:"図3", src:"img/202411_3_fig3_prog.jpg", cap:"図3　挑戦者が箱を変えた場合の確率を求めるプログラム"},
+  "図4": {label:"図4", src:"img/202411_3_fig4_out.jpg",  cap:"図4　図3のプログラムの出力結果"}
+};
+
+const SA_SU = [
+  "初めに挑戦者は左の箱を選び，司会者が中央の箱を開けた後で，改めて挑戦者は右の箱を選びなおした",
+  "初めに挑戦者は左の箱を選び，司会者が右の箱を開けた後で，改めて挑戦者は中央の箱を選びなおした",
+  "初めに挑戦者は中央の箱を選び，司会者が右の箱を開けた後で，改めて挑戦者は左の箱を選びなおした",
+  "初めに挑戦者は中央の箱を選び，司会者が左の箱を開けた後で，改めて挑戦者は右の箱を選びなおした",
+  "初めに挑戦者は右の箱を選び，司会者が左の箱を開けた後で，改めて挑戦者は中央の箱を選びなおした",
+  "初めに挑戦者は右の箱を選び，司会者が中央の箱を開けた後で，改めて挑戦者は左の箱を選びなおした"
+];
+const UE = [
+  "当たりかつ挑戦者が選んでいない箱",
+  "当たりまたは挑戦者が選んだ箱",
+  "当たりまたは挑戦者が選んでいない箱",
+  "ハズレかつ挑戦者が選んだ箱",
+  "ハズレまたは挑戦者が選んだ箱",
+  "ハズレまたは挑戦者が選んでいない箱"
+];
+const COND = ["atari == sentaku","atari != sentaku","atari &gt; sentaku","atari &lt; sentaku"];
+const code = s => `<code style="font-family:Consolas,Menlo,monospace;font-size:.9em">${s}</code>`;
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 問1 ─────────
+{
+  title: `問1　次の太郎さんと先生との会話文を読み，空欄${B('ア')}〜${B('オ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。`,
+  context: `
+<p>太郎：昨日のテレビでやっていたクイズなんですけど，解答を聞いてもなんだか納得がいかなかったんです。<br>
+先生：どのような問題だったか覚えていますか？<br>
+太郎：はい。机の上に<b>箱が三つあって，うち一つは当たりで，残り二つはハズレ</b>になっています。ここで，挑戦者はこの箱の中から一つを選択するのですが，<b>挑戦者が一つの箱を選んだあと，司会者は残りの二つの箱から，ハズレの箱を一つ開ける</b>んです。ちなみに，<b>司会者はどの箱が当たりなのかを知っています</b>。<br>
+先生：挑戦者が選ばなかった二つの箱のうち，ハズレの箱が一つわかるということですね。<br>
+太郎：その状態で，挑戦者は改めて残っている二つの箱から選びなおすことができるのです。このとき，挑戦者は選択する箱を変えるべきかどうかというクイズでした。</p>
+${figBox("説明図")}
+<p>先生：なるほど。ちなみに，答えはどちらだと思いましたか？<br>
+太郎：ハズレの箱が一つわかったので，箱を変えても変えなくても当たりの確率は2分の1で同じだと思いました。でも，このクイズの答えは，<b>箱を変えない場合の当たりの確率は3分の1のままで，箱を変えた場合の当たりの確率は3分の2となり，挑戦者は箱を変えるべきだ</b>という話でした。これがどうも納得いかなくて……。<br>
+先生：じゃあ，この問題をプログラミングで確かめてみましょうか。まず，三つの箱について，<b>当たりを1，ハズレを0とした三つの要素をもつ配列</b>で表してみます。ただし，配列の要素は［左の箱，中央の箱，右の箱］の順とします。この場合，配列は全部で何パターンありますか？<br>
+太郎：初期状態としては，[1, 0, 0]，[0, 1, 0]，[0, 0, 1]の3パターンありますね。<br>
+先生：そうですね。ここで，<b>挑戦者が初めに選ぶ箱（配列の一つ）の要素に2を足して</b>みることにします。例えば，[1, 0, 0]の状態から箱を一つ選ぶ場合，[3, 0, 0]，${B('ア')}，[1, 0, 2]の3パターンがあることになります。<br>
+太郎：初期状態が[0, 1, 0]の場合と[0, 0, 1]の場合も考えると，全部で${B('イ')}パターンありますね。<br>
+先生：そのとおりです。では，これらの状態の要素において，0から3の数値はどのような意味を表しているか説明できますか？<br>
+太郎：要素の0はハズレかつ挑戦者が選んでいない箱，1は${B('ウ')}，2は${B('エ')}，3は当たりかつ挑戦者が選んだ箱ということになります。<br>
+先生：はい，そのとおりです。次に，司会者は残りの二つの箱から，ハズレの箱を一つ選んで開けることを考えてみましょう。まず，配列の要素に3を含むパターンでは，司会者は残りの0の要素のうちどちらかの箱を開けることになります。一方，残りのパターンでは，司会者は必ず${B('オ')}を開けることになりますね。<br>
+太郎：なるほど，挑戦者が初めに当たりの箱を選んだ場合は，司会者が開ける箱はランダムに決定されるのに対し，挑戦者がハズレの箱を選んだ場合は，司会者が開ける箱は一つに決まるんですね。</p>`,
+  items: [
+    {
+      label:"ア", points:1, type:"single",
+      qtext:`例えば，[1, 0, 0]の状態から箱を一つ選ぶ場合，[3, 0, 0]，${B('ア')}，[1, 0, 2]の3パターンがあることになります。`,
+      choices:["[0, 1, 2]","[1, 2, 0]","[2, 0, 1]","[2, 1, 0]"],
+      correct:1,
+      exp:{
+        answer:"①（[1, 2, 0]）",
+        text:`会話文から，配列について次のことが読み取れる。<br>・配列は三つの要素をもち，当たりを1，ハズレを0とする。<br>・配列の要素は［左の箱，中央の箱，右の箱］の順とする。<br>・挑戦者が初めに選ぶ箱（配列の一つ）の要素に2を足す。<br>配列[1, 0, 0]（左の箱が当たり）から箱を一つ選ぶとき，左の箱を選んだ場合は[3, 0, 0]，<b>中央の箱を選んだ場合は[1, 2, 0]</b>，右の箱を選んだ場合は[1, 0, 2]となる。`
+      }
+    },
+    {
+      label:"イ", points:1, type:"single",
+      qtext:`初期状態が[0, 1, 0]の場合と[0, 0, 1]の場合も考えると，全部で${B('イ')}パターンありますね。`,
+      choices:["5","6","9","12"],
+      correct:2,
+      exp:{
+        answer:"②（9パターン）",
+        text:`三つの初期状態に対して，挑戦者が箱を一つ選ぶすべてのパターンは次のとおり。
+<table style="border-collapse:collapse;margin:8px 0;font-size:.82rem;text-align:center;width:100%">
+<tr><th style="border:1px solid #ccc;padding:4px">初期状態</th><th style="border:1px solid #ccc;padding:4px">左を選ぶ</th><th style="border:1px solid #ccc;padding:4px">中央を選ぶ</th><th style="border:1px solid #ccc;padding:4px">右を選ぶ</th></tr>
+<tr><td style="border:1px solid #ccc;padding:4px">[1,0,0]</td><td style="border:1px solid #ccc">[3,0,0]</td><td style="border:1px solid #ccc">[1,2,0]</td><td style="border:1px solid #ccc">[1,0,2]</td></tr>
+<tr><td style="border:1px solid #ccc;padding:4px">[0,1,0]</td><td style="border:1px solid #ccc">[2,1,0]</td><td style="border:1px solid #ccc">[0,3,0]</td><td style="border:1px solid #ccc">[0,1,2]</td></tr>
+<tr><td style="border:1px solid #ccc;padding:4px">[0,0,1]</td><td style="border:1px solid #ccc">[2,0,1]</td><td style="border:1px solid #ccc">[0,2,1]</td><td style="border:1px solid #ccc">[0,0,3]</td></tr>
+</table>すべてのパターンは<b>9通り</b>である。`
+      }
+    },
+    {
+      label:"ウ", points:3, type:"single",
+      qtext:`要素の0はハズレかつ挑戦者が選んでいない箱，1は${B('ウ')}，2は${B('エ')}，3は当たりかつ挑戦者が選んだ箱ということになります。<br>空欄${B('ウ')}に当てはまるものを選べ。`,
+      choices:UE, correct:0,
+      exp:{
+        answer:"⓪",
+        text:`初期状態の配列の当たりを1，ハズレを0とし，挑戦者が選ぶ箱に2を足すため，0から3の数値は次のような意味をもつ。<br>0 …… ハズレかつ挑戦者が選んでいない箱<br><b>1 …… 当たりかつ挑戦者が選んでいない箱</b><br>2 …… ハズレかつ挑戦者が選んだ箱<br>3 …… 当たりかつ挑戦者が選んだ箱<br>なお，0から3のそれぞれの数値は一意に決まるため，選択肢①・②・④・⑤にあるような「または」がつく場合はない。`
+      }
+    },
+    {
+      label:"エ", points:3, type:"single",
+      qtext:`2は${B('エ')}ということになります。空欄${B('エ')}に当てはまるものを選べ。`,
+      choices:UE, correct:3,
+      exp:{
+        answer:"③",
+        text:`0 …… ハズレかつ挑戦者が選んでいない箱<br>1 …… 当たりかつ挑戦者が選んでいない箱<br><b>2 …… ハズレかつ挑戦者が選んだ箱</b>（ハズレ0＋選んだ2）<br>3 …… 当たりかつ挑戦者が選んだ箱<br>「または」がつく選択肢は，数値が一意に決まることから当てはまらない。`
+      }
+    },
+    {
+      label:"オ", points:1, type:"single",
+      qtext:`まず，配列の要素に3を含むパターンでは，司会者は残りの0の要素のうちどちらかの箱を開けることになります。一方，残りのパターンでは，司会者は必ず${B('オ')}を開けることになりますね。`,
+      choices:["0の要素の箱","1の要素の箱","2の要素の箱","3の要素の箱"],
+      correct:0,
+      exp:{
+        answer:"⓪（0の要素の箱）",
+        text:`司会者は「ハズレかつ挑戦者が選んでいない箱」，つまり「0の箱」しか選ぶことができない。そのため，配列の要素に3を含むパターン（[3,0,0]，[0,3,0]，[0,0,3]）では，司会者は残りの0の要素のうちどちらかの箱を開けることになるため，二つのパターンが存在する。一方，配列の要素に3を含まないパターン（例：[1,2,0]）では，0の要素が一つしかないため，司会者が開ける箱（0の箱）は一つに定まる。`
+      }
+    }
+  ]
+},
+
+// ───────── 問2 ─────────
+{
+  title: `問2　次の文章の空欄${B('カ')}〜${B('ケ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。`,
+  context: `
+<p>先生：クイズの流れがわかったところで，これをプログラムで表してみましょう。まず，<b>挑戦者が箱を変えなかった場合の確率を求めるプログラム</b>を図1に示します。なお，プログラムに使用している「乱数(1, 3)」は，二つの引数として指定した1以上3以下からランダムな整数を戻り値として返す関数です。また，「表示する()」の引数に配列をそのまま指定した場合は，配列の要素がすべて表示されるものとします。今回は1000回繰り返してみて当たりの確率を求めてみましょう。</p>
+${figBox("図1")}
+<p>太郎：プログラムの(04)〜(06)行目が初期状態の箱を作成している部分で，次の(07)(08)行目が挑戦者が初めに選ぶ箱（配列の一つ）の要素に2を足す部分ですね。<br>
+先生：はい，それぞれ関数「乱数(1, 3)」を利用して一つの箱を無作為に選んでいますね。<br>
+太郎：プログラムの(09)〜(13)行目が当たり判定による処理ですね。ここはどのようにして当たりかどうかを判断しているのですか？<br>
+先生：挑戦者が箱を変えなかった場合は，単純に挑戦者が初めに選ぶ箱が当たりの箱であるかどうかを調べればよいです。<br>
+太郎：なるほど。それでは，プログラムを実行してみます。</p>
+${figBox("図2")}
+<p>先生：プログラムの出力結果から，当たりの確率は約3分の1であることがわかりますね。例えば，図2の3回目はどのような状況か説明できますか？<br>
+太郎：3回目の配列は[2, 1, 0]で「ハズレ」の判定になっているので，${B('ケ')}ということですね。<br>
+先生：そのとおりです。</p>`,
+  items: [
+    {
+      label:"カ", points:1, type:"single",
+      qtext:`図1の(08)行目　${code('Hako[sentaku - 1] = ')}${B('カ')}${figLinks("図1")}`,
+      choices:[code("Hako[sentaku] + 1"),code("Hako[sentaku - 1] + 1"),code("Hako[sentaku] + 2"),code("Hako[sentaku - 1] + 2")],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`(04)〜(06)行目では，初期状態の配列Hakoを定義して，当たりの箱（配列の添字）を乱数を用いて決定し，該当の配列の要素に1を代入している。なお，配列の添字は0から始まるため，(06)行目の添字はatariではなく${code('atari - 1')}となることに注意したい（例えば，乱数で3が出た場合，配列の添字は3ではなく2となる）。<br>次に，(07)(08)行目において，挑戦者が選ぶ箱（配列の添字）を乱数を用いて決定し，該当の要素に2を足す処理を行っている。添字が${code('sentaku - 1')}であることをふまえると，(08)行目は${code('Hako[sentaku - 1] = Hako[sentaku - 1] + 2')}であることがわかる。`
+      }
+    },
+    {
+      label:"キ", points:1, type:"single",
+      qtext:`図1の(09)行目　もし${B('キ')}であれば：${figLinks("図1")}<span style="font-size:.78rem;color:var(--muted)">「a == b」は値aと値bが等しいことを，「a != b」は値aと値bが等しくないことを示す。</span>`,
+      choices:COND.map(code), correct:0,
+      exp:{
+        answer:"⓪（atari == sentaku）",
+        text:`(09)〜(13)行目は条件分岐となっており，条件式が真の場合は，変数seikaiを1増やし，(11)行目の内容（回数，配列，当たり）を表示する。一方，偽の場合は，(13)行目の内容（回数，配列，ハズレ）を表示するようになっている。これらの処理から，(09)行目の条件式で当たりかハズレかの判定を行っていることが想像できる。<br>変数atariには(05)行目で当たりの箱の番号（1〜3）が代入されており，変数sentakuには(07)行目で挑戦者が選ぶ箱の番号（1〜3）が代入されている（番号は配列の添字ではない点に注意する）。つまり，条件式には当たりの条件である「もし変数atariと変数sentakuが等しければ」が入ればよく，「${code('atari == sentaku')}」となる。なお，「=」は代入，「==」は等しい（等価演算子）という意味である。`
+      }
+    },
+    {
+      label:"ク", points:1, type:"single",
+      qtext:`図1の(14)行目　表示する("当たりの確率：", ${B('ク')})${figLinks("図1")}`,
+      choices:[code("atari / kaisu"),code("seikai / kaisu"),code("kaisu / atari"),code("kaisu / seikai")],
+      correct:1,
+      exp:{
+        answer:"①（seikai / kaisu）",
+        text:`(14)行目は，(03)〜(13)行目の繰り返しがすべて終了した最後に実行される。繰り返しは1000回実行されているため，当たりの確率は「当たりの回数÷1000」で求める。<br>(09)行目の条件式で当たりの判定となった場合，(10)行目の${code('seikai = seikai + 1')}で変数seikaiが1増えているため，変数seikaiには当たりの回数が格納されていることがわかる。また，繰り返しの回数である1000は，(02)行目で変数kaisuに代入されている。これらから，当たりの確率は${code('seikai / kaisu')}で求められることがわかる。`
+      }
+    },
+    {
+      label:"ケ", points:3, type:"single",
+      qtext:`3回目の配列は[2, 1, 0]で「ハズレ」の判定になっているので，${B('ケ')}ということですね。${figLinks("図2")}`,
+      choices:[
+        "当たりが左の箱で，挑戦者は中央の箱を選んだ後で，司会者は右の箱を開けた",
+        "当たりが左の箱で，挑戦者は右の箱を選んだ後で，司会者は中央の箱を開けた",
+        "当たりが中央の箱で，挑戦者は左の箱を選んだ後で，司会者は右の箱を開けた",
+        "当たりが中央の箱で，挑戦者は右の箱を選んだ後で，司会者は左の箱を開けた"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`3回目の[2, 1, 0]（ハズレ）は，初期状態が[0, 1, 0]の配列（中央の箱が当たり）に対して，挑戦者が左の箱を選んだ状態を意味している（挑戦者が選んだ箱の要素に2を加算するため）。また，空欄オの解説で示したように，司会者は必ず0の箱を開けるため，ここでは司会者は右の箱を開けることになる。まとめると「当たりが中央の箱で，挑戦者は左の箱を選んだ後で，司会者は右の箱を開けた」となる。`
+      }
+    }
+  ]
+},
+
+// ───────── 問3 ─────────
+{
+  title: `問3　次の文章の空欄${B('コ')}〜${B('ス')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。ただし，${B('シ')}・${B('ス')}の順序は問わない。`,
+  context: `
+<p>先生：次に，<b>挑戦者が箱を変えた場合の確率を求めるプログラム</b>を図3に示します。プログラムを見て，何か気づくことはありませんか？<br>
+太郎：図1の挑戦者が箱を変えなかった場合の確率を求めるプログラムと比較して，ほとんど変わっていないですね。どうしてですか？</p>
+${figBox("図3")}
+<p>先生：配列の要素に3を含むパターン，つまり初めに当たりを選んでいた場合，挑戦者は箱を変えると必ずハズレを選ぶことになります。一方，初めにハズレを選んでいた場合，司会者は必ず${B('オ')}を開けることになりますから，挑戦者は箱を変えると必ず当たりを選ぶことになります。<br>
+太郎：なるほど，そういうことですね。つまり，図1と図3のプログラムの実行結果を比較すると，当たりとハズレの確率がそれぞれ逆になるということですね。<br>
+先生：よく気づきましたね。そのため，図3のようにプログラムを修正しなくても，図1のプログラムの${B('キ')}の部分を${B('コ')}に変えるだけでも，挑戦者が箱を変えた場合の確率を求めることができますよ。<br>
+太郎：おもしろいですね。それでは，プログラムを実行してみます。</p>
+${figBox("図4")}
+<p>先生：プログラムの出力結果から，当たりの確率は約3分の2であることがわかりますね。例えば，図4の999回目と1000回目はどのような状況であるか説明できますか？<br>
+太郎：まず，999回目の配列は[1, 0, 2]で「ハズレ」から「当たり」の判定に変わっているので，${B('サ')}ということになりますね。次に，1000回目の配列は[0, 3, 0]で「当たり」から「ハズレ」の判定に変わっているので，${B('シ')}あるいは${B('ス')}ということですね。やっぱり，箱を変えた方が当たる確率は高くなるのですね。<br>
+先生：そのとおりです。これで理解が深まりましたね。</p>`,
+  items: [
+    {
+      label:"コ", points:2, type:"single",
+      qtext:`図1のプログラムの${B('キ')}の部分を${B('コ')}に変えるだけでも，挑戦者が箱を変えた場合の確率を求めることができますよ。${figLinks("図1","図3")}`,
+      choices:COND.map(code), correct:1,
+      exp:{
+        answer:"①（atari != sentaku）",
+        text:`司会者が一つの箱を開けた後，挑戦者が箱を変えた場合のパターンとしては，次の2通りとなる。<br>・配列の要素に3を含むパターン（初めに当たりを選んでいた場合）→挑戦者は箱を変えると必ずハズレを選ぶ<br>・配列の要素に3を含まないパターン（初めにハズレを選んでいた場合）→挑戦者は箱を変えると必ず当たりを選ぶ（司会者は0の箱を開ける）<br>9通りすべてについて調べると，箱を変えなかった場合の結果とすべて逆になっていることがわかる。つまり，挑戦者が初めにハズレを選んでいれば当たりに，初めに当たりを選んでいればハズレとなる。よって，図3のプログラムの(09)行目の条件式は，元の条件式「${code('atari == sentaku')}」を逆転すればよいため，「${code('atari != sentaku')}」（変数atariと変数sentakuが等しくない）が当てはまる。`
+      }
+    },
+    {
+      label:"サ", points:2, type:"single",
+      qtext:`999回目の配列は[1, 0, 2]で「ハズレ」から「当たり」の判定に変わっているので，${B('サ')}ということになりますね。${figLinks("図4")}`,
+      choices:SA_SU, correct:5,
+      exp:{
+        answer:"⑤",
+        text:`[1, 0, 2]の状態（左の箱が当たり）は，「初めに挑戦者は右の箱を選び（この段階ではハズレ），司会者が中央の箱を開けた後で，改めて挑戦者は左の箱を選びなおした（最終的には当たり）」ということを表している。司会者は0の箱（中央）しか開けられない点に注目しよう。`
+      }
+    },
+    {
+      label:"シ・ス", points:6, type:"multi", pick:2, partial:3,
+      qtext:`1000回目の配列は[0, 3, 0]で「当たり」から「ハズレ」の判定に変わっているので，${B('シ')}あるいは${B('ス')}ということですね。次の⓪〜⑤のうちから<b>二つ</b>選べ（順不同）。${figLinks("図4")}`,
+      choices:SA_SU, correctSet:[2,3],
+      exp:{
+        answer:"②・③（順不同，各3点）",
+        text:`[0, 3, 0]の状態（中央の箱が当たり）は，初めに挑戦者が当たりの中央の箱を選んでいるため，司会者は残りの左・右どちらのハズレの箱でも開けることができる。よって，<br>・「初めに挑戦者は中央の箱を選び（この段階では当たり），司会者が右の箱を開けた後で，改めて挑戦者は左の箱を選びなおした（最終的にはハズレ）」（②）<br>・「初めに挑戦者は中央の箱を選び（この段階では当たり），司会者が左の箱を開けた後で，改めて挑戦者は右の箱を選びなおした（最終的にはハズレ）」（③）<br>の2通りが考えられる。`
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第3問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>

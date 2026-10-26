@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2025年11月｜第2問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年11月（ベネッセ・駿台マーク模試）｜第2問（配点30）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ','ⓑ','ⓒ','ⓓ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "A図1": {label:"図1", src:"img/202511_2A_fig1_label.jpg",    cap:"図1　本の背表紙に貼られているラベル（出典：『日本十進分類法 新訂10版』日本図書館協会）"},
+  "A表1": {label:"表1", src:"img/202511_2A_tab1_latch.jpg",    cap:"表1　LATCHの五つの観点とその基準"},
+  "A表2": {label:"表2", src:"img/202511_2A_tab2_betchi.jpg",   cap:"表2　別置記号と分類の例"},
+  "A図2": {label:"図2", src:"img/202511_2A_fig2_label.jpg",    cap:"図2　別置記号が表記されたラベルの例"},
+  "A図3": {label:"図3", src:"img/202511_2A_fig3_searchpc.jpg", cap:"図3　図書館の中に設置されている検索PCの画面"},
+  "A図4": {label:"図4", src:"img/202511_2A_fig4_usage.jpg",    cap:"図4　検索PCにおける先月の各検索メニューの使用回数"},
+  "B図5": {label:"図5", src:"img/202511_2B_fig5_game.jpg",     cap:"図5　プレイヤーAとBが「ヒット＆ブローゲーム」を行ったときの対戦過程"},
+  "B表3": {label:"表3", src:"img/202511_2B_tab3_725.jpg",      cap:"表3　正解の番号が「725」のときの1回目の宣言について状況をまとめた表"},
+  "Bツの選択肢": {label:"ツの選択肢", src:"img/202511_2B_q4_choices.jpg", cap:"ツ の解答群（正解の番号に数字が含まれている可能性を表すグラフ）"},
+  "B表4": {label:"表4", src:"img/202511_2B_tab4_progress.jpg", cap:"表4　あるゲームの進行状況"},
+  "B表5": {label:"表5", src:"img/202511_2B_tab5_candidates.jpg", cap:"表5　1回目の宣言「012」で0H1Bであり，2回目に「345」で宣言するときの状況"}
+};
+const ALLN = `<span style="font-size:.8rem;color:var(--muted)">※すべて正解の場合のみ得点</span>`;
+const DIGHINT = `<span style="font-size:.8rem;color:var(--muted)">（数字を1マスに1つずつ入力）</span>`;
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── A ─────────
+{
+  title: "第2問A　次のSさんとT先生の会話文を読み，後の問い（問1〜6）に答えよ。",
+  context: `
+<p>Sさん：昨日，<sub>(A)</sub><u class="point">授業のレポートを作成するために近所の図書館に本を借りに行った</u>のですが，目的の本がどこにあるかよくわからなかったんです。<br>
+T先生：図書館の本は，一般的に日本十進分類法（NDC）というルールに沿って分類されて本棚に並べられているんだ。本の背表紙にラベルが貼ってあったのは覚えてる？<br>
+Sさん：昨日借りた本が手元にあるので，ちょっと確認しますね。…ありました，ラベルには，次のように「913」，「アイ」，「2」と書いてあります。これは何を意味するのですか？</p>
+${figBox("A図1")}
+<p>T先生：一番上の「913」は分類記号といって，本をグループ分けしているんだ。この本だと，先頭の「9」は「文学」を表していて，順番に「91」は「日本文学」，「913」は「小説・物語」というように細分化して特定のジャンルにグループ化されているんだよ。<br>
+Sさん：そうなんですね。その下の「アイ」と「2」は何を表しているのですか？<br>
+T先生：まず「アイ」は図書記号といって，本の著者またはタイトルの最初の2文字（カタカナ）を表しているよ。次の「2」は巻冊記号といって，この本が第2巻であることを表しているんだ。ただ，これらは図書館のルールによるから，図書記号が一文字の場合や，巻冊記号がない場合もあるよ。<br>
+Sさん：なるほど，まるで本の住所みたいですね。<sub>(B)</sub><u class="point">これらの記号のおかげで，本が規則正しく整えられて，利用者が本を探しやすくなっているのですね。</u><br>
+T先生：そうだね。このラベル以外にも，図書館では，すべての人が利用しやすいような工夫が施されているんだ。次に図書館に行くときは，そのような観点から本を探してみると面白いと思うよ。<br>
+Sさん：確かにそうですね。早速，今日の帰りに寄ってみたいと思います。</p>`,
+  items: [
+    {
+      label:"問1（ア）", points:2, type:"single",
+      qtext:`下線部(A)に関して，Sさんが図書館で借りてきた本を使用してレポートを作成する際に注意すべき点について，著作権の観点から述べた文として最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "図書館に所蔵されている本の所有者は図書館であるため，本の内容の一部をレポートに引用する場合は，図書館に許諾を取らなければいけない。",
+        "図書館に所蔵されている本の著作権は，その本の著者が所有しているため，本の内容の一部をレポートに引用する場合は，著者に許諾を取らなければいけない。",
+        "図書館に所蔵されている本の内容の一部をレポートに引用する場合は，引用元を明記しなければならない。",
+        "図書館に所蔵されている本であれば，誰の許諾も必要なく，自由に本の内容をレポートに記載することができる。"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`引用は，自分の著作物に他人の著作物（文章や図表など）の一部を取り込むことである。引用には次のルールがあり，この要件に従えば著作権者の許諾を得る必要はない。<br>・引用部分が自分の著作部分に対して従属的であること（引用部分が主ではなく，補足や根拠として使うこと）。<br>・引用部分を「」などを用いて明確に区別すること。<br>・出典（引用元）を明記すること（著者名・書名・ページ数など）。<br>・引用する文章を改変しないこと。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"著作権は図書館ではなく著者にあるが，引用の要件に従えば著作権者の許諾を得なくてもよい。"},
+          {label:"① 誤り",ok:false,text:"本の著作権者が著者であっても，適切な引用の範囲内であれば，著作権者の許諾を得る必要はない。"},
+          {label:"② 正しい（正解）",ok:true,text:"引用するときは引用元を明記するなど，引用の要件に従って使用する必要がある。"},
+          {label:"③ 誤り",ok:false,text:"引用のルールに従わずに自由に記載することは許されない。"}
+        ]
+      }
+    },
+    {
+      label:"問2（イ）", points:1, type:"single",
+      pre:`<p>下線部(B)に関して，次の文章の空欄${B('イ')}・${B('ウ')}に入れるのに最も適当なものを，後の⓪〜④のうちから一つずつ選べ。ただし，同じものを繰り返し選んでもよい。</p><p>　情報を整理して表現する方法としてLATCHがある。LATCHでは，次の五つの観点を用いて情報を整理する。</p>${figBox("A表1")}<div class="fig">　図1の本の背表紙に貼られているラベルを表1のLATCHの基準に当てはめると，分類記号は${B('イ')}，図書記号は${B('ウ')}を基準に情報が整理されていることがわかる。また，巻冊記号は階層（連続量）を基準に情報が整理されているといえる。</div>`,
+      qtext:`分類記号は${B('イ')}を基準に情報が整理されている。${figLinks("A図1","A表1")}`,
+      choices:["場所","アルファベット","時間","カテゴリー","階層（連続量）"],
+      correct:3,
+      exp:{
+        answer:"③（カテゴリー）",
+        text:`分類記号は，例えば「913」は「小説・物語」というように，本をグループ分けする役割を果たすので，物事の差異により区別された領域であるといえる。よって，③のカテゴリーである。`
+      }
+    },
+    {
+      label:"問2（ウ）", points:1, type:"single",
+      qtext:`図書記号は${B('ウ')}を基準に情報が整理されている。${figLinks("A図1","A表1")}`,
+      choices:["場所","アルファベット","時間","カテゴリー","階層（連続量）"],
+      correct:1,
+      exp:{
+        answer:"①（アルファベット）",
+        text:`図書記号は，本の著者またはタイトルの最初の2文字（カタカナ）を表していることから，日本語の五十音順で整理しているといえる。よって，①のアルファベットである。`
+      }
+    },
+    {
+      label:"問3（エ）", points:2, type:"single",
+      pre:`<p>　図書館の本には，分類記号，図書記号，巻冊記号の他に，別置記号がラベルに記載されることがある。別置記号によって一般の図書と特定のテーマや利用者層に関連する図書とを区別して配置し，利用者が目的の図書を探しやすくなるよう工夫がされている。表2はある図書館で使用される別置記号と分類の例，図2は別置記号が表記されたラベルの例である（別置記号や分類は，図書館によって異なる場合がある）。</p>${figBox("A表2")}${figBox("A図2")}<p>　例えば，図2のラベルが貼られた図書は，分類記号ではなく別置記号と図書記号を使用し，一般の図書とは区別して「絵本」コーナーに並べられる。</p>`,
+      qtext:`ユニバーサルデザインの観点からだれでも図書館を利用しやすくするために，<b>別置記号によって分類する優先順位が低い図書</b>を，次の⓪〜③のうちから一つ選べ。${figLinks("A表2","A図2")}`,
+      choices:[
+        "乳幼児や児童向けの図書",
+        "成人向けの自己啓発書やビジネス書",
+        "高齢者向けの大活字本（文字が大きく行間が広い書籍）",
+        "視覚に障がいのある人向けの点字図書や音声図書"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`ユニバーサルデザインの視点では，別置記号による分類が特に必要になるのは，特別な配慮を必要とする利用者がアクセスしやすいように配置することが望ましい図書である。具体的には，児童や乳幼児，高齢者，視覚などに障がいのある人々が挙げられる。逆に，成人向けの図書や一般的な自己啓発本など，特別な配慮を必要としない本は「優先順位が低い図書」に該当する。`
+      }
+    },
+    {
+      label:"問4（オ）", points:2, type:"single",
+      qtext:`図書館の中に設置されている，図書を探すための検索PCについて考える。この図書館の検索PCは，インターネットを経由して図書館貸出システムにアクセスすることで，検索PCが設置されている図書館に限らず，地域の複数の図書館の蔵書検索や貸出予約ができる。この検索PCについて，使いやすさや安全性を考えたときに，アクセシビリティやセキュリティの観点から施すべき設定として<b>誤っているもの</b>を，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "検索PCの入力デバイスとして，キーボードやマウスに加えてタッチパネルを導入し，誰でも直感的に操作しやすいように設定する。",
+        "利用者はログインIDとパスワードを使用して図書館貸出システムにログインするが，一定時間操作がない場合は自動的にログアウトするように設定する。",
+        "利用者の検索履歴や貸出履歴の情報は，検索PCに残らないように設定する。",
+        "利用者の利便性を高めるために，図書館貸出システム以外のWebサイトにもアクセスできるように設定する。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`図書館内の図書検索用PCについて，アクセシビリティやセキュリティの観点から適切な設定を判断することが求められている。`,
+        options:[
+          {label:"⓪ 正しい",ok:false,text:"タッチパネルを導入することで，高齢者や子ども，障がいのある人でも操作がしやすくなるため，アクセシビリティ向上の観点から適切な設定である。"},
+          {label:"① 正しい",ok:false,text:"一定時間操作しない場合に自動的にログアウトする設定にすることで，次に利用する人が前の利用者の情報を閲覧できてしまう状況を防ぐことができる。セキュリティ上非常に重要な設定である。"},
+          {label:"② 正しい",ok:false,text:"検索PCに利用者の情報を残さないことは，情報漏えいを防ぐうえで重要であり，セキュリティの観点から適切な対応である。"},
+          {label:"③ 誤り（これが正解）",ok:true,text:"図書館貸出システム以外のすべてのWebサイトに自由にアクセスできる設定は，ウイルス感染や不適切なサイトへのアクセスといったセキュリティリスクが高まるため，不適切である。"}
+        ]
+      }
+    },
+    {
+      label:"問5（カ）", points:3, type:"single",
+      pre:`<p>　図3は図書館の中に設置されている検索PCの画面である。また，検索PCにおける先月の各検索メニューの使用回数は図4の通りであった。</p>${figBox("A図3")}${figBox("A図4")}`,
+      qtext:`図4の各検索メニューの使用回数を踏まえて，図3の検索PCの画面を改善する方法として最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("A図3","A図4")}`,
+      choices:[
+        "各検索メニューの使用回数の比率に合わせて，各検索メニューのボタン横幅の比率を変更する。",
+        "タイトルと著者名は「キーワードで検索」でも検索ができるため，「タイトルで検索」と「著者名で検索」を削除する。",
+        "「キーワードで検索」の使用回数が最も多いため，検索メニューの一番上に「キーワードで検索」を移動させ，ボタンのサイズを大きくする。",
+        "「分類記号で検索」の使用回数が他の検索メニューと比較して少ないため，検索メニューから「分類記号で検索」を削除する。"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`図書館の検索PCにおけるユーザインタフェース（UI）の改善を提案できることが求められている。図4ではキーワード検索1780回，タイトル検索1103回，著者名検索657回，分類記号検索192回の順で使用回数が多い。使用回数が多いものを優先的に配置・強調することは，UI改善の基本的な考え方である。しかし，使用回数が低いものも利用者が存在することを意識しなければいけない。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"使用頻度が低いメニューが目立たなくなることで，必要とする利用者にとって使いにくくなるおそれがある。また比率に合わせて横幅を変更すると，各ボタンのサイズが大きく異なることになり，利便性が下がるおそれがある。"},
+          {label:"① 誤り",ok:false,text:"「タイトルで検索」や「著者名で検索」は，「キーワードで検索」よりも条件を絞った検索が可能であり，実際に利用する人も多いため，削除すべきではない。"},
+          {label:"② 正しい（正解）",ok:true,text:"利用頻度の高い「キーワードで検索」を最上部に配置し，ボタンサイズを大きくすることで，多くの人にとって視認性と操作性が向上し，UIの改善として最も適切である。"},
+          {label:"③ 誤り",ok:false,text:"分類記号による検索を必要とする利用者も一定数存在しており，使用回数が少ないからといって削除することが，UIの改善に直結するとはいえない。"}
+        ]
+      }
+    },
+    {
+      label:"問6（キ）", points:4, type:"digits", blanks:1, correctDigits:[6], suffixText:"分の1以下",
+      qtext:`次の文章の空欄${B('キ')}に当てはまる数字を答えよ。ただし，検索結果に表示される書籍に関するデータの転送時間以外は無視できるものとし，1MB＝1000kBとして計算すること。なお，bpsとは1秒あたりに送信できるデータ量（ビット数）を表す単位である。
+<div class="fig">　ある図書館に設置されている検索PCで蔵書検索を行うと，1回の検索で最大20件分の書籍のタイトルや著者，蔵書場所，貸出情報などのテキストと，表紙の画像が表示される。現在，検索結果として表示される書籍1件あたりの平均データ量は，テキストデータが15kB，画像データが360kBである。<br>　最近，「検索PCによる検索結果の表示が遅い」という利用者からの声が複数届いていることを受け，画像のデータ量を小さくすることで検索結果の表示速度を改善したいと考えた。ここで，蔵書データが保管されているサーバと検索PC間の通信速度が6Mbpsであるとき，検索結果を2秒以内にすべて表示するためには，書籍1件あたりの画像のデータ量を${B('キ')}分の1以下にする必要がある。</div>${DIGHINT}`,
+      exp:{
+        answer:"6",
+        text:`画像のデータ量を小さくする前の状態における，1回の検索で読み込まれる最大のデータ量は（15kB＋360kB）×20である。圧縮後の画像データのデータ量を x kB とおくと，1回の検索で読み込まれる最大のデータ量は同様に（15kB＋x kB）×20と表される。通信速度が6Mbpsであるとき，このデータ量が2秒以内に転送できればよいので，6Mビット＝750kBであることも使うと<br>　（15＋x）×20 ÷ 750 ≦ 2（秒）<br>と立式でき，これを解くと x ≦ 60 となる。つまり，画像のデータ量が60kB以下であれば2秒以内に転送できるとわかる。よって，最初のデータ量と比較して 60/360＝1/6，つまり<b>6分の1以下</b>にすればよいことがわかる。`
+      }
+    }
+  ]
+},
+
+// ───────── B ─────────
+{
+  title: "第2問B　「ヒット＆ブローゲーム」についての次の文章を読み，後の問い（問1〜5）に答えよ。",
+  context: `
+<p>　「ヒット＆ブローゲーム」はプレイヤー2人が先攻・後攻に分かれて対戦する数当てゲームである。<br>
+　はじめに，それぞれのプレイヤーは相手に知られないように，0から9までの10種類の数字のうち任意の数字を使って，<b>3桁の番号</b>を作成する。このとき，各数字は一度しか使えないものとする。よって，各桁の数字が重複することはなく，「101」や「777」といった同じ数字を2回以上使用した番号は作成できない。また，例えば「012」のように先頭の桁に0を配置することも可能である。<br>
+　両プレイヤーが番号を作成し終わったら，先攻のプレイヤーは相手の番号を推理してその番号を宣言する。後攻のプレイヤーは宣言された番号と自身が作成した番号を比べ，次のようなルールに基づいて推理結果を「Xヒット，Yブロー」という形式で発表する。<br>
+　このやりとりを先攻／後攻で交互に繰り返し，先に相手の番号を完全に当てたプレイヤー，つまり先に相手に3ヒットと発表させたプレイヤーの勝利となる。</p>
+<div class="fig"><b>〈推理結果の発表ルール〉</b><br>　自分が作成した番号と相手が宣言した番号とを比較し，どちらの番号にも含まれ，かつ桁の位置も合っている数字は「ヒット（H）」，どちらの番号にも含まれるが桁の位置が違っている数字は「ブロー（B）」とする。<br>（例）自分の番号が「164」，宣言された番号が「469」であるとき<br>　「6」はどちらの番号にも含まれ桁の位置も合っているためヒット，「4」はどちらの番号にも含まれるが桁の位置が違うためブロー，よって発表する結果は「1ヒット，1ブロー（1H1B）」である。</div>`,
+  items: [
+    {
+      label:"問1（クケコ）", points:2, type:"digits", blanks:3, correctDigits:[7,2,0], suffixText:"通り",
+      qtext:`このゲームの条件において，作成できる番号は${B('ク')}${B('ケ')}${B('コ')}通りである。${DIGHINT}`,
+      exp:{
+        answer:"720",
+        text:`「0から9までの10種類の数字のうち任意の数字を使って，3桁の番号を作成する。このとき，各数字は一度しか使えない」という条件がある。<br>つまり1桁目は0から9の10通り，2桁目は1桁目で使った数字が除外されるので9通り，3桁目は1桁目および2桁目で使った数字が除外されるので8通りとなる。組合せの総数は各桁で使える数字の種類の積となるので，10×9×8＝<b>720通り</b>となる。`
+      }
+    },
+    {
+      label:"問2（サ・シ）", points:2, type:"digits", blanks:2, correctDigits:[1,1], prefixText:"サH シB →",
+      pre:`<p>問2　次の文章を読み，空欄${B('サ')}〜${B('セ')}に当てはまる数字を答えよ。なお，図5中のプレイヤーAの作成した番号は隠されている。</p><p>　次の図5は，あるプレイヤーどうしが「ヒット＆ブローゲーム」を行ったときの対戦過程である。このゲームではプレイヤーAが，プレイヤーBの作成した番号「476」に対して5回目の宣言で「476」と3ヒットとなり，プレイヤーBは5回目の宣言でも3ヒットを出せなかったため，プレイヤーAの勝利となった。</p>${figBox("B図5")}`,
+      qtext:`図5のプレイヤーAの④の宣言「407」の結果${B('サ')}H${B('シ')}Bに当てはまる数字を答えよ。<br>${ALLN}${figLinks("B図5")}`,
+      exp:{
+        answer:"1H1B（サ1，シ1）",
+        text:`正解（3ヒット）が「476」であることを踏まえて「407」と照合する。先頭の「4」は正解と同じ位置なのでヒット，「0」は正解に含まれないのでカウントされない。「7」は数字が合っているが位置違いなのでブローとなる。よって，プレイヤーAの4回目「407」の結果は<b>1ヒット1ブロー</b>となる。`
+      }
+    },
+    {
+      label:"問2（ス・セ）", points:2, type:"digits", blanks:2, correctDigits:[0,2], prefixText:"スH セB →",
+      qtext:`図5のプレイヤーBの③の宣言「681」の結果${B('ス')}H${B('セ')}Bに当てはまる数字を答えよ。<br>${ALLN}${figLinks("B図5")}`,
+      exp:{
+        answer:"0H2B（ス0，セ2）",
+        text:`1回目の「034」と2回目の「967」の宣言が0ヒット0ブローであったことから，0，3，4，9，6，7の計6種類は，いずれも正解の3桁に含まれない数字だとわかる。<br>4回目の「218」と5回目の「718」がともに2ヒット0ブローという結果であることから，共通する真ん中と右の「18」の部分は位置を含めて正解となる。また，4回目，5回目の左の「2」と「7」は正解の数字ではないことが確定する。<br>これより3回目の宣言の「681」について，先頭の「6」は2回目の結果から正解に含まれないのでカウントされない。真ん中と右の「81」は正解の「18」と比較すると数字が合っているが位置が逆なので2ブローとなる。よって，<b>0ヒット2ブロー</b>になる。`
+      }
+    },
+    {
+      label:"問3（ソタチ）", points:3, type:"digits", blanks:3, correctDigits:[5,1,8],
+      qtext:`図5の対戦において，プレイヤーAが作成した番号は，${B('ソ')}${B('タ')}${B('チ')}である。<br>${ALLN}${figLinks("B図5")}`,
+      exp:{
+        answer:"518",
+        text:`問2の解説より「0，2，3，4，6，7，9」の7種類の数字が除外され，「1」と「8」は真ん中と右の桁に確定する。残る左の桁として使えるものは「5」のみである。したがって，正解の番号は<b>「518」</b>と確定する。`
+      }
+    },
+    {
+      label:"問4（ツ）", points:2, type:"single",
+      pre:`<p>　「ヒット＆ブローゲーム」の勝敗の分かれ目は，1回目の宣言ですでに決まっているといわれる。表3は，正解の番号が「725」のときに，1回目にどのような番号を宣言してどのような状況になるかまとめた表である。なお，候補数（候補となる3桁の番号の組合せの数）の一部分は示していない。この表からは各数字が正解の候補でありうるか，ということを絞り込むことができる。</p>${figBox("B表3")}`,
+      qtext:`いま，新しい対戦において，あるプレイヤーが1回目に番号「129」を宣言したところ結果は「0H0B」と，また，2回目に番号「347」を宣言したところ結果は「1H1B」と発表された。このとき，正解の番号にそれぞれの数字が含まれている可能性をグラフで表したものとして最も適当なものを，次の⓪〜③のうちから一つ選べ。なお，グラフが上に伸びているほど可能性は高く，それぞれのグラフの目盛り幅や上限の値は一定ではないものとする。${figLinks("B表3")}${figBox("Bツの選択肢")}`,
+      choices:["グラフ⓪","グラフ①","グラフ②","グラフ③"],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`1回目に数字「129」を宣言した際の結果が0ヒット0ブローであったことから，「1」「2」「9」は正解に含まれないことが確定する。次に2回目に数字「347」を宣言して1ヒット1ブローという結果が出たため，「3」「4」「7」のうち2個は正解に含まれていることになる。一方，ここまでの宣言に含まれていない数字である「0」「5」「6」「8」は，判断の根拠がまだないため，このうちいずれか1個が正解に含まれるため，現時点では「0」「5」「6」「8」すべてに中程度の可能性が残る。<br>したがって，「1・2・9」が可能性0％（グラフがない）になり，「3・4・7」が高い可能性（グラフが高く伸びている）を示し，「0・5・6・8」は中程度の可能性になるものが最も適切である。`
+      }
+    },
+    {
+      label:"問5（テトナ）", points:4, type:"digits", blanks:3, correctDigits:[1,4,3],
+      pre:`<p>　「ヒット＆ブローゲーム」ではこのようにして推理結果を論理的に分析していくことで，5回程度で正解に含まれている数字を推測することができるという。表4はあるゲームの進行状況を示したものであり，表5はこのゲームにおいて2回目の宣言を行うときの候補を示したものである。</p>${figBox("B表4")}${figBox("B表5")}`,
+      qtext:`このゲームの進行から推理すると，表4の3回目の宣言結果から正解の番号が2通りに絞られ，4回目の宣言結果から正解の番号は${B('テ')}${B('ト')}${B('ナ')}に確定する。（各桁は⓪〜⑤のいずれか）<br>${ALLN}${figLinks("B表4","B表5")}`,
+      exp:{
+        answer:"143",
+        text:`1回目と2回目でプレイヤーが挙げた数字に重複がないため，正解の候補は「0」「1」「2」の中に1個，「3」「4」「5」の中に2個含まれているとわかる。<br>3回目の「351」が0ヒット2ブローであることから，以下のいずれかのパターンになる。<br>【パターンA】3回目の「3」「5」がブローで，「1」「4」は不正解<br>【パターンB】3回目の「3」「5」のうち1個がブロー，3回目の「1」がブロー，2回目の「4」はヒットまたはブロー<br>4回目の「214」が0ヒット2ブローなので，1回目と比較すると「1」「2」のうちどちらかがブローであり，「4」もブローである。したがって，「0」は不正解とわかる。また，「4」が正解の候補の数字として確定するため，3回目は【パターンB】が正しかったことがわかる。<br>以上より，ヒットまたはブローに該当するのは「1」「4」が確定，さらに「3」「5」のどちらか1個であるとわかる。「1」は1回目・3回目・4回目でいずれもブローなので，左端が正解となる。このとき「4」は左端でヒットにはならないため，2回目のヒットおよび4回目のブローに該当する位置，つまり真ん中が正解となる。「3」「5」のうち「5」が正解だったとすると，2回目および3回目の情報から「5」の正解位置が左端となり，「1」が左端であることと矛盾する。よって，正解は「3」であり，右端の位置に入る。よって正解は<b>143</b>である。<br>なお，3回目までの情報では【パターンA】と【パターンB】の両方の可能性が残るため，正解の候補は143と235の2通りとなる。ただし，4回目の宣言結果によって235の可能性が消えるため，正解は143に定まる。`
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第2問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>

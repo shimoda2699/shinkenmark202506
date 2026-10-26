@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2024年11月｜第4問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2024年11月（ベネッセ・駿台マーク模試）｜第4問（配点25）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "表1": {label:"表1", src:"img/202411_4_tab1_kakei.jpg",   cap:"表1　2020年〜2022年における家計調査データ（単位：円）"},
+  "表2": {label:"表2", src:"img/202411_4_tab2_stats.jpg",   cap:"表2　表1のデータの統計量（単位：円）"},
+  "図1": {label:"図1", src:"img/202411_4_fig1_matrix.jpg",  cap:"図1　各項目の関係"},
+  "グラフ": {label:"グラフⅠ〜Ⅲ", src:"img/202411_4_q4_hist.jpg", cap:"支出割合のヒストグラム（グラフⅠ〜Ⅲ）"},
+  "図2": {label:"図2", src:"img/202411_4_fig2_eastwest.jpg",cap:"図2　東日本と西日本に分類した各項目の散布図"},
+  "図3": {label:"図3", src:"img/202411_4_fig3_regression.jpg",cap:"図3　ほうれんそうの支出割合とはくさいの支出割合の回帰直線"}
+};
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 共通資料・問1・問2 ─────────
+{
+  title: "第4問　次の問い（問1〜6）に答えよ。（配点 25）",
+  context: `
+<p>　次の表1は，47都道府県庁所在地別，二人以上の世帯の一世帯あたりの2020年から2022年の年間支出金額の平均値（以下，支出金額）のうち，野菜の一部について示したものである。表2は，表1のデータにおける平均値や四分位数などの基本的な統計量を算出したものである。</p>
+${figBox("表1")}
+${figBox("表2")}
+<p style="font-size:.78rem;color:var(--muted)">家計調査（総務省統計局）をもとに作成</p>`,
+  items: [
+    {
+      label:"問1（ア）", points:2, type:"single",
+      qtext:`表1のデータだけを用いて全国の傾向や項目ごとの違いを分析する際，<b>行うことが困難であるデータの整理・整形や可視化の方法</b>を，次の⓪〜③のうちから一つ選べ。${figLinks("表1")}`,
+      choices:[
+        "品目ごとに支出金額を上位群と下位群の都道府県に分け，平均値と標準偏差を求める。",
+        "ある都道府県における世帯ごとのレタスの年間支出金額の度数分布表をかく。",
+        "関東地方や近畿地方などの地域ごとにはくさいとレタスの支出金額の散布図をかく。",
+        "品目ごとに47都道府県庁所在地別の支出金額について箱ひげ図をかく。"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`与えられた表のデータから，行うことが困難であるデータの整理・整形や可視化の方法が問われている。前提として，棒グラフやヒストグラム，箱ひげ図，散布図などのグラフの特徴をおさえておかなければならない。`,
+        options:[
+          {label:"⓪ 誤り（可能）",ok:false,text:"品目ごとに支出金額を上位群（大きいもの）と下位群（小さいもの）の二つに分け，それぞれ平均値と標準偏差を求めることは可能である。"},
+          {label:"① 正しい（困難）",ok:true,text:"表1は都道府県庁所在地ごとの一世帯あたりの平均値であり，表1から世帯ごとの年間支出金額を求めることはできない。"},
+          {label:"② 誤り（可能）",ok:false,text:"関東地方や近畿地方など都道府県を地域別に分けて，特定の品目ごとに支出金額の散布図をかくことは可能である。"},
+          {label:"③ 誤り（可能）",ok:false,text:"それぞれの品目における都道府県庁所在地の支出金額について，箱ひげ図をかくことは可能である。"}
+        ]
+      }
+    },
+    {
+      label:"問2（イ）", points:2, type:"single",
+      qtext:`表2のデータから読み取れることとして<b>適当でないもの</b>を，次の⓪〜③のうちから一つ選べ。${figLinks("表2")}`,
+      choices:[
+        "すべての都道府県庁所在地におけるキャベツの支出金額は，すべての都道府県庁所在地におけるはくさいの支出金額よりも高い。",
+        "ほうれんそうの支出金額の第3四分位数は，ねぎの支出金額の中央値よりも低い。",
+        "はくさいの支出金額とレタスの支出金額を比較したとき，範囲は，はくさいの方がレタスより小さい。",
+        "キャベツの支出金額とレタスの支出金額を比較したとき，標準偏差においても，四分位範囲においても，レタスの方が散らばりが大きい。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`与えられた表のデータから，読み取れることができるかどうかが問われている。前提として，平均値，中央値，分散，標準偏差，四分位数，四分位範囲，範囲などの基本統計量の特徴をおさえておかなければならない。`,
+        options:[
+          {label:"⓪ 誤り（適当）",ok:false,text:"キャベツの最小値は2,379円，はくさいの最大値は1,774円である。そのため，すべての都道府県庁所在地において，はくさいよりもキャベツの支出金額の方が高いといえる。"},
+          {label:"① 誤り（適当）",ok:false,text:"ほうれんそうの第3四分位数は2,427円，ねぎの中央値（第2四分位数）は3,077円である。そのため，ほうれんそうの第3四分位数は，ねぎの中央値よりも低いといえる。"},
+          {label:"② 誤り（適当）",ok:false,text:"範囲（最大値－最小値）を求めると，はくさいは1774－909＝865，レタスは3293－1987＝1306となる。よって，レタスよりもはくさいの方が範囲が小さいといえる。"},
+          {label:"③ 正しい（適当でない）",ok:true,text:"標準偏差はキャベツ294円，レタス297円でレタスの方がわずかに大きい。しかし四分位範囲（第3四分位数－第1四分位数）はキャベツ3178－2751＝427（円），レタス2552－2221＝331（円）であり，四分位範囲ではレタスよりもキャベツの方が散らばりが大きいため，適当でない。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問3・問4 共通資料 ─────────
+{
+  title: "問3・問4　共通資料",
+  context: `
+<p>　調査を進めると，食料費全体における支出金額が47都道府県庁所在地ごとに異なることがわかったため，食料費全体に対する，それぞれの野菜の支出金額の割合（以下，支出割合）を求めることにした。例えば，札幌市の食料費全体が940,138円であるのに対して，キャベツの支出金額は3,031円であるため，3,031÷940,138＝0.00322…　よって0.32％となり，札幌市では，年間支出金額におけるキャベツの支出割合は0.32％となる。これらを47都道府県庁所在地ごとに求めた。</p>
+<p>　図1のA〜Cは，それぞれの二つの項目の“支出金額”における散布図と相関係数を示したもので，ⅰ〜ⅲは，それぞれの二つの項目の“支出割合”における散布図と相関係数を表したものである。例えば，図1のAは縦軸を「ほうれんそうの支出金額」，横軸を「はくさいの支出金額」としたもので，ⅰは縦軸を「はくさいの支出割合」，横軸を「ほうれんそうの支出割合」としたものである。</p>
+${figBox("図1")}`,
+  items: [
+    {
+      label:"問3（ウ）", points:3, type:"single",
+      pre:`<p>問3　次の文章を読み，空欄${B('ウ')}〜${B('オ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。ただし，空欄${B('エ')}・${B('オ')}は解答の順序は問わない。</p><div class="fig">図1を見ると，最も相関が強いのは${B('ウ')}における${B('エ')}と${B('オ')}である。</div>`,
+      qtext:`空欄${B('ウ')}に当てはまるものを選べ。${figLinks("図1")}`,
+      choices:["支出金額","支出割合"],
+      correct:0,
+      exp:{
+        answer:"⓪（支出金額）",
+        text:`相関係数は二つの間の直線的な関係の強さをはかる指標であり，－1以上1以下の値をとる。この値が1に近いほど強い正の相関，－1に近いほど強い負の相関があるといえる。図1に記載された相関係数の大きさを比較すると，B（行がほうれんそう，列がレタス）のグラフが0.37で最も大きな数値である。また，A〜Cが「支出金額」，ⅰ〜ⅲが「支出割合」を表しているため，ほうれんそうとレタスの<b>支出金額</b>の相関が最も強いと判断できる。`
+      }
+    },
+    {
+      label:"問3（エ・オ）", points:4, type:"multi", pick:2, partial:2,
+      qtext:`最も相関が強いのは${B('ウ')}における${B('エ')}と${B('オ')}である。空欄${B('エ')}・${B('オ')}に当てはまるものを<b>二つ</b>選べ（順不同）。${figLinks("図1")}`,
+      choices:["ほうれんそう","はくさい","レタス"],
+      correctSet:[0,2],
+      exp:{
+        answer:"⓪・②（順不同，各2点）",
+        text:`図1の相関係数を比較すると，Bの0.37が最大である。Bは行がほうれんそう，列がレタスの「支出金額」の散布図なので，<b>ほうれんそう</b>と<b>レタス</b>が当てはまる。`
+      }
+    },
+    {
+      label:"問4（カ）", points:3, type:"single",
+      qtext:`図1における(1)〜(3)には，ほうれんそう，はくさい，レタスのそれぞれの支出割合におけるヒストグラムが示されている。ヒストグラムの横軸は0.00％以上0.35％未満の0.05％幅とした。このとき，(1)〜(3)のそれぞれに当てはまるヒストグラムの組合せとして最も適当なものを，後の⓪〜⑤のうちから一つ選べ。${figLinks("図1")}${figBox("グラフ")}`,
+      choices:[
+        "(1)－Ⅰ　(2)－Ⅱ　(3)－Ⅲ",
+        "(1)－Ⅰ　(2)－Ⅲ　(3)－Ⅱ",
+        "(1)－Ⅱ　(2)－Ⅰ　(3)－Ⅲ",
+        "(1)－Ⅱ　(2)－Ⅲ　(3)－Ⅰ",
+        "(1)－Ⅲ　(2)－Ⅰ　(3)－Ⅱ",
+        "(1)－Ⅲ　(2)－Ⅱ　(3)－Ⅰ"
+      ],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`図1のほうれんそう，はくさい，レタスの「支出割合」ⅰ〜ⅲにおけるデータの範囲をみると，ほうれんそうの範囲が概ね0.10〜0.35％，はくさいは概ね0.05〜0.20％，レタスは概ね0.20〜0.35％の範囲であることがわかる。一方，ヒストグラムの分布をみると，Ⅰは0.10〜0.35％，Ⅱは0.05〜0.20％，Ⅲは0.20〜0.35％に分布していることがわかる。これらをふまえると，(1)がⅠ（ほうれんそう），(2)がⅡ（はくさい），(3)がⅢ（レタス）であると考えられる。`
+      }
+    }
+  ]
+},
+
+// ───────── 問5 ─────────
+{
+  title: "問5　図2から読み取れることとして最も適当なものを，次の⓪〜③のうちから一つ選べ。",
+  context: `
+<p>　支出割合について東日本（24市）と西日本（23市）に分けて分析を進めた。東日本は白い円（○），西日本は黒いバツ（×）で表されており，図1と同様の対応関係によって散布図と相関係数を図2に表している。なお，47都道府県庁所在地における二つの項目の相関係数を「全国の相関係数」と表現している。</p>
+<p>　なお，相関係数の絶対値が0以上0.15未満のとき「相関がみられない」，0.15以上のとき「相関がみられる」と判断することにする。</p>
+${figBox("図2")}`,
+  items: [
+    {
+      label:"問5（キ）", points:3, type:"single",
+      qtext:`図2から読み取れることとして最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("図2")}`,
+      choices:[
+        "レタスははくさいよりも支出割合が高い傾向があり，東日本，西日本ともにレタスの支出割合を高くすればはくさいの支出割合も高くなる傾向がある。",
+        "レタスの支出割合は他の二つの項目と比べ高い傾向にあり，レタスとほうれんそうの支出割合の相関は東日本では相関がみられないが，西日本ではほうれんそうの支出割合が高くなるとレタスの支出割合も高くなる傾向がある。",
+        "ほうれんそうとはくさいの支出割合は，ほうれんそうの方がはくさいより散らばりが大きく，東日本，西日本において正の相関がみられるので，全国においても正の相関がみられる。",
+        "はくさいとほうれんそうの支出割合を東日本と西日本に分けて分析すると，それぞれの相関係数からはくさいの支出割合が高くなることが原因でほうれんそうの支出割合が高くなる。"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`一つの散布図の中に複数の属性（この場合は東日本と西日本を○と×で表している）を表現することがあるため，図の読み取りに慣れておく必要がある。また，相関関係と因果関係の違いについても理解しておきたい。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"前半の「レタスははくさいよりも支出割合が高い傾向がある」は正しい。一方，レタスとはくさいの相関係数は全国が0.07，東日本が0.04，西日本が0.11であり，いずれも相関はないと考えられる。後半の記述は誤りである。"},
+          {label:"① 正しい（正解）",ok:true,text:"前半は図2の散布図から正しい。レタスとほうれんそうの支出割合の相関係数は，東日本が－0.12で相関がないが，西日本は0.50で正の相関がみられる。"},
+          {label:"② 誤り",ok:false,text:"前半・中盤は正しいが，全国の相関係数は0.07であるため（相関なし），最後の「全国においても正の相関がみられる」が誤り。"},
+          {label:"③ 誤り",ok:false,text:"はくさいとほうれんそうの相関係数は東日本0.41，西日本0.60と両者とも正の相関がある。しかし，相関係数から相関関係を調べることはできるが，因果関係があることを断定することはできない。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問6 ─────────
+{
+  title: "問6　次の文章を読み，後の問い（a・b）に答えよ。",
+  context: `
+<p>　さらに詳しく分析するために，はくさいとほうれんそうの関係に着目し，はくさいの支出割合をほうれんそうの支出割合で予測する回帰直線を，西日本と東日本に分けて図3のように作成した。また，それぞれの項目における箱ひげ図を示す。なお，箱ひげ図ではあるルールをもとに●で外れ値を表現しており，西日本におけるはくさいの支出割合には<u class="point">外れ値</u>があることがわかった。</p>
+${figBox("図3")}`,
+  items: [
+    {
+      label:"a（ク・ケ）", points:6, type:"multi", pick:2, partial:3,
+      qtext:`下線部に関して適当なものを，次の⓪〜⑤のうちから<b>二つ</b>選べ。ただし，解答の順序は問わない。${figLinks("図3")}`,
+      choices:[
+        "外れ値と判断したデータを除くと，相関係数の絶対値は必ず1に近づく値に変化する。",
+        "外れ値と判断したデータを除くと，相関係数の絶対値は必ず0に近づく値に変化する。",
+        "外れ値と判断したデータを除くと，相関係数の絶対値は0に近づく値，もしくは，1に近づく値のどちらに変化するかわからない。",
+        "外れ値と判断したデータを除いても，相関係数は変化しない。",
+        "外れ値と判断したデータは，必ず除いて分析する必要がある。",
+        "外れ値と判断したデータについて，個別で分析してもよい。"
+      ],
+      correctSet:[2,5],
+      exp:{
+        answer:"②・⑤（順不同，各3点）",
+        text:`外れ値とは他のデータと比較して極端に大きな／小さな値のことを指すが，外れ値を除くと相関係数がどのように変化するかはわからない。例えば，外れ値が直線上から大きく外れているとき，この外れ値を除くと相関係数の絶対値は1に近づく。一方，外れ値が直線上にあるとき，この外れ値を除くと相関係数の絶対値は0に近づく。そのため，⓪「必ず1に近づく」，①「必ず0に近づく」，③「相関係数は変化しない」は誤りで，②が正しい。<br>外れ値の取り扱いについては定まっておらず，条件によっては外れ値を除いた方がよい場合もあるが，除かずに分析した方がよいときもある。よって，④「必ず除いて分析する必要がある」は誤りである。さらに，外れ値の分析によって新たな知見を得ることもあるため，⑤「個別で分析してもよい」は正しい。`
+      }
+    },
+    {
+      label:"b（コ）", points:2, type:"single",
+      pre:`<div class="fig">　ほうれんそうの支出割合が${B('コ')}％であったとき，回帰直線から予測できるはくさいの支出割合の差は東日本と西日本で小数点第4位を四捨五入して計算すると，0.035〜0.037％程度の差があることがわかった。<br>　また，このように東日本と西日本のようにグループ分けして分析すると，47都道府県全体での分析ではみられない傾向が見つかることを実感できた。ほうれんそうの支出割合から，はくさいの支出割合を予測するなど，一つのデータから他のデータの数値を予測できると，商品の仕入れ数の推測に用いるなど関連づけることなどができる。</div>`,
+      qtext:`空欄${B('コ')}に入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("図3")}`,
+      choices:["0.15","0.20","0.25","0.30"],
+      correct:1,
+      exp:{
+        answer:"①（0.20）",
+        text:`二つの変量の間に相関のある散布図において，データの関係性を表すために引いた直線のことを回帰直線といい，その式を回帰式という。図3の回帰式は，東日本が y＝0.1647x＋0.0008，西日本が y＝0.2939x＋0.0009 となっており，それぞれxがほうれんそう，yがはくさいを表す。`,
+        options:[
+          {label:"① 正しい（正解）",ok:true,text:"x に 0.20（％）＝0.0020 を代入すると，東日本は 0.1647×0.0020＋0.0008＝0.0011294，西日本は 0.2939×0.0020＋0.0009＝0.0014878。差は 0.0014878－0.0011294＝0.0003584≒0.036（％）となる。"},
+          {label:"② 誤り",ok:false,text:"x に 0.25（％）＝0.0025 を代入すると，東日本は0.00121175，西日本は0.00163475。差は0.000423≒0.0423（％）となる。"},
+          {label:"⓪・③ 誤り",ok:false,text:"0.15％や0.30％は，どちらか一方の過去のデータが存在しないため，予測する回帰直線が適切であるとは限らない。"}
+        ]
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第4問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>

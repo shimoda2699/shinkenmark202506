@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2024年11月｜第2問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2024年11月（ベネッセ・駿台マーク模試）｜第2問（配点30）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "A図1": {label:"図1", src:"img/202411_2A_fig1_drawing.jpg", cap:"図1　花子さんが描いた絵"},
+  "A図2": {label:"図2", src:"img/202411_2A_fig2_binary.jpg",  cap:"図2　二値化した画像"},
+  "A表1": {label:"表1", src:"img/202411_2A_tab1_cc.jpg",      cap:"表1　CCライセンスの種類"},
+  "Aアの選択肢": {label:"アの選択肢", src:"img/202411_2A_q1_choices.jpg", cap:"ア の選択肢（CCライセンスの組合せ）"},
+  "A図3": {label:"図3", src:"img/202411_2A_fig3_code.jpg",    cap:"図3　符号化した画像データ"},
+  "Aエの選択肢": {label:"エの選択肢", src:"img/202411_2A_q3_choices.jpg", cap:"エ の選択肢（二値化した画像）"},
+  "B表1": {label:"表1", src:"img/202411_2B_tab1_survey.jpg",  cap:"表1　価格も加味した商品（店舗）の魅力事前アンケート結果"},
+  "B図1": {label:"図1", src:"img/202411_2B_fig1_layout.jpg",  cap:"図1　店舗の配置図（空欄は飲食店以外の店舗）"},
+  "B表2": {label:"表2", src:"img/202411_2B_tab2_coef.jpg",    cap:"表2　位置による係数"},
+  "B図2": {label:"図2", src:"img/202411_2B_fig2_sim.jpg",     cap:"図2　一人あたりの平均購入金額のシミュレーション結果"},
+  "Bab":  {label:"a・b", src:"img/202411_2B_q2_ab.jpg",       cap:"店舗の並びとシミュレーション結果（a・b）"},
+  "Bcd":  {label:"c・d", src:"img/202411_2B_q2_cd.jpg",       cap:"店舗の並びとシミュレーション結果（c・d）"},
+  "B表3": {label:"表3", src:"img/202411_2B_tab3_price.jpg",   cap:"表3　単価変更前後の商品の魅力割合"},
+  "Bスの選択肢": {label:"スの選択肢", src:"img/202411_2B_q3_choices.jpg", cap:"ス の選択肢（単価変更後のシミュレーション結果）"}
+};
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── A ─────────
+{
+  title: "第2問A　次の花子さんと先生の会話文を読み，問い（問1〜5）に答えよ。",
+  context: `
+<p>花子：「デジタル化したい絵を描いてきて」と先日宿題をもらったので，リンゴの絵を鉛筆で描きました！<br>
+先生：よく描けていますね！　今日の授業ではこの絵をデジタル化していきましょう。<br>
+花子：ほめてもらえてうれしいです。デジタル化するなら，インターネットで公開してみんなに共有したいです！</p>
+${figBox("A図1")}
+<p>先生：この絵の著作権は，花子さんにありますが，クリエイティブ・コモンズ・ライセンス（以下，CCライセンス）を使うことでインターネットで公開した画像をどのように使ってほしいか意思表示することができますよ。<br>
+花子：なるほど！　私が描いたということがわかれば，営利目的でも利用してほしいです！　白黒なので，この絵を少し修正して色をつけてもらってもいいと思っています。ただ，その場合も，もとは私の作品であることは常に伝えてほしいです。<br>
+先生：<sub>A</sub><u class="point">CCライセンスのアイコンを組み合わせることで，その意思を表示することができますよ。</u>それでは，インターネットで公開する前に，デジタル化をしていきましょう。画像のデジタル化は，標本化 → 量子化 → 符号化の順で行います。色情報をもつとそれだけデータ量が多くなりますが，今回は鉛筆で描いた白黒の絵なので，<sub>B</sub><u class="point">データ量が少なくてすむ白黒の明暗を表現した画像であるグレースケール画像で表現しましょう。256階調の場合，0（完全な黒）から255（完全な白）までの256段階の異なる階調があります。</u>解像度を高くして，グレースケールの256階調だと鉛筆で描いた絵とほぼ同じ状態で保存できますよ。<br>
+花子：先生！　256階調を選んだはずが，間違えて2階調を選んでしまいました！<br>
+先生：今やったのは二値化ですね。画像を完全な黒か，完全な白かの二つで表したものです。<br>
+花子：この二値化した画像（図2）は，リンゴの輪郭がわかりづらいですね……。</p>
+${figBox("A図2")}
+<p>先生：<sub>C</sub><u class="point">二値化は「しきい値」といって，黒と白を分ける明度の基準を決めることができますよ。</u>しきい値を調整すればリンゴの輪郭がくっきり見えるようになります。<br>
+花子：なるほど！　二値化した画像も味わいがあってよいですね！<br>
+先生：そうですね。<sub>D</sub><u class="point">今回は，グレースケールも含め白黒画像でデジタル化しましたが，カラー画像の場合，赤（R），緑（G），青（B）のそれぞれが階調をもち，これらを組み合わせることでさまざまな色が表現できます。</u><br>
+花子：なるほど。画像のデジタル化って楽しいですね。いろいろと試してみます。</p>`,
+  items: [
+    {
+      label:"問1（ア）", points:2, type:"single",
+      qtext:`下線部Aについて，クリエイティブ・コモンズ・ライセンスは，BY（表示），NC（非営利），ND（改変禁止），SA（継承）のアイコンの組合せによって，著作者自身が著作物の利用に関して意思表示するものである。花子さんの意思に合致するものとして最も適当なものを，後の⓪〜⑤のうちから一つ選べ。${figBox("A表1")}${figBox("Aアの選択肢")}`,
+      choices:["BY","BY・NC","BY・ND","BY・SA","BY・NC・ND","BY・NC・SA"],
+      correct:3,
+      exp:{
+        answer:"③（BY・SA）",
+        text:`花子さんの「私が描いたということがわかれば，営利目的でも利用してほしいです！　白黒なので，この絵を少し修正して色をつけてもらってもいいと思っています。ただ，その場合も，もとは私の作品であることは常に伝えてほしいです。」の発言と，各アイコンの役割を照らし合わせて考える。<br>・「私が描いたということがわかれば」→著作権表示が必要なので<b>BY（表示）</b>が該当する。<br>・「営利目的でも利用してほしい」→<b>NC（非営利）は不要</b>。<br>・「絵を少し修正して色をつけてもらってもいい」→改変可能なので<b>ND（改変禁止）は不要</b>。<br>・「もとは私の作品であることは常に伝えてほしい」→新しい作品にも元の作品と同じライセンスをつけることで可能となるので<b>SA（継承）</b>が該当する。`,
+        options:[
+          {label:"③ 正しい（正解）",ok:true,text:"BY（表示）とSA（継承）の組合せ。"}
+        ]
+      }
+    },
+    {
+      label:"問2（イ）", points:2, type:"single",
+      pre:`<p>下線部Bのグレースケール画像のデータ量に関して，次の文章の空欄${B('イ')}・${B('ウ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。</p><div class="fig">　画像のデータ量は，総画素数×量子化ビット数で求められる。0と1の2進法1桁で二つの状態を表せることから，2階調のデータの量子化ビット数は1ビットとなる。グレースケール画像で総画素数が同じ場合，16階調は4階調の${B('イ')}倍のデータ量となる。また，図1の絵を縦50ピクセル，横45ピクセル，256階調でデジタル化した場合，データ量は${B('ウ')}バイトとなる。なお，圧縮などは考えないものとする。</div>`,
+      qtext:`グレースケール画像で総画素数が同じ場合，16階調は4階調の${B('イ')}倍のデータ量となる。`,
+      choices:["2","4","8","16"],
+      correct:0,
+      exp:{
+        answer:"⓪（2倍）",
+        text:`グレースケール画像の階調について理解しよう。<br>グレースケール4階調の画像は 4＝2<sup>2</sup> より1画素あたり2ビットで表現できる。16階調の画像は 16＝2<sup>4</sup> より1画素あたり4ビットで表現できる。<br>したがって，16階調のデータは4階調のデータの<b>2倍</b>のデータ量となる。`
+      }
+    },
+    {
+      label:"問2（ウ）", points:2, type:"single",
+      qtext:`図1の絵を縦50ピクセル，横45ピクセル，256階調でデジタル化した場合，データ量は${B('ウ')}バイトとなる。なお，圧縮などは考えないものとする。`,
+      choices:["2,250","18,000","72,000","576,000"],
+      correct:0,
+      exp:{
+        answer:"⓪（2,250バイト）",
+        text:`グレースケール画像のデータ量計算を理解しよう。<br>グレースケール画像の256階調では 256＝2<sup>8</sup> より1画素あたり8ビット必要である。バイトの単位で解答する必要があるため，8ビット＝1バイトとして計算すると，<br>（データ量（バイト））＝50×45×1バイト（8ビット）＝<b>2250バイト</b>`,
+        options:[
+          {label:"① 18,000",ok:false,text:"ビット単位のまま（50×45×8＝18,000ビット）。バイトに直していない。"}
+        ]
+      }
+    },
+    {
+      label:"問3（エ）", points:3, type:"single",
+      qtext:`下線部Cについて，次の図3は，ある画像データを0（完全な黒）から7（完全な白）までの8階調で符号化したものである。しきい値を，明度50％の位置で二値化した場合のデジタル画像として最も適当なものを，後の⓪〜③のうちから一つ選べ。${figBox("A図3")}${figBox("Aエの選択肢")}`,
+      choices:["画像⓪","画像①","画像②","画像③"],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`画像の二値化や符号化について理解しよう。<br>符号化したデータは2進法なので10進法に変換すると，000〜011（0〜3）が<b>黒</b>，100〜111（4〜7）が<b>白</b>となる。しきい値は50％の位置とあるので，二値化の白と黒の境界は3と4の間となる。<br>これを図3と対応づけると次のようになる。
+<table style="border-collapse:collapse;margin:8px auto;font-size:.8rem;text-align:center">
+<tr><td style="background:#222;color:#fff;padding:4px 8px">000</td><td style="background:#222;color:#fff;padding:4px 8px">010</td><td style="border:1px solid #999;padding:4px 8px">111</td><td style="background:#222;color:#fff;padding:4px 8px">010</td></tr>
+<tr><td style="background:#222;color:#fff;padding:4px 8px">010</td><td style="border:1px solid #999;padding:4px 8px">110</td><td style="background:#222;color:#fff;padding:4px 8px">011</td><td style="border:1px solid #999;padding:4px 8px">101</td></tr>
+<tr><td style="border:1px solid #999;padding:4px 8px">110</td><td style="border:1px solid #999;padding:4px 8px">111</td><td style="background:#222;color:#fff;padding:4px 8px">010</td><td style="border:1px solid #999;padding:4px 8px">100</td></tr>
+<tr><td style="background:#222;color:#fff;padding:4px 8px">010</td><td style="border:1px solid #999;padding:4px 8px">101</td><td style="border:1px solid #999;padding:4px 8px">110</td><td style="background:#222;color:#fff;padding:4px 8px">010</td></tr>
+</table>
+よって，正解は②である。`
+      }
+    },
+    {
+      label:"問4（オ）", points:3, type:"single",
+      qtext:`下線部Dについての説明として最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "1画素あたりのデータ量は，256階調のグレースケール画像，RGBそれぞれ256階調のカラー画像ともに256ビットである。",
+        "白黒の絵をデジタル化する場合，RGBそれぞれ8階調のカラー画像でデジタル化しても，二値化した2階調の画像と同じデータ量となる。",
+        "白と黒で描いた絵をRGBそれぞれ4階調でデジタル化する場合，黒色の部分が多いほど，データ量が多くなる。",
+        "RGBそれぞれ4階調のカラー画像をデジタル化するには1色2ビットのデータ量が必要なので1画素あたり6ビットのデータ量が必要である。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`デジタル化したカラー画像の特徴について理解しよう。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"256階調のグレースケールは 256＝2<sup>8</sup> より1画素あたり8ビット。RGB各色が256階調のカラー画像は各色8ビットなので，合計24ビット（8ビット×3色）となる。"},
+          {label:"① 誤り",ok:false,text:"二値化画像は1画素あたり1ビット。RGB各色8階調のカラー画像は，元の絵が白黒であったとしても1画素あたり9ビット（3ビット×3色）が必要となる。"},
+          {label:"② 誤り",ok:false,text:"1画素あたりに使用されるビット数によってデータ量が決まるので，黒が多いからといってデータ量は変わらない。"},
+          {label:"③ 正しい（正解）",ok:true,text:"RGBそれぞれ4階調では各色に2ビットが必要。1画素あたり6ビット（2ビット×3色）が必要となる。"}
+        ]
+      }
+    },
+    {
+      label:"問5（カ）", points:3, type:"single",
+      qtext:`画像のデジタル化について学んだ花子さんは，調べた内容をまとめることにした。内容として<b>誤っているもの</b>を，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "画像のデジタル化は，標本化→量子化→符号化の順で行われ，256階調のグレースケール画像を用いると，二値化した画像と比較し，もとの画像に近い状態で表現できる。",
+        "白黒の絵をデジタル化する場合，256階調のグレースケール画像と二値化した画像でデータ量は変わらない。",
+        "二値化した画像で物体と背景の明るさが大きく異なる場合，黒と白を分ける明度の基準である「しきい値」を調整することで，物体と背景の境界を明瞭にすることができる。",
+        "総画素数が同じ場合，64階調のグレースケール画像と，RGBそれぞれ4階調のカラー画像は同じデータ量になる。"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`画像のデジタル化について学んだ内容を確認しよう。`,
+        options:[
+          {label:"⓪ 正しい",ok:false,text:"二値化した画像は完全な白か完全な黒かの2段階の色だけだが，256階調のグレースケール画像では256段階の明るさで表現するため，元の画像に近い状態で表現できる。"},
+          {label:"① 誤り（これが正解）",ok:true,text:"256階調のグレースケール画像は1画素あたり8ビット，二値化した画像は1画素あたり1ビット。データ量は異なる。"},
+          {label:"② 正しい",ok:false,text:"明るい部分と暗い部分の境界を「しきい値」とすることで，物体と背景の境界を明瞭にすることができる。"},
+          {label:"③ 正しい",ok:false,text:"64階調のグレースケール画像は1画素あたり6ビット。RGBそれぞれ4階調のカラー画像も6ビット（2ビット×3色）となる。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── B 問1 ─────────
+{
+  title: `第2問B　次の文章を読み，後の問い（問1〜3）に答えよ。<br>問1　次の文章の空欄${B('キ')}〜${B('サ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。`,
+  context: `
+<p>　太郎さんは文化祭の実行委員である。今年の文化祭では，飲食店の模擬店を何店舗か出店することにした。</p>
+<p>　昨年の文化祭では，クレープ，たこ焼き，かき氷，綿菓子の4店舗を出店した。価格も加味して「どの飲食店に最も魅力を感じるか」のアンケートを生徒500人に対して実施したところ，結果は表1のとおりであった。ここでは，アンケート結果の割合を，商品魅力割合と呼ぶことにする。昨年はこの商品魅力割合を基準にして，商品の材料を準備した。</p>
+${figBox("B表1")}
+<p>　しかし，実際の模擬店での購入人数の割合は予想とは異なる結果となった。そのため，準備していた商品が余ったり，途中で材料が不足して追加で買い出したりすることが生じた。太郎さんは，その原因を考えることにした。<br>
+　太郎さんが昨年の店舗の位置について調べてみると，図1のとおりであった。</p>
+${figBox("B図1")}
+<p>　太郎さんは表1と図1をみて，実際の模擬店での商品購入割合が予想と異なったのは，入口に近い店舗ほど人の目に留まりやすく集客に影響したからではないかと考えた。</p>
+<p>　今年は商品魅力割合と店舗の位置によって売上がどのように変化するかのシミュレーション結果から売上を予測し，準備をするのがよいのではないかと考えた。そこで，昨年の実際の模擬店での購入人数の割合をもとに表2の入口から近い順（店舗順）に対する「位置による係数」を設定して使うことにした。</p>
+${figBox("B表2")}
+<p>各店舗で商品を購入する確率は次のようになるとする。</p>
+<div class="fig">商品を購入する確率 ＝ （商品の魅力割合×位置による係数） ÷ 各商品の（商品の魅力割合×位置による係数）の和</div>
+<p>例えば，クレープを購入する確率は，<br>
+　商品の魅力割合×位置による係数＝0.2×2.0＝0.4<br>
+　他の商品も同様に計算し，<br>
+　クレープを購入する確率＝0.4÷（0.4＋0.3＋0.3＋0.15）≒0.35<br>
+よって，クレープを購入する確率は約35％となる。<br>
+同様に計算すると，たこ焼きを購入する確率は約26％，かき氷を購入する確率は約26％，綿菓子を購入する確率は約13％となる。</p>
+<p>　クレープ，たこ焼き，かき氷，綿菓子の店舗順で100人のお客さんが商品を各自一つだけ購入した場合，期待される売上金額の合計が高い順に並べると${B('キ')}→${B('ク')}→${B('ケ')}→${B('コ')}である。</p>
+<p>　太郎さんは，さきに設定した「商品を購入する確率」を用いて500人のお客さんがランダムに必ず一つの商品を購入した場合，一人あたりの購入金額の平均がどのようになるか，乱数を使用したシミュレーションプログラムを作成してみた。<br>
+　次の図2は，500人のお客さんがランダムに来店し，商品を一つ購入した場合のシミュレーションを1000回行った結果を表したグラフである。横軸は，一人あたりの購入金額の平均，縦軸は出現回数である。</p>
+${figBox("B図2")}
+<p>この結果より，${B('サ')}ということがいえる。</p>`,
+  items: [
+    {
+      label:"キ〜コ", points:4, type:"choicegroup",
+      qtext:`クレープ，たこ焼き，かき氷，綿菓子の店舗順で100人のお客さんが商品を各自一つだけ購入した場合，期待される売上金額の合計が高い順に並べると${B('キ')}→${B('ク')}→${B('ケ')}→${B('コ')}である。<br><span style="font-size:.8rem;color:var(--muted)">※キ〜コすべて正解の場合のみ4点</span>${figLinks("B表1","B表2")}`,
+      blanks:[
+        {label:"キ（1番目）", choices:["クレープ","たこ焼き","かき氷","綿菓子"], correct:1},
+        {label:"ク（2番目）", choices:["クレープ","たこ焼き","かき氷","綿菓子"], correct:0},
+        {label:"ケ（3番目）", choices:["クレープ","たこ焼き","かき氷","綿菓子"], correct:2},
+        {label:"コ（4番目）", choices:["クレープ","たこ焼き","かき氷","綿菓子"], correct:3}
+      ],
+      exp:{
+        answer:"キ①　ク⓪　ケ②　コ③（たこ焼き→クレープ→かき氷→綿菓子）",
+        text:`数式モデルで求めた商品を購入する確率をもとに，店舗ごとの売上金額を比較しよう。<br>クレープを購入する確率は約35％，たこ焼きは約26％，かき氷は約26％，綿菓子は約13％である。この確率で100人のお客さんが商品を一つ購入した場合，期待される各商品の売上金額の合計は次のように求めることができる。<br>
+　クレープ　35％　300円×35人＝10,500円<br>
+　たこ焼き　26％　500円×26人＝13,000円<br>
+　かき氷　　26％　200円×26人＝5,200円<br>
+　綿菓子　　13％　100円×13人＝1,300円<br>
+よって，①たこ焼き → ⓪クレープ → ②かき氷 → ③綿菓子 の順となる。`
+      }
+    },
+    {
+      label:"サ", points:3, type:"single",
+      qtext:`この結果より，${B('サ')}ということがいえる。${figLinks("B図2")}`,
+      choices:[
+        "一人あたりの購入金額の平均は何度シミュレーションを実行しても同じ結果になる",
+        "一人あたりの購入金額の平均の分布の最大値と最小値の差はおよそ40円",
+        "一人あたりの購入金額の平均の最頻値は310円",
+        "一人あたりの購入金額の平均として290円を下回る出現回数の合計は10回以下"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`シミュレーション結果を表したグラフから情報を適切に読み取ろう。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"乱数を用いているため，シミュレーション結果が同じになるとは限らない。"},
+          {label:"① 正しい（正解）",ok:true,text:"グラフの左端に注目すると最小値283円，右端に注目すると最大値322円ということがわかる。その差は322－283＝39（円）となり，およそ40円である。"},
+          {label:"② 誤り",ok:false,text:"グラフの山が最も高いところに注目すると最頻値は300円以下のところにある。"},
+          {label:"③ 誤り",ok:false,text:"290円を下回る出現回数の合計なので，280〜289の出現回数を合計すると20回を超える。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── B 問2 ─────────
+{
+  title: "問2　太郎さんは，これまでの結果を受けて，今度は店舗の位置を変更して傾向を調べることにした。",
+  context: `
+<p>　次のa〜dの図は，店舗の並び順を変更して500人のお客さんがランダムに来店し，商品を一つ購入した場合のシミュレーションを1000回行った結果を表したグラフである。横軸は，一人あたりの購入金額の平均，縦軸は出現回数である。</p>
+<p style="font-size:.85rem;color:var(--muted)">表1（価格も加味した商品の魅力事前アンケート結果）・表2（位置による係数）は再掲です。${figLink("B表1")} ${figLink("B表2")}</p>
+${figBox("Bab")}
+${figBox("Bcd")}`,
+  items: [
+    {
+      label:"シ", points:4, type:"single",
+      qtext:`a〜dから読み取れることとして最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("Bab","Bcd","B表1","B表2")}`,
+      choices:[
+        "全体の売上金額を上げるためには，aとdの並び順は適さない傾向にある。",
+        "aの並び順では，4店舗全体の売上金額は上昇する傾向にある。",
+        "bとcの並び順ではbの方が全体の売上金額が多い傾向が読み取れる。",
+        "aの並び順ではクレープを買った人は一人もいない。"
+      ],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`店舗の位置を変えたシミュレーション結果を比較しよう。`,
+        options:[
+          {label:"⓪ 正しい（正解）",ok:true,text:"aとdのグラフは，bとcのグラフに比べて左に分布しており全体の売上金額が低い傾向があるため，4店舗全体の売上金額を上げるためにはaとdの並び順は適さない。"},
+          {label:"① 誤り",ok:false,text:"aの並び順では，他のグラフより左に分布しており全体の売上金額が低いことがわかる。"},
+          {label:"② 誤り",ok:false,text:"bとcのグラフは売上の分布がほとんど変わらないので，読み取れない内容である。"},
+          {label:"③ 誤り",ok:false,text:"このグラフからは，どの商品を何回買ったかは読み取れない内容である。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── B 問3 ─────────
+{
+  title: "問3　太郎さんは，現状500円のたこ焼きを400円に値下げし，昨年実施した「どの飲食店に最も魅力を感じるか」のアンケートを今年も実施したところ，表3のようになった。",
+  context: `
+<p>　商品に魅力があると回答した人が最も多かったたこ焼きの店舗を入口の近くに配置し，店舗の並び順がたこ焼き店，クレープ店，かき氷店，綿菓子店となるようにしてシミュレーションを行った。</p>
+${figBox("B表3")}
+<p>なお，変更前のシミュレーション結果は以下のとおりである。</p>
+${figBox("B図2")}`,
+  items: [
+    {
+      label:"ス", points:4, type:"single",
+      qtext:`単価変更後のシミュレーション結果として最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("B表3","B図2","B表2")}${figBox("Bスの選択肢")}`,
+      choices:["グラフ⓪（100円付近）","グラフ①（200円付近）","グラフ②（330円付近）","グラフ③（400円付近）"],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`商品の価格と商品魅力割合を変えたシミュレーション結果を確認しよう。<br>商品魅力割合と店舗の位置が変わったことにより，商品の購入確率はおよそ次のとおりとなる。<br>
+　たこ焼き：40％×2.0＝80％　購入確率 80÷140≒57％<br>
+　クレープ：20％×1.5＝30％　購入確率 30÷140≒21％<br>
+　かき氷：20％×1.0＝20％　購入確率 20÷140≒14％<br>
+　綿菓子：20％×0.5＝10％　購入確率 10÷140≒7％<br>
+それぞれの店舗で購入したお客さん全員の購入金額の平均値は 400×0.57＋300×0.21＋200×0.14＋100×0.07＝228＋63＋28＋7＝<b>326</b> となり，図2のグラフより分布が右に寄ることが推測できる。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"本来，一人あたりの平均購入金額は，最低価格（綿菓子）の100円を下回ることはないが，それを下回っている。"},
+          {label:"① 誤り",ok:false,text:"200円のかき氷と100円の綿菓子の商品魅力割合が減って，単価が高いたこ焼き（400円）の商品魅力割合が増えているため，一人あたりの平均購入金額は大きく減ることはないはずだが，変更前に比べて約100円も下がっている。"},
+          {label:"② 正しい（正解）",ok:true,text:"図2の条件変更前のグラフと比較し，右に寄っており一人あたりの平均購入金額が上がっているといえる。"},
+          {label:"③ 誤り",ok:false,text:"本来，一人あたりの平均購入金額は，最高価格（たこ焼き）の400円を上回ることはないが，それを上回っている。"}
+        ]
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第2問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>

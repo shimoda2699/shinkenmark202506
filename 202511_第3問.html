@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2025年11月｜第3問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年11月（ベネッセ・駿台マーク模試）｜第3問（配点25）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ','ⓑ','ⓒ','ⓓ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "図1": {label:"図1", src:"img/202511_3_fig1_kanbunA.jpg", cap:"図1　漢文A（杜甫「絶句」より）"},
+  "図2": {label:"図2", src:"img/202511_3_fig2_progA.jpg",   cap:"図2　漢文Aを書き下し文に変換するプログラム"},
+  "図3": {label:"図3", src:"img/202511_3_fig3_kanbunB.jpg", cap:"図3　漢文B（杜甫「絶句」より）"},
+  "図4": {label:"図4", src:"img/202511_3_fig4_progB.jpg",   cap:"図4　漢文Bを書き下し文に変換するプログラム"},
+  "図5": {label:"図5", src:"img/202511_3_fig5_kanbunC.jpg", cap:"図5　漢文C（韓非「韓非子」より）"},
+  "図6": {label:"図6", src:"img/202511_3_fig6_progC.jpg",   cap:"図6　漢文Cを書き下し文に変換するプログラム"}
+};
+const code = s => `<code style="font-family:Consolas,Menlo,monospace;font-size:.9em">${s}</code>`;
+const NOTE = `<p style="font-size:.78rem;color:var(--muted)">※このプログラムでは，出力後の文字は改行されないものとする。</p>`;
+const EO = ["modori == 0","modori == 1","Kaeriten[i] == 0","Kaeriten[i] == 1","Kaeriten[i] == nagasa","Kaeriten[i] != nagasa"].map(code);
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 問1 ─────────
+{
+  title: `第3問　高校生のCさんとDさんが，漢文を書き下し文に変換するプログラムについて話し合っている。<br>問1　次の会話文中の空欄${B('ア')}・${B('イ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。`,
+  context: `
+<p>Cさん：昨日，中学生の弟から漢文の宿題について聞かれたんだ。漢文を書き下し文にするやり方，覚えてる？<br>
+Dさん：もちろん，覚えているよ。漢文を日本語で読むために，返り点で漢字の順序を入れ替えたり，送り仮名を漢字につけ足して足りない語を補ったりして書き下し文にするんだよね。弟にはちゃんと教えられたの？<br>
+Cさん：意外と覚えているもので，宿題の内容はちゃんと教えることができたよ。そこでね，漢文を書き下し文に変換するアルゴリズムを，プログラムで表現できないかと思ったんだ。<br>
+Dさん：それは面白そうだね。でも，どうやって漢文をプログラムで表現したらいいのかな？<br>
+Cさん：いろいろな表現方法があると思うけど，配列を利用したらどうかと思ったんだ。例えば，図1の漢文Aを書き下し文に変換するプログラム（図2）を考えてみたよ。</p>
+${figBox("図1")}
+<p>Dさん：図1は返り点がない送り仮名だけを含む漢文だね。「江ハ碧ニシテ鳥ハ逾白ク」という書き下し文になるね。図2のプログラムだと，(01)行目で漢文「江碧鳥逾白」を配列Kanbunに格納して，(02)行目で漢文の送り仮名を配列Okuriganaに格納しているんだね。送り仮名が含まれていない漢字に対応する配列Okuriganaの要素には，""（空の文字列）を挿入しているね。ところで，(01)行目と(02)行目で，漢文や送り仮名をまとめて一つの変数に代入せずに，それぞれ一つひとつを配列の各要素に格納しているのはどうしてなの？<br>
+Cさん：その理由は，${B('ア')}だよ。あと，図1の漢文Aにはないけど，返り点を含む漢文の場合には，漢字の順序を入れ替えて表示する必要があることも理由の一つだよ。ちなみに，配列の添字は0から始まるよ。それと(03)行目の「要素数(配列)」は配列の要素数を返す関数だよ。<br>
+Dさん：なるほどね。プログラムを実行したら，問題なく漢文Aを書き下し文に変換できたことを確認したよ。</p>
+${figBox("図2")}${NOTE}`,
+  items: [
+    {
+      label:"ア", points:1, type:"single",
+      qtext:`(01)行目と(02)行目で，漢文や送り仮名をまとめて一つの変数に代入せずに，それぞれ一つひとつを配列の各要素に格納している理由は，${B('ア')}だよ。${figLinks("図2")}`,
+      choices:[
+        "配列の各要素には一つの文字しか格納することができないから",
+        "一つの配列に漢文と送り仮名を格納する必要があるから",
+        "配列Kanbunの要素数によって変数nagasaの値が変化するから",
+        "配列Kanbunと配列Okuriganaの各要素を対応づける必要があるから"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`図2のプログラムの(05)行目の表示処理を確認すると，Kanbun[0]の後の送り仮名がOkurigana[0]，次のKanbun[1]の後の送り仮名がOkurigana[1]というように同じ添字の各要素が対応していることがわかる。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"配列の各要素には，複数の文字を格納することも可能であるため，「一つの文字しか格納することができない」という制約は存在しない。"},
+          {label:"① 誤り",ok:false,text:"「一つの配列に漢文と送り仮名を格納」という説明は，そもそも漢文と送り仮名を別々の配列に分け，それぞれの漢字を一文字ずつ配列に格納している理由にはなっていない。"},
+          {label:"② 誤り",ok:false,text:"変数nagasaが配列の要素数によって変化することと，漢字を一文字ずつ配列に格納していることは直接関係しない。"},
+          {label:"③ 正しい（正解）",ok:true,text:"配列Kanbunと配列Okuriganaの各要素を対応づけて順番に表示することで，一つの漢字に送り仮名を対応させる処理が可能となる。"}
+        ]
+      }
+    },
+    {
+      label:"イ", points:1, type:"single",
+      qtext:`図2の(04)行目　${code('i')} を0から${B('イ')}まで1ずつ増やしながら繰り返す：${figLinks("図2")}`,
+      choices:["nagasa","nagasa + 1","nagasa - 1","nagasa - 2"].map(code),
+      correct:2,
+      exp:{
+        answer:"②（nagasa - 1）",
+        text:`「配列の添字は0から始まるよ」という会話文から，配列Kanbunの添字0〜4に「江，碧，鳥，逾，白」，配列Okuriganaの添字0〜4に「ハ，ニシテ，ハ，（空），ク」が対応する。<br>変数iは(05)行目で配列KanbunおよびOkuriganaの添字として用いられていることがわかる。プログラムの実行結果は「江ハ碧ニシテ鳥ハ逾白ク」であることから，配列の先頭から最後まで順番に表示していることがわかる。配列Kanbunの添字の範囲は0〜4であり，変数iの取りうる範囲もそれと一致させる必要がある。(03)行目では，「要素数(Kanbun)」の戻り値である配列Kanbunの要素数5が変数nagasaに格納される。変数nagasaの値である5から1を引けば，配列の添字の最大値である4と一致する。`
+      }
+    }
+  ]
+},
+
+// ───────── 問2 ─────────
+{
+  title: `問2　次の会話文中の空欄${B('ウ')}〜${B('オ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。なお，「==」は両辺の値が等しいかどうかを判定する比較演算子，「!=」は両辺の値が等しくないかどうかを判定する比較演算子である。`,
+  context: `
+<p>Cさん：次に，返り点のある漢文について考えよう。返り点は漢文の左側にある記号で，レ点，一二点，上下点などがあるけど，まずはレ点が一つだけある場合を，プログラムで表現してみるね。<br>
+Dさん：漢文にレ点がある場合，レ点のついている文字とその次の文字を，送り仮名を含めて順序を逆にして読むんだったね。<br>
+Cさん：そうだね。図3の漢文Bでは，「欲」にレ点があるから，「欲」と「然」の順序が逆になり，送り仮名を含めると「山ハ青クシテ花ハ然エント欲ス」という書き下し文になるよ。</p>
+${figBox("図3")}
+<p>Dさん：つまり，レ点があるところでは，配列の要素を逆に表示する必要があるね。これを踏まえて，図3の漢文Bを書き下し文に変換するプログラム（図4）を考えたよ。<br>
+Cさん：新たに配列Kaeritenを用意して，0と1でレ点の有無を表現しているんだね。図4のプログラムでは，(03)行目で配列Kaeritenの四つ目の要素が1だから，配列Kanbunの四つ目の要素の「欲」にレ点がついていることを表しているね。このルールで配列Kaeritenを作るのであれば，${B('ウ')}ということだよね？<br>
+Dさん：うん，そのようになるけれども，これは三つの配列Kanbun，Okurigana，Kaeritenの要素数をそろえるために，あえてそのようにしているよ。<br>
+Cさん：なるほどね。ところで，(05)行目の変数modoriは何のためのものなの？<br>
+Dさん：(06)〜(13)行目の繰り返し処理では，変数iを1ずつ増やしながら，配列Kaeritenの値を確認しているんだ。もし${B('エ')}であれば，そのまま漢字と送り仮名を表示して，加えて${B('オ')}の場合は，一つ前の漢字と送り仮名も表示しているよ。<br>
+Cさん：そういうことか。配列Kaeritenと変数modoriの値によって，漢字と送り仮名を表示する順序を制御しているんだね。</p>
+${figBox("図4")}${NOTE}`,
+  items: [
+    {
+      label:"ウ", points:2, type:"single",
+      qtext:`このルールで配列Kaeritenを作るのであれば，${B('ウ')}ということだよね？${figLinks("図3","図4")}`,
+      choices:[
+        "配列Kaeritenの最初の要素が1になることはない",
+        "配列Kaeritenの最後の要素が1になることはない",
+        "配列Kaeritenの要素に2以上の数値が格納されることがある",
+        "配列Kaeritenの要素に文字列が格納されることがある"
+      ],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`配列Kanbunの添字0〜4は「山，青，花，欲，然」，配列Kaeritenの添字0〜4は「0，0，0，1，0」。Kanbun[3]の「欲」に対応するレ点の有無を示すのがKaeriten[3]であり，この値は1（レ点有）である。<br>会話文にある「レ点があるところでは，配列の要素を逆に表示する必要がある」という説明に従えば，Kanbun[4]の「然」を先に表示してからKanbun[3]の「欲」を表示することになる。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"Kaeriten[0]の値が1の場合，Kanbun[1]の要素の値を先に表示することになる。よって，最初の要素が1になることはある。"},
+          {label:"① 正しい（正解）",ok:true,text:"最後の要素Kaeriten[4]が1の場合，Kanbun[5]の要素を先に表示することになるが，Kanbun[5]は存在しない。よって，最後の要素が1になることはない。"},
+          {label:"② 誤り",ok:false,text:"会話文から，各要素はレ点の有無を表す0または1のいずれかである。"},
+          {label:"③ 誤り",ok:false,text:"会話文から，各要素はレ点の有無を表す0または1のいずれかのみであり，文字列が格納されることはない。"}
+        ]
+      }
+    },
+    {
+      label:"エ", points:3, type:"single",
+      qtext:`図4の(07)行目　もし${B('エ')}ならば：${figLinks("図4")}`,
+      choices:EO, correct:2,
+      exp:{
+        answer:"②（Kaeriten[i] == 0）",
+        text:`(07)行目の${B('エ')}の条件を満たす場合，(08)行目でKanbun[i]とOkurigana[i]の要素の値をそのまま表示している。これは，会話文の「もし${B('エ')}であれば，そのまま漢字と送り仮名を表示」の部分が対応している。そのまま表示するということは，レ点がないときの処理と推測できる。つまりKaeriten[i]の値が0（レ点無）のとき，そのまま表示すればよいということになる。`
+      }
+    },
+    {
+      label:"オ", points:3, type:"single",
+      qtext:`図4の(09)行目　もし${B('オ')}ならば：${figLinks("図4")}`,
+      choices:EO, correct:1,
+      exp:{
+        answer:"①（modori == 1）",
+        text:`(07)行目の「${code('Kaeriten[i] == 0')}」の条件を満たさない場合，つまりレ点がある場合（Kaeriten[i] == 1）は，漢文の表示を行わず，(13)行目で変数modoriに1を格納している。つまり変数modoriは「レ点があるため，今回は表示をスキップした」という状態を記録するための変数であることがわかる。次回以降の表示処理においてスキップした値を改めて表示する必要がある。<br>(09)行目の${B('オ')}の条件を満たす場合，(10)行目でKanbun[i - 1]とOkurigana[i - 1]の値を表示している。これは，レ点があるため表示をスキップした値をここで改めて出力する処理である。以上より，modoriの値が1であれば，表示をスキップした値をここで表示すればよい。`
+      }
+    }
+  ]
+},
+
+// ───────── 問3 ─────────
+{
+  title: `問3　次の会話文中の空欄${B('カ')}，${B('ク')}〜${B('コ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。また，${B('キ')}に当てはまる数字を答えよ。`,
+  context: `
+<p>Cさん：次に，図5の漢文Cのようにレ点が連続してある場合を考えてみよう。<br>
+Dさん：漢文にレ点が連続してある場合，レ点がついている最後の文字の次の文字から，送り仮名を含めて下から順にレ点がついている最初の文字まで読むんだったね。<br>
+Cさん：そうだね。図5の漢文Cでは，「欲」と「伐」に連続してレ点があるから，送り仮名を含めると「鄭ノ武公胡ヲ伐タント欲ス」という書き下し文になるよ。連続したレ点に対応できるように，図6のようにプログラムを修正してみたよ。</p>
+${figBox("図5")}
+<p>Dさん：図4のプログラムと大きく変わってない気がするけど，図6のプログラムでは，どのようにして連続したレ点に対応させているの？<br>
+Cさん：図4のプログラムでは，変数modoriは「レ点があるか／ないか」を示す働きをしていたけど，図6のプログラムでは，変数modoriは${B('カ')}を表す働きをしているんだ。この変数modoriの値を利用して，連続したレ点を含む場合でも，(11)，(12)行目で漢字と送り仮名を逆順で表示するようにしているよ。<br>
+Dさん：なるほど。つまり，図6のプログラムを実行すると，(12)行目が全部で${B('キ')}回実行されることになるね。うん，これなら問題なく書き下し文に変換できそうだよ。<br>
+Cさん：図6のプログラムを実行したら，「鄭ノ武公胡ヲ伐タント欲ス」と表示されたよ。これでレ点を含む漢文は大丈夫だね。さて，次は一二点を含む漢文を書き下し文に変換するプログラムを作成してみようか。<br>
+Dさん：うん，対応できる漢文がどんどん増えていきそうだね。</p>
+${figBox("図6")}${NOTE}`,
+  items: [
+    {
+      label:"カ", points:3, type:"single",
+      qtext:`図6のプログラムでは，変数modoriは${B('カ')}を表す働きをしているんだ。${figLinks("図5","図6")}`,
+      choices:[
+        "漢文全体におけるレ点の個数",
+        "連続するレ点の個数",
+        "連続するレ点のうち最初のレ点がある位置の配列の添字",
+        "連続するレ点のうち最後のレ点がある位置の配列の添字"
+      ],
+      correct:1,
+      exp:{
+        answer:"①（連続するレ点の個数）",
+        text:`配列Kanbunは添字0〜5に「鄭，武，公，欲，伐，胡」，配列Okuriganaは「ノ，（空），（空），ス，タント，ヲ」，配列Kaeritenは「0，0，0，1，1，0」。<br>会話文の「この変数modoriの値を利用して，連続したレ点を含む場合でも，(11)，(12)行目で漢字と送り仮名を逆順で表示するようにしている」から，図5の漢文Cでは，プログラムは以下のように動作すると推測できる。<br>(1)「欲」をスキップ（1回目）　(2)「伐」をスキップ（2回目）　(3)「胡」を表示　(4) 2回目にスキップした「伐」を表示　(5) 1回目にスキップした「欲」を表示<br>このように，スキップの回数（＝連続するレ点の個数）だけ後で表示を繰り返す必要がある。そこで変数modoriに「連続するレ点の個数」を格納しておけば，まとめてスキップした分を正しい順序で表示できる。`
+      }
+    },
+    {
+      label:"キ", points:3, type:"digits", blanks:1, correctDigits:[3], suffixText:"回",
+      qtext:`図6のプログラムを実行すると，(12)行目が全部で${B('キ')}回実行されることになるね。<span style="font-size:.8rem;color:var(--muted)">（数字を入力）</span>${figLinks("図6")}`,
+      exp:{
+        answer:"3",
+        text:`図5ではレ点が2個連続しているため，変数modoriの値は2となる。次にレ点がない「胡」（Kanbun[5]）を表示する段階での変数iの値は5である。よって，(12)行目の表示処理は次のように3回繰り返される。
+<table style="border-collapse:collapse;margin:8px 0;font-size:.82rem;text-align:center;width:100%">
+<tr><th style="border:1px solid #ccc;padding:4px">繰り返し</th><th style="border:1px solid #ccc">i</th><th style="border:1px solid #ccc">j</th><th style="border:1px solid #ccc">i - j</th><th style="border:1px solid #ccc">Kanbun</th><th style="border:1px solid #ccc">Okurigana</th></tr>
+<tr><td style="border:1px solid #ccc;padding:4px">1周目</td><td style="border:1px solid #ccc">5</td><td style="border:1px solid #ccc">0</td><td style="border:1px solid #ccc">5</td><td style="border:1px solid #ccc">胡</td><td style="border:1px solid #ccc">ヲ</td></tr>
+<tr><td style="border:1px solid #ccc;padding:4px">2周目</td><td style="border:1px solid #ccc">5</td><td style="border:1px solid #ccc">1</td><td style="border:1px solid #ccc">4</td><td style="border:1px solid #ccc">伐</td><td style="border:1px solid #ccc">タント</td></tr>
+<tr><td style="border:1px solid #ccc;padding:4px">3周目</td><td style="border:1px solid #ccc">5</td><td style="border:1px solid #ccc">2</td><td style="border:1px solid #ccc">3</td><td style="border:1px solid #ccc">欲</td><td style="border:1px solid #ccc">ス</td></tr>
+</table>よって，キの正解は3である。`
+      }
+    },
+    {
+      label:"ク", points:3, type:"single",
+      qtext:`図6の(11)行目　${code('j')} を0から${B('ク')}まで1ずつ増やしながら繰り返す：${figLinks("図6")}`,
+      choices:["modori - 1","modori","modori + 1","modori + i"].map(code),
+      correct:1,
+      exp:{
+        answer:"①（modori）",
+        text:`${B('ク')}は変数jの終了値が問われている。(08)行目の条件より(11)行目の処理が行われるのは変数modoriの値が0ではないとき，つまりレ点で表示をスキップした場合である。<br>「欲」レ点「伐」レ点「胡」の場合，連続するレ点は2個なので，変数modoriの値は2である。レ点がない「胡」を表示するときはKanbun[5]が対応するので，変数iの値は5である。その後に，「伐」→「欲」の順で表示する必要があるので，変数iの値を基準とするとKanbun[i - 1]→Kanbun[i - 2]となる。これは，変数jを0からmodoriまで1ずつ増やし，表示する値の添字を「i - j」とすることで実現できる（j＝0,1,2 の3回）。`
+      }
+    },
+    {
+      label:"ケ", points:3, type:"single",
+      qtext:`図6の(12)行目　表示する(Kanbun[${B('ケ')}], Okurigana[${B('ケ')}])${figLinks("図6")}`,
+      choices:["j","i + j","i - j","i - j + 1"].map(code),
+      correct:2,
+      exp:{
+        answer:"②（i - j）",
+        text:`レ点がない「胡」（i＝5）を表示した後に「伐」（添字4）→「欲」（添字3）の順で表示する必要がある。変数jを0からmodori（＝2）まで増やしながら，表示する値の添字を「${code('i - j')}」とすれば，5→4→3の順に「胡」「伐」「欲」を表示できる。`
+      }
+    },
+    {
+      label:"コ", points:3, type:"single",
+      qtext:`図6の(15)行目　${code('modori = ')}${B('コ')}${figLinks("図6")}`,
+      choices:["modori + 1","modori - 1","modori + i","modori - i"].map(code),
+      correct:0,
+      exp:{
+        answer:"⓪（modori + 1）",
+        text:`(07)行目の条件を満たさなかった場合（レ点の場合）に(15)行目の処理が行われる。${B('カ')}より変数modoriは連続するレ点の個数を格納する変数であることから，変数modoriの今の値に1を足す必要がある。`
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第3問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>

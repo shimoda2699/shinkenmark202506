@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2024年11月｜第1問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2024年11月（ベネッセ・駿台マーク模試）｜第1問（配点20）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "あ〜うの選択肢": {src:"img/202411_1_q1a_choices.jpg", cap:"空欄 あ 〜 う の語句の組合せ（選択肢）"},
+  "図1":          {src:"img/202411_1_fig1_cpu.jpg",     cap:"図1　モニタリングツールのCPUの項目"},
+  "エの選択肢":    {src:"img/202411_1_q2a_choices.jpg",  cap:"エ の選択肢（CPU・主記憶装置・キャッシュメモリの構成）"},
+  "オの選択肢":    {src:"img/202411_1_q2b_choices.jpg",  cap:"オ の選択肢（キャッシュ容量の割合を表す円グラフ）"},
+  "表1":          {src:"img/202411_1_tab1_access.jpg",  cap:"表1　フォルダごとのアクセス権"},
+  "表2":          {src:"img/202411_1_tab2_members.jpg", cap:"表2　各部の所属人数"},
+  "表3":          {src:"img/202411_1_tab3_ud7.jpg",     cap:"表3　ユニバーサルデザインの7原則"},
+  "シの選択肢":    {src:"img/202411_1_q4shi_choices.jpg",cap:"シ の解答群（Webページのデザイン）"}
+};
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 問1 ─────────
+{
+  title: "問1　次の文章を読み，後の問い（a〜c）に答えよ。",
+  context: `
+<p>　人は「自らの見たいもの，信じたいものを信じる」という心理的特性を有しており，これは「確証バイアス」と呼ばれる。プラットフォーム事業者は，利用者個人のクリック履歴など収集したデータを組み合わせて${B('あ')}し，コンテンツのレコメンデーションやターゲティング広告等利用者が関心を持ちそうな情報を優先的に配信している。このようなプラットフォーム事業者のアルゴリズム機能によって，ユーザは，インターネット上の膨大な情報・データの中から自身が求める情報を得ることができる。</p>
+<p>　一方，アルゴリズム機能で配信された情報を受け取り続けることにより，ユーザは，自身の興味のある情報だけにしか触れなくなり，<sub>A</sub><u class="point">あたかも情報の膜につつまれたかのような「フィルターバブル」と呼ばれる状態</u>となる傾向にある。このフィルターバブルの内側では，自身と似た考え・意見が多く集まり，反対のものは${B('い')}されるため，その存在そのものに気付きづらい。</p>
+<p>　また，SNS等で，自分と似た興味関心を持つユーザが集まる場でコミュニケーションする結果，自分が発信した意見に似た意見が返ってきて，特定の意見や思想が${B('う')}していく状態は「エコーチェンバー」と呼ばれ，<sub>B</sub><u class="point">何度も同じような意見を聞くことで，それが正しく，間違いのないものであると，より強く信じ込んでしまう傾向にある。</u></p>
+<p style="text-align:right;font-size:.8rem;color:var(--muted)">引用：令和5年度情報通信白書「インターネット上での偽・誤情報の拡散等」（一部改変）</p>`,
+  items: [
+    {
+      label:"a（ア）", points:2, type:"single",
+      qtext:`空欄${B('あ')}〜${B('う')}に当てはまる語句の組合せとして最も適当なものを，次の⓪〜⑦のうちから一つ選べ。${figBox("あ〜うの選択肢")}`,
+      choices:[
+        "あ：分析　い：受容　う：増幅",
+        "あ：分析　い：受容　う：減衰",
+        "あ：分析　い：排除　う：増幅",
+        "あ：分析　い：排除　う：減衰",
+        "あ：検証　い：受容　う：増幅",
+        "あ：検証　い：受容　う：減衰",
+        "あ：検証　い：排除　う：増幅",
+        "あ：検証　い：排除　う：減衰"
+      ],
+      correct:2,
+      exp:{
+        answer:"②（分析－排除－増幅）",
+        text:`<b>あ</b>：プラットフォーム事業者は，利用者個人のクリック履歴など収集したデータを組み合わせて<b>分析</b>することで，利用者が関心を持ちそうな情報（コンテンツ）を絞り込んでいる。なお，レコメンデーションとは，顧客におすすめの情報を提供するサービスのことであり，Webサイトへの訪問履歴や商品の購入履歴などのデータをもとに，自動的におすすめの商品やサービスなどを表示する。<br><br><b>い</b>：フィルターバブルとは，アルゴリズムがインターネット利用者個人の検索履歴やクリック履歴を分析して学習することで，個々のユーザにとって見たい情報が優先的に表示される一方，利用者の観点に合わない情報からは隔離され，自身の考え方や価値観のバブル（泡）の中に孤立するという情報環境を指す。バブルの内側では，反対のものは<b>排除</b>されるため，「バブルの内側に入ってしまっている」ということに気付きづらい。<br><br><b>う</b>：エコーチェンバーとは，自分と似た興味関心を持つユーザをフォローした結果，意見をSNSで発信すると自分と似た意見が返ってきて，特定の意見や思想が<b>増幅</b>していく状態のことを指す。閉じた小部屋で音が反響する物理現象にたとえたものである。`,
+        options:[
+          {label:"② 正しい（正解）",ok:true,text:"分析－排除－増幅の組合せ。"}
+        ]
+      }
+    },
+    {
+      label:"b（イ）", points:2, type:"single",
+      qtext:`下線部Aに関して，フィルターバブルによって生じる問題について述べた文として<b>誤っているもの</b>を，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "ユーザは自分の興味関心や信念に合致する情報をおもに受け取り，それに対立する情報に触れる機会がなくなるため，偏った意見を持つ可能性が高くなる。",
+        "ユーザと異なる意見や視点と接触する機会が減少するため，意見の対立や社会的な分断を助長する可能性が高くなる。",
+        "ユーザは自身に関心がない情報も含めて幅広い情報に触れることになるため，正当な判断をする能力が低下する可能性が高くなる。",
+        "ユーザは偏った情報を受け取ることになるため，政治的な意思決定や社会問題に関してバイアス（偏見や先入観）がかかった判断をする可能性が高くなる。"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`フィルターバブルの概要や特徴を理解しておくとともに，フィルターバブルによって生じる問題や，その対策についても理解しておこう。`,
+        options:[
+          {label:"⓪ 正しい",ok:false,text:"フィルターバブルによって，ユーザは自分の興味関心や信念に合致する情報をおもに受け取るようになり，それに対立する情報（興味関心がない情報）に触れる機会がなくなってしまう。その結果，偏った意見を持つ可能性が高くなる。"},
+          {label:"① 正しい",ok:false,text:"他のユーザからの自分とは異なる意見や視点と接触する機会が減少してしまう。その結果，意見の対立や社会的な分断を助長する可能性が高くなる。"},
+          {label:"② 誤り（これが正解）",ok:true,text:"「ユーザは自身に関心がない情報も含めて幅広い情報に触れることになるため」の部分が誤っている。フィルターバブルによって，ユーザは自身の興味のある限られた情報だけにしか触れなくなり，その結果，正当な判断をする能力が低下する可能性が高くなる。"},
+          {label:"③ 正しい",ok:false,text:"ユーザは偏った情報を受け取ることになってしまう。その結果，政治的な意思決定や社会問題に関してバイアス（偏見や先入観）がかかった判断をする可能性が高くなる。"}
+        ]
+      }
+    },
+    {
+      label:"c（ウ）", points:2, type:"single",
+      qtext:`下線部Bに関して，エコーチェンバーの状態にならないようにするための対策について述べた文として最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "インターネットでWebページを閲覧する際，検索履歴や閲覧履歴を記録するようにブラウザの設定を変更する。",
+        "SNSではユーザに最適化されたコンテンツや広告を表示させるようにアプリの設定を変更する。",
+        "インターネット上から情報を取得するときは，できるだけ一次情報ではなく二次情報にアクセスするように心がける。",
+        "自分とは異なる意見や主張を発信している記事や投稿にもアクセスし，多様な情報に触れるように心がける。"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`エコーチェンバーの概要や特徴を理解しておくとともに，エコーチェンバーによって生じる問題や，その対策についても理解しておこう。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"検索履歴や閲覧履歴を記録するようにブラウザを設定していると，同じWebサイトやコンテンツから情報を得ることが多くなり，結果的にエコーチェンバーに陥ってしまう可能性が高くなる。"},
+          {label:"① 誤り",ok:false,text:"ユーザに最適化されたコンテンツや広告を表示させるように設定していると，偏った限定的な情報しか得られなくなってしまい，結果的にエコーチェンバーに陥ってしまう可能性が高くなる。"},
+          {label:"② 誤り",ok:false,text:"個人の意見・思想が介入される二次情報ではなく，できるだけ情報源である一次情報にアクセスするように心がけ，自分で物事の判断をしていくことが大切である。"},
+          {label:"③ 正しい（正解）",ok:true,text:"自分とは異なる意見や主張にもアクセスし多様な情報に触れることで，同じような意見だけを何度も聞くことがなくなり，限定的な偏った情報を強く信じ込んでしまうことを回避できる。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問2 ─────────
+{
+  title: "問2　次のAさんと先生の会話文を読み，後の問い（a〜c）に答えよ。",
+  context: `
+<p>Aさん：コンピュータのオペレーティングシステムで，システムのパフォーマンスやリソース使用状況を監視する「モニタリングツール」のCPUの項目に「キャッシュ」という用語があったのですが，これは何を表しているのですか？<br>
+先　生：CPUと主記憶装置との間にあるのがキャッシュメモリで，その容量を「キャッシュ」という項目に書いてあるのです。CPUはコンピュータの動作に必要なデータを主記憶装置とやり取りしながら処理しています。CPUと主記憶装置では，どちらのほうが高速に動作するかわかりますか？<br>
+Aさん：確か，主記憶装置よりもCPUのほうが高速に動作するんですよね。<br>
+先　生：そのとおりです。CPUは非常に高速に動作しますが，主記憶装置は低速に動作するため待ち時間が発生してしまいます。そこで，CPUと主記憶装置との間にキャッシュメモリを置いて，この待ち時間を軽減しているのです。<br>
+Aさん：キャッシュメモリをCPUと主記憶装置との間に置くことによって，なぜ待ち時間が軽減されるのですか？<br>
+先　生：キャッシュメモリは，データを一時的に保管しておくものです。<u class="point">CPUが頻繁に使用するデータを主記憶装置ではなくキャッシュメモリに一時的に保管しておくことによって，CPUが主記憶装置にアクセスする回数を軽減させています。</u><br>
+Aさん：なるほど，理解できました。ただ，モニタリングツールのCPUの項目は，下の図1のように「1次キャッシュ」，「2次キャッシュ」，「3次キャッシュ」という名称になっているのですが，これは複数のキャッシュメモリがあるということなのでしょうか？</p>
+${figBox("図1")}
+<p>先　生：基本的にキャッシュメモリはCPU内部に複数設置されていて，レジスタ（記憶装置）から近い順に1次キャッシュ，2次キャッシュ，3次キャッシュと呼ばれています。レジスタに近いキャッシュメモリほど，一般的に高速で容量が小さいという特徴があります。<br>
+Aさん：つまり，CPUはまず1次キャッシュにデータを探しに行って，データがなければ2次キャッシュ，そこにもなければ3次キャッシュというようにアクセスするということですね。<br>
+先　生：そういうことです。CPUはキャッシュメモリのおかげで，効率よく処理することができるのですね。</p>`,
+  items: [
+    {
+      label:"a（エ）", points:1, type:"single",
+      qtext:`Aさんと先生の会話文をふまえて，CPU，主記憶装置，キャッシュメモリの正しい構成として最も適当なものを，次の⓪〜③のうちから一つ選べ。${figBox("エの選択肢")}`,
+      choices:["図の⓪","図の①","図の②","図の③"],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`これらの構成に関する知識がなくとも，会話文から推測が可能である。<br>・先生「CPUと主記憶装置との間にキャッシュメモリを置いて，この待ち時間を軽減している」→「CPU－キャッシュメモリ－主記憶装置」の順であることがわかる。<br>・先生「キャッシュメモリはCPU内部に複数設置されていて，レジスタから近い順に1次キャッシュ，2次キャッシュ，3次キャッシュ」→CPUの内部にレジスタ，1〜3次キャッシュが設置されていることがわかる。<br>つまり，CPUの内部にレジスタ－1次キャッシュ－2次キャッシュ－3次キャッシュがあり，この次に主記憶装置がある図を選べばよい。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"CPUの枠（点線）がレジスタだけを囲んでおり，キャッシュメモリがCPUの外にある（キャッシュメモリはCPU内部に設置されている）。"},
+          {label:"① 正しい（正解）",ok:true,text:"CPUの枠内にレジスタ・1次・2次・3次キャッシュがあり，その外に主記憶装置がある。"},
+          {label:"②・③ 誤り",ok:false,text:"主記憶装置がレジスタとキャッシュメモリの間にあり，「CPU－キャッシュメモリ－主記憶装置」の順になっていない。"}
+        ]
+      }
+    },
+    {
+      label:"b（オ）", points:1, type:"single",
+      qtext:`Aさんがモニタリングツールで1次キャッシュ，2次キャッシュ，3次キャッシュの容量を調べたところ，図1のとおりであった。これらをキャッシュ全体の容量に対する割合で表したときの正しい円グラフを，次の⓪〜③のうちから一つ選べ。なお，円グラフでは，1次キャッシュ，2次キャッシュ，3次キャッシュをそれぞれL1，L2，L3と表記している。${figLinks("図1")}${figBox("オの選択肢")}`,
+      choices:["円グラフ⓪","円グラフ①","円グラフ②","円グラフ③"],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`図1から，1〜3次キャッシュのそれぞれの容量は480KB，7.5MB，18.0MBであることがわかる。単位の変換は1MB＝1000KBあるいは1MB＝1024KBと考えるが，どちらの比で考えてもよい（解答には影響しない）。単位をMBにそろえると，1次キャッシュの480KBは0.48MB→約0.5MB。つまり1〜3次キャッシュの比は「0.5：7.5：18.0」となり，さらに1次キャッシュを基準（1とする）に考えると「1：15：36」となる。この比を適切に表している円グラフは⓪である。`,
+        options:[
+          {label:"⓪ 正しい（正解）",ok:true,text:"L1がごくわずか，L2が約3割，L3が約7割。"},
+          {label:"①・②・③ 誤り",ok:false,text:"L1が大きすぎる，またはL1が最大になっているなど，1：15：36の比になっていない。"}
+        ]
+      }
+    },
+    {
+      label:"c（カ）", points:2, type:"single",
+      qtext:`下線部に関して，CPUのキャッシュメモリと同様の効果で実装されている仕組みとして最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "同じデータを複数のハードディスクに記録し，一方のハードディスクに障害が発生した際，もう一方のハードディスクからデータを復旧する。",
+        "データベースの更新に必要な一連の処理を実行する際，システム全体にデータの矛盾が生じないように制御を行う。",
+        "DNSによるIPアドレスやドメイン名の問い合わせ結果を一時的に保管しておき，短期間に同じ問い合わせがあった際，保管された情報を返す。",
+        "パスワードだけではなく，パスワードと指紋など，異なる二つの要素を使ってユーザの認証を行う。"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`下線部にあるように，キャッシュメモリを置くメリットは，CPU－主記憶装置のアクセス頻度を減らすことで，待ち時間が軽減されることにある。このことをふまえて考えるとよい。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"ミラーリングの説明。データを冗長化し耐障害性を高めることができるが，キャッシュの仕組みとは関係がない。"},
+          {label:"① 誤り",ok:false,text:"トランザクション管理の説明。問題が発生した場合はロールバックにより更新前の状態に戻す。データベースの整合性を保つ仕組みであり，キャッシュの仕組みとは関係がない。"},
+          {label:"② 正しい（正解）",ok:true,text:"DNSの問い合わせ結果を一時的にキャッシュに保管しておき，短期間に同じ問い合わせがあった際に保管された情報を返すことで，DNSサーバがさらに上位のDNSサーバに問い合わせる回数を軽減することができる。"},
+          {label:"③ 誤り",ok:false,text:"二要素認証の説明。データの機密性を高め，悪意のある第三者によってデータが漏洩するリスクを軽減できるが，キャッシュの仕組みとは関係がない。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問3 ─────────
+{
+  title: `問3　次の文章の空欄${B('キ')}〜${B('ケ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。`,
+  context: `
+<p>　情報システムに対してユーザなどのアクセスを制御・管理する方法や技術のことをアクセス制御という。例えば，ファイル管理システムにおいては，特定のフォルダやその中に含まれるファイルへのアクセスを制限することで，データの保護を強化することができる。ここでは以下のルールに従ってアクセス制御を行う。</p>
+<div class="fig">
+・各フォルダに，特定のグループに所属する人のみにそのフォルダ内の情報にアクセスできる権限（アクセス権）を与える。<br>
+・アクセス権は，「読み取り(R)」，「書き込み(W)」の2種類とする。「読み取り(R)」はフォルダおよびファイル内容の読み取りが可能な権限である。「書き込み(W)」は，フォルダへのファイルの格納およびファイルの内容の更新が可能な権限である。<br>
+・フォルダごとに設定されたアクセス権が，フォルダ内のファイルに継承される。例えば，「美術部」というフォルダに対して，美術部員である人のみに読み取り(R)と書き込み(W)の両方の権限を与えた場合，「美術部」フォルダの中にある情報は美術部員だけが読み取りおよび更新ができるようになり，他の部活動に所属する生徒は情報へのアクセスが制限される。
+</div>
+<p>　ある学校で，部活動を活発にするために校内のサーバ上に部活動ごとにフォルダをつくることになった。各フォルダにアクセス権を割り振った結果は表1のとおりである。なお，空欄部分は何も権限がないことを意味する。</p>
+${figBox("表1")}
+<p>　この表より，パソコン部と美術部が共同でつくる作品ファイルを格納するのに最も適したフォルダは${B('キ')}である。<br>
+　また，各部の所属人数は表2のとおりである。なお，この学校では，一人が同時に二つ以上の部活動に所属することは不可としている。</p>
+${figBox("表2")}
+<p>　表1および表2より${B('ク')}ということが読み取れる。<br>
+　仮に，パソコン部に所属していた花子さんが吹奏楽部に移る場合は，パソコン部としてアクセスしていた場所を見ることができないよう${B('ケ')}する必要がある。</p>`,
+  items: [
+    {
+      label:"キ", points:1, type:"single",
+      qtext:`この表より，パソコン部と美術部が共同でつくる作品ファイルを格納するのに最も適したフォルダは${B('キ')}である。${figLinks("表1")}`,
+      choices:["フォルダA","フォルダB","フォルダC","フォルダD","フォルダE"],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`「パソコン部と美術部が共同でつくる作品ファイルを格納するのに最も適したフォルダ」が条件であるため，パソコン部員および美術部員ともに「書き込み(W)」の権限があるフォルダが必要である。`,
+        options:[
+          {label:"⓪ 正しい（正解）",ok:true,text:"フォルダAは美術部員，パソコン部員ともに「書き込み(W)」の権限がある。"},
+          {label:"① 誤り",ok:false,text:"フォルダBは美術部員に「書き込み(W)」の権限がない。"},
+          {label:"② 誤り",ok:false,text:"フォルダCは美術部員，パソコン部員ともに「書き込み(W)」の権限がない。"},
+          {label:"③ 誤り",ok:false,text:"フォルダDはパソコン部員に「書き込み(W)」の権限がない。"},
+          {label:"④ 誤り",ok:false,text:"フォルダEは美術部員，パソコン部員ともに「書き込み(W)」の権限がない。"}
+        ]
+      }
+    },
+    {
+      label:"ク", points:1, type:"single",
+      qtext:`表1および表2より${B('ク')}ということが読み取れる。${figLinks("表1","表2")}`,
+      choices:[
+        "フォルダBを読み取ることができるのは3名である",
+        "美術部員がファイルの書き込みをできるのはフォルダAのみである",
+        "フォルダDは，美術部員，パソコン部員ともに書き込みが可能である",
+        "フォルダCのファイルを読み取ることができるのは13名である",
+        "美術部が他の部活動に所属する部員に情報を公開したい場合に使用するにはフォルダEが適している"
+      ],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`部活動の所属人数を加味してアクセス権限の内容を読み取ろう。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"フォルダBに「読み取り(R)」権限が与えられているのは，美術部員（5名）およびパソコン部員（3名）なので合計8名が正しい。"},
+          {label:"① 誤り",ok:false,text:"美術部員に「書き込み(W)」権限が与えられているフォルダはフォルダAだけでなくフォルダDも該当する。"},
+          {label:"② 誤り",ok:false,text:"フォルダDは美術部員には「書き込み(W)」権限が与えられているが，パソコン部員には与えられていない。"},
+          {label:"③ 正しい（正解）",ok:true,text:"フォルダCに「読み取り(R)」権限が与えられているのは，パソコン部員（3名）と吹奏楽部員（10名）なので合計13名である。"},
+          {label:"④ 誤り",ok:false,text:"フォルダEは演劇部員に「読み取り(R)」権限が与えられていないため，適していない。美術部員に「読み取り(R)」と「書き込み(W)」の権限があり，他の部活動に所属する部員に「読み取り(R)」の権限があるフォルダDが適当。"}
+        ]
+      }
+    },
+    {
+      label:"ケ", points:1, type:"single",
+      qtext:`仮に，パソコン部に所属していた花子さんが吹奏楽部に移る場合は，パソコン部としてアクセスしていた場所を見ることができないよう${B('ケ')}する必要がある。${figLinks("表1")}`,
+      choices:[
+        "フォルダAとフォルダBにあるファイルをすべて削除",
+        "フォルダAとフォルダBの美術部員とパソコン部員のアクセス権をRのみに変更",
+        "花子さんのアクセス権をパソコン部から吹奏楽部に変更",
+        "パソコン部の権限に加えて吹奏楽部の権限を花子さんに付与"
+      ],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`アクセス権限を変更する際の注意点を確認しよう。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"フォルダAとフォルダBにあるファイルをすべて削除すると，花子さん以外もファイルの読み取りができなくなってしまう。"},
+          {label:"① 誤り",ok:false,text:"アクセス権をRのみに変更すると，花子さん以外も全員ファイルの書き込みができなくなってしまう。"},
+          {label:"② 正しい（正解）",ok:true,text:"花子さん以外の他の部員に影響しないようにするためには，花子さん自身のアクセス権限を変更する必要がある。"},
+          {label:"③ 誤り",ok:false,text:"花子さんはパソコン部を辞めると「パソコン部の部外者」となるため，花子さんのパソコン部としての権限は削除する必要がある。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問4 ─────────
+{
+  title: `問4　次の文章の空欄${B('コ')}〜${B('シ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。ただし，空欄${B('コ')}・${B('サ')}は解答の順序は問わない。`,
+  context: `
+<p>　さまざまな人々が不都合なく暮らせる社会をつくるために欠かせない考え方としてユニバーサルデザインがある。ユニバーサルデザインとは，文化や言語，国籍の違い，年齢，障害の有無などにかかわらず，すべての人が使いやすいように配慮されたデザインのことである。ユニバーサルデザインの基準として1990年代にアメリカの建築家ロナルド・メイスが中心となって「ユニバーサルデザインの7原則」が考案された。</p>
+${figBox("表3")}
+<p>　この原則をすべて満たせてはいないが，この考えに基づいてつくられているユニバーサルデザインの例として${B('コ')}と${B('サ')}が挙げられる。<br>
+　また，ユニバーサルデザインに含まれる考え方にアクセシビリティとユーザビリティがある。アクセシビリティは，情報にたどり着くまでの障壁の有無などアクセスのしやすさのことである。ユーザビリティは，ものやサービスの「使いやすさ」，「わかりやすさ」のことである。それぞれの関係は包含関係にある。</p>
+<p>　この考えに基づいてWebページを作成する際，${B('シ')}のデザインは適しているとはいえない。</p>`,
+  items: [
+    {
+      label:"コ・サ", points:4, type:"multi", pick:2, partial:2,
+      qtext:`この考えに基づいてつくられているユニバーサルデザインの例として${B('コ')}と${B('サ')}が挙げられる。次の⓪〜⑤のうちから<b>二つ</b>選べ（順不同）。${figLinks("表3")}`,
+      choices:[
+        "操作方法を理解するために詳細な説明を読み込む必要があるスマホアプリ",
+        "車いす使用者が利用できる十分なスペースが確保されている多目的トイレ",
+        "有名な建築家にデザインしてもらった勾配が急なおしゃれな階段",
+        "高級フランス料理店で英語だけで書かれているメニュー表",
+        "同じボタンが高い位置と低い位置の2か所につけられている自動販売機",
+        "左利きの人だけが使いやすいようにつくられたハサミ"
+      ],
+      correctSet:[1,4],
+      exp:{
+        answer:"①・④（順不同，各2点）",
+        text:`ユニバーサルデザインの7原則を確認しよう。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"「詳細な説明を読み込む必要がある」のは「簡単で直感的に利用できる」に反している。"},
+          {label:"① 正しい（正解）",ok:true,text:"「十分なスペースが確保されている」のは「使いやすい使用空間と条件が確保されている」といえるため，ユニバーサルデザインの例といえる。"},
+          {label:"② 誤り",ok:false,text:"「勾配が急な」階段は足が不自由な人などにとって使いづらい場合があり，「身体的な負担が少ない」に反している。"},
+          {label:"③ 誤り",ok:false,text:"「英語だけで書かれているメニュー表」は英語がわからない人には読み取れないため，「誰でも公平に利用できる」や「必要な情報が簡単に理解できる」に反している。"},
+          {label:"④ 正しい（正解）",ok:true,text:"「同じボタンが高い位置と低い位置の2か所につけられている」のは，子どもや車いすの人にとっても使いやすく「誰でも公平に利用できる」といえるため，ユニバーサルデザインの例といえる。"},
+          {label:"⑤ 誤り",ok:false,text:"「左利きの人だけが使いやすい」のは，右利きの人には使いづらいことになるので「誰でも公平に利用できる」に反している。"}
+        ]
+      }
+    },
+    {
+      label:"シ", points:3, type:"single",
+      qtext:`この考えに基づいてWebページを作成する際，${B('シ')}のデザインは適しているとはいえない。${figBox("シの選択肢")}`,
+      choices:[
+        "登録確認のメッセージ（「登録しませんか？」はい　いいえ）",
+        "ボタンに立体感をつけ，文字を大きくする（学校案内／入試情報）",
+        "動画の画面の下部に字幕をつける",
+        "前後のページへの遷移ができるリンクやボタン（前へ／次へ）を配置する"
+      ],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`アクセシビリティやユーザビリティを意識したWebページをおさえよう。`,
+        options:[
+          {label:"⓪ 適していない（正解）",ok:true,text:"確認メッセージが否定形なので「はい」「いいえ」のどちらを押せばよいかわかりづらくなっている。さらに，「はい」「いいえ」がボタンやリンク（下線）の形になっていないので押してよいのかどうかがわかりづらいことや，「はい」と「いいえ」の距離が近いので意図しない方のボタンを押してしまう可能性もある。ユーザビリティを考慮したデザインとはいえない。"},
+          {label:"① 適している",ok:false,text:"文字を大きくしてわかりやすくしていることに加え，立体感をつけることでボタンであることをわかりやすくしているため，ユーザビリティを意識したデザインといえる。"},
+          {label:"② 適している",ok:false,text:"字幕をつけることで，耳が不自由な人や音を出すことができない状況にある人も情報にアクセスしやすくなっており，アクセシビリティを意識したデザインといえる。"},
+          {label:"③ 適している",ok:false,text:"「前へ」「次へ」のボタンをつけることで，前後のページにアクセスしやすくなっているのでアクセシビリティを意識したデザインといえる。"}
+        ]
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第1問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>

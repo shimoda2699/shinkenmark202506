@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I ベネッセ・駿台マーク模試 2025年11月｜第1問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年11月（ベネッセ・駿台マーク模試）｜第1問（配点20）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="index.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="index.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ','ⓑ','ⓒ','ⓓ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "表1": {label:"表1", src:"img/202511_1_tab1_framework.jpg", cap:"表1　フレームワークの例"},
+  "アの選択肢": {label:"アの選択肢", src:"img/202511_1_q1a_choices.jpg", cap:"ア の選択肢（あ〜う のフレームワークの組合せ）"},
+  "図1": {label:"図1", src:"img/202511_1_fig1_fishbone.jpg", cap:"図1　特性要因図のイメージ"},
+  "図2": {label:"図2", src:"img/202511_1_fig2_festival.jpg", cap:"図2　今年の文化祭についての特性要因図"},
+  "図3": {label:"図3", src:"img/202511_1_fig3_hdd_ssd.jpg", cap:"図3　HDDとSSD"},
+  "表2": {label:"表2", src:"img/202511_1_tab2_songs.jpg",   cap:"表2　楽曲テーブルA"},
+  "表3": {label:"表3", src:"img/202511_1_tab3_singers.jpg", cap:"表3　歌手テーブルB"},
+  "表4": {label:"表4", src:"img/202511_1_tab4_users.jpg",   cap:"表4　ユーザテーブルC"},
+  "表5": {label:"表5", src:"img/202511_1_tab5_works.jpg",   cap:"表5　作品テーブルD"},
+  "ケの選択肢": {label:"ケの選択肢", src:"img/202511_1_q3c_choices.jpg", cap:"ケ の選択肢（結合してできたテーブル）"},
+  "図4": {label:"図4", src:"img/202511_1_fig4_filter.jpg",   cap:"図4　画像編集アプリのフィルタ機能"},
+  "図5": {label:"図5", src:"img/202511_1_fig5_building.jpg", cap:"図5　画素数600×600の画像"},
+  "コの選択肢": {label:"コの選択肢", src:"img/202511_1_q4a_choices.jpg", cap:"コ の選択肢（画素ごとの明度を表すグラフ）"}
+};
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 問1 ─────────
+{
+  title: "問1　次の問い（a・b）に答えよ。",
+  context: `
+<p>　問題解決に役立つ手法や思考の枠組みのことを，フレームワークという。目的に合ったフレームワークを活用することで，問題解決を効果的・効率的に進めることができる。表1はフレームワークの例である。</p>
+${figBox("表1")}
+<div class="fig">A：中央に記載された一つのテーマから枝を伸ばして情報を広げ，まとめる。<br>B：性質を表す要素二つを縦横の軸とする二次元の座標に，複数の物事を配置する。<br>C：評価の観点を書き出し，各評価対象がその観点でどれくらい優れているかを点数化する。<br>D：複数の集合の関係を，図形や数値を使って，図式化する。</div>`,
+  items: [
+    {
+      label:"a（ア）", points:2, type:"single",
+      qtext:`次のあ〜うのそれぞれの場面において，表1のA〜Dのどのフレームワークを使うのが適切であると考えられるか。最も適当な組合せを，後の⓪〜ⓑのうちから一つ選べ。
+<div class="fig">あ　文化祭の企画案を「体験型」と「観賞型」に分類し，それぞれの企画数と，両方の要素を持つ企画数を視覚化する。<br>い　文化祭の演劇を成功させるために求められる要素や取り組むべきことについてのアイデアを出し，整理する。<br>う　文化祭の複数の模擬店候補について，味・価格・手間の観点から評価し，比較する。</div>${figLinks("表1")}${figBox("アの選択肢")}`,
+      choices:[
+        "あ：A　い：B　う：C","あ：A　い：B　う：D","あ：A　い：D　う：B","あ：A　い：D　う：C",
+        "あ：B　い：C　う：A","あ：B　い：C　う：D","あ：B　い：D　う：A","あ：B　い：D　う：C",
+        "あ：D　い：A　う：B","あ：D　い：A　う：C","あ：D　い：B　う：A","あ：D　い：B　う：C"
+      ],
+      correct:9,
+      exp:{
+        answer:"⑨（あ：D　い：A　う：C）",
+        text:`場面に応じて適切なフレームワークを選択する判断力が求められている。一般に，Aはスパイダー図，Bは座標軸，Cはマトリックス図，Dはベン図と呼ばれる。<br>
+<b>あ</b>：文化祭の企画を「体験型」と「観賞型」の二つのカテゴリーで分類するとき，一部両方の特徴を併せ持つ企画やいずれにも該当しない企画も出てくる。そのような場合，<b>Dのベン図</b>を用いて「体験型だけの企画」「観賞型だけの企画」「両方に該当する企画」「いずれにも該当しない企画」の数を明確に表現することができ，分類状況を視覚的に把握しやすくなる。<br>
+<b>い</b>：演劇の成功には，シナリオ作成，配役，舞台美術，宣伝活動などの多様な要素が求められる。さらに，例えば宣伝活動の成功には，ポスター作成，SNS投稿などの多様な要素が求められるなど，それぞれの要素は細分化することができる。<b>Aのスパイダー図</b>を用いることで，関連性や構造が視覚的にまとまり，取り組むべき項目を明確に可視化・整理できる。<br>
+<b>う</b>：「味・価格・手間」の観点から模擬店候補を評価したものは，<b>Cのマトリックス図</b>を用いることで優劣を比較しやすくなる。`
+      }
+    },
+    {
+      label:"b（イ・ウ）", points:3, type:"multi", pick:2,
+      pre:`<p>　フレームワークの一つに特性要因図（フィッシュボーン図）がある。特性要因図とは，特性と要因の関係を魚の骨（フィッシュボーン）のような形状で体系的に整理した図である。</p>${figBox("図1")}<p>　図1の「特性」とは結果を表し，「要因」とはその結果をもたらすのに影響を与えた要素のことを指す。特性要因図を用いることで，結果に対してどのような要因が関連しているのかを明確にできる。<br>　ある高校の今年の文化祭の反省点を特性要因図で整理し，その結果を図2に示した。この高校の生徒Xさんはこの特性要因図をみながら「来年の文化祭の来場者を増やすにはどうすればよいか」を考え，クラスメイトと意見を出し合った。</p>${figBox("図2")}`,
+      qtext:`この特性要因図の内容をもとにした意見として<b>適当でないもの</b>を，次の⓪〜⑤のうちから<b>二つ</b>選べ。ただし，解答の順序は問わない。<br><span style="font-size:.8rem;color:var(--muted)">※二つとも正解の場合のみ3点</span>${figLinks("図2")}`,
+      choices:[
+        "ポスターだけでなく，SNSも活用し，できるだけ早めに告知しよう。",
+        "子どもから高齢者まで，幅広い年齢層が楽しめる魅力的な新企画を増やそう。",
+        "校門に目立つ看板を設置し，文化祭を知らなかった人にも当日気づいてもらおう。",
+        "混雑を避けるため，来場者が増える時間帯は来場者の入場を一時的に制限しよう。",
+        "雨天や寒い日でも楽しめるように，屋内企画を充実させよう。",
+        "校内の案内表示を増やし，来場者がスムーズに移動できるようにしよう。"
+      ],
+      correctSet:[3,5],
+      exp:{
+        answer:"③・⑤（順不同）",
+        text:`特性要因図から得られた内容を考察し，問題解決に活かせる力が求められている。`,
+        options:[
+          {label:"⓪ 適当",ok:false,text:"「ポスターのみで周知した」「SNSは全く利用しなかった」「告知が遅かった」という広報面での課題が挙げられているため，SNSも活用してできるだけ早めに告知をすることは，来場者数増加につながる改善策となる可能性がある。"},
+          {label:"① 適当",ok:false,text:"「特定の層に向けた企画に偏っていた」という企画面での課題が挙げられているため，幅広く楽しめる魅力的な新企画を増やすことは改善策となる可能性がある。"},
+          {label:"② 適当",ok:false,text:"「学校の入り口は特に装飾せず通行人が気づきにくかった」という外観面の課題があるため，校門に目立つ看板を設置することは改善策となる可能性がある。"},
+          {label:"③ 適当でない（正解）",ok:true,text:"特性要因図のいずれの要因とも関連性がないため，適当ではない。また，来場者を増やす意見ではなく，来場者を増やした後の対策である。"},
+          {label:"④ 適当",ok:false,text:"「気温が低く雨が降っていた」にもかかわらず「屋内の企画が少なかった」という課題より，屋内企画を充実させることは改善策となる可能性がある。"},
+          {label:"⑤ 適当でない（正解）",ok:true,text:"特性要因図のいずれの要因とも関連性がないため，適当ではない。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問2 ─────────
+{
+  title: "問2　次の文章を読み，後の問い（a・b）に答えよ。",
+  context: `
+<p>　コンピュータに搭載される補助記憶装置として，図3のようなHDDやSSDがあり，写真や動画など様々なデータの保存に利用されている。現在，容量はどちらも<sub>(A)</sub><u class="point">1TB（テラバイト）</u>以上のものがある。HDDとSSDは，情報の記録方式や特徴に大きな違いがあるため，用途によって使い分けられている。</p>
+${figBox("図3")}
+<p>　HDDは主に金属で作られた薄いディスクの表面に，磁気を帯びた素材を塗った記録メディアである。ディスクの中心には穴が空いており，駆動装置に固定して目的のデータ位置まで回転させ，データを読み書きするための磁気ヘッドを近づけてデータの保存や消去などが行われる。このとき，物理的に部品が駆動することにより駆動音が発生する。</p>
+<p>　一方，SSDは，半導体を利用してデータを書き換えるフラッシュメモリを搭載している記録メディアである。フラッシュメモリでは磁気ではなく電気を利用してデータの読み書きが行われるため，データが記録されている位置によって読み取り速度が変わることはない。また，HDDに比べて小型化されていることが特徴であり，磁気ヘッドのような物理的に駆動する部品を使っていないため衝撃に強く，振動や駆動音もない。</p>`,
+  items: [
+    {
+      label:"a（エ）", points:2, type:"single",
+      qtext:`下線部(A)にある「TB」の「T」は国際単位系の接頭辞の一つであり，このような接頭辞は大きな値や小さな値を簡易的に表現するための補助単位として用いられる。<br>　いま，1枚10,000Bの写真データを10,000枚保存するための補助記憶装置が必要になった。次の⓪〜④の容量を持つ補助記憶装置があるとき，この写真データをすべて記録することができる容量のうち，容量として最も少ないものを，次の⓪〜④のうちから一つ選べ。`,
+      choices:["100 kB","10 MB","1 GB","10 TB","1 PB"],
+      correct:2,
+      exp:{
+        answer:"②（1 GB）",
+        text:`補助記憶装置の容量を適切に比較・判断する力が求められている。ここでは，1kB＝1,000B，1MB＝1,000kB，1GB＝1,000MB，1TB＝1,000GB，1PB＝1,000TBとして計算する。<br>写真データ1枚の容量は10,000Bで，それが10,000枚あるため合計容量は，10,000B×10,000枚＝100,000,000B＝<b>100MB</b>となる。<br>各選択肢を同じ単位（MB）に統一して比較すると，⓪100kB＝0.1MB（容量不足），①10MB（容量不足），②1GB＝1,000MB（十分記録可能），③10TB＝10,000,000MB（十分記録可能），④1PB＝1,000,000,000MB（十分記録可能）。<br>したがって，100MBが記録可能な容量のうち，容量として最も少ないものは②の1GBである。なお，1kB＝1,024Bなどとして計算しても同様の解答が得られる。`
+      }
+    },
+    {
+      label:"b（オ・カ）", points:3, type:"multi", pick:2,
+      qtext:`HDDやSSDに関する記述として適当なものを，次の⓪〜④のうちから<b>二つ</b>選べ。ただし，解答の順序は問わない。<br><span style="font-size:.8rem;color:var(--muted)">※二つとも正解の場合のみ3点</span>${figLinks("図3")}`,
+      choices:[
+        "HDDではディスクの回転速度を落とすことでより速くデータを読み取れる。",
+        "HDDに強力な磁石を近づけると記録内容が失われることがある。",
+        "SSDでは物理的に駆動する部品がなくとも，読み取るデータの位置を特定できる。",
+        "SSDを不注意で落下させたとしても故障することはない。",
+        "HDDもSSDもコンピュータの電源を切ると記録内容が初期化される。"
+      ],
+      correctSet:[1,2],
+      exp:{
+        answer:"①・②（順不同）",
+        text:`HDDとSSDの特性を正しく理解し考察する力が求められている。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"HDDのディスク回転速度を落とすと，むしろデータの読み取り速度は遅くなる。読み取り速度を速くするためには，回転速度を上げる必要がある。"},
+          {label:"① 正しい（正解）",ok:true,text:"HDDは磁気によってデータを記録しているため，強力な磁石を近づけると磁気データが乱れ，記録内容が失われるおそれがある。"},
+          {label:"② 正しい（正解）",ok:true,text:"SSDは半導体メモリを使っており，HDDのように物理的に駆動する部品は存在しないが，読み取るデータの位置を特定できる。"},
+          {label:"③ 誤り",ok:false,text:"SSDには駆動部品はないため衝撃に強いが，強い衝撃が加わると基板や内部回路が故障するおそれがある。"},
+          {label:"④ 誤り",ok:false,text:"HDDやSSDは，電源を切ってもデータが残ったまま保持される性質（不揮発性）を持っているため，記録内容は初期化されない。"}
+        ]
+      }
+    }
+  ]
+},
+
+// ───────── 問3 ─────────
+{
+  title: "問3　次の文章を読み，後の問い（a〜c）に答えよ。",
+  context: `
+<p>　日本で利用されている，ある音楽ストリーミングサービスの楽曲やユーザに関する情報を記録したリレーショナルデータベース（関係データベース）のテーブルの一部を，表2〜5に示す。リレーショナルデータベースの場合，このようにデータの種類によって各テーブルを作成して整理するのが一般的である。</p>
+${figBox("表2")}
+${figBox("表3")}
+${figBox("表4")}
+${figBox("表5")}
+<p style="font-size:.8rem;color:var(--muted)">※楽曲名，歌手名などの情報はすべて架空のものです。</p>
+<p>　リレーショナルデータベースは，各テーブルに対してデータの操作を行うことができる。<br>
+　例えば，楽曲テーブルAとは別に，アメリカで利用されている同ストリーミングサービスに登録されている楽曲テーブルEがあるとする。楽曲テーブルAと楽曲テーブルEで同じ楽曲が登録されている場合は，同じ楽曲IDが使用されているものとする。このとき，楽曲テーブルEに含まれる楽曲IDを，楽曲テーブルAの楽曲IDから除いた結果を表示する操作を行うと，${B('ク')}が表示される。<br>
+　作品テーブルDは楽曲テーブルAの楽曲IDと歌手テーブルBの歌手IDを対応させたデータが記録されているが，これを<sub>(B)</sub><u class="point">他のテーブルと結合させることで</u>，楽曲IDと歌手IDが対応できていないものを明らかにできる。</p>`,
+  items: [
+    {
+      label:"a（キ）", points:2, type:"single",
+      qtext:`歌手テーブルBの歌手ID「3」の行（レコード）に，「null」が含まれている。これは歌手「ASAHAKU」の歌手ジャンルが未入力であることを意味している。このように，値が未入力の場合や値が存在しない「非存在」の場合は「null」が設定される。「非存在」としての「null」が設定されうる項目として最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("表2","表3","表4")}`,
+      choices:["楽曲テーブルAの「楽曲名」","楽曲テーブルAの「楽曲時間」","ユーザテーブルCの「登録種別」","ユーザテーブルCの「アカウント削除日」"],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`「非存在」としての「null」を設定しても問題ない項目を判断する力が求められている。`,
+        options:[
+          {label:"⓪① 誤り",ok:false,text:"「楽曲名」や「楽曲時間」は，いずれも楽曲が存在する以上，必ずデータが存在するので，「非存在」としての「null」にはならない。"},
+          {label:"② 誤り",ok:false,text:"「登録種別」は，無料か有料のどちらかであり，値は必ず存在するため，「null」にはならない。"},
+          {label:"③ 正しい（正解）",ok:true,text:"「アカウント削除日」は，アカウントが削除されていなければ，その日付は入力できない。よって，「非存在」として「null」が設定される。"}
+        ]
+      }
+    },
+    {
+      label:"b（ク）", points:2, type:"single",
+      qtext:`楽曲テーブルEに含まれる楽曲IDを，楽曲テーブルAの楽曲IDから除いた結果を表示する操作を行うと，${B('ク')}が表示される。空欄${B('ク')}に入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "アメリカでは登録されていないが日本では登録されている楽曲ID",
+        "日本では登録されていないがアメリカでは登録されている楽曲ID",
+        "日本でもアメリカでも登録されている楽曲ID",
+        "日本でもアメリカでも登録されていない楽曲ID"
+      ],
+      correct:0,
+      exp:{
+        answer:"⓪",
+        text:`テーブルに格納されているデータの差を求めた場合に残るデータが何かを見出すことが求められている。<br>楽曲テーブルAには日本で，楽曲テーブルEにはアメリカで登録されている楽曲が登録されている。例えば，楽曲テーブルA（日本）には楽曲X，楽曲Yが登録されており，楽曲テーブルE（アメリカ）には楽曲Y，楽曲Zが登録されているとする。このとき，楽曲テーブルEに含まれる楽曲IDを楽曲テーブルAの楽曲IDから除くと，両方のテーブルに存在する（日本とアメリカ両方に登録されている）楽曲Yが除かれ，楽曲X（日本のみに登録されている）が残る。つまり，アメリカでは登録されていないが日本では登録されている楽曲名が表示される。`
+      }
+    },
+    {
+      label:"c（ケ）", points:2, type:"single",
+      qtext:`下線部(B)に関して，楽曲IDをもとに，楽曲テーブルAに作品テーブルDを結合させてできたテーブルとして最も適当なものを，次の⓪〜③のうちから一つ選べ。ただし，各テーブルで省略されているデータについては考慮しないものとする。${figLinks("表2","表5")}${figBox("ケの選択肢")}`,
+      choices:["テーブル⓪（歌手ID：1,2,3,4）","テーブル①（歌手ID：1,2,null,3）","テーブル②（歌手ID：1,2,null,null）","テーブル③（歌手ID：1,2,4,5）"],
+      correct:1,
+      exp:{
+        answer:"①",
+        text:`テーブルを結合したときの状態として正しい判断が求められている。<br>テーブルAには楽曲IDとして1，2，3，4が登録されている（5は存在しない）。テーブルDには楽曲IDとして1，2，4，5が登録されている（3は存在しない）。<br>このとき，テーブルAを基準にテーブルDの歌手IDを結合すると，楽曲ID「3」はテーブルDにデータがないため対応する歌手IDが「null」となる。また，テーブルDにだけ存在する楽曲ID「5」は，テーブルAに存在しないため無視される。<br>よって，楽曲ID 1→歌手ID 1，2→2，3→null，4→3 となる①が正しい。`
+      }
+    }
+  ]
+},
+
+// ───────── 問4 ─────────
+{
+  title: "問4　次の文章を読み，後の問い（a・b）に答えよ。",
+  context: `
+<p>　スマートフォンに保存されている画像は，画像編集アプリのフィルタ機能（図4）を用いて，画像をぼかしたりシャープにしたりすることができる。このとき，画像の中で明るさ（明度）や色がどれくらい細かく変化しているかを表すものとして，空間周波数という指標を用いることがある。空間周波数は，イメージセンサが捉えた明度の変化量を数値化したものである。画像のある1列だけを取り出して，画素ごとの明度を左から右へ並べたものは，波形グラフとしてとらえることができる。図5は，画素数600×600の画像に，画素の目盛りを表示したものである。例えば，図5の背景（空）の部分のように明暗の変化がゆるやかな領域では，空間周波数が低くなる。一方，図5のビルの部分のように明暗の変化が激しい領域では，空間周波数が高くなる。</p>
+${figBox("図4")}
+${figBox("図5")}`,
+  items: [
+    {
+      label:"a（コ）", points:2, type:"single",
+      qtext:`図5の直線Aの位置の左から右にかけての各画素の明度の値を表した図として最も適当なものを，次の⓪〜③のうちから一つ選べ。なお，ある画素が明るいほど，その画素の明度は大きい値をとるものとする。${figLinks("図5")}${figBox("コの選択肢")}`,
+      choices:["グラフ⓪","グラフ①","グラフ②","グラフ③"],
+      correct:2,
+      exp:{
+        answer:"②",
+        text:`直線Aは左端から右端へと見ると，まず空の領域（明度の変化が小さい領域）から始まり，途中でビルの領域（明度の変化が大きい領域）を通る。ビルの領域内では，影になっている右側より左側の方が明るく，明度の変化が大きい。そして最後に再び空の領域（明度の変化が小さい領域）で終わる。`,
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"全体的に明度の変化が小さく，ビルに該当するような明度の変化の大きい部分が見られないため不適当。"},
+          {label:"① 誤り",ok:false,text:"図5では約150〜約500画素がビルの領域にあたるが，①の図では約200〜約450画素の範囲で明度が大きく変化しており，位置が一致しないため不適当。"},
+          {label:"② 正しい（正解）",ok:true,text:"空の領域である左右は明度の変化が小さく，ビルの領域である中央に明度の変化が大きい部分が描かれている。また，ビルの領域内でも左側の方が明度と明度の変化が大きく，右側の影に対応する部分は明度と明度の変化が小さい。画素の範囲もビルの領域と一致する。"},
+          {label:"③ 誤り",ok:false,text:"左側（空の領域）が明度の変化が大きく，空の領域として不自然なため不適当。"}
+        ]
+      }
+    },
+    {
+      label:"b（サ）", points:2, type:"single",
+      qtext:`ある人物の顔のみ描写されている画像に対して，空間周波数が高い部分だけを強調する処理を行うと，その画像はどのようになるか。<b>誤っているもの</b>を，次の⓪〜③のうちから一つ選べ。`,
+      choices:["顔の輪郭線が鮮明になる。","肌の陰影がより際立つ。","しわやえくぼの凹凸（おうとつ）が目立つようになる。","目や鼻などが大きくなる。"],
+      correct:3,
+      exp:{
+        answer:"③",
+        text:`問題文より，「明暗の変化がゆるやかな領域」では空間周波数が低く，「明暗の変化が激しい領域」では空間周波数が高くなることがわかる。これより，空間周波数の高い部分を強調する処理を行うと，明暗の変化が激しい部分がより強調され，鮮明になることがわかる。`,
+        options:[
+          {label:"⓪ 正しい",ok:false,text:"空間周波数の高い部分である輪郭線は強調され鮮明になる。"},
+          {label:"① 正しい",ok:false,text:"空間周波数の高い部分である肌の光があたっているところとあたっていないところの境目は強調され，肌の陰影がより際立つ。"},
+          {label:"② 正しい",ok:false,text:"空間周波数の高い部分であるしわやえくぼの凹凸は強調され目立つようになる。"},
+          {label:"③ 誤り（これが正解）",ok:true,text:"「大きさ」の変化は画像の形状（寸法）の変化を意味している。空間周波数の高い部分を強調する処理は，画像のサイズや形状自体を変化させる処理ではない。"}
+        ]
+      }
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第1問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>
