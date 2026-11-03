@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 全統マーク模試 2025年11月｜第2問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 2025年11月（全統マーク模試）｜第2問（配点30）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="zentou.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="zentou.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ','ⓑ','ⓒ','ⓓ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "A図1": {label:"図1", src:"img/zen202511_2A_fig1_pc.jpg",     cap:"図1　PCに表示された「YourClothes」のWebページ"},
+  "A図2": {label:"図2", src:"img/zen202511_2A_fig2_sp.jpg",     cap:"図2　スマートフォンに表示された「YourClothes」のWebページ"},
+  "A図3": {label:"図3", src:"img/zen202511_2A_fig3_tabnav.jpg", cap:"図3　「ホーム」「おすすめ」「お知らせ」に遷移するためのタブメニュー（左）とナビゲーションバー（右）"},
+  "B図4・5": {label:"図4・図5", src:"img/zen202511_2B_fig4_5_queues.jpg", cap:"図4　並列並び（左）／図5　フォーク並び（右）"},
+  "B表1": {label:"表1", src:"img/zen202511_2B_tab1_arrivals.jpg", cap:"表1　10人目までの客の到着時刻と会計時間"},
+  "B図6": {label:"図6", src:"img/zen202511_2B_fig6_gantt.jpg",    cap:"図6　並列並びのシミュレーションの様子（作成途中）"},
+  "B表2": {label:"表2", src:"img/zen202511_2B_tab2_fork.jpg",     cap:"表2　表計算ソフトによるフォーク並びのシミュレーション"},
+  "Bソの選択肢": {label:"ソの選択肢", src:"img/zen202511_2B_q3b_choices.jpg", cap:"ソ の選択肢（X〜Zの組合せ）"},
+  "B図7": {label:"図7", src:"img/zen202511_2B_fig7_freq.jpg",     cap:"図7　所要時間の度数分布"}
+};
+const ALLN = `<span style="font-size:.8rem;color:var(--muted)">※すべて正解の場合のみ得点</span>`;
+const DIG = `<span style="font-size:.8rem;color:var(--muted)">（数字を1マスに1つずつ入力）</span>`;
+const WORDS = ["HTTP","HTML","IMAP","モバイルフレンドリー","アクセシビリティ","ユーザビリティ","オブジェクト指向","コンテンツ","レイアウト"];
+const WORDEXP = `<br><span style="font-size:.82rem;color:var(--muted)">正解以外の選択肢：⓪HTTPはWebサーバとWebブラウザの間での情報のやり取りを制御するプロトコル。②IMAPはメールの受信に用いられるプロトコル。③モバイルフレンドリーはスマートフォンなどのモバイルデバイスで使いやすく作られていること。⑥オブジェクト指向はソフトウェア開発における概念で，処理対象であるモノ（オブジェクト）とそれを処理するプロセスを一体と捉える考え方。⑦コンテンツはWebページや書籍，動画などの各種メディアが伝える情報の内容のこと。</span>`;
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── A ─────────
+{
+  title: "第2問A　次の会話文を読み，後の問い（問1〜3）に答えよ。",
+  context: `
+<p>Pさん：普段はスマートフォンで利用している通販サイトに，先日，自宅のPCでアクセスしたところ，Webページの見た目がかなり異なることに気がつきました。同じURLでも，PCとスマートフォンで見た目が異なるのはどうしてでしょうか。<br>
+Qさん：えっ，違うんだ。私もPCとスマートフォンの両方で通販サイトを利用しているけど，特に操作に困らなかったから，気にしたことがなかった。<br>
+先　生：Pさんが気づいたとおり，最近のWebサイトは，アクセスするデバイスに応じて，${B('ア')}などを変えているんですよ。Webページの基本構造はWebページを記述する言語である${B('イ')}で制作し，スタイルや${B('ア')}を記述するCSSで，デバイスの画面の幅などに応じて異なる${B('ア')}を選択するよう指定します。<br>
+Pさん：そうなんですね。それは，画面の横幅が違っても見やすくするためですか？<br>
+先　生：もちろんそれも理由の一つですが，それだけではありません。Qさんが，操作に困らなかったと言っているように，異なるデバイスで利用しても${B('ウ')}が低下しないよう，見やすさに加えて操作性や使用環境，ユーザのニーズの違いなど，いくつかの観点に配慮するのが一般的です。また，ユーザの使用環境の違いに関わりなく，誰もが同様に情報を得られるようにするという意味では，デバイスごとに異なる${B('ア')}を提供するというのは，${B('エ')}を確保する役割も担っているといえますね。</p>`,
+  items: [
+    {
+      label:"問1（ア）", points:2, type:"single",
+      qtext:`会話文中の空欄${B('ア')}に入れるのに最も適当な語句を，次の⓪〜⑧のうちから一つ選べ。`,
+      choices:WORDS, correct:8,
+      exp:{answer:"⑧（レイアウト）",
+        text:`「スタイルや${B('ア')}を記述するCSS」「デバイスの画面の幅などに応じて異なる${B('ア')}を選択する」などの記述から，CSSで指定するものであり，Webページの画面構成を指す語句である「レイアウト」が該当する。<br><span style="font-size:.82rem;color:var(--muted)">【参考】レスポンシブデザイン：スマートフォンやPCといった，デバイスごとの特性に応じたレイアウトを提供するデザインのこと。CSS（Cascading Style Sheets）：HTMLで作られたWebページのフォントや色，レイアウトなどを設定するための言語。</span>${WORDEXP}`}
+    },
+    {
+      label:"問1（イ）", points:2, type:"single",
+      qtext:`会話文中の空欄${B('イ')}に入れるのに最も適当な語句を，次の⓪〜⑧のうちから一つ選べ。`,
+      choices:WORDS, correct:1,
+      exp:{answer:"①（HTML）",
+        text:`「スタイルや${B('ア')}を記述するCSS」に対して「Webページを記述する言語」であるから，「HTML」が該当する。${WORDEXP}`}
+    },
+    {
+      label:"問1（ウ）", points:3, type:"single",
+      qtext:`会話文中の空欄${B('ウ')}に入れるのに最も適当な語句を，次の⓪〜⑧のうちから一つ選べ。`,
+      choices:WORDS, correct:5,
+      exp:{answer:"⑤（ユーザビリティ）",
+        text:`「操作に困らなかった」という発言を受けていること，続く文で見やすさ，操作性などに配慮すると述べていることから，「ユーザビリティ」が該当する。<br><span style="font-size:.82rem;color:var(--muted)">【整理】アクセシビリティは，年齢や性別などの属性によらない，幅広い人々にとっての情報やサービスへのアクセスや利用のしやすさを指す。ユーザビリティは，使いやすさや使い勝手のことを指す。</span>${WORDEXP}`}
+    },
+    {
+      label:"問1（エ）", points:3, type:"single",
+      qtext:`会話文中の空欄${B('エ')}に入れるのに最も適当な語句を，次の⓪〜⑧のうちから一つ選べ。`,
+      choices:WORDS, correct:4,
+      exp:{answer:"④（アクセシビリティ）",
+        text:`使用環境の違いに対応したレイアウトの切り替えが「誰もが同様に情報を得られるようにするという意味」と捉えられているので，「アクセシビリティ」が該当する。${WORDEXP}`}
+    },
+    {
+      label:"問2（オ）", points:3, type:"single",
+      pre:`<p>　Pさんたちは，通販サイト「YourClothes」にPCとスマートフォンのそれぞれでアクセスし，表示されたページを比較した。図1がPCに表示されたWebページ，図2がスマートフォンに表示されたWebページである。図1と比べて図2には，PCとスマートフォンの一般的な操作方法や画面表示（縦横比や表示面積）の違いを理由とするいくつかの体裁の変更が見られる。</p>${figBox("A図1")}<p style="font-size:.8rem;color:var(--muted)">※商品写真か商品説明文をクリックすると商品詳細が表示される</p>${figBox("A図2")}<p style="font-size:.8rem;color:var(--muted)">※商品写真か商品説明文を含む枠内をタップすると商品詳細が表示される</p>`,
+      qtext:`それらのうち，PCとスマートフォンの<b>操作方法の違い</b>を理由とする変更と考えられるものとして最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("A図1","A図2")}`,
+      choices:[
+        "図1のように商品写真を横並びに表示するのではなく，図2のように縦一列に表示し，画面上で一つ一つの写真が占める面積が相対的に大きく表示されるようにしている。",
+        "図1のような左側のナビゲーション領域をなくし，図2のように左上のハンバーガーメニューアイコンをタップすると，カテゴリなどの項目が展開されるようにしている。",
+        "図1のようにアクセスしているURLを画面の上部に表示するのではなく，図2のように画面の下部に表示するようにしている。",
+        "図1の上部や左下にあるセールやキャンペーンの告知画像を，図2のように表示されないようにしている。"
+      ],
+      correct:0,
+      exp:{answer:"⓪",
+        text:`PCとスマートフォンの「操作方法の違い」を理由とする変更を選ぶ。`,
+        options:[
+          {label:"⓪ 適当（正解）",ok:true,text:"商品写真を縦一列に並べるのは，画面を上下にスクロールして閲覧するスマートフォンの操作に適し，かつ，タップ可能なアイテムを一画面に多く表示しすぎないことで，指による誤操作を防いでいるデザインといえる。"},
+          {label:"① 適当でない",ok:false,text:"左側のナビゲーション領域をなくすのは，スマートフォンの画面が多くのPCと異なり縦長で，かつ小さいことに配慮した画面表示の違いに対応するデザインといえる。"},
+          {label:"② 適当でない",ok:false,text:"図2のURLの表示位置は，ブラウザのユーザインタフェースのデザインによって決まる。"},
+          {label:"③ 適当でない",ok:false,text:"告知画像がないのは，スマートフォンの画面が小さく，たくさんの情報を一度に表示すると視認性が低下することに配慮した，画面表示の違いに対応するデザインである。"}
+        ]}
+    },
+    {
+      label:"問3（カ）", points:2, type:"single",
+      pre:`<p>　前ページ図2のハンバーガーメニューアイコンはタップするとメニューの項目が展開され，ナビゲーション表示のために用いられることが多い。一方，最近ではこれに代わって，タブメニューやナビゲーションバー（図3）なども用いられるようになってきた。</p>${figBox("A図3")}`,
+      qtext:`タブメニューやナビゲーションバーと比べたとき，ハンバーガーメニューアイコンの<b>デメリットとなる点</b>として最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("A図2","A図3")}`,
+      choices:[
+        "展開されたメニューの表示項目が多くなると，文字のフォントサイズを小さくする必要が生じ，見にくくなる。",
+        "メニューの項目が展開される領域にはコンテンツを配置できないので，Webページの空白部分が多くなる。",
+        "メニューの項目を変更すると，Webページの他のコンテンツのデザインに影響を与えやすい。",
+        "ハンバーガーメニューアイコンをタップしないと，ユーザは他にどのようなコンテンツがあるかわからない。"
+      ],
+      correct:3,
+      exp:{answer:"③",
+        text:`ハンバーガーメニューアイコンの特徴を，タブメニューやナビゲーションバーと比べて考える。`,
+        options:[
+          {label:"⓪ 適当でない",ok:false,text:"展開されるメニューの項目はスクロールが可能なので，フォントサイズを小さくしなくても多くの内容を表示できる。"},
+          {label:"① 適当でない",ok:false,text:"展開されるメニューの項目は，既に表示されているコンテンツに重なって展開されるので，あらかじめ空白部分を確保する必要はない。"},
+          {label:"② 適当でない",ok:false,text:"展開されるメニューの内容は他のコンテンツから独立しているので，これを変更しても他のコンテンツの配置や大きさなどには影響しない。"},
+          {label:"③ 適当（正解）",ok:true,text:"ハンバーガーメニューアイコンを採用する場合，Webページに常に表示されているのは三本線のアイコンだけなので，これをタップしてメニューの項目を展開しなければ，内容を知ることはできない。"}
+        ]}
+    }
+  ]
+},
+
+// ───────── B ─────────
+{
+  title: "第2問B　次の文章を読み，後の問い（問1〜5）に答えよ。",
+  context: `
+<p>　Kさんがよく利用する商店にはレジが3台あり，左から<b>レジA</b>，<b>レジB</b>，<b>レジC</b>となっている。会計を待つ客の並び方には，レジごとに列を作る「並列並び」（図4）と，全体で一つの列を作る「フォーク並び」（図5）があることに気づいたKさんは，それぞれの並び方で「並び始めてから会計を終えるまでにかかる時間（所要時間）」に違いがあるかを，シミュレーションを行って検討することにした。</p>
+${figBox("B図4・5")}
+<p>　Kさんはまず，並列並びの場合を考えることとし，次の【条件】でシミュレーションを行い，所要時間を調べた。</p>
+<div class="fig"><b>【条件】</b><br>
+・時刻0秒において，最初の3人の客の会計が3台のレジで同時に開始され，その後は30秒ごとに一人の客が到着する。<br>
+・到着した客は，3台あるレジのうちで会計待ちの人数（会計中の人数と列の人数の合計）が最小のレジを選んで並び，一度並ぶレジを決めたら他のレジに変えることはない。会計待ちの人数が最小のレジが複数ある場合は，最も左側のレジを選ぶ。<br>
+・「前の客の会計が終わってからその客の会計が終わるまでにかかる時間（会計時間）」は，60秒以上110秒未満である。次の表1のように，0以上1未満の数値が同じ確率で出現する乱数をもとにして60以上110未満の整数を等しい確率で生成し，それぞれの客の会計時間とする。</div>
+${figBox("B表1")}
+<p style="font-size:.8rem;color:var(--muted)">（注）表中の乱数は，小数第3位を切り捨てて表示している。</p>`,
+  items: [
+    {
+      label:"問1（キク）", points:2, type:"digits", blanks:2, correctDigits:[8,0], suffixText:"秒",
+      qtext:`表1中の空欄${B('キ')}${B('ク')}（10人目の会計時間）に当てはまる数字を答えよ。<br>${ALLN}${DIG}${figLinks("B表1")}`,
+      exp:{answer:"80",
+        text:`0以上1未満の乱数 x を60以上110未満の整数 y に対応付け，x から y を求める関数 f(x) を導くとよい。表1で最小の乱数である0.09が64に，次に小さい乱数である0.13が66に対応付けられている（つまり，f(0.09)＝64，f(0.13)＝66 となる）ことから，関数 f(x) は，乱数の最小値である0を対応先の最小値である60に対応させ，乱数の値が1に近づくほど110に近い値に対応させるような関数だと推測できる。<br>乱数は0以上1未満の値が等確率で生成されることから，乱数の0以上1未満の値を50等分し，0以上0.02未満を60に，0.02以上0.04未満を61に割り当てればよいことがわかる。したがって，乱数の値 x を50倍して60を足した後に，小数点以下を切り捨てればよい。ある数 a の小数点以下を切り捨てる関数を floor(a) と書くと，f(x)＝floor(50x＋60) となるので，x＝0.40 に対応する値は<br>　f(0.40)＝floor(50×0.40＋60)＝floor(80)＝<b>80</b>`}
+    },
+    {
+      label:"問2（ケ）", points:2, type:"single",
+      pre:`<p>問2　次の文章を読み，空欄${B('ケ')}に入れるのに最も適当なものを，後の解答群のうちから一つ選べ。また，空欄${B('コ')}${B('サ')}に当てはまる数字を答えよ。</p><p>　Kさんは，前記の【条件】を適用して10人目までの客についてシミュレーションを実行することにした。Kさんは，客の待ち状況を可視化するための図を作成しており，次の図6は6人目までの状況を記入し終わったところである。<br>　このシミュレーションにおいて，4人目の客が並ぶレジは<b>レジA</b>であり，所要時間は103秒，9人目の客が並ぶレジは${B('ケ')}であり，所要時間は${B('コ')}${B('サ')}秒である。</p>${figBox("B図6")}`,
+      qtext:`9人目の客が並ぶレジは${B('ケ')}である。${figLinks("B図6","B表1")}`,
+      choices:["レジA","レジB","レジC"], correct:1,
+      exp:{answer:"①（レジB）",
+        text:`図6で描かれていない部分を埋めていくと，10人目の客までのシミュレーション結果は次のようになる。<br>・7人目は，到着した120秒目の時点ですべてのレジの会計待ちの人数が1人（会計中1人＋列0人）なので，最も左側にあるレジAに並び，133秒目から238秒目まで会計を行う。<br>・8人目は，到着した150秒目の時点ですべてのレジの会計待ちの人数が1人なので，最も左側にあるレジAに並び，238秒目から311秒目まで会計を行う。<br>・9人目は，到着した180秒目の時点での会計待ちの人数は，レジAは2人，レジBとレジCは1人なので，レジBとレジCのうち左側にある<b>レジB</b>に並び，182秒目から268秒目まで会計を行う。`}
+    },
+    {
+      label:"問2（コサ）", points:2, type:"digits", blanks:2, correctDigits:[8,8], suffixText:"秒",
+      qtext:`9人目の客の所要時間は${B('コ')}${B('サ')}秒である。<br>${ALLN}${DIG}${figLinks("B図6","B表1")}`,
+      exp:{answer:"88",
+        text:`9人目は，到着した180秒目の時点で会計待ちの人数が最小（1人）のレジのうち左側のレジBに並ぶ。レジBでは5人目の会計が182秒目に終わるので，9人目は182秒目から会計を始め，会計時間86秒で268秒目に会計を終える。所要時間は 268－180＝<b>88</b>秒である。`}
+    },
+    {
+      label:"問3a（シスセ）", points:2, type:"digits", blanks:3, correctDigits:[1,9,3], suffixText:"秒",
+      pre:`<p>問3　次にKさんは，表計算ソフトを用いて，フォーク並びの場合についてシミュレーションした。並列並びのシミュレーションと同じ状況を再現するため，レジは3台とし，レジの選択の仕方以外は前記の【条件】を適用する。フォーク並びでは，客は空いているレジに速やかに移動し，空いているレジが複数ある場合は，最も左側のレジを利用するものとする。それぞれの客の到着時刻および会計時間を表1と同一にして，所要時間をシミュレーションしたものを表2に示す。</p>${figBox("B表2")}<p style="font-size:.8rem;color:var(--muted)">（表の一部を“？”で隠してある）</p>`,
+      qtext:`表2中の空欄${B('シ')}${B('ス')}${B('セ')}（9人目の会計開始時刻）に当てはまる数字を答えよ。<br>${ALLN}${DIG}${figLinks("B表2")}`,
+      exp:{answer:"193",
+        text:`フォーク並びの場合，客の到着順とレジの開始順が一致する。E列の会計終了時刻は，レジが空く時刻を表しているから，E列の値を小さい順に並び替えたものがC列の行番号5の行（4人目）以降に入ることになる。E列の値は 66, 93, 64, 131, 155, 193, 236, 228 … であり，小さい順に 64, 66, 93, 131, 155, <b>193</b>, … となる。よって，空欄にはE列で6番目に大きい（小さい順で6番目の）値193が入る。<br>なお，フォーク並びでの10人目までの結果は，レジA：1人目(〜66)→5人目(〜155)→8人目(〜228)→10人目(〜308)，レジB：2人目(〜93)→6人目(〜193)→9人目(〜279)，レジC：3人目(〜64)→4人目(〜131)→7人目(〜236)となる。`}
+    },
+    {
+      label:"問3b（ソ）", points:2, type:"single",
+      pre:`<div class="fig">　図6と表2を比べると，5人目の客は${B('X')}の場合の方が所要時間は短く，6人目の客は${B('Y')}の場合の方が所要時間は短い。このように，二つの並び方でそれぞれの客の所要時間を比べたとき，${B('Z')}。</div>`,
+      qtext:`図6と表2の比較に基づく文章中の空欄${B('X')}〜${B('Z')}に入るものの組合せとして最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("B図6","B表2")}${figBox("Bソの選択肢")}`,
+      choices:[
+        "X：並列並び　Y：並列並び　Z：並列並びの方が常に短い",
+        "X：並列並び　Y：フォーク並び　Z：場合によってどちらが短いかが異なる",
+        "X：フォーク並び　Y：並列並び　Z：場合によってどちらが短いかが異なる",
+        "X：フォーク並び　Y：フォーク並び　Z：フォーク並びの方が常に短い"
+      ],
+      correct:2,
+      exp:{answer:"②",
+        text:`時刻60秒に到着する5人目の客の所要時間は，並列並びで 182－60＝122秒，フォーク並びで95秒であるので，${B('X')}には「フォーク並び」が入る。一方，時刻90秒に到着する6人目の客の所要時間は，並列並びで 190－90＝100秒，フォーク並びで103秒であるので，${B('Y')}には「並列並び」が入る。したがって，${B('Z')}には「場合によってどちらが短いかが異なる」が入る。`}
+    },
+    {
+      label:"問4（タ）", points:3, type:"single",
+      pre:`<p>　Kさんは，並列並びの場合のシミュレーションと，フォーク並びの場合のシミュレーションを，それぞれ1000人目の客まで行った。結果を比較するために，所要時間を客ごとに計算して度数分布を調べ，その結果を図7の折れ線グラフに表した。</p>${figBox("B図7")}<p style="font-size:.8rem;color:var(--muted)">横軸の <u>a</u> は a－10以上 a 未満の階級を表す。たとえば，<u>100</u> は90以上100未満の階級を表す。</p>`,
+      qtext:`このグラフから読み取れることとして最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("B図7")}`,
+      choices:[
+        "並列並びの場合に所要時間が90秒未満であるような客は，フォーク並びの場合にも所要時間が90秒未満である。",
+        "最初の客が来てから約100秒目から約150秒目までの間のみ，フォーク並びの場合の方が並列並びの場合よりも並んでいる合計人数が多かった。",
+        "所要時間が150秒以上の範囲では，どちらの並び方でも所要時間が増えるほど店舗を訪れる客の数が減っていく。",
+        "所要時間のばらつきは，フォーク並びの場合の方が並列並びの場合よりも小さくなっている。"
+      ],
+      correct:3,
+      exp:{answer:"③",
+        text:`度数分布の折れ線グラフの読み取り。<br><span style="font-size:.82rem;color:var(--muted)">【参考】待ち行列理論：フォーク並びと並列並びの比較は，待ち行列理論の分野における有名な問題である。レジまでの移動時間を考慮しない場合，フォーク並びと並列並びで所要時間の平均は同じである一方，フォーク並びでは並列並びと比べて所要時間の分散が小さくなる。客の間で公平感がなくなり不満が生じやすくなるという観点から，理論的には，フォーク並びの方がよいとされる。</span>`,
+        options:[
+          {label:"⓪ 適当でない",ok:false,text:"図7からは客ごとの所要時間は読み取れない。また問3bで確認したように，並列並びとフォーク並びのどちらの所要時間が短いかは，場合により異なる。"},
+          {label:"① 適当でない",ok:false,text:"図7の横軸は最初の客が来てからの秒数を表しているわけではない。また，列に並んでいる客の人数を図7から読み取ることはできない。"},
+          {label:"② 適当でない",ok:false,text:"図7の縦軸は店舗を訪れる客の数ではないため，店舗を訪れる客の数を図7から読み取ることはできない。"},
+          {label:"③ 適当（正解）",ok:true,text:"フォーク並びの度数分布は山型で正規分布に近い形をしているが，並列並びの度数分布は，所要時間の短い部分と長い部分でフォーク並びの度数を上回り，台形に近い分布となっている。このようなグラフの形状からフォーク並びの方が所要時間のばらつきが小さいと読み取れる。"}
+        ]}
+    },
+    {
+      label:"問5（チ）", points:2, type:"single",
+      pre:`<p>　Kさんがこれまでのシミュレーション結果を授業で発表したところ，発表を聞いた生徒から次のコメントをもらった。</p><div class="fig">フォーク並びの場合，列の先頭からレジまでの客の移動距離が並列並びの場合より長く，余計に時間がかかるので，並列並びと結果を比較する場合はこれを考慮して条件を変更した方がよいのではないか。</div><p>　Kさんは，問3における表2に変更を加えることで，このコメントに対応することにした。フォーク並びでは列の先頭の客がレジまで移動するのに5秒かかると仮定し，この移動時間が所要時間に及ぼす影響を調べることができるように表2に変更を加える。ただし，変更は4人目以降に対して行うものとする。また，所要時間（F列）は会計終了時刻（E列）と到着時刻（B列）の差によって求めるものとする。</p><div class="fig"><b>変更</b><br>　表2のある列の値に5を加えるように修正した上で再計算し，その結果を並列並びの場合と比較する。このとき修正を加える列は${B('チ')}。</div>`,
+      qtext:`空欄${B('チ')}に入れるのに最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("B表2")}`,
+      choices:["B列でもC列でもよい","B列でもF列でもよい","C列でもD列でもよい","E列でもF列でもよい"],
+      correct:2,
+      exp:{answer:"②",
+        text:`「列の先頭の客がレジの前まで移動するのに5秒かかる」と仮定すると，4人目以降の客の会計開始時刻は5秒遅くなる（＋5秒）。したがって，会計開始時刻（C列）の値に5を加えるように修正すれば，コメントを考慮したことになる。ただし，それぞれの客の会計時間（D列）や会計終了時刻（E列）の値に5を加えても，会計終了時刻は5秒遅くなるので，修正を加える列はC列〜E列のいずれでもよい。<br>到着時刻（B列）の値に5を加えると，会計終了時刻－到着時刻（＝所要時間）の値は小さくなるので，移動時間を考慮したことにはならない。<br>所要時間（F列）の値に5を加えると，すべての客の所要時間が一律に5秒増えるが，C列〜E列の値は表2のままなので，レジまでの移動時間が所要時間に及ぼす影響を調べるシミュレーションにはならない。C列（またはD列またはE列）の値に5を加える変更では，所要時間の変化が一律でない可能性がある。<br>なお，「F列はE列とB列の差によって求める」とあるので，所要時間（F列）の値に5を加える変更は，この条件に矛盾する。`}
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第2問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>
