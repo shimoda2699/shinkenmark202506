@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 直前演習 第1回｜第4問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 直前演習（実力完成）第1回｜第4問（配点25）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="chokuzen.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="chokuzen.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ','ⓑ','ⓒ','ⓓ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "表1": {label:"表1", src:"img/choku01_4_tab1.jpg", cap:"表1　食品ごとの1人あたりの年間消費量（単位：kg）（出典：農林水産省「令和3年度食料需給表」により作成）"},
+  "図1": {label:"図1", src:"img/choku01_4_fig1.jpg", cap:"図1　食品ごとの1人あたりの年間消費量の変化"},
+  "ウの選択肢": {label:"ウの選択肢", src:"img/choku01_4_u_choices.jpg", cap:"ウ の選択肢（1965年度を1としたときの比率のグラフ⓪〜③）"},
+  "図2": {label:"図2", src:"img/choku01_4_fig2.jpg", cap:"図2　散布図・相関行列"},
+  "図3": {label:"図3", src:"img/choku01_4_fig3.jpg", cap:"図3　肉類と魚介類の年間消費量の散布図と回帰直線"}
+};
+const FOODS = ["小麦","緑黄色野菜","その他の野菜","肉類","魚介類"];
+const D10 = ["0","1","2","3","4","5","6","7","8","9"];
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── 導入・問1・問2 ─────────
+{
+  title: "第4問　次の文章を読み，後の問い（問1〜5）に答えよ。（配点 25）",
+  context: `
+<p>　次の表1は，国が実施した食料需給に関する統計調査をもとに，1965年度から2021年度のデータについて，食品ごとに1人あたりの年間消費量をまとめたものの一部である。</p>
+${figBox("表1")}
+<p>　太郎さんたちは，食生活の変化を調べようとしている。</p>`,
+  items: [
+    {
+      label:"問1（ア）", points:3, type:"single",
+      qtext:`太郎さんたちは，表1のデータから次のような仮説を考えた。表1のデータだけから分析できる仮説として最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("表1")}`,
+      choices:[
+        "各年の食品の生産量が多くなると消費量が多くなる傾向があるのではないか。",
+        "肉類の価格と肉類の消費量には相関があるのではないか。",
+        "近年，みそやしょうゆなどの消費量が減ったのは，健康志向の高まりが原因ではないか。",
+        "肉類の消費量や油脂類の消費量は，年々増加傾向にあるのではないか。"
+      ],
+      correct:3,
+      exp:{answer:"③", text:"問題文より，表1のデータにない情報は分析できないことに注意しよう。",
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"食品の生産量のデータは表1に含まれない。よって，表1のデータだけではこのような仮説を分析することはできない。"},
+          {label:"① 誤り",ok:false,text:"肉類の価格のデータは表1に含まれない。よって，表1のデータだけではこのような仮説を分析することはできない。"},
+          {label:"② 誤り",ok:false,text:"近年，みそとしょうゆなどの消費量が減っているのは事実であるが，その原因は表1からは読み取れない。"},
+          {label:"③ 正しい（正解）",ok:true,text:"各年度の肉類の消費量や油脂類の消費量のデータはすべて表1に含まれていることから，肉類の消費量や油脂類の消費量が年々増加傾向にあるかどうかは表1のデータだけから分析することができる。"}
+        ]}
+    },
+    {
+      label:"問2（イ）", points:3, type:"single",
+      pre:`<p>　太郎さんたちは，表1のデータの年ごとの変化に注目し，米，小麦，緑黄色野菜，その他の野菜，肉類，魚介類の1人あたりの年間消費量（以下，年間消費量）について，図1の折れ線グラフにまとめた。</p>${figBox("図1")}`,
+      qtext:`図1から読み取ることができることとして最も適当なものを，次の⓪〜③のうちから一つ選べ。${figLinks("図1")}`,
+      choices:[
+        "6つの食品のうち1年間に最も消費された食品は，1965年度では米であるが，2021年度では肉類である。",
+        "米の年間消費量は，2021年度では1965年度と比べておよそ半減している。",
+        "魚介類の年間消費量は2021年度以降も減り続けている。",
+        "その他の野菜の年間消費量が減るにつれて，緑黄色野菜の年間消費量も減っている。"
+      ],
+      correct:1,
+      exp:{answer:"①", text:"折れ線グラフから読み取れる範囲を確認しよう。",
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"6つの食品のうち，1年間に最も消費された食品は，1965年度では「米」であるが，2021年度では「その他の野菜」である。"},
+          {label:"① 正しい（正解）",ok:true,text:"米の年間消費量は，1965年度に約110kg，2021年度に約50kgと読み取れるから，およそ半減しているといえる。"},
+          {label:"② 誤り",ok:false,text:"図1は2021年度までのデータを折れ線グラフにまとめたものであり，2021年度以降の動向は分からないので，読み取れない。"},
+          {label:"③ 誤り",ok:false,text:"「その他の野菜」の年間消費量は減少傾向にあるが，「その他の野菜」の年間消費量が減少している年で「緑黄色野菜」の年間消費量が増加しているときもある。"}
+        ]}
+    }
+  ]
+},
+
+// ───────── 問3 ─────────
+{
+  title: "問3　さらに太郎さんたちは，図1を用いて1965年度との食生活の変化を調べようと考えた。",
+  context: `
+<p>　その際，年間消費量が多い食品と少ない食品があるので，年間消費量の増減ではなく，1965年度の年間消費量を1としたときの比率をもとに比較することにした。</p>
+<p style="font-size:.85rem;color:var(--muted)">表1・図1は再掲です。${figLink("表1")} ${figLink("図1")}</p>`,
+  items: [
+    {
+      label:"問3（ウ）", points:4, type:"single",
+      qtext:`1965年度の年間消費量に対する各年の消費量の比率を比較するためのグラフとして最も適当なものを，次の⓪〜③のうちから一つ選べ。各折れ線は，米・小麦・緑黄色野菜・その他の野菜・肉類・魚介類を表している。${figLinks("図1")}${figBox("ウの選択肢")}`,
+      choices:["グラフ⓪","グラフ①","グラフ②","グラフ③"],
+      correct:1,
+      exp:{answer:"①", text:`1965年度から2021年度の間で年間消費量の変化の大きい食品に注目すると，「米」はおよそ半減し，0.5倍になっている。一方で，「肉類」は9.2kgから34.0kgまで増えているので，3〜4倍となっている。グラフがこのような傾向で表していてグラフの縦軸の目盛りが，そのような変化量を表しているものは①である。<br><span style="font-size:.82rem;color:var(--muted)">⓪，②は縦軸の目盛りが0.9〜1.2程度で小さすぎる。③の縦軸の目盛りには負の値が現れているが，このようなことは，比率を調べる際にはあり得ない。</span>`}
+    },
+    {
+      label:"問3（エ）", points:4, type:"single",
+      qtext:`1965年度の年間消費量に対する2021年度の年間消費量の比率が最も大きい食品は${B('エ')}である。空欄${B('エ')}に当てはまるものを，次の⓪〜④のうちから一つ選べ。${figLinks("ウの選択肢","表1")}`,
+      choices:["米","小麦","緑黄色野菜","肉類","魚介類"],
+      correct:3,
+      exp:{answer:"③（肉類）", text:`①のグラフから読み取れるように，消費量の比率が最も大きい食品は<b>肉類</b>（9.2kg→34.0kg，約3.7倍）である。`}
+    }
+  ]
+},
+
+// ───────── 問4 ─────────
+{
+  title: `問4　次の文章を読み，空欄${B('オ')}，${B('カ')}に入れるのに最も適当なものを，後の解答群のうちから一つずつ選べ。`,
+  context: `
+<p>　太郎さんたちは，食品ごとの関連を調べるために，統計ソフトウェアで図2を作成した（これを散布図・相関行列という）。図2の「Ⅰ」〜「Ⅵ」は，食品ごとの年間消費量をヒストグラムにしたものである。また，「A」〜「O」は2つの食品の消費量の相関係数，「あ」〜「そ」は2つの食品の消費量の散布図である。例えば，図2の「あ」は縦軸を「小麦」の消費量（kg），横軸を「米」の消費量（kg）とした散布図であり，それに対応した相関係数は「A」で表されている。</p>
+${figBox("図2")}
+<p>　図2を見ると，米が多く消費されている年に多く消費され，米の消費が少ない年に消費が少ないという傾向が最も強いのは${B('オ')}であり，米の消費が少ない年に多く消費され，米の多く消費されている年に消費が少ないという傾向が最も強いのは${B('カ')}であることがわかった。</p>`,
+  items: [
+    {
+      label:"オ", points:3, type:"single",
+      qtext:`米が多く消費されている年に多く消費され，米の消費が少ない年に消費が少ないという傾向が最も強いのは${B('オ')}である。${figLinks("図2")}`,
+      choices:FOODS, correct:2,
+      exp:{answer:"②（その他の野菜）", text:`米の消費量との相関関係を調べるには，図2の「A」〜「E」の相関係数を見ればよい。最も強い正の相関を示しているのは「C」の相関係数0.882であるから，<b>その他の野菜</b>（②）である。<br><span style="font-size:.82rem;color:var(--muted)">【Point】散布図から判断する限り「あ」「い」「え」など複数が該当してしまうため，最も強い傾向を示す食品1種類を特定するためには，数値である相関係数に着目するとよい。</span>`}
+    },
+    {
+      label:"カ", points:3, type:"single",
+      qtext:`米の消費が少ない年に多く消費され，米の多く消費されている年に消費が少ないという傾向が最も強いのは${B('カ')}である。${figLinks("図2")}`,
+      choices:FOODS, correct:3,
+      exp:{answer:"③（肉類）", text:`最も強い負の相関を示しているのは「D」の相関係数−0.988であるから，<b>肉類</b>（③）である。`}
+    }
+  ]
+},
+
+// ───────── 問5 ─────────
+{
+  title: `問5　次の文章を読み，空欄${B('キ')}に入れるのに最も適当なものを解答群から一つ選べ。また，空欄${B('ク')}〜${B('コ')}に当てはまる数字を答えよ。`,
+  context: `
+<p>　太郎さんは，肉類と魚介類の関係が単調な変化ではないことに気づいた。表1の1965年度から2021年度までのすべてのデータを確認したところ，1965年度から2000年度までは肉類と魚介類はともに年間消費量は増加傾向にあったが，それ以降は魚介類の年間消費量は減少傾向にあることがわかった。そこで，図3のように，肉類と魚介類の年間消費量を散布図で表した上で，2つの群に分けて回帰直線を作成したところ，ともに増加しているときの回帰直線の式は y＝0.4x＋25.2，魚介類の年間消費量が減少傾向にあるときの回帰直線の式は y＝−2.4x＋101.1 となった。<br>
+　図3の傾向が成り立つと仮定すると，肉類の年間消費量が35.0kgになったときの魚介類の年間消費量を予測するときに用いるのに適切な回帰直線の式は${B('キ')}であり，これをもとに計算すると，そのときの魚介類の年間消費量は${B('ク')}${B('ケ')}.${B('コ')}kgと予測できる。</p>
+${figBox("図3")}`,
+  items: [
+    {
+      label:"キ・クケ.コ", points:5, type:"choicegroup",
+      qtext:`適切な回帰直線の式${B('キ')}と，魚介類の年間消費量の予測値${B('ク')}${B('ケ')}.${B('コ')}kgを答えよ。<br><span style="font-size:.8rem;color:var(--muted)">※キ・ク・ケ・コすべて正解の場合のみ5点</span>${figLinks("図3")}`,
+      blanks:[
+        {label:"キ（回帰直線の式）", choices:["y＝0.4x＋25.2","y＝−2.4x＋101.1"], correct:1},
+        {label:"ク（十の位）", choices:D10, correct:1},
+        {label:"ケ（一の位）", choices:D10, correct:7},
+        {label:"コ（小数第1位）", choices:D10, correct:1}
+      ],
+      exp:{answer:"キ①，17.1", text:`図3より，肉類の年間消費量が約27.0kgを境界にして，適用すべき回帰直線の式が異なっていることがわかる。肉類の年間消費量が35.0kgのときは，27.0kgを超えているので，回帰直線の式 <b>y＝−2.4x＋101.1</b>（①）を用いるのが適切である。この式に x＝35 を代入すると<br>　y＝−2.4×35＋101.1＝17.1<br>であるから，魚介類の年間消費量は<b>17.1kg</b>と予測できる。<br><span style="font-size:.82rem;color:var(--muted)">2021年度以降も魚介類が減少傾向にあることから，適切な回帰直線の式を選択することもできる。</span>`}
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第4問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>

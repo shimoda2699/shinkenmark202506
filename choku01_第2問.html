@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報I 直前演習 第1回｜第2問</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--primary:#1a56a0;--primary-light:#e8f0fb;--correct:#1a7a4a;--correct-bg:#e6f4ec;--wrong:#b91c1c;--wrong-bg:#fde8e8;--text:#1e2a3a;--muted:#5a6a7e;--border:#d0dae6;--radius:10px;--shadow:0 2px 12px rgba(26,86,160,.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--primary);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  header h1{font-size:.95rem;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-label{font-size:.78rem;opacity:.9;white-space:nowrap;}
+  .progress-bar{width:110px;height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:#7ec8f7;border-radius:3px;transition:width .3s;}
+  main{max-width:780px;margin:0 auto;padding:18px 14px 90px;}
+  .sec-title{background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;padding:8px 16px;border-radius:8px;margin:26px 0 12px;}
+  .context{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;font-size:.92rem;line-height:1.85;}
+  .context p{margin-bottom:.7em;}
+  .context table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.85rem;}
+  .context th,.context td{border:1px solid var(--border);padding:6px 8px;}
+  .context th{background:var(--primary-light);font-weight:700;}
+  .fig{background:var(--primary-light);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.86rem;line-height:1.75;}
+  .fig-cap{font-weight:700;color:var(--primary);font-size:.8rem;margin-bottom:4px;}
+  .blank{display:inline-block;border:1.5px solid var(--text);padding:0 10px;font-weight:700;background:#fff;border-radius:3px;}
+  u.point{text-underline-offset:3px;}
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .q-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .q-badge{background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .q-point{font-size:.72rem;color:var(--muted);}
+  .q-status{margin-left:auto;font-size:.95rem;}
+  .q-text{font-size:.92rem;line-height:1.8;margin-bottom:10px;}
+  .choices{display:flex;flex-direction:column;gap:8px;}
+  .choice-btn{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;text-align:left;font-size:.87rem;line-height:1.55;transition:border-color .15s,background .15s;width:100%;font-family:inherit;}
+  .choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn .ci{font-weight:700;color:var(--primary);min-width:20px;}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);}
+  .choice-btn.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .choice-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .choice-btn:disabled{cursor:default;}
+  .pick-hint{font-size:.78rem;color:var(--muted);margin:-2px 0 8px;}
+  .digits-row{display:flex;align-items:center;gap:6px;margin:6px 0 4px;flex-wrap:wrap;}
+  .digit-prefix,.digit-suffix{font-size:.9rem;font-weight:700;}
+  .digit-box{width:2.4em;height:2.4em;text-align:center;font-size:1.1rem;font-weight:700;border:2px solid var(--border);border-radius:6px;background:#fff;color:var(--text);}
+  .digit-box:focus{outline:none;border-color:var(--primary);background:var(--primary-light);}
+  .digit-box.correct{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);}
+  .digit-box.wrong{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);}
+  .digit-answer{font-size:.8rem;color:var(--muted);margin-left:8px;}
+  .blank-group{margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+  .blank-group-label{font-weight:700;color:var(--primary);font-size:.85rem;margin-bottom:6px;}
+  .action-row{margin-top:12px;display:flex;justify-content:flex-end;}
+  .btn-primary{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .btn-primary:hover{background:#154080;}
+  .btn-primary:disabled{background:#b6c2d0;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;}
+  .result-banner{display:none;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.88rem;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
+  .result-banner.show{display:flex;}
+  .result-banner.correct{background:var(--correct-bg);color:var(--correct);}
+  .result-banner.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .explanation-link{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);padding:4px 12px;border-radius:20px;cursor:pointer;background:#fff;}
+  .explanation-link:hover{background:var(--primary-light);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:200;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .modal-title{font-size:.95rem;font-weight:700;color:var(--primary);}
+  .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .modal-body{font-size:.89rem;line-height:1.85;}
+  .modal-body .correct-answer{background:var(--correct-bg);border-left:4px solid var(--correct);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-weight:700;color:var(--correct);}
+  .modal-body p{margin-bottom:.7em;}
+  .opt-exp{margin:6px 0;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:.85rem;}
+  .opt-exp.ok{border-left:3px solid var(--correct);}
+  .opt-exp.ng{border-left:3px solid var(--wrong);}
+  .label-ok{color:var(--correct);font-weight:700;}
+  .label-ng{color:var(--wrong);font-weight:700;}
+  #final-area{margin-top:30px;}
+  .result-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.86rem;}
+  .result-table th,.result-table td{border:1px solid var(--border);padding:6px 9px;text-align:center;}
+  .result-table th{background:var(--primary-light);font-weight:700;}
+  .result-table td.ok{color:var(--correct);font-weight:700;}
+  .result-table td.ng{color:var(--wrong);font-weight:700;}
+  .score-big{font-size:2.8rem;font-weight:800;color:var(--primary);}
+  .score-denom{font-size:1.1rem;color:var(--muted);}
+  @media(max-width:540px){.context,.q-card{padding:14px;}.choice-btn{font-size:.83rem;}.progress-bar{width:70px;}.score-big{font-size:2.2rem;}}
+
+  /* トップページへ戻るボタン */
+  .back-to-index-wrap{max-width:800px;margin:14px auto;padding:0 16px;text-align:left;}
+  .back-to-index-wrap.bottom{margin:28px auto 36px;text-align:center;}
+  .back-to-index-btn{display:inline-block;background:var(--primary,#1a56a0);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .back-to-index-btn:hover{background:#154080;}
+
+  /* 図表（画像）と図表リンク */
+  .fig-img-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin:12px 0;text-align:center;}
+  .fig-img-wrap .fig-cap{text-align:left;}
+  .fig-img{max-width:100%;height:auto;display:block;margin:4px auto 0;cursor:zoom-in;}
+  .fig-zoom-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .fig-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;}
+  .fig-links-label{font-size:.78rem;color:var(--muted);}
+  .fig-link{font-family:inherit;font-size:.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);border:1.5px solid var(--primary);border-radius:20px;padding:5px 14px;cursor:pointer;}
+  .fig-link::before{content:"📊 ";}
+  .fig-link:hover{background:#d6e4f7;}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.95);z-index:300;flex-direction:column;}
+  .lb-overlay.show{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;}
+  .lb-cap{font-size:.86rem;font-weight:700;flex:1;line-height:1.4;}
+  .lb-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;font-size:.82rem;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .lb-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .lb-body img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;}
+  .lb-body.zoom{align-items:flex-start;justify-content:flex-start;}
+  .lb-body.zoom img{max-width:none;max-height:none;width:200%;}
+  .lb-foot{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;padding:6px 0 12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>情報Ⅰ 直前演習（実力完成）第1回｜第2問（配点30）</h1>
+  <div class="progress-wrap">
+    <span class="progress-label" id="prog-label">0 / 0 回答</span>
+    <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+<div class="back-to-index-wrap top"><a class="back-to-index-btn" href="chokuzen.html">← トップへ戻る</a></div>
+
+<main id="quiz-area"></main>
+<div class="back-to-index-wrap bottom"><a class="back-to-index-btn" href="chokuzen.html">↑ トップへ戻る</a></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">解説</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<div class="lb-overlay" id="lb" onclick="if(event.target===this||event.target.id==='lb-body')closeFig()">
+  <div class="lb-bar">
+    <span class="lb-cap" id="lb-cap"></span>
+    <button class="lb-btn" onclick="toggleZoom()" id="lb-zoom">拡大</button>
+    <button class="lb-btn" onclick="closeFig()">✕ 閉じる</button>
+  </div>
+  <div class="lb-body" id="lb-body"><img id="lb-img" alt="" onclick="toggleZoom()"></div>
+  <div class="lb-foot">画像をタップで拡大／縮小・背景タップで閉じる</div>
+</div>
+<script>
+const SYM = ['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨','ⓐ','ⓑ','ⓒ','ⓓ'];
+
+// ===== 図表の登録（imgフォルダの画像を参照） =====
+const FIGS = {
+  "表1": {label:"表1", src:"img/choku01_2B_tab1.jpg", cap:"表1　120円の商品の支払いパターン"},
+  "表2": {label:"表2", src:"img/choku01_2B_tab2.jpg", cap:"表2　140円の商品の支払いパターン"},
+  "表3": {label:"表3", src:"img/choku01_2B_tab3.jpg", cap:"表3　160円の商品の支払いパターン"},
+  "表4": {label:"表4", src:"img/choku01_2B_tab4.jpg", cap:"表4　100人に販売したときの金種ごとの枚数の変化"},
+  "図1": {label:"図1", src:"img/choku01_2B_fig1.jpg", cap:"図1　おつり用の硬貨の枚数の推移"},
+  "図2": {label:"図2", src:"img/choku01_2B_fig2.jpg", cap:"図2　おつり用の硬貨の最小枚数の箱ひげ図"}
+};
+// 図表を本文中に表示（タップで拡大）
+function figBox(key){ const f=FIGS[key]; return `<div class="fig-img-wrap"><div class="fig-cap">${f.cap}</div><img class="fig-img" src="${f.src}" alt="${f.cap}" loading="lazy" onclick="openFig('${key}')"><div class="fig-zoom-hint">タップで拡大</div></div>`; }
+// 設問中の「表1」などのリンク（チップ）
+function figLink(key){ const f=FIGS[key]; return `<button type="button" class="fig-link" onclick="openFig('${key}')">${f.label||key}</button>`; }
+function figLinks(...keys){ return `<div class="fig-links"><span class="fig-links-label">図表を確認：</span>${keys.map(k=>figLink(k)).join('')}</div>`; }
+function B(s){ return `<span class="blank">${s}</span>`; }
+
+// ===== セクション（問題文）と設問データ =====
+const sections = [
+
+// ───────── A ─────────
+{
+  title: "第2問A　次の会話文は，自分たちの所属する学校について，より多くの人に伝えるための工夫としてどのようなものが考えられるかを議論した際の3人の生徒S，T，Uの会話である。会話文を読み，問い（問1〜5）に答えよ。",
+  context: `
+<p>S：最近，私たちの学校に留学生が多く来るようになったね。<br>
+T：その留学生たちが，教室の場所がわからないって言っていたよ。<br>
+U：それなら，私たちで『校内マップ』を作ることにしよう。<br>
+S：様々な国から留学生が来ているから，${B('ア')}ことで，言語の違いによる障壁を取り除くことができると思うよ。<br>
+T：校内マップを作るだけではなく，例えばコンピュータ教室や理科室には，その教室だとわかるようなイラスト，つまり${B('イ')}を作って掲示してはどうかな。<br>
+U：それはいいね。<br>
+S：学校のWebサイトも同じように，様々な人に使ってもらえるよう，改善できる点はないかな。<br>
+T：${B('ウ')}ことで，Webサイト閲覧で読み上げソフトを使っている視覚障がいのある方々に対してもWebサイトの情報を正しく伝えることができるようになるよ。<br>
+U：その他にも，<sub>A</sub><u class="point">Webサイトのメニューの表示方法を考え直すことで，目的のページに到達しやすくなり，利便性が向上する</u>ことも考えられるね。<br>
+S：それだけではなく，私たちの学校をより多くの人に知ってもらうため，<sub>B</sub><u class="point">SNSで校内の情報を発信していく</u>のはどうかな。<br>
+T：いろいろな意見が出てきて面白いね。早速作業に移ろう。</p>`,
+  items: [
+    {
+      label:"問1（ア）", points:3, type:"single",
+      qtext:`空欄${B('ア')}に当てはまるものとして最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["文字のサイズを大きくする","文字を使わず，絵やイラストを用いて表現する","類似色の使用を避ける","フォントを，判読性の高いゴシック体に統一する"],
+      correct:1,
+      exp:{answer:"①", text:"用いる言語が異なる人に対して，どのような工夫により理解度が向上するかを考える。",
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"文字のサイズを大きくすることは，遠視や老眼の人に対して理解度を向上させる工夫ではあるが，言語の違いによる障壁を取り除けるわけではない。"},
+          {label:"① 正しい（正解）",ok:true,text:"文字を使わず，絵やイラストを用いて表現することは，用いる言語を問わず，人に伝達する手段である。よって，言語の違いによる障壁を取り除くことができる。"},
+          {label:"② 誤り",ok:false,text:"類似色の使用を避けることは，色の識別が困難な人に対して理解度を向上させる工夫ではあるが，言語の違いによる障壁を取り除けるわけではない。"},
+          {label:"③ 誤り",ok:false,text:"フォントを判読性の高いゴシック体に統一したとしても，文章を認識しやすくするだけで，言語の違いによる障壁を取り除くわけではない。"}
+        ]}
+    },
+    {
+      label:"問2（イ）", points:3, type:"single",
+      qtext:`空欄${B('イ')}に当てはまるものとして最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["ヒストグラム","ダイアグラム","ピクトグラム","バリアフリー"],
+      correct:2,
+      exp:{answer:"②（ピクトグラム）", text:"Tさんの発言の「その教室だとわかるようなイラスト」，つまり「表現対象となるものを視覚化し，さらに単純化したもの」は何かを考える。",
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"ヒストグラムとは，データを可視化するためのグラフの一種であり，今回の目的とは無関係である。"},
+          {label:"① 誤り",ok:false,text:"ダイアグラムとは，情報を幾何学的な図形などを組み合わせて表す抽象化の一種であり，今回の目的とは無関係である。"},
+          {label:"② 正しい（正解）",ok:true,text:"ピクトグラムとは，表現対象となるものを視覚化し，さらに単純化したものである。"},
+          {label:"③ 誤り",ok:false,text:"バリアフリーとは，生活する上で障壁（バリア）となるものをなくす工夫のことであるが，イラストのみを指す言葉ではない。"}
+        ]}
+    },
+    {
+      label:"問3（ウ）", points:3, type:"single",
+      qtext:`空欄${B('ウ')}に当てはまるものとして最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["画像ファイルに代替テキストを付ける","文字ばかりの説明ではなく，図解を付ける","重要な部分の文字の色を変える","表やグラフを利用し，データを比較しやすくする"],
+      correct:0,
+      exp:{answer:"⓪", text:"読み上げソフトを使っている視覚障がい者の方々に対して，どのような工夫がふさわしいかを考える（アクセシビリティの向上につながる）。",
+        options:[
+          {label:"⓪ 正しい（正解）",ok:true,text:"画像ファイルに代替テキストを付けることで，音声読み上げソフトを使った際に音声としての情報を得ることができる。"},
+          {label:"① 誤り",ok:false,text:"文字に図解を付けても，視覚障がい者の方々にとっての読み取りやすさが改善されたとは言えない。"},
+          {label:"② 誤り",ok:false,text:"重要な部分の文字の色を変えても，視覚障がいのある方々にとっての読み取りやすさが改善されたとは言えない。"},
+          {label:"③ 誤り",ok:false,text:"表やグラフを利用しても，視覚障がい者の方々にとっての読み取りやすさが改善されたとは言えない。"}
+        ]}
+    },
+    {
+      label:"問4（エ）", points:3, type:"single",
+      qtext:`下線部Aについて，関連のある用語として最も適当なものを，次の⓪〜③のうちから一つ選べ。`,
+      choices:["ユーザーズガイド","ユニバーサルサービス","ユーザビリティ","ユニバーサルデザインフォント"],
+      correct:2,
+      exp:{answer:"②（ユーザビリティ）", text:"「目的のページに到達しやすくなり，利便性が向上する」は使いやすさに関わる。",
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"ユーザーズガイドとは，取扱説明書のことである。"},
+          {label:"① 誤り",ok:false,text:"ユニバーサルサービスとは，国民が誰でも利用できるべきサービスのことである。"},
+          {label:"② 正しい（正解）",ok:true,text:"ユーザビリティとは，使いやすさのことである。"},
+          {label:"③ 誤り",ok:false,text:"ユニバーサルデザインフォントとは，判読性が高くなるように設計されたフォントのことである。"}
+        ]}
+    },
+    {
+      label:"問5（オ）", points:3, type:"single",
+      qtext:`下線部Bについて，SNSで学校の情報を掲載する場面において<b>避けなくてもよいもの</b>を，次の⓪〜③のうちから一つ選べ。`,
+      choices:[
+        "本人の許諾なしに，顔が大きくうつっている写真を掲載すること。",
+        "本人の許諾なしに，生徒の名前がうつっている写真を掲載すること。",
+        "テレビに登場するキャラクターがうつっている写真を掲載すること。",
+        "学校の位置が特定できる情報がうつっている写真を掲載すること。"
+      ],
+      correct:3,
+      exp:{answer:"③", text:"SNSでの情報発信で配慮すべき点を確認しよう。",
+        options:[
+          {label:"⓪ 避けるべき",ok:false,text:"顔が大きくうつっている写真の掲載は，生徒個人の特定につながるため，プライバシー保護などの観点から，避けるべき点である。"},
+          {label:"① 避けるべき",ok:false,text:"生徒の名前がうつっている写真の掲載は，プライバシー保護や個人情報保護などの観点から，避けるべき点である。"},
+          {label:"② 避けるべき",ok:false,text:"テレビに登場するキャラクターがうつっている写真の掲載は，著作権や産業財産権の侵害などの観点から，避けるべき点である。"},
+          {label:"③ 避けなくてもよい（正解）",ok:true,text:"学校の位置情報は公知情報にあたるため，学校の位置が特定できる情報が掲載されることは避けなくてもよい。"}
+        ]}
+    }
+  ]
+},
+
+// ───────── B ─────────
+{
+  title: "第2問B　次の文章を読み，後の問い（問1〜5）に答えよ。",
+  context: `
+<p>　Sさんの所属する部活動では毎年，文化祭でホットドッグの模擬店を出店している。販売する商品は3品あり，価格をそれぞれ120円，140円，160円で設定する。代金の支払いは現金のみで行われるが，毎年おつり用の硬貨が不足してしまい，硬貨の調達のために販売の一時中止が発生している。そこで，今年は昨年までの売り上げ状況をもとに事前にシミュレーションを行い，おつり用の硬貨の準備を適切に行いたいと考え，顧問のT先生と打ち合わせをすることになった。なお，ここではおつりを渡す際に100円硬貨が不足した場合，10円硬貨や50円硬貨で補うなど，大きい金額の硬貨をより小さい金額の硬貨で補うことは考えないものとする。</p>
+<p>S：今年はおつりの準備を適切に行いたいので，事前にシミュレーションをしてみようと思っています。<br>
+T：それはとてもよい試みだと思います。今のところシミュレーションはどのように行う予定で考えていますか？<br>
+S：お客さんは一つの商品しか購入しないという仮定のもと，それぞれの商品について，支払いパターンとその際のおつりの枚数を表にまとめてみました。なお，支払いに用いるお金の種類は，10円，50円，100円，500円硬貨のみに限定し，おつりに用いるお金の種類は，10円，50円，100円硬貨のみに限定しました。また，支払い時の硬貨の出し方は，前年の文化祭の記録にあるパターンのみを用いることにします。前年の文化祭において，120円の商品の支払いパターンは表1のように7通りあります。この7通りについて「パターン」の列を設けて通し番号をつけました。</p>
+${figBox("表1")}
+<p>T：表1の「支払い方法」の10円〜500円は硬貨の種類で，その下の数字は硬貨の枚数ですね。また，「支払い」はお客さんが店員に渡した金額で，「おつり」は「支払い」に応じたおつりの金額，「おつりの枚数」はおつりに用いる硬貨における種類ごとの枚数ということですね。<br>
+S：その通りです。そして，「差し引き枚数」はお客さんが支払った硬貨の枚数からおつりの硬貨の枚数を引いたものです。例えば，パターン4ではお客さんは支払いに50円硬貨1枚と100円硬貨1枚を出し，店員はおつりとして10円硬貨を3枚返しています。このやりとりにより，差し引き枚数は，10円硬貨が3枚減り「−3」，50円硬貨が1枚増え「1」，100円硬貨が1枚増え「1」となります。<br>
+T：わかりました。では，前年の文化祭における140円の商品の支払いパターンをまとめた表2についても説明してもらえますか。<br>
+S：前年の文化祭において，140円の商品の支払いパターンは7通りでした。120円の商品の支払いパターンに続き，パターンの列の通し番号は8から順番に割り振っています。</p>
+${figBox("表2")}`,
+  items: [
+    {
+      label:"問1（カ）", points:3, type:"single",
+      qtext:`表2の空欄${B('カ')}に当てはまるものとして適当なものを，次の⓪〜④のうちから一つ選べ。${figLinks("表2","表1")}`,
+      choices:["−4","−3","−2","3","4"],
+      correct:3,
+      exp:{answer:"③（3）", text:"パターン11は，140円の支払いに対し，50円硬貨3枚の150円で支払うことから，50円硬貨は3枚（③）増える。"}
+    },
+    {
+      label:"問2（キ）", points:3, type:"single",
+      qtext:`表2において，おつり用の硬貨をすべての金種（10円，50円，100円）のおつり用の硬貨が0枚の状態から始め，お客さんがパターン8から順にパターン14まで1回ずつ購入するとしたとき，おつり用の硬貨が最後まで一度も不足しない金種を過不足なく含む組合せを，次の⓪〜⑥のうちから一つ選べ。${figLinks("表2")}`,
+      choices:["10円","50円","100円","10円と50円","10円と100円","50円と100円","10円と50円と100円"],
+      correct:3,
+      exp:{answer:"③（10円と50円）", text:`パターン8から順におつり用の硬貨の枚数を追っていく必要がある。<br>
+<b>10円硬貨</b>は，パターン8から10まで4枚ずつ増え続け，計12枚となり，パターン11から14まで1枚ずつ減りつづけ，最終的に8枚となる。そのため，10円硬貨は一度も不足にはならない。<br>
+<b>50円硬貨</b>は，パターン8で2枚増えるが，パターン9と10では増減なし，パターン11で3枚増え，パターン12で1枚増える。ここまでで6枚であるが，そのあとは1枚ずつ減って4枚となる。そのため，50円硬貨は一度も不足にはならない。<br>
+<b>100円硬貨</b>は，パターン8では増減なしでパターン9で1枚増える。パターン10では4枚減るため，この時点で100円硬貨は不足することとなる。<br>
+よって，一度も不足しない硬貨の組合せは，10円と50円（③）である。`}
+    }
+  ]
+},
+
+{
+  title: "第2問B（続き）　問3〜5",
+  context: `
+<p>　前年の文化祭において，160円の商品の支払いパターンは12通りあった。そこで，同様に160円の商品の支払いパターンについて，表3を作成した。</p>
+${figBox("表3")}
+<p>S：例年，約100名のお客さんに商品を購入してもらっていますが，それぞれの商品の前年度の売上個数の割合は，120円が30%，140円が50%，160円が20%です。これをもとに，硬貨の種類ごとの「差し引き枚数」をシミュレーションしてみようと思います。<br>
+T：よいと思います。各金額の商品に対するお客さんの支払いパターンの確率は均等にしましょう。<br>
+S：はい，それではやってみます。乱数を使って120円，140円，160円の商品がそれぞれ30%，50%，20%の確率で現れ，かつ，各金額の商品に対応する支払いパターンがそれぞれ均等に選ばれるようにしました。ただし，最初はおつり用の硬貨をまったく準備しないものとし，100人のお客さんが一人一つ商品を一人購入したという設定にしてシミュレーションをしてみました。<br>
+T：いいですね。Sさんのシミュレーション結果をもとに表4を作成しました。「おつり用の硬貨の枚数（枚）」は，そのとき店にあるおつり用の硬貨の，金種ごとの枚数を表しています。枚数がマイナスの箇所は，金種がどれだけ不足しているかを示しています。また，最後の行は，100人のお客さんに販売したのちに，最も枚数が不足したときの不足枚数がわかるようにしてみました。これにより，それぞれの金種が最大で何枚不足するのかを読み取ることができます。</p>
+${figBox("表4")}
+<p>S：ありがとうございます。さらに，この100人に販売したシミュレーションで1人目から100人目まで，おつり用の硬貨の枚数がどのように推移するかを，図1に折れ線グラフで表してみます。</p>
+${figBox("図1")}`,
+  items: [
+    {
+      label:"問3（ク）", points:3, type:"single",
+      qtext:`今回のシミュレーションについて，図1のグラフから読み取れることとして最も適当なものを，次の⓪〜④のうちから一つ選べ。${figLinks("図1","表3","表4")}`,
+      choices:[
+        "おつり用の50円硬貨の枚数は増加を続けており，減少することは一度もない。",
+        "おつり用の100円硬貨は不足が続いており，パターン15のように100円硬貨の差し引き枚数が正の値になるパターンは一度も選ばれていない。",
+        "初めにおつり用の10円硬貨を20枚準備していても，10円硬貨が不足する場合がある。",
+        "おつり用の10円，50円，100円硬貨のすべてが同時に不足する状態は発生していない。",
+        "おつり用の硬貨の枚数が一番少ない（不足を含む）ときの枚数と一番多いときの枚数の差は，50円硬貨が最も大きい。"
+      ],
+      correct:3,
+      exp:{answer:"③", text:"図1の3本の折れ線の動きを丁寧に読み取ろう。",
+        options:[
+          {label:"⓪ 誤り",ok:false,text:"おつり用の50円硬貨の枚数は増加だけではなく，途中で減少している区間もある。したがって，「増加を続けており，減少することは一度もない」とは言えない。"},
+          {label:"① 誤り",ok:false,text:"100円硬貨は不足の状態が続いているが，その中でも増加の推移を示しているところもある。このときは，100円硬貨の差し引き枚数が正の値になっている。"},
+          {label:"② 誤り",ok:false,text:"おつり用の10円硬貨は一番不足しているときでも，20枚以上不足することはない。よって，おつりを20枚用意していれば不足することはない。"},
+          {label:"③ 正しい（正解）",ok:true,text:"10円，50円，100円の三つのグラフが同時にすべて0未満（不足）になっているときは存在していない。つまり，おつり用の10円，50円，100円硬貨のすべてが同時に不足する状態は，このシミュレーションでは発生していない。"},
+          {label:"④ 誤り",ok:false,text:"グラフから，一番不足しているときの枚数をみると，50円硬貨の方が不足分が多く，一番多い時の枚数は50円硬貨よりも10円硬貨の方が多いことが読み取れる。よって，その差は50円硬貨よりも10円硬貨の方が大きい。"}
+        ]}
+    },
+    {
+      label:"問4（ケ）", points:3, type:"single",
+      pre:`<p>S：表4の結果を得たときと同様の設定でシミュレーションを100回実施してみました。シミュレーション1回ごとに，それぞれの硬貨が最も少なくなるときの枚数を最小枚数として記録し，100回分の最小枚数のデータを箱ひげ図にしたものが図2です。なお，図2の×の印はそれぞれ硬貨の最小枚数の平均値を表します。</p>${figBox("図2")}`,
+      qtext:`100回のシミュレーションにおいて，図2のみからは<b>読み取れないこと</b>を，次の⓪〜④のうちから一つ選べ。${figLinks("図2")}`,
+      choices:[
+        "おつり用の10円硬貨が最も少なくなるときの枚数の平均値は−10以上0以下の範囲にある。",
+        "おつり用の100円硬貨の最小枚数の最小値と最大値の差は，おつり用の50円硬貨の最小枚数の最小値と最大値の差の8倍以上である。",
+        "おつり用の100円硬貨はどのシミュレーションにおいても必ず不足している。",
+        "中央値が最も大きいのはおつり用の50円硬貨の最小枚数である。",
+        "おつり用の10円硬貨の最小枚数が最小となるとき，おつり用の100円硬貨の最小枚数も最小となる。"
+      ],
+      correct:4,
+      exp:{answer:"④", text:"一つひとつの選択肢を丁寧に検証することがポイント。",
+        options:[
+          {label:"⓪ 読み取れる",ok:false,text:"図2の10円硬貨の箱ひげ図に×（平均値）が示されており，その位置から平均値がおおよそ−10以上0以下であると判断できる。"},
+          {label:"① 読み取れる",ok:false,text:"50円硬貨の最小枚数の最大値は約3であり，最小値は約−5でその差は約8である。100円硬貨の最小枚数の最大値は約−11であり，最小値は約−95でその差は約84である。よって，その差は8倍以上と読み取ることができる。"},
+          {label:"② 読み取れる",ok:false,text:"図2の100円硬貨の箱ひげ図において，最小枚数の最大値は0未満であり，そのシミュレーションにおいても必ず不足した状態が一度は発生していることが読み取れる。"},
+          {label:"③ 読み取れる",ok:false,text:"図2では，10円・50円・100円のそれぞれについて最小枚数の中央値（箱の中央の線）が示されている。比較すると50円硬貨の中央値が一番大きいと読み取れる。"},
+          {label:"④ 読み取れない（正解）",ok:true,text:"10円硬貨が最小になったとき，100円硬貨も最小になっているかどうかはこのグラフだけからは判断することができない。"}
+        ]}
+    },
+    {
+      label:"問5（コ）", points:3, type:"single",
+      pre:`<p>　100人のお客さんを想定して，準備する硬貨の枚数について考察する。<br>　図2の100回のシミュレーションの結果から判断すると，「それぞれのおつり用の硬貨が不足しないように準備する」ためには，図2におけるそれぞれの硬貨の最小枚数の${B('コ')}の枚数分を準備するのがよい。</p>`,
+      qtext:`空欄${B('コ')}に入れるのに最も適切なものを，解答群のうちから一つ選べ。${figLinks("図2")}`,
+      choices:["最小値","最大値","平均値","中央値","第1四分位数","第3四分位数"],
+      correct:0,
+      exp:{answer:"⓪（最小値）", text:"「それぞれのおつり用の硬貨が不足しないように準備する」とは，どのシミュレーションでも，いずれのおつり用の硬貨も在庫が0未満にならないようにするということである。そのためには，各硬貨について，100回のシミュレーションのうちで「最も不足した場合」を想定して準備をする必要がある。これに該当するのは，最小枚数の最小値である。"}
+    }
+  ]
+}
+];
+
+// ===== エンジン =====
+let items = [];
+sections.forEach((s, si) => s.items.forEach((it, ii) => { it._sec = si; items.push(it); }));
+const state = items.map(it=>{
+  if(it.type==='multi') return { sel:[], done:false };
+  if(it.type==='digits') return { sel:Array(it.blanks).fill(''), done:false };
+  if(it.type==='choicegroup') return { sel:Array(it.blanks.length).fill(null), done:false };
+  return { sel:null, done:false };
+});
+
+function build() {
+  let html = '';
+  let gi = 0;
+  sections.forEach((sec) => {
+    html += `<div class="sec-title">${sec.title}</div>`;
+    if (sec.context) html += `<div class="context">${sec.context}</div>`;
+    sec.items.forEach((it) => {
+      const idx = gi++;
+      html += `<div class="q-card" id="q-${idx}">`;
+      if (it.pre) html += `<div class="q-text">${it.pre}</div>`;
+      html += `
+        <div class="q-head">
+          <span class="q-badge">${it.label}</span>
+          <span class="q-point">${it.points}点</span>
+          <span class="q-status" id="st-${idx}"></span>
+        </div>
+        <div class="q-text">${it.qtext}</div>`;
+
+      if (it.type === 'digits') {
+        html += `<div class="digits-row">`;
+        if (it.prefixText) html += `<span class="digit-prefix">${it.prefixText}</span>`;
+        for (let b=0;b<it.blanks;b++) {
+          html += `<input type="tel" inputmode="numeric" maxlength="1" class="digit-box" id="d-${idx}-${b}" oninput="onDigitInput(${idx},${b},this)">`;
+        }
+        if (it.suffixText) html += `<span class="digit-suffix">${it.suffixText}</span>`;
+        html += `</div>`;
+      } else if (it.type === 'choicegroup') {
+        it.blanks.forEach((bl, bi) => {
+          html += `<div class="blank-group"><div class="blank-group-label">空欄${bl.label}</div><div class="choices">
+            ${bl.choices.map((c, ci) => `
+              <button class="choice-btn" id="c-${idx}-${bi}-${ci}" onclick="selectGroupChoice(${idx},${bi},${ci})">
+                <span class="ci">${SYM[ci]}</span><span>${c}</span>
+              </button>`).join('')}
+          </div></div>`;
+        });
+      } else {
+        html += `<div class="choices">
+          ${it.choices.map((c, ci) => `
+            <button class="choice-btn" id="c-${idx}-${ci}" onclick="${it.type==='multi'?`toggleChoice(${idx},${ci})`:`selectChoice(${idx},${ci})`}">
+              <span class="ci">${SYM[ci]}</span><span>${c}</span>
+            </button>`).join('')}
+        </div>`;
+        if (it.type === 'multi') {
+          html += `<div class="pick-hint">※ ${it.pick}つ選択してください（<span id="pickcount-${idx}">0</span>/${it.pick}）</div>`;
+        }
+      }
+
+      html += `
+        <div class="action-row">
+          <button class="btn-primary" id="sub-${idx}" onclick="submitAnswer(${idx})" disabled>回答する</button>
+        </div>
+        <div class="result-banner" id="rb-${idx}">
+          <span id="ri-${idx}" style="font-size:1.2rem"></span>
+          <span id="rt-${idx}"></span>
+          <button class="explanation-link" onclick="openModal(${idx})">解説を見る</button>
+        </div>
+      </div>`;
+    });
+  });
+  html += `
+  <div id="final-area">
+    <div class="action-row" style="justify-content:center">
+      <button class="btn-primary" id="final-btn" onclick="showResult()" disabled>結果を見る（全問回答後に押せます）</button>
+    </div>
+    <div id="final-result"></div>
+  </div>`;
+  document.getElementById('quiz-area').innerHTML = html;
+  document.getElementById('prog-label').textContent = `0 / ${items.length} 回答`;
+}
+
+function selectChoice(qi, ci) {
+  if (state[qi].done) return;
+  state[qi].sel = ci;
+  items[qi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = false;
+}
+
+function toggleChoice(qi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  const pos = st.sel.indexOf(ci);
+  const btn = document.getElementById(`c-${qi}-${ci}`);
+  if (pos >= 0) {
+    st.sel.splice(pos, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (st.sel.length >= it.pick) return;
+    st.sel.push(ci);
+    btn.classList.add('selected');
+  }
+  document.getElementById(`pickcount-${qi}`).textContent = st.sel.length;
+  document.getElementById(`sub-${qi}`).disabled = st.sel.length !== it.pick;
+}
+
+function onDigitInput(qi, bi, el) {
+  const it = items[qi], st = state[qi];
+  el.value = el.value.replace(/[^0-9]/g,'').slice(0,1);
+  st.sel[bi] = el.value;
+  if (el.value && bi < it.blanks-1) {
+    const next = document.getElementById(`d-${qi}-${bi+1}`);
+    if (next) next.focus();
+  }
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v==='');
+}
+
+function selectGroupChoice(qi, bi, ci) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  st.sel[bi] = ci;
+  it.blanks[bi].choices.forEach((_, j) => {
+    document.getElementById(`c-${qi}-${bi}-${j}`).classList.toggle('selected', j === ci);
+  });
+  document.getElementById(`sub-${qi}`).disabled = st.sel.some(v=>v===null);
+}
+
+function submitAnswer(qi) {
+  const st = state[qi], it = items[qi];
+  if (st.done) return;
+  let ok = false;
+
+  if (it.type === 'multi') {
+    if (st.sel.length !== it.pick) return;
+    const a = [...st.sel].sort(), b = [...it.correctSet].sort();
+    ok = a.length === b.length && a.every((v,i)=>v===b[i]);
+    st.done = true;
+    it.choices.forEach((_, j) => {
+      const b2 = document.getElementById(`c-${qi}-${j}`);
+      b2.disabled = true;
+      if (it.correctSet.includes(j)) b2.classList.add('correct');
+      else if (st.sel.includes(j)) b2.classList.add('wrong');
+      b2.classList.remove('selected');
+    });
+  } else if (it.type === 'digits') {
+    if (st.sel.some(v=>v==='')) return;
+    ok = st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+    st.done = true;
+    for (let b=0;b<it.blanks;b++) {
+      const box = document.getElementById(`d-${qi}-${b}`);
+      box.disabled = true;
+      box.classList.add(String(st.sel[b])===String(it.correctDigits[b]) ? 'correct' : 'wrong');
+    }
+    if (!ok) {
+      const row = document.getElementById(`d-${qi}-${it.blanks-1}`).parentElement;
+      const span = document.createElement('span');
+      span.className = 'digit-answer';
+      span.textContent = `正解：${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+      row.appendChild(span);
+    }
+  } else if (it.type === 'choicegroup') {
+    if (st.sel.some(v=>v===null)) return;
+    ok = it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+    st.done = true;
+    it.blanks.forEach((bl, bi) => {
+      bl.choices.forEach((_, j) => {
+        const b2 = document.getElementById(`c-${qi}-${bi}-${j}`);
+        b2.disabled = true;
+        if (j === bl.correct) b2.classList.add('correct');
+        else if (j === st.sel[bi]) b2.classList.add('wrong');
+        b2.classList.remove('selected');
+      });
+    });
+  } else {
+    if (st.sel === null) return;
+    ok = st.sel === it.correct;
+    st.done = true;
+    document.getElementById(`sub-${qi}`).style.display = 'none';
+    it.choices.forEach((_, j) => {
+      const b = document.getElementById(`c-${qi}-${j}`);
+      b.disabled = true; b.classList.remove('selected');
+      if (j === it.correct) b.classList.add('correct');
+      else if (j === st.sel && !ok) b.classList.add('wrong');
+    });
+  }
+
+  if (it.type !== 'single') document.getElementById(`sub-${qi}`).style.display = 'none';
+
+  const rb = document.getElementById(`rb-${qi}`);
+  rb.classList.add('show', ok ? 'correct' : 'wrong');
+  document.getElementById(`ri-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`rt-${qi}`).textContent = ok ? '正解！' : ((it.type==='multi'&&it.partial&&scoreOf(qi)>0) ? `部分正解（${scoreOf(qi)}/${it.points}点）` : '不正解');
+  document.getElementById(`st-${qi}`).textContent = ok ? '✓' : '✗';
+  document.getElementById(`st-${qi}`).style.color = ok ? 'var(--correct)' : 'var(--wrong)';
+  updateProgress();
+}
+
+function isCorrect(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') {
+    const a=[...st.sel].sort(), b=[...it.correctSet].sort();
+    return a.length===b.length && a.every((v,i)=>v===b[i]);
+  }
+  if (it.type === 'digits') {
+    return st.sel.every((v,i)=>String(v)===String(it.correctDigits[i]));
+  }
+  if (it.type === 'choicegroup') {
+    return it.blanks.every((bl,bi)=>st.sel[bi]===bl.correct);
+  }
+  return st.sel === it.correct;
+}
+
+function fmtUser(qi) {
+  const st = state[qi], it = items[qi];
+  if (it.type === 'multi') return st.sel.length ? st.sel.map(i=>SYM[i]).join('・') : '—';
+  if (it.type === 'digits') return st.sel.join('');
+  if (it.type === 'choicegroup') return st.sel.map(i=>i===null?'—':SYM[i]).join('／');
+  return st.sel !== null ? SYM[st.sel] : '—';
+}
+function fmtCorrect(qi) {
+  const it = items[qi];
+  if (it.type === 'multi') return it.correctSet.map(i=>SYM[i]).join('・');
+  if (it.type === 'digits') return `${it.prefixText||''}${it.correctDigits.join('')}${it.suffixText||''}`;
+  if (it.type === 'choicegroup') return it.blanks.map(bl=>SYM[bl.correct]).join('／');
+  return SYM[it.correct];
+}
+
+function updateProgress() {
+  const done = state.filter(s => s.done).length;
+  document.getElementById('prog-label').textContent = `${done} / ${items.length} 回答`;
+  document.getElementById('prog-fill').style.width = `${(done / items.length) * 100}%`;
+  const fb = document.getElementById('final-btn');
+  if (done === items.length) { fb.disabled = false; fb.textContent = '結果を見る'; }
+}
+
+function showResult() {
+  let correct = 0, points = 0, maxP = 0;
+  const rows = items.map((it, i) => {
+    maxP += it.points;
+    const ok = isCorrect(i), sc = scoreOf(i);
+    if (ok) correct++;
+    points += sc;
+    const mark = ok ? '○' : (sc>0 ? '△' : '✗');
+    return `<tr><td>${it.label}</td><td>${fmtUser(i)}</td><td>${fmtCorrect(i)}</td><td class="${ok?'ok':'ng'}">${mark}</td><td>${sc}/${it.points}</td></tr>`;
+  }).join('');
+  document.getElementById('final-result').innerHTML = `
+    <div class="q-card" style="text-align:center;margin-top:16px">
+      <h2 style="font-size:1.3rem;color:var(--primary)">第2問 結果</h2>
+      <div style="margin:14px 0">
+        <span class="score-big">${correct}</span><span class="score-denom"> / ${items.length}問正解</span>
+        <div style="color:var(--muted);margin-top:4px">獲得点数：${points} / ${maxP}点</div>
+      </div>
+      <table class="result-table">
+        <tr><th>設問</th><th>あなた</th><th>正解</th><th>正誤</th><th>得点</th></tr>${rows}
+      </table>
+      <div style="margin-top:18px"><button class="btn-secondary" onclick="location.reload()">もう一度挑戦する</button></div>
+    </div>`;
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function openModal(qi) {
+  const it = items[qi], exp = it.exp;
+  const opts = exp.options ? exp.options.map(o => `<div class="opt-exp ${o.ok?'ok':'ng'}"><span class="${o.ok?'label-ok':'label-ng'}">${o.label}</span>　${o.text}</div>`).join('') : '';
+  document.getElementById('modal-title').textContent = `${it.label} 解説`;
+  document.getElementById('modal-body').innerHTML = `<div class="correct-answer">✓ 正解：${exp.answer}</div><p>${exp.text}</p><div style="margin-top:10px">${opts}</div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+// ===== 図表ライトボックス =====
+function openFig(key){
+  const f=FIGS[key]; if(!f) return;
+  document.getElementById('lb-img').src=f.src;
+  document.getElementById('lb-img').alt=f.cap;
+  document.getElementById('lb-cap').textContent=f.cap;
+  document.getElementById('lb-body').classList.remove('zoom');
+  document.getElementById('lb-zoom').textContent='拡大';
+  document.getElementById('lb').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeFig(){ document.getElementById('lb').classList.remove('show'); document.body.style.overflow=''; }
+function toggleZoom(){ const b=document.getElementById('lb-body'); b.classList.toggle('zoom'); document.getElementById('lb-zoom').textContent=b.classList.contains('zoom')?'縮小':'拡大'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeFig(); } });
+
+// 部分点（順不同の複数選択で1つ正解ごとに加点）
+function scoreOf(qi){
+  const it=items[qi], st=state[qi];
+  if(it.type==='multi' && it.partial){ return st.sel.filter(v=>it.correctSet.includes(v)).length*it.partial; }
+  return isCorrect(qi)?it.points:0;
+}
+
+build();
+</script>
+</body>
+</html>
